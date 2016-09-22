@@ -1,0 +1,23 @@
+[package]
+name = "poke-a-mango"
+description = "Display images in your terminal, kind of"
+documentation = "https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/doc/poke_a_mango/index.html"
+repository = "https://github.com/nabijaczleweli/poke-a-mango"
+readme = "README.md"
+keywords = ["pokemon", "game", "sfml", "meme"]
+license = "MIT"
+# Remember to also update in appveyor.yml
+version = "0.1.0"
+# Remember to also update in poke-a-mango.md
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
+exclude = ["*.enc"]
+
+
+[dependencies]
+clap = "2.12"
+
+
+[[bin]]
+name = "poke-a-mango"
+test = false
+doc = false
