@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["uppercase_first","Uppercase the first character of the supplied string."]]});
