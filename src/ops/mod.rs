@@ -1,5 +1,5 @@
-use rustc_serialize::{Encodable, Decodable};
 use toml::{Parser, Value, decode, encode_str};
+use rustc_serialize::{Encodable, Decodable};
 use std::io::{Read, Write};
 use self::super::Error;
 use std::path::Path;

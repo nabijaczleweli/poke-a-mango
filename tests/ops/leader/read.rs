@@ -1,10 +1,7 @@
-extern crate poke_a_mango;
-extern crate chrono;
-
-use self::poke_a_mango::ops::Leader;
-use self::poke_a_mango::Error;
-use self::chrono::DateTime;
+use poke_a_mango::ops::Leader;
 use self::super::make_dir;
+use poke_a_mango::Error;
+use chrono::DateTime;
 use std::io::Write;
 use std::fs::File;
 

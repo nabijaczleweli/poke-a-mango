@@ -1,6 +1,4 @@
-extern crate poke_a_mango;
-
-use self::poke_a_mango::util::uppercase_first;
+use poke_a_mango::util::uppercase_first;
 
 
 #[test]
