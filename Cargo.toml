@@ -14,7 +14,14 @@ exclude = ["*.enc"]
 
 
 [dependencies]
+rustc-serialize = "0.3"
+conrod = "0.44"
 clap = "2.13"
+toml = "0.2"
+
+[dependencies.chrono]
+version = "0.2"
+features = ["rustc-serialize"]
 
 
 [[bin]]
