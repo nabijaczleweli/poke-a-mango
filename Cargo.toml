@@ -15,7 +15,11 @@ exclude = ["*.enc"]
 
 [dependencies]
 rustc-serialize = "0.3"
+piston_window = "0.53"
+lazy_static = "0.2"
 conrod = "0.44"
+glutin = "0.6"
+regex = "0.1"
 clap = "2.13"
 toml = "0.2"
 

@@ -23,6 +23,15 @@ pub enum Error {
         /// This should be lowercase and imperative ("create", "open").
         op: &'static str,
     },
+    /// A UI error, like a failure to creat a Window.
+    Ui {
+        /// The UI operation's description.
+        ///
+        /// This should be imperative.
+        desc: &'static str,
+        /// The failed operation, as returned by the UI framework.
+        error: String,
+    },
 }
 
 impl Error {
@@ -58,6 +67,7 @@ impl Error {
                 });
                 writeln!(err_out, "{}ing {} failed.", op, desc).unwrap()
             }
+            Error::Ui { ref desc, ref error } => writeln!(err_out, "Failed to {}: {}.", desc, error).unwrap(),
         }
     }
 
@@ -77,6 +87,7 @@ impl Error {
         match *self {
             Error::FileParsingFailed { .. } => 1,
             Error::Io { .. } => 2,
+            Error::Ui { .. } => 3,
         }
     }
 }

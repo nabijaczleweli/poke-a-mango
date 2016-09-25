@@ -12,9 +12,17 @@
 
 
 use clap::{self, App, Arg, AppSettings};
+use glutin::get_primary_monitor;
+use std::str::{self, FromStr};
 use std::path::PathBuf;
 use std::env::home_dir;
+use regex::Regex;
 use std::fs;
+
+
+lazy_static! {
+    static ref SIZE_ARG_RGX: Regex = Regex::new(r"(\d+)x(\d+)").unwrap();
+}
 
 
 /// Representation of the application's all configurable values.
@@ -22,11 +30,18 @@ use std::fs;
 pub struct Options {
     /// Directory containing configuration. Default: `"$HOME/.poke-a-mango"`
     pub config_dir: (String, PathBuf),
+    /// The target monitor's resolution for scaling. Default: detected
+    pub desktop_size: (u32, u32),
 }
 
 impl Options {
     /// Parse `env`-wide command-line arguments into an `Options` instance
     pub fn parse() -> Options {
+        let detected_resolution_default = {
+            let (w, h) = get_primary_monitor().get_dimensions();
+            format!("{}x{}", w, h)
+        };
+
         let matches = App::new("poke-a-mango")
             .version(crate_version!())
             .author(crate_authors!())
@@ -34,6 +49,9 @@ impl Options {
             .about("What all the kool kidz are playing these days")
             .arg(Arg::from_usage("-c --config-dir=[CONFIG_DIR] 'Directory containing configuration. Default: $HOME/.poke-a-mango'")
                 .validator(Options::config_dir_validator))
+            .arg(Arg::from_usage("-d --desktop-size=[DESKTOP_SIZE] 'The desktop's resolution'")
+                .default_value(&detected_resolution_default)
+                .validator(Options::size_validator))
             .get_matches();
 
         Options {
@@ -59,10 +77,23 @@ impl Options {
                     }
                 }
             },
+            desktop_size: Options::parse_size(matches.value_of("desktop-size").unwrap()).unwrap(),
         }
+    }
+
+    fn parse_size(s: &str) -> Option<(u32, u32)> {
+        SIZE_ARG_RGX.captures(s).map(|c| (u32::from_str(c.at(1).unwrap()).unwrap(), u32::from_str(c.at(2).unwrap()).unwrap()))
     }
 
     fn config_dir_validator(s: String) -> Result<(), String> {
         fs::canonicalize(&s).map(|_| ()).map_err(|_| format!("Configuration directory \"{}\" not found", s))
+    }
+
+    fn size_validator(s: String) -> Result<(), String> {
+        match Options::parse_size(&s) {
+            None => Err(format!("\"{}\" is not a valid size (in format \"NNNxMMM\")", s)),
+            Some((0, _)) | Some((_, 0)) => Err(format!("Can't resize image to size 0")),
+            Some(_) => Ok(()),
+        }
     }
 }

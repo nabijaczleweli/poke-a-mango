@@ -6,8 +6,10 @@ use std::path::Path;
 use std::fs::File;
 
 mod leader;
+mod window;
 
 pub use self::leader::Leader;
+pub use self::window::create_window;
 
 
 fn read_toml_file<T: Decodable>(p: &Path, desc: &'static str) -> Result<T, Error> {
