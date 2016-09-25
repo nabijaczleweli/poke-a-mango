@@ -1,4 +1,4 @@
-use std::fs::create_dir_all;
+use std::fs::create_dir;
 use std::path::PathBuf;
 use std::env::temp_dir;
 
@@ -7,7 +7,11 @@ mod read;
 
 
 fn make_dir(section: &str, function: &str) -> PathBuf {
-    let tf = temp_dir().join("poke-a-mango-test").join(format!("leader-{}-{}", section, function));
-    create_dir_all(&tf).unwrap();
+    let mut tf = temp_dir();
+    let _ = create_dir(&tf);
+    tf.push("poke-a-mango-test");
+    let _ = create_dir(&tf);
+    tf.push(format!("leader-{}-{}", section, function));
+    let _ = create_dir(&tf);
     tf.join("leaderboard.toml")
 }
