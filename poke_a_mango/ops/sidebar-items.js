@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Leader","A leaderboard entry."]]});
+initSidebarItems({"fn":[["create_window","Create a window based on the size of the target desktop."]],"struct":[["Leader","A leaderboard entry."]]});
