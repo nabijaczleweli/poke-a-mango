@@ -3,40 +3,29 @@ use poke_a_mango::ops::create_window;
 use poke_a_mango::Error;
 
 
-// TODO: replace explicit size destructuring assert_eq!s with a straight Size==Size once
-//       https://github.com/PistonDevelopers/piston/pull/1120 gets released
-
 #[test]
 fn resize_1600x900() {
-    let s = window((1600, 900)).unwrap().size();
-    assert_eq!(s.width, 300);
-    assert_eq!(s.height, 600);
+    assert_eq!(window((1600, 900)).unwrap().size(), (300, 600).into());
 }
 
 #[test]
 fn resize_1080p() {
-    let s = window((1920, 1080)).unwrap().size();
-    assert_eq!(s.width, 360);
-    assert_eq!(s.height, 720);
+    assert_eq!(window((1920, 1080)).unwrap().size(), (360, 720).into());
 }
 
 #[test]
 fn resize_720p() {
-    let s = window((1280, 720)).unwrap().size();
-    assert_eq!(s.width, 240);
-    assert_eq!(s.height, 480);
+    assert_eq!(window((1280, 720)).unwrap().size(), (240, 480).into());
 }
 
 #[test]
 fn resize_pal() {
-    let s = window((768, 576)).unwrap().size();
-    assert_eq!(s.width, 192);
-    assert_eq!(s.height, 384);
+    assert_eq!(window((768, 576)).unwrap().size(), (192, 384).into());
 }
 
 #[test]
 fn title() {
-    assert_eq!(window((0,0)).unwrap().get_title(), "poke-a-mango".to_string());
+    assert_eq!(window((0, 0)).unwrap().get_title(), "poke-a-mango".to_string());
 }
 
 fn window(size: (u32, u32)) -> Result<NoWindow, Error> {
