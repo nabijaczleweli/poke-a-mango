@@ -5,11 +5,13 @@ use self::super::Error;
 use std::path::Path;
 use std::fs::File;
 
+mod state;
 mod leader;
 mod window;
 mod widgets;
 
 pub use self::leader::Leader;
+pub use self::state::GameState;
 pub use self::widgets::Widgets;
 pub use self::window::create_window;
 

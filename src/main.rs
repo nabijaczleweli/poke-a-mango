@@ -33,6 +33,7 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
 
     ui.fonts.insert_from_file(opts.config_dir.1.join("assets").join("DejaVuSansMono.ttf")).unwrap();
 
+    let mut game_state = poke_a_mango::ops::GameState::MainMenu;
     let widgets = poke_a_mango::ops::Widgets::new(ui.widget_id_generator());
 
     while let Some(event) = window.next() {
@@ -40,7 +41,9 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
             ui.handle_event(e);
         }
 
-        event.update(|_| widgets.update(ui.set_widgets()));
+        event.update(|_| {
+            game_state = widgets.update(ui.set_widgets(), game_state);
+        });
 
         window.draw_2d(&event, |ctx, graphics| {
             if let Some(primitives) = ui.draw_if_changed() {
