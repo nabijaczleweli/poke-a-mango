@@ -1,9 +1,11 @@
 extern crate piston_window;
 extern crate poke_a_mango;
+extern crate conrod;
 
 use std::io::stderr;
 use std::process::exit;
-use piston_window::PistonWindow;
+use piston_window::{PistonWindow, UpdateEvent};
+use conrod::backend::piston_window as conrod_backend;
 
 
 fn main() {
@@ -25,13 +27,25 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
     println!("{:#?}", opts);
 
     let mut window: PistonWindow = try!(poke_a_mango::ops::create_window(opts.desktop_size));
-    while let Some(e) = window.next() {
-        window.draw_2d(&e, |c, g| {
-            piston_window::clear([0.5, 0.5, 0.5, 1.0], g);
-            piston_window::rectangle([1.0, 0.0, 0.0, 1.0], // red
-                                     [0.0, 0.0, 100.0, 100.0], // rectangle
-                                     c.transform,
-                                     g);
+    let mut ui = conrod::UiBuilder::new().build();
+    let mut glyph_cache = conrod_backend::GlyphCache::new(&mut window, opts.desktop_size.0, opts.desktop_size.1);
+    let image_map = conrod::image::Map::new();
+
+    ui.fonts.insert_from_file(opts.config_dir.1.join("assets").join("DejaVuSansMono.ttf")).unwrap();
+
+    let widgets = poke_a_mango::ops::Widgets::new(ui.widget_id_generator());
+
+    while let Some(event) = window.next() {
+        if let Some(e) = conrod_backend::convert_event(event.clone(), &window) {
+            ui.handle_event(e);
+        }
+
+        event.update(|_| widgets.update(ui.set_widgets()));
+
+        window.draw_2d(&event, |ctx, graphics| {
+            if let Some(primitives) = ui.draw_if_changed() {
+                conrod_backend::draw(ctx, graphics, primitives, &mut glyph_cache, &image_map, |img| img);
+            }
         });
     }
 
