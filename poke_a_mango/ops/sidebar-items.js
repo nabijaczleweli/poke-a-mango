@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["create_window","Create a window based on the size of the target desktop."]],"struct":[["Leader","A leaderboard entry."],["Widgets","Container for all widgets' IDs, also manages setting them."]]});
+initSidebarItems({"enum":[["GameState","All game's possible states."]],"fn":[["create_window","Create a window based on the size of the target desktop."]],"struct":[["Leader","A leaderboard entry."],["Widgets","Container for all widgets' IDs, also manages setting them."]]});
