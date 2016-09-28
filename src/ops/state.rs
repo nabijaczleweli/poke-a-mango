@@ -1,4 +1,4 @@
-/// All game's possible states.
+/// Game's all possible states.
 ///
 /// `Widgets::update()` takes care of proper state transformation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -42,4 +42,18 @@ pub enum GameState {
     ///
     /// Can transform into: nothing. This is the final state all others seek.
     Exit,
+}
+
+impl GameState {
+    /// Check whether this state currently means that the game has ended.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use poke_a_mango::ops::GameState;
+    /// assert_eq!(GameState::Exit.should_exit(), true);
+    /// ```
+    pub fn should_exit(&self) -> bool {
+        *self == GameState::Exit
+    }
 }

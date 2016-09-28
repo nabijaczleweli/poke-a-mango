@@ -4,8 +4,8 @@ extern crate conrod;
 
 use std::io::stderr;
 use std::process::exit;
-use piston_window::{PistonWindow, UpdateEvent};
 use conrod::backend::piston_window as conrod_backend;
+use piston_window::{PistonWindow, UpdateEvent, Window};
 
 
 fn main() {
@@ -43,6 +43,10 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
 
         event.update(|_| {
             game_state = widgets.update(ui.set_widgets(), game_state);
+
+            if game_state.should_exit() {
+                window.set_should_close(true);
+            }
         });
 
         window.draw_2d(&event, |ctx, graphics| {

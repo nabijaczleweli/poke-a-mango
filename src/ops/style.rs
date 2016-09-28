@@ -2,7 +2,7 @@ use conrod::color::{TRANSPARENT, WHITE};
 use conrod::widget::Button;
 
 
-/// Set the button style that looks :+1: on the canvas.
+/// Set the button style to a one that looks :+1: on the canvas.
 ///
 /// # Examples
 ///
