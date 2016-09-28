@@ -1,9 +1,9 @@
-use conrod::color::{DARK_CHARCOAL, TRANSPARENT, WHITE};
 use conrod::{Colorable, Labelable, Widget, UiCell};
+use self::super::{GameState, set_button_style};
 use conrod::widget::id::{Generator, Id};
 use conrod::widget::{Canvas, Button};
 use conrod::{Positionable, Sizeable};
-use self::super::GameState;
+use conrod::color::DARK_CHARCOAL;
 
 
 /// Container for all widgets' IDs, also manages setting them.
@@ -40,7 +40,14 @@ use self::super::GameState;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Widgets {
     main_canvas: Id,
+
+    start_button_canvas: Id,
+    leaderboard_button_canvas: Id,
+    exit_button_canvas: Id,
+
     start_button: Id,
+    leaderboard_button: Id,
+    exit_button: Id,
 }
 
 impl Widgets {
@@ -60,7 +67,12 @@ impl Widgets {
     pub fn new(mut id_gen: Generator) -> Widgets {
         Widgets {
             main_canvas: id_gen.next(),
+            start_button_canvas: id_gen.next(),
+            leaderboard_button_canvas: id_gen.next(),
+            exit_button_canvas: id_gen.next(),
             start_button: id_gen.next(),
+            leaderboard_button: id_gen.next(),
+            exit_button: id_gen.next(),
         }
     }
 
@@ -94,21 +106,38 @@ impl Widgets {
     /// # }
     /// ```
     pub fn update(&self, mut ui_wdgts: UiCell, cur_state: GameState) -> GameState {
-        Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
-
         match cur_state {
             GameState::MainMenu => {
-                let mut butan = Button::new()
-                    .label("Start")
-                    .padded_wh_of(self.main_canvas, 20.0)
-                    .mid_top_with_margin_on(self.main_canvas, 20.0);
-                butan.style.color = Some(TRANSPARENT);
-                butan.style.border = None;
-                butan.style.border_color = Some(TRANSPARENT);
-                butan.style.label_color = Some(WHITE);
+                Canvas::new()
+                    .flow_down(&[(self.start_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.leaderboard_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.exit_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
+                    .set(self.main_canvas, &mut ui_wdgts);
 
-                if butan.set(self.start_button, &mut ui_wdgts).was_clicked() {
+                let mut start_button = Button::new()
+                    .label("Start")
+                    .padded_wh_of(self.start_button_canvas, 20.0)
+                    .mid_top_with_margin_on(self.start_button_canvas, 20.0);
+                set_button_style(&mut start_button);
+
+                let mut leaderboard_button = Button::new()
+                    .label("Leaderboard")
+                    .padded_wh_of(self.leaderboard_button_canvas, 20.0)
+                    .mid_top_with_margin_on(self.leaderboard_button_canvas, 20.0);
+                set_button_style(&mut leaderboard_button);
+
+                let mut exit_button = Button::new()
+                    .label("Exit")
+                    .padded_wh_of(self.exit_button_canvas, 20.0)
+                    .mid_top_with_margin_on(self.exit_button_canvas, 20.0);
+                set_button_style(&mut exit_button);
+
+                if start_button.set(self.start_button, &mut ui_wdgts).was_clicked() {
                     GameState::ChooseDifficulty
+                } else if leaderboard_button.set(self.leaderboard_button, &mut ui_wdgts).was_clicked() {
+                    GameState::DisplayLeaderboard
+                } else if exit_button.set(self.exit_button, &mut ui_wdgts).was_clicked() {
+                    GameState::Exit
                 } else {
                     GameState::MainMenu
                 }

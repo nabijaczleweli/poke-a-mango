@@ -6,6 +6,7 @@ use std::path::Path;
 use std::fs::File;
 
 mod state;
+mod style;
 mod leader;
 mod window;
 mod widgets;
@@ -14,6 +15,7 @@ pub use self::leader::Leader;
 pub use self::state::GameState;
 pub use self::widgets::Widgets;
 pub use self::window::create_window;
+pub use self::style::set_button_style;
 
 
 fn read_toml_file<T: Decodable>(p: &Path, desc: &'static str) -> Result<T, Error> {
