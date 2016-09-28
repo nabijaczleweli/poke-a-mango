@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/arrayvec/lib.rs.html#1-866' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/arrayvec/lib.rs.html#1-875' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p><strong>arrayvec</strong> provides the types <code>ArrayVec</code> and <code>ArrayString</code>:
 array-backed vector and string types, which store their contents inline.</p>
 
@@ -68,6 +68,14 @@ array-backed vector and string types, which store their contents inline.</p>
 <li>Requires Rust nightly channel</li>
 <li>Use the unstable feature untagged unions for the internal implementation,
 which has reduced space overhead</li>
+</ul></li>
+<li><p><code>use_generic_array</code></p>
+
+<ul>
+<li>Optional</li>
+<li>Requires Rust stable channel</li>
+<li>Depend on generic-array and allow using it just like a fixed
+size array for ArrayVec storage.</li>
 </ul></li>
 </ul>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>

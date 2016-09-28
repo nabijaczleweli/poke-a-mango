@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/arrayvec-0.3.18/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/arrayvec-0.3.19/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -908,6 +908,15 @@
 <span id="864">864</span>
 <span id="865">865</span>
 <span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! **arrayvec** provides the types `ArrayVec` and `ArrayString`: </span>
 <span class='doccomment'>//! array-backed vector and string types, which store their contents inline.</span>
@@ -924,9 +933,18 @@
 <span class='doccomment'>//!   - Requires Rust nightly channel</span>
 <span class='doccomment'>//!   - Use the unstable feature untagged unions for the internal implementation,</span>
 <span class='doccomment'>//!     which has reduced space overhead</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! - `use_generic_array`</span>
+<span class='doccomment'>//!   - Optional</span>
+<span class='doccomment'>//!   - Requires Rust stable channel</span>
+<span class='doccomment'>//!   - Depend on generic-array and allow using it just like a fixed</span>
+<span class='doccomment'>//!     size array for ArrayVec storage.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>), <span class='ident'>no_std</span>)]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>odds</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>nodrop</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;use_generic_array&quot;</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>generic_array</span>;
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;std&quot;</span>))]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>core</span> <span class='kw'>as</span> <span class='ident'>std</span>;
