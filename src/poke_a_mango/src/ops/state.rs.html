@@ -101,6 +101,15 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
 </pre><pre class='rust '>
 <span class='doccomment'>/// Game&#39;s all possible states.</span>
 <span class='doccomment'>///</span>
@@ -128,11 +137,13 @@
     <span class='ident'>ChooseDifficulty</span>,
     <span class='doccomment'>/// The game is currently in progress.</span>
     <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This also contains the game&#39;s difficulty.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// Can transform into:</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>///   * `MainMenu`</span>
     <span class='doccomment'>///   * `Exit`</span>
-    <span class='ident'>Playing</span>,
+    <span class='ident'>Playing</span>(<span class='ident'>Difficulty</span>),
     <span class='doccomment'>/// Display top 10 high scores.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// This screen also contains the Back button.</span>
@@ -146,6 +157,13 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Can transform into: nothing. This is the final state all others seek.</span>
     <span class='ident'>Exit</span>,
+}
+
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Difficulty</span> {
+    <span class='ident'>Easy</span>,
+    <span class='ident'>Normal</span>,
+    <span class='ident'>Hard</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>GameState</span> {
