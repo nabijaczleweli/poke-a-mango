@@ -1,9 +1,10 @@
+use self::super::{Difficulty, GameState, set_button_style};
 use conrod::{Colorable, Labelable, Widget, UiCell};
-use self::super::{GameState, set_button_style};
+use conrod::widget::button::{Button, Flat};
 use conrod::widget::id::{Generator, Id};
-use conrod::widget::{Canvas, Button};
 use conrod::{Positionable, Sizeable};
 use conrod::color::DARK_CHARCOAL;
+use conrod::widget::Canvas;
 
 
 /// Container for all widgets' IDs, also manages setting them.
@@ -48,6 +49,16 @@ pub struct Widgets {
     start_button: Id,
     leaderboard_button: Id,
     exit_button: Id,
+
+    easy_button_canvas: Id,
+    normal_button_canvas: Id,
+    hard_button_canvas: Id,
+    back_button_canvas: Id,
+
+    easy_button: Id,
+    normal_button: Id,
+    hard_button: Id,
+    back_button: Id,
 }
 
 impl Widgets {
@@ -73,6 +84,14 @@ impl Widgets {
             start_button: id_gen.next(),
             leaderboard_button: id_gen.next(),
             exit_button: id_gen.next(),
+            easy_button_canvas: id_gen.next(),
+            normal_button_canvas: id_gen.next(),
+            hard_button_canvas: id_gen.next(),
+            back_button_canvas: id_gen.next(),
+            easy_button: id_gen.next(),
+            normal_button: id_gen.next(),
+            hard_button: id_gen.next(),
+            back_button: id_gen.next(),
         }
     }
 
@@ -114,22 +133,11 @@ impl Widgets {
                                  (self.exit_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
                     .set(self.main_canvas, &mut ui_wdgts);
 
-                let mut start_button = Button::new()
-                    .label("Start")
-                    .padded_wh_of(self.start_button_canvas, 20.0)
-                    .mid_top_with_margin_on(self.start_button_canvas, 20.0);
+                let mut start_button = Widgets::padded_butan("Start", self.start_button_canvas);
+                let mut leaderboard_button = Widgets::padded_butan("Leaderboard", self.leaderboard_button_canvas);
+                let mut exit_button = Widgets::padded_butan("Exit", self.exit_button_canvas);
                 set_button_style(&mut start_button);
-
-                let mut leaderboard_button = Button::new()
-                    .label("Leaderboard")
-                    .padded_wh_of(self.leaderboard_button_canvas, 20.0)
-                    .mid_top_with_margin_on(self.leaderboard_button_canvas, 20.0);
                 set_button_style(&mut leaderboard_button);
-
-                let mut exit_button = Button::new()
-                    .label("Exit")
-                    .padded_wh_of(self.exit_button_canvas, 20.0)
-                    .mid_top_with_margin_on(self.exit_button_canvas, 20.0);
                 set_button_style(&mut exit_button);
 
                 if start_button.set(self.start_button, &mut ui_wdgts).was_clicked() {
@@ -142,7 +150,43 @@ impl Widgets {
                     GameState::MainMenu
                 }
             }
+            GameState::ChooseDifficulty => {
+                Canvas::new()
+                    .flow_down(&[(self.easy_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.normal_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.hard_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.back_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
+                    .set(self.main_canvas, &mut ui_wdgts);
+
+                let mut easy_button = Widgets::padded_butan("Easy", self.easy_button_canvas);
+                let mut normal_button = Widgets::padded_butan("Normal", self.normal_button_canvas);
+                let mut hard_button = Widgets::padded_butan("Hard", self.hard_button_canvas);
+                let mut back_button = Widgets::padded_butan("Back", self.back_button_canvas);
+                set_button_style(&mut easy_button);
+                set_button_style(&mut normal_button);
+                set_button_style(&mut hard_button);
+                set_button_style(&mut back_button);
+
+                if easy_button.set(self.easy_button, &mut ui_wdgts).was_clicked() {
+                    GameState::Playing(Difficulty::Easy)
+                } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
+                    GameState::Playing(Difficulty::Normal)
+                } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
+                    GameState::Playing(Difficulty::Hard)
+                } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
+                    GameState::MainMenu
+                } else {
+                    GameState::ChooseDifficulty
+                }
+            }
             s => s,
         }
+    }
+
+    fn padded_butan(label: &'static str, canvas: Id) -> Button<'static, Flat> {
+        Button::new()
+            .label(label)
+            .padded_wh_of(canvas, 20.0)
+            .mid_top_with_margin_on(canvas, 20.0)
     }
 }
