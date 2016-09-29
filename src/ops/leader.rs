@@ -1,5 +1,5 @@
+use chrono::{DateTime, FixedOffset, ParseError, Local};
 use self::super::{read_toml_file, write_toml_file};
-use chrono::{DateTime, FixedOffset, ParseError};
 use self::super::super::Error;
 use std::iter::FromIterator;
 use std::cmp::Ordering;
@@ -13,13 +13,9 @@ use std::path::Path;
 /// Reading a leaderboard, adding an entry to it, then writing it back.
 ///
 /// ```
-/// # extern crate poke_a_mango;
-/// # extern crate chrono;
 /// # use std::fs::{File, create_dir_all};
-/// # use self::poke_a_mango::ops::Leader;
-/// # use self::chrono::Local;
+/// # use poke_a_mango::ops::Leader;
 /// # use std::env::temp_dir;
-/// # fn main() {
 /// let tf = temp_dir().join("poke-a-mango-doctest").join("ops-Leader-0");
 /// create_dir_all(&tf).unwrap();
 ///
@@ -28,16 +24,8 @@ use std::path::Path;
 ///
 /// let mut leaders = Leader::read(&tf).unwrap();
 /// assert!(leaders.is_empty());
-/// leaders.push(Leader {
-///     name: "nabijaczleweli".to_string(),
-///     time: {
-///         let now = Local::now();
-///         now.with_timezone(now.offset())
-///     },
-///     score: 105,
-/// });
+/// leaders.push(Leader::now("nabijaczleweli".to_string(), 105));
 /// assert_eq!(Leader::write(leaders, &tf), Ok(()));
-/// # }
 /// ```
 #[derive(Debug, Clone, Hash, PartialEq, Eq, RustcEncodable, RustcDecodable)]
 pub struct Leader {
@@ -51,9 +39,9 @@ pub struct Leader {
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, RustcEncodable, RustcDecodable)]
 struct LeaderForSerialisation {
-    pub name: String,
-    pub time: String,
-    pub score: u64,
+    name: String,
+    time: String,
+    score: u64,
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, RustcEncodable, RustcDecodable)]
@@ -63,6 +51,25 @@ struct Leaders {
 
 
 impl Leader {
+    /// Create a new leaderboard entry with `time` set to now.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use poke_a_mango::ops::Leader;
+    /// let ldr = Leader::now("nabijaczleweli".to_string(), 36);
+    /// assert_eq!(ldr.name, "nabijaczleweli");
+    /// assert_eq!(ldr.score, 36);
+    /// ```
+    pub fn now(name: String, score: u64) -> Leader {
+        let now = Local::now();
+        Leader {
+            name: name,
+            time: now.with_timezone(now.offset()),
+            score: score,
+        }
+    }
+
     /// Read leaderboard from the specified file.
     ///
     /// If the specified file doesn't exist an empty leaderboard is returned.

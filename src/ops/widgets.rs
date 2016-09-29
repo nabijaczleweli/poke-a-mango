@@ -1,8 +1,8 @@
+use conrod::{Positionable, Borderable, Colorable, Labelable, Sizeable, Widget, UiCell, Align};
+use conrod::widget::text_box::{TextBox, Event as TextBoxEvent};
 use self::super::{Difficulty, GameState, set_button_style};
-use conrod::{Colorable, Labelable, Widget, UiCell};
-use conrod::{Positionable, Sizeable, Align};
-use conrod::widget::button::{Button, Flat};
 use conrod::color::{DARK_CHARCOAL, WHITE};
+use conrod::widget::button::{Button, Flat};
 use conrod::widget::id::{Generator, Id};
 use conrod::widget::{Canvas, Text};
 use rand::{Rng, thread_rng};
@@ -70,8 +70,15 @@ pub struct Widgets {
     scores: [Id; 10],
 
     mango_button_canvas: Id,
-
     mango_button: Id,
+
+    score_label_canvas: Id,
+    name_input_canvas: Id,
+    done_button_canvas: Id,
+
+    score_label: Id,
+    name_input: Id,
+    done_button: Id,
 }
 
 impl Widgets {
@@ -139,6 +146,12 @@ impl Widgets {
                      id_gen.next()],
             mango_button_canvas: id_gen.next(),
             mango_button: id_gen.next(),
+            score_label_canvas: id_gen.next(),
+            name_input_canvas: id_gen.next(),
+            done_button_canvas: id_gen.next(),
+            score_label: id_gen.next(),
+            name_input: id_gen.next(),
+            done_button: id_gen.next(),
         }
     }
 
@@ -253,13 +266,56 @@ impl Widgets {
                     *cur_state = GameState::GameOver {
                         difficulty: difficulty,
                         score: score,
+                        name: "Your name".to_string(),
                     };
                 } else {
                     *cur_state = GameState::Playing {
                         difficulty: difficulty,
-                        score: score + 1,
+                        score: score + mango_button_clicked as u64,
                         mango: new_mango,
                     }
+                }
+            }
+            &mut GameState::GameOver { difficulty, score, name: _ } => {
+                Canvas::new()
+                    .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.score_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.name_input_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.done_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
+                    .set(self.main_canvas, &mut ui_wdgts);
+
+                Widgets::paddded_text("Game over", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
+                Widgets::paddded_text(&format!("Score: {}", score), self.score_label_canvas, Align::Middle).set(self.score_label, &mut ui_wdgts);
+
+                let mut pressed = false;
+                let name = if let &mut GameState::GameOver { difficulty: _, score: _, ref mut name } = cur_state {
+                    let name_c = name.clone();
+                    let name_input = TextBox::new(&name_c)
+                        .color(DARK_CHARCOAL)
+                        .text_color(WHITE)
+                        .border(0.0)
+                        .padded_w_of(self.name_input_canvas, 20.0)
+                        .mid_left_with_margin_on(self.name_input_canvas, 20.0);
+                    for ev in name_input.set(self.name_input, &mut ui_wdgts) {
+                        match ev {
+                            TextBoxEvent::Update(iname) => *name = iname,
+                            TextBoxEvent::Enter => pressed = true,
+                        }
+                    }
+                    name.clone()
+                } else {
+                    "".to_string()
+                };
+
+                let mut done_button = Widgets::padded_butan("Done", self.done_button_canvas);
+                set_button_style(&mut done_button);
+                pressed = pressed | done_button.set(self.done_button, &mut ui_wdgts).was_clicked();
+
+                if pressed && name != "" && name != "Your name" {
+                    *cur_state = GameState::GameEnded {
+                        name: name,
+                        score: ((score as f64) * difficulty.point_weight()).floor() as u64,
+                    };
                 }
             }
             &mut GameState::DisplayLeaderboard(_) => {
@@ -288,9 +344,9 @@ impl Widgets {
                     *cur_state = GameState::MainMenu;
                 }
             }
+            &mut GameState::GameEnded { .. } |
             &mut GameState::LoadLeaderboard |
-            &mut GameState::Exit |
-            &mut GameState::GameOver { .. } => {
+            &mut GameState::Exit => {
                 Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
             }
         }

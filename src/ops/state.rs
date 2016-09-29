@@ -44,11 +44,26 @@ pub enum GameState {
     ///
     /// In this stage the player enters its name.
     ///
-    /// Can transform into: TODO.
+    /// Can transform into `GameEnded`.
     GameOver {
         /// The game difficulty, as same as in the `Playing` stage.
         difficulty: Difficulty,
         /// The user's final score.
+        score: u64,
+        /// The user's name, mostly partial.
+        name: String,
+    },
+    /// The game cycle has ended. Semi-meta-state
+    ///
+    /// Contains the game's difficulty and the players final score.
+    ///
+    /// In this stage the player enters its name.
+    ///
+    /// Transforms into `MainMenu`.
+    GameEnded {
+        /// The user's name.
+        name: String,
+        /// User's final score, weighted.
         score: u64,
     },
     /// Meta-state indicating that the leaderboard needs to be loaded.
@@ -133,10 +148,10 @@ impl Difficulty {
     /// let points = 20;
     /// let difficulty = Difficulty::Hard;
     ///
-    /// let real_points = (points as f32) * difficulty.point_weight();
+    /// let real_points = (points as f64) * difficulty.point_weight();
     /// assert_eq!(real_points, 40.0);
     /// ```
-    pub fn point_weight(&self) -> f32 {
+    pub fn point_weight(&self) -> f64 {
         match *self {
             Difficulty::Easy => 0.5,
             Difficulty::Normal => 1.0,
