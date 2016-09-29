@@ -27,13 +27,30 @@ pub enum GameState {
     ChooseDifficulty,
     /// The game is currently in progress.
     ///
-    /// This also contains the game's difficulty.
+    /// This also contains the game's difficulty, the player's current score and whether the current fruit is a mango.
     ///
-    /// Can transform into:
+    /// Can transform into `GameOver`.
+    Playing {
+        /// The game difficulty, as chosen in the `ChooseDifficulty` stage.
+        difficulty: Difficulty,
+        /// The user's current score.
+        score: u64,
+        /// Whether the current fruit is a mango.
+        mango: bool,
+    },
+    /// The game was lost after a valiant battle.
     ///
-    ///   * `MainMenu`
-    ///   * `Exit`
-    Playing { difficulty: Difficulty, score: u64, },
+    /// Contains the game's difficulty and the players final score.
+    ///
+    /// In this stage the player enters its name.
+    ///
+    /// Can transform into: TODO.
+    GameOver {
+        /// The game difficulty, as same as in the `Playing` stage.
+        difficulty: Difficulty,
+        /// The user's final score.
+        score: u64,
+    },
     /// Meta-state indicating that the leaderboard needs to be loaded.
     ///
     /// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.
@@ -57,10 +74,14 @@ pub enum GameState {
     Exit,
 }
 
+/// The game's difficulty, chosen in the `ChooseDifficulty` step.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Difficulty {
+    /// Easy difficulty, points are halved when sorting.
     Easy,
+    /// Normal difficulty, points are untouched when sorting.
     Normal,
+    /// Hard difficulty, points are doubled when sorting.
     Hard,
 }
 
@@ -87,5 +108,39 @@ impl GameState {
     /// ```
     pub fn should_load_leaderboard(&self) -> bool {
         *self == GameState::LoadLeaderboard
+    }
+}
+
+impl Difficulty {
+    /// The difficulty's numeric value, from `1` to `3`.
+    pub fn numeric(&self) -> u32 {
+        match *self {
+            Difficulty::Easy => 1,
+            Difficulty::Normal => 2,
+            Difficulty::Hard => 3,
+        }
+    }
+
+    /// How to much to multiply the player's points for sorting.
+    ///
+    /// Points on Easy are worth half, and on Hard - twice the normal amount.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use poke_a_mango::ops::Difficulty;
+    /// // Normally you'd get these by playing
+    /// let points = 20;
+    /// let difficulty = Difficulty::Hard;
+    ///
+    /// let real_points = (points as f32) * difficulty.point_weight();
+    /// assert_eq!(real_points, 40.0);
+    /// ```
+    pub fn point_weight(&self) -> f32 {
+        match *self {
+            Difficulty::Easy => 0.5,
+            Difficulty::Normal => 1.0,
+            Difficulty::Hard => 2.0,
+        }
     }
 }

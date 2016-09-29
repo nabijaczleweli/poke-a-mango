@@ -5,6 +5,7 @@ use conrod::widget::button::{Button, Flat};
 use conrod::color::{DARK_CHARCOAL, WHITE};
 use conrod::widget::id::{Generator, Id};
 use conrod::widget::{Canvas, Text};
+use rand::{Rng, thread_rng};
 use std::cmp;
 
 
@@ -67,6 +68,10 @@ pub struct Widgets {
     top_label: Id,
     usernames: [Id; 10],
     scores: [Id; 10],
+
+    mango_button_canvas: Id,
+
+    mango_button: Id,
 }
 
 impl Widgets {
@@ -132,6 +137,8 @@ impl Widgets {
                      id_gen.next(),
                      id_gen.next(),
                      id_gen.next()],
+            mango_button_canvas: id_gen.next(),
+            mango_button: id_gen.next(),
         }
     }
 
@@ -210,24 +217,50 @@ impl Widgets {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Easy,
                         score: 0,
+                        mango: true,
                     };
                 } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Normal,
                         score: 0,
+                        mango: true,
                     };
                 } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Hard,
                         score: 0,
+                        mango: true,
                     };
                 } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::MainMenu;
                 }
             }
-            &mut GameState::Playing { difficulty, score } => {
-                Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
-                println!("{:?}: {}", difficulty, score);
+            &mut GameState::Playing { difficulty, score, mango } => {
+                Canvas::new()
+                    .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)), (self.mango_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
+                    .set(self.main_canvas, &mut ui_wdgts);
+
+                // Difficulty's numeric value is inverted here
+                let change_fruit = thread_rng().gen_weighted_bool(25 * (4 - difficulty.numeric()));
+                let new_mango = if change_fruit { !mango } else { mango };
+
+                Widgets::paddded_text("Poke a mango!", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
+                let mut mango_button = Widgets::padded_butan(if new_mango { "Mango" } else { "Avocado" }, self.mango_button_canvas);
+                set_button_style(&mut mango_button);
+
+                let mango_button_clicked = mango_button.set(self.mango_button, &mut ui_wdgts).was_clicked();
+                if mango_button_clicked && !mango {
+                    *cur_state = GameState::GameOver {
+                        difficulty: difficulty,
+                        score: score,
+                    };
+                } else {
+                    *cur_state = GameState::Playing {
+                        difficulty: difficulty,
+                        score: score + 1,
+                        mango: new_mango,
+                    }
+                }
             }
             &mut GameState::DisplayLeaderboard(_) => {
                 if let &mut GameState::DisplayLeaderboard(ref ldrbrd) = cur_state {
@@ -256,7 +289,8 @@ impl Widgets {
                 }
             }
             &mut GameState::LoadLeaderboard |
-            &mut GameState::Exit => {
+            &mut GameState::Exit |
+            &mut GameState::GameOver { .. } => {
                 Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
             }
         }
