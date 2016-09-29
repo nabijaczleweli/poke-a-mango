@@ -1,7 +1,10 @@
+use self::super::Leader;
+
+
 /// Game's all possible states.
 ///
 /// `Widgets::update()` takes care of proper state transformation.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum GameState {
     /// Display the main menu.
     ///
@@ -31,6 +34,14 @@ pub enum GameState {
     ///   * `MainMenu`
     ///   * `Exit`
     Playing(Difficulty),
+    /// Meta-state indicating that the leaderboard needs to be loaded.
+    ///
+    /// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.
+    ///
+    /// Leaderboards are loaded via `Leader::load()`.
+    ///
+    /// Transforms into `DisplayLeaderboard`
+    LoadLeaderboard,
     /// Display top 10 high scores.
     ///
     /// This screen also contains the Back button.
@@ -39,7 +50,7 @@ pub enum GameState {
     ///
     ///   * `MainMenu`
     ///   * `Exit`
-    DisplayLeaderboard,
+    DisplayLeaderboard(Vec<Leader>),
     /// Pseudo-state, signifying that the game window should be closed.
     ///
     /// Can transform into: nothing. This is the final state all others seek.
@@ -60,9 +71,21 @@ impl GameState {
     ///
     /// ```
     /// # use poke_a_mango::ops::GameState;
-    /// assert_eq!(GameState::Exit.should_exit(), true);
+    /// assert!(GameState::Exit.should_exit());
     /// ```
     pub fn should_exit(&self) -> bool {
         *self == GameState::Exit
+    }
+
+    /// Check whether this state requires usercode to load the leaderboard.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use poke_a_mango::ops::GameState;
+    /// assert!(GameState::LoadLeaderboard.should_load_leaderboard());
+    /// ```
+    pub fn should_load_leaderboard(&self) -> bool {
+        *self == GameState::LoadLeaderboard
     }
 }

@@ -1,10 +1,11 @@
 use self::super::{Difficulty, GameState, set_button_style};
 use conrod::{Colorable, Labelable, Widget, UiCell};
+use conrod::{Positionable, Sizeable, Align};
 use conrod::widget::button::{Button, Flat};
+use conrod::color::{DARK_CHARCOAL, WHITE};
 use conrod::widget::id::{Generator, Id};
-use conrod::{Positionable, Sizeable};
-use conrod::color::DARK_CHARCOAL;
-use conrod::widget::Canvas;
+use conrod::widget::{Canvas, Text};
+use std::cmp;
 
 
 /// Container for all widgets' IDs, also manages setting them.
@@ -34,7 +35,7 @@ use conrod::widget::Canvas;
 /// // Then, in the event loop
 /// # let event = Event;
 /// event.update(|_| {
-///     game_state = widgets.update(ui.set_widgets(), game_state)
+///     widgets.update(ui.set_widgets(), &mut game_state);
 /// });
 /// # }
 /// ```
@@ -59,6 +60,13 @@ pub struct Widgets {
     normal_button: Id,
     hard_button: Id,
     back_button: Id,
+
+    top_label_canvas: Id,
+    username_score_canvases: [Id; 10],
+
+    top_label: Id,
+    usernames: [Id; 10],
+    scores: [Id; 10],
 }
 
 impl Widgets {
@@ -92,13 +100,45 @@ impl Widgets {
             normal_button: id_gen.next(),
             hard_button: id_gen.next(),
             back_button: id_gen.next(),
+            top_label_canvas: id_gen.next(),
+            username_score_canvases: [id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next(),
+                                      id_gen.next()],
+            top_label: id_gen.next(),
+            usernames: [id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next(),
+                        id_gen.next()],
+            scores: [id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next(),
+                     id_gen.next()],
         }
     }
 
     /// Update the UI elements and set them.
     ///
-    /// Given the current game's state it will return the next one, for example,
-    /// if `GameState::MainMenu` was passed in and the Start button was pressed `GameState::ChooseDifficulty` will be returned.
+    /// Given the current game's state it will update it with the next one, if needed, for example,
+    /// if `GameState::MainMenu` was passed in and the Start button was pressed it'll be updated to `GameState::ChooseDifficulty`.
     ///
     /// Should be called on the update window event.
     ///
@@ -120,13 +160,13 @@ impl Widgets {
     /// # let event = Event;
     /// let mut game_state = GameState::MainMenu;
     /// event.update(|_| {
-    ///     game_state = widgets.update(ui.set_widgets(), game_state)
+    ///     widgets.update(ui.set_widgets(), &mut game_state)
     /// });
     /// # }
     /// ```
-    pub fn update(&self, mut ui_wdgts: UiCell, cur_state: GameState) -> GameState {
+    pub fn update(&self, mut ui_wdgts: UiCell, mut cur_state: &mut GameState) {
         match cur_state {
-            GameState::MainMenu => {
+            &mut GameState::MainMenu => {
                 Canvas::new()
                     .flow_down(&[(self.start_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.leaderboard_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -141,16 +181,14 @@ impl Widgets {
                 set_button_style(&mut exit_button);
 
                 if start_button.set(self.start_button, &mut ui_wdgts).was_clicked() {
-                    GameState::ChooseDifficulty
+                    *cur_state = GameState::ChooseDifficulty;
                 } else if leaderboard_button.set(self.leaderboard_button, &mut ui_wdgts).was_clicked() {
-                    GameState::DisplayLeaderboard
+                    *cur_state = GameState::LoadLeaderboard;
                 } else if exit_button.set(self.exit_button, &mut ui_wdgts).was_clicked() {
-                    GameState::Exit
-                } else {
-                    GameState::MainMenu
+                    *cur_state = GameState::Exit;
                 }
             }
-            GameState::ChooseDifficulty => {
+            &mut GameState::ChooseDifficulty => {
                 Canvas::new()
                     .flow_down(&[(self.easy_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.normal_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -168,18 +206,42 @@ impl Widgets {
                 set_button_style(&mut back_button);
 
                 if easy_button.set(self.easy_button, &mut ui_wdgts).was_clicked() {
-                    GameState::Playing(Difficulty::Easy)
+                    *cur_state = GameState::Playing(Difficulty::Easy);
                 } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
-                    GameState::Playing(Difficulty::Normal)
+                    *cur_state = GameState::Playing(Difficulty::Normal);
                 } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
-                    GameState::Playing(Difficulty::Hard)
+                    *cur_state = GameState::Playing(Difficulty::Hard);
                 } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
-                    GameState::MainMenu
-                } else {
-                    GameState::ChooseDifficulty
+                    *cur_state = GameState::MainMenu;
                 }
             }
-            s => s,
+            &mut GameState::DisplayLeaderboard(_) => {
+                if let &mut GameState::DisplayLeaderboard(ref ldrbrd) = cur_state {
+                    let leader_n = cmp::min(ldrbrd.len(), 10);
+
+                    let mut canvases = Vec::with_capacity(leader_n + 2);
+                    canvases.push((self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)));
+                    canvases.append(&mut (0..leader_n).map(|i| (self.username_score_canvases[i], Canvas::new().color(DARK_CHARCOAL))).collect());
+                    canvases.push((self.back_button_canvas, Canvas::new().color(DARK_CHARCOAL)));
+                    Canvas::new()
+                        .flow_down(&canvases)
+                        .set(self.main_canvas, &mut ui_wdgts);
+
+                    Widgets::paddded_text("Leaderboard", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
+
+                    for i in 0..leader_n {
+                        Widgets::paddded_text(&ldrbrd[i].name, self.username_score_canvases[i], Align::Start).set(self.usernames[i], &mut ui_wdgts);
+                        Widgets::paddded_text(&ldrbrd[i].score.to_string(), self.username_score_canvases[i], Align::End).set(self.scores[i], &mut ui_wdgts);
+                    }
+                }
+
+                let mut back_button = Widgets::padded_butan("Back", self.back_button_canvas);
+                set_button_style(&mut back_button);
+                if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
+                    *cur_state = GameState::MainMenu;
+                }
+            }
+            _ => (),
         }
     }
 
@@ -188,5 +250,14 @@ impl Widgets {
             .label(label)
             .padded_wh_of(canvas, 20.0)
             .mid_top_with_margin_on(canvas, 20.0)
+    }
+
+    fn paddded_text<'a>(label: &'a str, canvas: Id, alignment: Align) -> Text<'a> {
+        Text::new(label)
+            .color(WHITE)
+            .padded_w_of(canvas, 5.0)
+            .mid_left_with_margin_on(canvas, 5.0)
+            .line_spacing(2.0)
+            .align_text_to(alignment)
     }
 }

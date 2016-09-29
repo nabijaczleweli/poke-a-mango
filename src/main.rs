@@ -42,12 +42,14 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
         }
 
         event.update(|_| {
-            game_state = widgets.update(ui.set_widgets(), game_state);
-
-            if game_state.should_exit() {
-                window.set_should_close(true);
-            }
+            widgets.update(ui.set_widgets(), &mut game_state);
         });
+
+        if game_state.should_exit() {
+            window.set_should_close(true);
+        } else if game_state.should_load_leaderboard() {
+            game_state = poke_a_mango::ops::GameState::DisplayLeaderboard(try!(poke_a_mango::ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml"))));
+        }
 
         window.draw_2d(&event, |ctx, graphics| {
             if let Some(primitives) = ui.draw_if_changed() {
