@@ -26,6 +26,7 @@ pub fn create_window<W: BuildFromWindowSettings>(desktop_size: (u32, u32)) -> Re
     let window_w = desktop_size.1 / 3;
     WindowSettings::new("poke-a-mango", [window_w, window_w * 2])
         .vsync(true)
+        .samples(8)
         .build()
         .map_err(|e| {
             Error::Ui {
