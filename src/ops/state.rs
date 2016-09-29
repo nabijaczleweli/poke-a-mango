@@ -33,7 +33,7 @@ pub enum GameState {
     ///
     ///   * `MainMenu`
     ///   * `Exit`
-    Playing(Difficulty),
+    Playing { difficulty: Difficulty, score: u64, },
     /// Meta-state indicating that the leaderboard needs to be loaded.
     ///
     /// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.

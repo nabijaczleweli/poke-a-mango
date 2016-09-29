@@ -138,7 +138,8 @@ impl Widgets {
     /// Update the UI elements and set them.
     ///
     /// Given the current game's state it will update it with the next one, if needed, for example,
-    /// if `GameState::MainMenu` was passed in and the Start button was pressed it'll be updated to `GameState::ChooseDifficulty`.
+    /// if `GameState::MainMenu` was passed in and the Start button was pressed it'll be updated to
+    /// `GameState::ChooseDifficulty`.
     ///
     /// Should be called on the update window event.
     ///
@@ -206,14 +207,27 @@ impl Widgets {
                 set_button_style(&mut back_button);
 
                 if easy_button.set(self.easy_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing(Difficulty::Easy);
+                    *cur_state = GameState::Playing {
+                        difficulty: Difficulty::Easy,
+                        score: 0,
+                    };
                 } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing(Difficulty::Normal);
+                    *cur_state = GameState::Playing {
+                        difficulty: Difficulty::Normal,
+                        score: 0,
+                    };
                 } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing(Difficulty::Hard);
+                    *cur_state = GameState::Playing {
+                        difficulty: Difficulty::Hard,
+                        score: 0,
+                    };
                 } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::MainMenu;
                 }
+            }
+            &mut GameState::Playing { difficulty, score } => {
+                Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
+                println!("{:?}: {}", difficulty, score);
             }
             &mut GameState::DisplayLeaderboard(_) => {
                 if let &mut GameState::DisplayLeaderboard(ref ldrbrd) = cur_state {
@@ -241,7 +255,10 @@ impl Widgets {
                     *cur_state = GameState::MainMenu;
                 }
             }
-            _ => (),
+            &mut GameState::LoadLeaderboard |
+            &mut GameState::Exit => {
+                Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
+            }
         }
     }
 
