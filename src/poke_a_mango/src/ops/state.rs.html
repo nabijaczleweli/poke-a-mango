@@ -188,6 +188,21 @@
 <span id="144">144</span>
 <span id="145">145</span>
 <span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='ident'>Leader</span>;
 
@@ -235,11 +250,26 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// In this stage the player enters its name.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into: TODO.</span>
+    <span class='doccomment'>/// Can transform into `GameEnded`.</span>
     <span class='ident'>GameOver</span> {
         <span class='doccomment'>/// The game difficulty, as same as in the `Playing` stage.</span>
         <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>,
         <span class='doccomment'>/// The user&#39;s final score.</span>
+        <span class='ident'>score</span>: <span class='ident'>u64</span>,
+        <span class='doccomment'>/// The user&#39;s name, mostly partial.</span>
+        <span class='ident'>name</span>: <span class='ident'>String</span>,
+    },
+    <span class='doccomment'>/// The game cycle has ended. Semi-meta-state</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Contains the game&#39;s difficulty and the players final score.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// In this stage the player enters its name.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Transforms into `MainMenu`.</span>
+    <span class='ident'>GameEnded</span> {
+        <span class='doccomment'>/// The user&#39;s name.</span>
+        <span class='ident'>name</span>: <span class='ident'>String</span>,
+        <span class='doccomment'>/// User&#39;s final score, weighted.</span>
         <span class='ident'>score</span>: <span class='ident'>u64</span>,
     },
     <span class='doccomment'>/// Meta-state indicating that the leaderboard needs to be loaded.</span>
@@ -324,10 +354,10 @@
     <span class='doccomment'>/// let points = 20;</span>
     <span class='doccomment'>/// let difficulty = Difficulty::Hard;</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let real_points = (points as f32) * difficulty.point_weight();</span>
+    <span class='doccomment'>/// let real_points = (points as f64) * difficulty.point_weight();</span>
     <span class='doccomment'>/// assert_eq!(real_points, 40.0);</span>
     <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_weight</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_weight</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
             <span class='ident'>Difficulty</span>::<span class='ident'>Easy</span> <span class='op'>=&gt;</span> <span class='number'>0.5</span>,
             <span class='ident'>Difficulty</span>::<span class='ident'>Normal</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,

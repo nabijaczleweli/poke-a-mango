@@ -356,12 +356,68 @@
 <span id="312">312</span>
 <span id="313">313</span>
 <span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Positionable</span>, <span class='ident'>Borderable</span>, <span class='ident'>Colorable</span>, <span class='ident'>Labelable</span>, <span class='ident'>Sizeable</span>, <span class='ident'>Widget</span>, <span class='ident'>UiCell</span>, <span class='ident'>Align</span>};
+<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>text_box</span>::{<span class='ident'>TextBox</span>, <span class='ident'>Event</span> <span class='kw'>as</span> <span class='ident'>TextBoxEvent</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>Difficulty</span>, <span class='ident'>GameState</span>, <span class='ident'>set_button_style</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Colorable</span>, <span class='ident'>Labelable</span>, <span class='ident'>Widget</span>, <span class='ident'>UiCell</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Positionable</span>, <span class='ident'>Sizeable</span>, <span class='ident'>Align</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>button</span>::{<span class='ident'>Button</span>, <span class='ident'>Flat</span>};
 <span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>color</span>::{<span class='ident'>DARK_CHARCOAL</span>, <span class='ident'>WHITE</span>};
+<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>button</span>::{<span class='ident'>Button</span>, <span class='ident'>Flat</span>};
 <span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>id</span>::{<span class='ident'>Generator</span>, <span class='ident'>Id</span>};
 <span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::{<span class='ident'>Canvas</span>, <span class='ident'>Text</span>};
 <span class='kw'>use</span> <span class='ident'>rand</span>::{<span class='ident'>Rng</span>, <span class='ident'>thread_rng</span>};
@@ -429,8 +485,15 @@
     <span class='ident'>scores</span>: [<span class='ident'>Id</span>; <span class='number'>10</span>],
 
     <span class='ident'>mango_button_canvas</span>: <span class='ident'>Id</span>,
-
     <span class='ident'>mango_button</span>: <span class='ident'>Id</span>,
+
+    <span class='ident'>score_label_canvas</span>: <span class='ident'>Id</span>,
+    <span class='ident'>name_input_canvas</span>: <span class='ident'>Id</span>,
+    <span class='ident'>done_button_canvas</span>: <span class='ident'>Id</span>,
+
+    <span class='ident'>score_label</span>: <span class='ident'>Id</span>,
+    <span class='ident'>name_input</span>: <span class='ident'>Id</span>,
+    <span class='ident'>done_button</span>: <span class='ident'>Id</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Widgets</span> {
@@ -498,6 +561,12 @@
                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>()],
             <span class='ident'>mango_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
             <span class='ident'>mango_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>score_label_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>name_input_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>done_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>score_label</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>name_input</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+            <span class='ident'>done_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
         }
     }
 
@@ -612,13 +681,56 @@
                     <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> {
                         <span class='ident'>difficulty</span>: <span class='ident'>difficulty</span>,
                         <span class='ident'>score</span>: <span class='ident'>score</span>,
+                        <span class='ident'>name</span>: <span class='string'>&quot;Your name&quot;</span>.<span class='ident'>to_string</span>(),
                     };
                 } <span class='kw'>else</span> {
                     <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span> {
                         <span class='ident'>difficulty</span>: <span class='ident'>difficulty</span>,
-                        <span class='ident'>score</span>: <span class='ident'>score</span> <span class='op'>+</span> <span class='number'>1</span>,
+                        <span class='ident'>score</span>: <span class='ident'>score</span> <span class='op'>+</span> <span class='ident'>mango_button_clicked</span> <span class='kw'>as</span> <span class='ident'>u64</span>,
                         <span class='ident'>mango</span>: <span class='ident'>new_mango</span>,
                     }
+                }
+            }
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { <span class='ident'>difficulty</span>, <span class='ident'>score</span>, <span class='ident'>name</span>: _ } <span class='op'>=&gt;</span> {
+                <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
+                    .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span>[(<span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
+                                 (<span class='self'>self</span>.<span class='ident'>score_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
+                                 (<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
+                                 (<span class='self'>self</span>.<span class='ident'>done_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))])
+                    .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+
+                <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='string'>&quot;Game over&quot;</span>, <span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>top_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Score: {}&quot;</span>, <span class='ident'>score</span>), <span class='self'>self</span>.<span class='ident'>score_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>score_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pressed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+                <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { <span class='ident'>difficulty</span>: _, <span class='ident'>score</span>: _, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>name</span> } <span class='op'>=</span> <span class='ident'>cur_state</span> {
+                    <span class='kw'>let</span> <span class='ident'>name_c</span> <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>clone</span>();
+                    <span class='kw'>let</span> <span class='ident'>name_input</span> <span class='op'>=</span> <span class='ident'>TextBox</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>name_c</span>)
+                        .<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)
+                        .<span class='ident'>text_color</span>(<span class='ident'>WHITE</span>)
+                        .<span class='ident'>border</span>(<span class='number'>0.0</span>)
+                        .<span class='ident'>padded_w_of</span>(<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='number'>20.0</span>)
+                        .<span class='ident'>mid_left_with_margin_on</span>(<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='number'>20.0</span>);
+                    <span class='kw'>for</span> <span class='ident'>ev</span> <span class='kw'>in</span> <span class='ident'>name_input</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>name_input</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>) {
+                        <span class='kw'>match</span> <span class='ident'>ev</span> {
+                            <span class='ident'>TextBoxEvent</span>::<span class='ident'>Update</span>(<span class='ident'>iname</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>iname</span>,
+                            <span class='ident'>TextBoxEvent</span>::<span class='ident'>Enter</span> <span class='op'>=&gt;</span> <span class='ident'>pressed</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
+                        }
+                    }
+                    <span class='ident'>name</span>.<span class='ident'>clone</span>()
+                } <span class='kw'>else</span> {
+                    <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()
+                };
+
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>done_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Done&quot;</span>, <span class='self'>self</span>.<span class='ident'>done_button_canvas</span>);
+                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>done_button</span>);
+                <span class='ident'>pressed</span> <span class='op'>=</span> <span class='ident'>pressed</span> <span class='op'>|</span> <span class='ident'>done_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>done_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>();
+
+                <span class='kw'>if</span> <span class='ident'>pressed</span> <span class='op'>&amp;&amp;</span> <span class='ident'>name</span> <span class='op'>!=</span> <span class='string'>&quot;&quot;</span> <span class='op'>&amp;&amp;</span> <span class='ident'>name</span> <span class='op'>!=</span> <span class='string'>&quot;Your name&quot;</span> {
+                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>GameEnded</span> {
+                        <span class='ident'>name</span>: <span class='ident'>name</span>,
+                        <span class='ident'>score</span>: ((<span class='ident'>score</span> <span class='kw'>as</span> <span class='ident'>f64</span>) <span class='op'>*</span> <span class='ident'>difficulty</span>.<span class='ident'>point_weight</span>()).<span class='ident'>floor</span>() <span class='kw'>as</span> <span class='ident'>u64</span>,
+                    };
                 }
             }
             <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(_) <span class='op'>=&gt;</span> {
@@ -647,9 +759,9 @@
                     <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>MainMenu</span>;
                 }
             }
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>GameEnded</span> { .. } <span class='op'>|</span>
             <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>LoadLeaderboard</span> <span class='op'>|</span>
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>Exit</span> <span class='op'>|</span>
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { .. } <span class='op'>=&gt;</span> {
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>Exit</span> <span class='op'>=&gt;</span> {
                 <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
             }
         }

@@ -210,9 +210,16 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>DateTime</span>, <span class='ident'>FixedOffset</span>, <span class='ident'>ParseError</span>, <span class='ident'>Local</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>read_toml_file</span>, <span class='ident'>write_toml_file</span>};
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>DateTime</span>, <span class='ident'>FixedOffset</span>, <span class='ident'>ParseError</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>Error</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>FromIterator</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
@@ -226,13 +233,9 @@
 <span class='doccomment'>/// Reading a leaderboard, adding an entry to it, then writing it back.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # extern crate poke_a_mango;</span>
-<span class='doccomment'>/// # extern crate chrono;</span>
 <span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
-<span class='doccomment'>/// # use self::poke_a_mango::ops::Leader;</span>
-<span class='doccomment'>/// # use self::chrono::Local;</span>
+<span class='doccomment'>/// # use poke_a_mango::ops::Leader;</span>
 <span class='doccomment'>/// # use std::env::temp_dir;</span>
-<span class='doccomment'>/// # fn main() {</span>
 <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-0&quot;);</span>
 <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
 <span class='doccomment'>///</span>
@@ -241,16 +244,8 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// let mut leaders = Leader::read(&amp;tf).unwrap();</span>
 <span class='doccomment'>/// assert!(leaders.is_empty());</span>
-<span class='doccomment'>/// leaders.push(Leader {</span>
-<span class='doccomment'>///     name: &quot;nabijaczleweli&quot;.to_string(),</span>
-<span class='doccomment'>///     time: {</span>
-<span class='doccomment'>///         let now = Local::now();</span>
-<span class='doccomment'>///         now.with_timezone(now.offset())</span>
-<span class='doccomment'>///     },</span>
-<span class='doccomment'>///     score: 105,</span>
-<span class='doccomment'>/// });</span>
+<span class='doccomment'>/// leaders.push(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105));</span>
 <span class='doccomment'>/// assert_eq!(Leader::write(leaders, &amp;tf), Ok(()));</span>
-<span class='doccomment'>/// # }</span>
 <span class='doccomment'>/// ```</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Leader</span> {
@@ -264,9 +259,9 @@
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
 <span class='kw'>struct</span> <span class='ident'>LeaderForSerialisation</span> {
-    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='kw'>pub</span> <span class='ident'>time</span>: <span class='ident'>String</span>,
-    <span class='kw'>pub</span> <span class='ident'>score</span>: <span class='ident'>u64</span>,
+    <span class='ident'>name</span>: <span class='ident'>String</span>,
+    <span class='ident'>time</span>: <span class='ident'>String</span>,
+    <span class='ident'>score</span>: <span class='ident'>u64</span>,
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
@@ -276,6 +271,25 @@
 
 
 <span class='kw'>impl</span> <span class='ident'>Leader</span> {
+    <span class='doccomment'>/// Create a new leaderboard entry with `time` set to now.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # use poke_a_mango::ops::Leader;</span>
+    <span class='doccomment'>/// let ldr = Leader::now(&quot;nabijaczleweli&quot;.to_string(), 36);</span>
+    <span class='doccomment'>/// assert_eq!(ldr.name, &quot;nabijaczleweli&quot;);</span>
+    <span class='doccomment'>/// assert_eq!(ldr.score, 36);</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>now</span>(<span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>score</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>Leader</span> {
+        <span class='kw'>let</span> <span class='ident'>now</span> <span class='op'>=</span> <span class='ident'>Local</span>::<span class='ident'>now</span>();
+        <span class='ident'>Leader</span> {
+            <span class='ident'>name</span>: <span class='ident'>name</span>,
+            <span class='ident'>time</span>: <span class='ident'>now</span>.<span class='ident'>with_timezone</span>(<span class='ident'>now</span>.<span class='ident'>offset</span>()),
+            <span class='ident'>score</span>: <span class='ident'>score</span>,
+        }
+    }
+
     <span class='doccomment'>/// Read leaderboard from the specified file.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// If the specified file doesn&#39;t exist an empty leaderboard is returned.</span>
