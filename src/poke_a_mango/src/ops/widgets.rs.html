@@ -305,6 +305,23 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>Difficulty</span>, <span class='ident'>GameState</span>, <span class='ident'>set_button_style</span>};
 <span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Colorable</span>, <span class='ident'>Labelable</span>, <span class='ident'>Widget</span>, <span class='ident'>UiCell</span>};
@@ -446,7 +463,8 @@
     <span class='doccomment'>/// Update the UI elements and set them.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Given the current game&#39;s state it will update it with the next one, if needed, for example,</span>
-    <span class='doccomment'>/// if `GameState::MainMenu` was passed in and the Start button was pressed it&#39;ll be updated to `GameState::ChooseDifficulty`.</span>
+    <span class='doccomment'>/// if `GameState::MainMenu` was passed in and the Start button was pressed it&#39;ll be updated to</span>
+    <span class='doccomment'>/// `GameState::ChooseDifficulty`.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Should be called on the update window event.</span>
     <span class='doccomment'>///</span>
@@ -514,14 +532,27 @@
                 <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>back_button</span>);
 
                 <span class='kw'>if</span> <span class='ident'>easy_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>easy_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Easy</span>);
+                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span> {
+                        <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>::<span class='ident'>Easy</span>,
+                        <span class='ident'>score</span>: <span class='number'>0</span>,
+                    };
                 } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>normal_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>normal_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Normal</span>);
+                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span> {
+                        <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>::<span class='ident'>Normal</span>,
+                        <span class='ident'>score</span>: <span class='number'>0</span>,
+                    };
                 } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>hard_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>hard_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Hard</span>);
+                    <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span> {
+                        <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>::<span class='ident'>Hard</span>,
+                        <span class='ident'>score</span>: <span class='number'>0</span>,
+                    };
                 } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>back_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>back_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
                     <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>MainMenu</span>;
                 }
+            }
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>Playing</span> { <span class='ident'>difficulty</span>, <span class='ident'>score</span> } <span class='op'>=&gt;</span> {
+                <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}: {}&quot;</span>, <span class='ident'>difficulty</span>, <span class='ident'>score</span>);
             }
             <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(_) <span class='op'>=&gt;</span> {
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(<span class='kw-2'>ref</span> <span class='ident'>ldrbrd</span>) <span class='op'>=</span> <span class='ident'>cur_state</span> {
@@ -549,7 +580,10 @@
                     <span class='op'>*</span><span class='ident'>cur_state</span> <span class='op'>=</span> <span class='ident'>GameState</span>::<span class='ident'>MainMenu</span>;
                 }
             }
-            _ <span class='op'>=&gt;</span> (),
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>LoadLeaderboard</span> <span class='op'>|</span>
+            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>::<span class='ident'>Exit</span> <span class='op'>=&gt;</span> {
+                <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+            }
         }
     }
 

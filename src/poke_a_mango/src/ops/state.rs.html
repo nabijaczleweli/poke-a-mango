@@ -169,7 +169,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>///   * `MainMenu`</span>
     <span class='doccomment'>///   * `Exit`</span>
-    <span class='ident'>Playing</span>(<span class='ident'>Difficulty</span>),
+    <span class='ident'>Playing</span> { <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>, <span class='ident'>score</span>: <span class='ident'>u64</span>, },
     <span class='doccomment'>/// Meta-state indicating that the leaderboard needs to be loaded.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.</span>
