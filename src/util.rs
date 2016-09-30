@@ -1,6 +1,10 @@
 //! Module containing various utility functions.
 
 
+/// Default fruit names.
+pub static FRUITS: &'static [&'static str] = &["Avocado", "Banana", "Melon", "Orange", "Pear", "Watermelon"];
+
+
 /// Uppercase the first character of the supplied string.
 ///
 /// Based on http://stackoverflow.com/a/38406885/2851815

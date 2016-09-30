@@ -35,8 +35,10 @@ pub enum GameState {
         difficulty: Difficulty,
         /// The user's current score.
         score: u64,
-        /// Whether the current fruit is a mango.
-        mango: bool,
+        /// The current fruit index.
+        ///
+        /// If `None` - it's a mango, else it's an index of fruit from `util::FRUITS`.
+        fruit: Option<usize>,
     },
     /// The game was lost after a valiant battle.
     ///

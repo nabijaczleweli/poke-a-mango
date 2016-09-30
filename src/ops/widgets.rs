@@ -4,6 +4,7 @@ use self::super::{Difficulty, GameState, set_button_style};
 use conrod::color::{DARK_CHARCOAL, WHITE};
 use conrod::widget::button::{Button, Flat};
 use conrod::widget::id::{Generator, Id};
+use self::super::super::util::FRUITS;
 use conrod::widget::{Canvas, Text};
 use rand::{Rng, thread_rng};
 use std::cmp;
@@ -230,39 +231,52 @@ impl Widgets {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Easy,
                         score: 0,
-                        mango: true,
+                        fruit: None,
                     };
                 } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Normal,
                         score: 0,
-                        mango: true,
+                        fruit: None,
                     };
                 } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::Playing {
                         difficulty: Difficulty::Hard,
                         score: 0,
-                        mango: true,
+                        fruit: None,
                     };
                 } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
                     *cur_state = GameState::MainMenu;
                 }
             }
-            &mut GameState::Playing { difficulty, score, mango } => {
+            &mut GameState::Playing { difficulty, score, fruit } => {
                 Canvas::new()
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)), (self.mango_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
                     .set(self.main_canvas, &mut ui_wdgts);
 
                 // Difficulty's numeric value is inverted here
-                let change_fruit = thread_rng().gen_weighted_bool(25 * (4 - difficulty.numeric()));
-                let new_mango = if change_fruit { !mango } else { mango };
+                let mut rng = thread_rng();
+                let change_fruit = rng.gen_weighted_bool(25 * (4 - difficulty.numeric()));
+                let new_fruit = if change_fruit {
+                    match fruit {
+                        None => Some(rng.gen_range(0, FRUITS.len())),
+                        Some(_) => None,
+                    }
+                } else {
+                    fruit
+                };
 
                 Widgets::paddded_text("Poke a mango!", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
-                let mut mango_button = Widgets::padded_butan(if new_mango { "Mango" } else { "Avocado" }, self.mango_button_canvas);
+                let mut mango_button = Widgets::padded_butan(if let Some(fruit_idx) = new_fruit {
+                                                                 FRUITS[fruit_idx]
+                                                             } else {
+                                                                 "Mango"
+                                                             },
+                                                             self.mango_button_canvas);
                 set_button_style(&mut mango_button);
 
                 let mango_button_clicked = mango_button.set(self.mango_button, &mut ui_wdgts).was_clicked();
-                if mango_button_clicked && !mango {
+                if mango_button_clicked && fruit.is_none() {
                     *cur_state = GameState::GameOver {
                         difficulty: difficulty,
                         score: score,
@@ -272,7 +286,7 @@ impl Widgets {
                     *cur_state = GameState::Playing {
                         difficulty: difficulty,
                         score: score + mango_button_clicked as u64,
-                        mango: new_mango,
+                        fruit: new_fruit,
                     }
                 }
             }
