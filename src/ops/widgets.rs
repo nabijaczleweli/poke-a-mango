@@ -281,7 +281,8 @@ impl Widgets {
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.score_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.name_input_canvas, Canvas::new().color(DARK_CHARCOAL)),
-                                 (self.done_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
+                                 (self.done_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
+                                 (self.back_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
                     .set(self.main_canvas, &mut ui_wdgts);
 
                 Widgets::paddded_text("Game over", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
@@ -311,11 +312,17 @@ impl Widgets {
                 set_button_style(&mut done_button);
                 pressed = pressed | done_button.set(self.done_button, &mut ui_wdgts).was_clicked();
 
+                let mut back_button = Widgets::padded_butan("Back", self.back_button_canvas);
+                set_button_style(&mut back_button);
+                let back_pressed = back_button.set(self.back_button, &mut ui_wdgts).was_clicked();
+
                 if pressed && name != "" && name != "Your name" {
                     *cur_state = GameState::GameEnded {
                         name: name,
                         score: ((score as f64) * difficulty.point_weight()).floor() as u64,
                     };
+                } else if back_pressed {
+                    *cur_state = GameState::MainMenu;
                 }
             }
             &mut GameState::DisplayLeaderboard(_) => {

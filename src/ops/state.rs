@@ -44,7 +44,10 @@ pub enum GameState {
     ///
     /// In this stage the player enters its name.
     ///
-    /// Can transform into `GameEnded`.
+    /// Can transform into:
+    ///
+    ///   * `GameEnded`
+    ///   * `MainMenu`
     GameOver {
         /// The game difficulty, as same as in the `Playing` stage.
         difficulty: Difficulty,
