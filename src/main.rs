@@ -41,23 +41,26 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
             ui.handle_event(e);
         }
 
-        event.update(|_| {
-            widgets.update(ui.set_widgets(), &mut game_state);
-        });
+        let is_update = event.update(|_| {
+                widgets.update(ui.set_widgets(), &mut game_state);
+            })
+            .is_some();
+        if is_update {
+            if game_state.should_exit() {
+                window.set_should_close(true);
+            } else if game_state.should_load_leaderboard() {
+                game_state =
+                    poke_a_mango::ops::GameState::DisplayLeaderboard(try!(poke_a_mango::ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml"))));
+            } else if let poke_a_mango::ops::GameState::GameEnded { name, score } = game_state {
+                let leaderboard_p = opts.config_dir.1.join("leaderboard.toml");
+                let mut leaderboard = try!(poke_a_mango::ops::Leader::read(&leaderboard_p));
+                leaderboard.push(poke_a_mango::ops::Leader::now(name, score));
+                leaderboard.sort();
+                leaderboard.reverse();
+                try!(poke_a_mango::ops::Leader::write(leaderboard, &leaderboard_p));
 
-        if game_state.should_exit() {
-            window.set_should_close(true);
-        } else if game_state.should_load_leaderboard() {
-            game_state = poke_a_mango::ops::GameState::DisplayLeaderboard(try!(poke_a_mango::ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml"))));
-        } else if let poke_a_mango::ops::GameState::GameEnded{name,score} = game_state {
-            let leaderboard_p = opts.config_dir.1.join("leaderboard.toml");
-            let mut leaderboard = try!(poke_a_mango::ops::Leader::read(&leaderboard_p));
-            leaderboard.push(poke_a_mango::ops::Leader::now(name, score));
-            leaderboard.sort();
-            leaderboard.reverse();
-            try!(poke_a_mango::ops::Leader::write(leaderboard, &leaderboard_p));
-
-            game_state = poke_a_mango::ops::GameState::MainMenu;
+                game_state = poke_a_mango::ops::GameState::MainMenu;
+            }
         }
 
         window.draw_2d(&event, |ctx, graphics| {
