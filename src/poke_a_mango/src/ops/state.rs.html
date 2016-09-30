@@ -203,6 +203,11 @@
 <span id="159">159</span>
 <span id="160">160</span>
 <span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='ident'>Leader</span>;
 
@@ -241,8 +246,10 @@
         <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>,
         <span class='doccomment'>/// The user&#39;s current score.</span>
         <span class='ident'>score</span>: <span class='ident'>u64</span>,
-        <span class='doccomment'>/// Whether the current fruit is a mango.</span>
-        <span class='ident'>mango</span>: <span class='ident'>bool</span>,
+        <span class='doccomment'>/// The current fruit index.</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>/// If `None` - it&#39;s a mango, else it&#39;s an index of fruit from `util::FRUITS`.</span>
+        <span class='ident'>fruit</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
     },
     <span class='doccomment'>/// The game was lost after a valiant battle.</span>
     <span class='doccomment'>///</span>
@@ -250,7 +257,10 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// In this stage the player enters its name.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into `GameEnded`.</span>
+    <span class='doccomment'>/// Can transform into:</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>///   * `GameEnded`</span>
+    <span class='doccomment'>///   * `MainMenu`</span>
     <span class='ident'>GameOver</span> {
         <span class='doccomment'>/// The game difficulty, as same as in the `Playing` stage.</span>
         <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>,

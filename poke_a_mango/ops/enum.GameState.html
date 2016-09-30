@@ -47,14 +47,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-480' class='srclink' href='../../src/poke_a_mango/src/ops/state.rs.html#8-90' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-480' class='srclink' href='../../src/poke_a_mango/src/ops/state.rs.html#8-95' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum GameState {
     MainMenu,
     ChooseDifficulty,
     Playing {
         difficulty: <a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a>,
         score: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
-        mango: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
+        fruit: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
     },
     GameOver {
         difficulty: <a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a>,
@@ -102,14 +102,21 @@
 
                            <table><tr><td id='variant.Playing.field.difficulty'><code>difficulty:&nbsp;<a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a></code></td><td><div class='docblock'><p>The game difficulty, as chosen in the <code>ChooseDifficulty</code> stage.</p>
 </div></td></tr><tr><td id='variant.Playing.field.score'><code>score:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></td><td><div class='docblock'><p>The user&#39;s current score.</p>
-</div></td></tr><tr><td id='variant.Playing.field.mango'><code>mango:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></td><td><div class='docblock'><p>Whether the current fruit is a mango.</p>
+</div></td></tr><tr><td id='variant.Playing.field.fruit'><code>fruit:&nbsp;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></td><td><div class='docblock'><p>The current fruit index.</p>
+
+<p>If <code>None</code> - it&#39;s a mango, else it&#39;s an index of fruit from <code>util::FRUITS</code>.</p>
 </div></td></tr></table><span id='variant.GameOver' class='variant'><code>GameOver</code></span><div class='docblock'><p>The game was lost after a valiant battle.</p>
 
 <p>Contains the game&#39;s difficulty and the players final score.</p>
 
 <p>In this stage the player enters its name.</p>
 
-<p>Can transform into <code>GameEnded</code>.</p>
+<p>Can transform into:</p>
+
+<ul>
+<li><code>GameEnded</code></li>
+<li><code>MainMenu</code></li>
+</ul>
 </div><h3 class='fields'>Fields</h3>
 
                            <table><tr><td id='variant.GameOver.field.difficulty'><code>difficulty:&nbsp;<a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a></code></td><td><div class='docblock'><p>The game difficulty, as same as in the <code>Playing</code> stage.</p>
@@ -146,7 +153,7 @@
 </div><span id='variant.Exit' class='variant'><code>Exit</code></span><div class='docblock'><p>Pseudo-state, signifying that the game window should be closed.</p>
 
 <p>Can transform into: nothing. This is the final state all others seek.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-534' class='srclink' href='../../src/poke_a_mango/src/ops/state.rs.html#103-127' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-534' class='srclink' href='../../src/poke_a_mango/src/ops/state.rs.html#108-132' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.should_exit' class='method'><code>fn <a href='#method.should_exit' class='fnname'>should_exit</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Check whether this state currently means that the game has ended.</p>
 
