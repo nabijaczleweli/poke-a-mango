@@ -1,9 +1,11 @@
 extern crate piston_window;
 extern crate poke_a_mango;
+extern crate rusttype;
 extern crate conrod;
 
 use std::io::stderr;
 use std::process::exit;
+use rusttype::FontCollection;
 use conrod::backend::piston_window as conrod_backend;
 use piston_window::{PistonWindow, UpdateEvent, Window};
 
@@ -31,7 +33,7 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
     let mut glyph_cache = conrod_backend::GlyphCache::new(&mut window, opts.desktop_size.0, opts.desktop_size.1);
     let image_map = conrod::image::Map::new();
 
-    ui.fonts.insert_from_file(opts.config_dir.1.join("assets").join("DejaVuSansMono.ttf")).unwrap();
+    ui.fonts.insert(FontCollection::from_bytes(&include_bytes!("../assets/DejaVuSansMono.ttf")[..]).into_font().unwrap());
 
     let mut game_state = poke_a_mango::ops::GameState::MainMenu;
     let widgets = poke_a_mango::ops::Widgets::new(ui.widget_id_generator());

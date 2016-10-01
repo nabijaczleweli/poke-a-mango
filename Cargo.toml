@@ -17,6 +17,7 @@ exclude = ["*.enc"]
 rustc-serialize = "0.3"
 piston_window = "0.52"
 lazy_static = "0.2"
+rusttype = "0.2"
 conrod = "0.44"
 glutin = "0.6"
 regex = "0.1"
