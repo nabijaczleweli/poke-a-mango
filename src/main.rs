@@ -26,7 +26,6 @@ fn actual_main() -> i32 {
 
 fn result_main() -> Result<(), poke_a_mango::Error> {
     let opts = poke_a_mango::Options::parse();
-    println!("{:#?}", opts);
 
     let mut window: PistonWindow = try!(poke_a_mango::ops::create_window(opts.desktop_size));
     let mut ui = conrod::UiBuilder::new().build();
