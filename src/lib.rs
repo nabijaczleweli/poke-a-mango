@@ -98,7 +98,7 @@
 //!
 //! ## OPTIONS
 //!
-//! -c --config-dir &lt;<config_dir>&gt;
+//! -c --config-dir &lt;config_dir&gt;
 //!
 //! ```text
 //! Directory with the configuration.
@@ -108,7 +108,7 @@
 //! Default: $HOME/.poke-a-mango
 //! ```
 //!
-//! -d --desktop-size &lt;<size>&gt;
+//! -d --desktop-size &lt;size&gt;
 //!
 //! ```text
 //! The target desktop's resolution.
