@@ -1,3 +1,10 @@
+//! Main functions doing actual work.
+//!
+//! Use `create_window()` to set up a window of correct size, then set up a `conrod::Ui` on it like you'd do normally.
+//! Then create an instance of `Widgets` and call `update()` on it each update event, then check for states that need manual
+//! handling from usercode and act accordingly.
+
+
 use toml::{Parser, Value, decode, encode_str};
 use rustc_serialize::{Encodable, Decodable};
 use std::io::{Read, Write};
