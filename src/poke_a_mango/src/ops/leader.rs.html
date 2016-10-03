@@ -217,6 +217,23 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>DateTime</span>, <span class='ident'>FixedOffset</span>, <span class='ident'>ParseError</span>, <span class='ident'>Local</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>read_toml_file</span>, <span class='ident'>write_toml_file</span>};
@@ -247,6 +264,8 @@
 <span class='doccomment'>/// leaders.push(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105));</span>
 <span class='doccomment'>/// assert_eq!(Leader::write(leaders, &amp;tf), Ok(()));</span>
 <span class='doccomment'>/// ```</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// This could alternatively be done with `Leader::append()`.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Leader</span> {
     <span class='doccomment'>/// Name the user entered when prompted.</span>
@@ -321,8 +340,6 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Reading a leaderboard, adding an entry to it, then writing it back.</span>
-    <span class='doccomment'>///</span>
     <span class='doccomment'>/// ```</span>
     <span class='doccomment'>/// # extern crate poke_a_mango;</span>
     <span class='doccomment'>/// # extern crate chrono;</span>
@@ -334,22 +351,8 @@
     <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-write-0&quot;);</span>
     <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Leader::write(vec![Leader {</span>
-    <span class='doccomment'>///                        name: &quot;nabijaczleweli&quot;.to_string(),</span>
-    <span class='doccomment'>///                        time: {</span>
-    <span class='doccomment'>///                            let now = Local::now();</span>
-    <span class='doccomment'>///                            now.with_timezone(now.offset())</span>
-    <span class='doccomment'>///                        },</span>
-    <span class='doccomment'>///                        score: 105,</span>
-    <span class='doccomment'>///                    },</span>
-    <span class='doccomment'>///                    Leader {</span>
-    <span class='doccomment'>///                        name: &quot;skorezore&quot;.to_string(),</span>
-    <span class='doccomment'>///                        time: {</span>
-    <span class='doccomment'>///                            let now = Local::now();</span>
-    <span class='doccomment'>///                            now.with_timezone(now.offset()) - Duration::minutes(30)</span>
-    <span class='doccomment'>///                        },</span>
-    <span class='doccomment'>///                        score: 51,</span>
-    <span class='doccomment'>///                    }],</span>
+    <span class='doccomment'>/// Leader::write(vec![Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105),</span>
+    <span class='doccomment'>///                    Leader::now(&quot;skorezore&quot;.to_string(), 51)],</span>
     <span class='doccomment'>///               &amp;tf.join(&quot;leaderboard.toml&quot;))</span>
     <span class='doccomment'>///     .unwrap();</span>
     <span class='doccomment'>/// # }</span>
@@ -358,6 +361,37 @@
         <span class='ident'>write_toml_file</span>(<span class='kw-2'>&amp;</span><span class='ident'>Leaders</span> { <span class='ident'>leader</span>: <span class='ident'>queued_leaders</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='ident'>LeaderForSerialisation</span>::<span class='ident'>from</span>).<span class='ident'>collect</span>() },
                         <span class='ident'>p</span>,
                         <span class='string'>&quot;leaderboard&quot;</span>)
+    }
+
+    <span class='doccomment'>/// Append the specified leader to the leaderboard file at the specified path.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This is equivalent to reading it, appending the leader, properly sorting and writing it back.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate poke_a_mango;</span>
+    <span class='doccomment'>/// # extern crate chrono;</span>
+    <span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
+    <span class='doccomment'>/// # use self::chrono::{Duration, Local};</span>
+    <span class='doccomment'>/// # use self::poke_a_mango::ops::Leader;</span>
+    <span class='doccomment'>/// # use std::env::temp_dir;</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-append-0&quot;);</span>
+    <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// assert_eq!(Leader::append(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105), &amp;tf.join(&quot;leaderboard.toml&quot;)), Ok(()));</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append</span>(<span class='ident'>ldr</span>: <span class='ident'>Leader</span>, <span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>leaderboard</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Leader</span>::<span class='ident'>read</span>(<span class='ident'>p</span>));
+
+        <span class='ident'>leaderboard</span>.<span class='ident'>push</span>(<span class='ident'>ldr</span>);
+        <span class='ident'>leaderboard</span>.<span class='ident'>sort</span>();
+        <span class='ident'>leaderboard</span>.<span class='ident'>reverse</span>();
+
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Leader</span>::<span class='ident'>write</span>(<span class='ident'>leaderboard</span>, <span class='ident'>p</span>));
+        <span class='prelude-val'>Ok</span>(())
     }
 }
 

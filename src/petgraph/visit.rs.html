@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/petgraph-0.2.8/src/visit.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/petgraph-0.2.9/src/visit.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>visit.rs.html -- source</title>
@@ -808,6 +808,31 @@
 <span id="764">764</span>
 <span id="765">765</span>
 <span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Graph visitor algorithms.</span>
 <span class='doccomment'>//!</span>
@@ -1503,6 +1528,7 @@
     <span class='ident'>tovisit</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>notvisited</span>: <span class='ident'>VecDeque</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>ordered</span>: <span class='ident'>VM</span>,
+    <span class='ident'>discovered</span>: <span class='ident'>VM</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>VM</span><span class='op'>&gt;</span> <span class='ident'>SubTopo</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>VM</span><span class='op'>&gt;</span>
@@ -1527,6 +1553,7 @@
     {
         <span class='ident'>SubTopo</span> {
             <span class='ident'>ordered</span>: <span class='ident'>graph</span>.<span class='ident'>visit_map</span>(),
+            <span class='ident'>discovered</span>: <span class='ident'>graph</span>.<span class='ident'>visit_map</span>(),
             <span class='ident'>tovisit</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
             <span class='ident'>notvisited</span>: <span class='ident'>VecDeque</span>::<span class='ident'>new</span>(),
         }
@@ -1537,8 +1564,22 @@
         <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Revisitable</span><span class='op'>&lt;</span><span class='ident'>NodeId</span><span class='op'>=</span><span class='ident'>N</span>, <span class='ident'>Map</span><span class='op'>=</span><span class='ident'>VM</span><span class='op'>&gt;</span>,
     {
         <span class='ident'>graph</span>.<span class='ident'>reset_map</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>ordered</span>);
+        <span class='ident'>graph</span>.<span class='ident'>reset_map</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>discovered</span>);
         <span class='self'>self</span>.<span class='ident'>tovisit</span>.<span class='ident'>clear</span>();
         <span class='self'>self</span>.<span class='ident'>tovisit</span>.<span class='ident'>push</span>(<span class='ident'>node</span>);
+    }
+
+    <span class='comment'>// discover all nodes reachable from `n`</span>
+    <span class='kw'>fn</span> <span class='ident'>discover</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>g</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>G</span>, <span class='ident'>n</span>: <span class='ident'>N</span>)
+        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>NeighborsDirected</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Visitable</span><span class='op'>&lt;</span><span class='ident'>NodeId</span><span class='op'>=</span><span class='ident'>N</span>, <span class='ident'>Map</span><span class='op'>=</span><span class='ident'>VM</span><span class='op'>&gt;</span>,
+    {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>discovered</span>.<span class='ident'>is_visited</span>(<span class='kw-2'>&amp;</span><span class='ident'>n</span>) {
+            <span class='kw'>return</span>;
+        }
+        <span class='self'>self</span>.<span class='ident'>discovered</span>.<span class='ident'>visit</span>(<span class='ident'>n</span>.<span class='ident'>clone</span>());
+        <span class='kw'>for</span> <span class='ident'>neigh</span> <span class='kw'>in</span> <span class='ident'>g</span>.<span class='ident'>neighbors_directed</span>(<span class='ident'>n</span>, <span class='ident'>Outgoing</span>) {
+            <span class='self'>self</span>.<span class='ident'>discover</span>(<span class='ident'>g</span>, <span class='ident'>neigh</span>);
+        }
     }
 
     <span class='doccomment'>/// Return the next node in the current topological order traversal, or</span>
@@ -1550,16 +1591,25 @@
         <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>NeighborsDirected</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Visitable</span><span class='op'>&lt;</span><span class='ident'>NodeId</span><span class='op'>=</span><span class='ident'>N</span>, <span class='ident'>Map</span><span class='op'>=</span><span class='ident'>VM</span><span class='op'>&gt;</span>,
     {
         <span class='comment'>// Take an unvisited element and find which of its neighbors are next</span>
+        <span class='comment'>//</span>
+        <span class='comment'>// discovered: All nodes that have been reachable through outgoing paths</span>
+        <span class='comment'>// from the start</span>
+        <span class='comment'>// ordered: All nodes that have already been emitted until this point</span>
         <span class='kw'>loop</span> {
             <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>nix</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>tovisit</span>.<span class='ident'>pop</span>() {
                 <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>ordered</span>.<span class='ident'>is_visited</span>(<span class='kw-2'>&amp;</span><span class='ident'>nix</span>) {
                     <span class='kw'>continue</span>;
                 }
                 <span class='self'>self</span>.<span class='ident'>ordered</span>.<span class='ident'>visit</span>(<span class='ident'>nix</span>.<span class='ident'>clone</span>());
+                <span class='self'>self</span>.<span class='ident'>discover</span>(<span class='ident'>g</span>, <span class='ident'>nix</span>.<span class='ident'>clone</span>());
                 <span class='kw'>for</span> <span class='ident'>neigh</span> <span class='kw'>in</span> <span class='ident'>g</span>.<span class='ident'>neighbors_directed</span>(<span class='ident'>nix</span>.<span class='ident'>clone</span>(), <span class='ident'>Outgoing</span>) {
                     <span class='comment'>// Look at each neighbor, and those that only have incoming edges</span>
                     <span class='comment'>// from the already ordered list, they are the next to visit.</span>
-                    <span class='kw'>if</span> <span class='ident'>g</span>.<span class='ident'>neighbors_directed</span>(<span class='ident'>neigh</span>.<span class='ident'>clone</span>(), <span class='ident'>Incoming</span>).<span class='ident'>all</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ordered</span>.<span class='ident'>is_visited</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>)) {
+                    <span class='comment'>// `discovered` is used to limit this to the induced subgraph</span>
+                    <span class='kw'>if</span> <span class='ident'>g</span>.<span class='ident'>neighbors_directed</span>(<span class='ident'>neigh</span>.<span class='ident'>clone</span>(), <span class='ident'>Incoming</span>)
+                        .<span class='ident'>filter</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>discovered</span>.<span class='ident'>is_visited</span>(<span class='ident'>b</span>))
+                        .<span class='ident'>all</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ordered</span>.<span class='ident'>is_visited</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>))
+                    {
                         <span class='self'>self</span>.<span class='ident'>tovisit</span>.<span class='ident'>push</span>(<span class='ident'>neigh</span>);
                     } <span class='kw'>else</span> {
                         <span class='self'>self</span>.<span class='ident'>notvisited</span>.<span class='ident'>push_back</span>(<span class='ident'>neigh</span>);
