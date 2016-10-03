@@ -44,7 +44,7 @@ Exit values and possible errors:
 
   `poke-a-mango` `-c` *pkmngo*
 
-    Save the game data in the pkmngo directory instead of the default one.
+    Save the game data in "pkmngo" directory instead of the default one.
 
 ## AUTHOR
 
