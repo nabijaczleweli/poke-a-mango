@@ -27,6 +27,8 @@ use std::path::Path;
 /// leaders.push(Leader::now("nabijaczleweli".to_string(), 105));
 /// assert_eq!(Leader::write(leaders, &tf), Ok(()));
 /// ```
+///
+/// This could alternatively be done with `Leader::append()`.
 #[derive(Debug, Clone, Hash, PartialEq, Eq, RustcEncodable, RustcDecodable)]
 pub struct Leader {
     /// Name the user entered when prompted.
@@ -101,8 +103,6 @@ impl Leader {
     ///
     /// # Examples
     ///
-    /// Reading a leaderboard, adding an entry to it, then writing it back.
-    ///
     /// ```
     /// # extern crate poke_a_mango;
     /// # extern crate chrono;
@@ -114,22 +114,8 @@ impl Leader {
     /// let tf = temp_dir().join("poke-a-mango-doctest").join("ops-Leader-write-0");
     /// create_dir_all(&tf).unwrap();
     ///
-    /// Leader::write(vec![Leader {
-    ///                        name: "nabijaczleweli".to_string(),
-    ///                        time: {
-    ///                            let now = Local::now();
-    ///                            now.with_timezone(now.offset())
-    ///                        },
-    ///                        score: 105,
-    ///                    },
-    ///                    Leader {
-    ///                        name: "skorezore".to_string(),
-    ///                        time: {
-    ///                            let now = Local::now();
-    ///                            now.with_timezone(now.offset()) - Duration::minutes(30)
-    ///                        },
-    ///                        score: 51,
-    ///                    }],
+    /// Leader::write(vec![Leader::now("nabijaczleweli".to_string(), 105),
+    ///                    Leader::now("skorezore".to_string(), 51)],
     ///               &tf.join("leaderboard.toml"))
     ///     .unwrap();
     /// # }
@@ -138,6 +124,37 @@ impl Leader {
         write_toml_file(&Leaders { leader: queued_leaders.into_iter().map(LeaderForSerialisation::from).collect() },
                         p,
                         "leaderboard")
+    }
+
+    /// Append the specified leader to the leaderboard file at the specified path.
+    ///
+    /// This is equivalent to reading it, appending the leader, properly sorting and writing it back.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate poke_a_mango;
+    /// # extern crate chrono;
+    /// # use std::fs::{File, create_dir_all};
+    /// # use self::chrono::{Duration, Local};
+    /// # use self::poke_a_mango::ops::Leader;
+    /// # use std::env::temp_dir;
+    /// # fn main() {
+    /// let tf = temp_dir().join("poke-a-mango-doctest").join("ops-Leader-append-0");
+    /// create_dir_all(&tf).unwrap();
+    ///
+    /// assert_eq!(Leader::append(Leader::now("nabijaczleweli".to_string(), 105), &tf.join("leaderboard.toml")), Ok(()));
+    /// # }
+    /// ```
+    pub fn append(ldr: Leader, p: &Path) -> Result<(), Error> {
+        let mut leaderboard = try!(Leader::read(p));
+
+        leaderboard.push(ldr);
+        leaderboard.sort();
+        leaderboard.reverse();
+
+        try!(Leader::write(leaderboard, p));
+        Ok(())
     }
 }
 

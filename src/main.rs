@@ -53,13 +53,7 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
                 game_state =
                     poke_a_mango::ops::GameState::DisplayLeaderboard(try!(poke_a_mango::ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml"))));
             } else if let poke_a_mango::ops::GameState::GameEnded { name, score } = game_state {
-                let leaderboard_p = opts.config_dir.1.join("leaderboard.toml");
-                let mut leaderboard = try!(poke_a_mango::ops::Leader::read(&leaderboard_p));
-                leaderboard.push(poke_a_mango::ops::Leader::now(name, score));
-                leaderboard.sort();
-                leaderboard.reverse();
-                try!(poke_a_mango::ops::Leader::write(leaderboard, &leaderboard_p));
-
+                try!(poke_a_mango::ops::Leader::append(poke_a_mango::ops::Leader::now(name, score), &opts.config_dir.1.join("leaderboard.toml")));
                 game_state = poke_a_mango::ops::GameState::MainMenu;
             }
         }

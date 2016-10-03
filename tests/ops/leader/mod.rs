@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use std::env::temp_dir;
 use chrono::Local;
 
+mod append;
 mod write;
 mod read;
 
