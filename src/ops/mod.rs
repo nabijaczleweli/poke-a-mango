@@ -12,17 +12,19 @@ use self::super::Error;
 use std::path::Path;
 use std::fs::File;
 
-mod state;
 mod style;
 mod leader;
 mod window;
 mod widgets;
+mod game_state;
+
+pub mod state;
 
 pub use self::leader::Leader;
 pub use self::widgets::Widgets;
 pub use self::window::create_window;
 pub use self::style::set_button_style;
-pub use self::state::{Difficulty, GameState};
+pub use self::game_state::{Difficulty, GameState};
 
 
 fn read_toml_file<T: Decodable>(p: &Path, desc: &'static str) -> Result<T, Error> {

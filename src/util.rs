@@ -22,3 +22,18 @@ pub fn uppercase_first(s: &str) -> String {
         Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
     }
 }
+
+/// Get the fruit name from the format used in `GameStatus::Playing::fruit`.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::util::fruit_name;
+/// assert_eq!(fruit_name(&None), "Mango");
+/// ```
+pub fn fruit_name(fruit: &Option<usize>) -> &'static str {
+    match *fruit {
+        Some(i) => FRUITS[i],
+        None => "Mango",
+    }
+}

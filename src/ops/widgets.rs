@@ -1,12 +1,12 @@
 use conrod::{Positionable, Borderable, Colorable, Labelable, Sizeable, Widget, UiCell, Align};
 use conrod::widget::text_box::{TextBox, Event as TextBoxEvent};
 use self::super::{Difficulty, GameState, set_button_style};
-use conrod::color::{DARK_CHARCOAL, WHITE};
 use conrod::widget::button::{Button, Flat};
+use conrod::color::{DARK_CHARCOAL, WHITE};
+use self::super::super::util::fruit_name;
 use conrod::widget::id::{Generator, Id};
-use self::super::super::util::FRUITS;
 use conrod::widget::{Canvas, Text};
-use rand::{Rng, thread_rng};
+use self::super::state;
 use std::cmp;
 
 
@@ -203,11 +203,11 @@ impl Widgets {
                 set_button_style(&mut exit_button);
 
                 if start_button.set(self.start_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::ChooseDifficulty;
+                    state::press_start(cur_state);
                 } else if leaderboard_button.set(self.leaderboard_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::LoadLeaderboard;
+                    state::press_display_highscores(cur_state);
                 } else if exit_button.set(self.exit_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Exit;
+                    state::press_exit(cur_state);
                 }
             }
             &mut GameState::ChooseDifficulty => {
@@ -228,69 +228,30 @@ impl Widgets {
                 set_button_style(&mut back_button);
 
                 if easy_button.set(self.easy_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing {
-                        difficulty: Difficulty::Easy,
-                        score: 0,
-                        fruit: None,
-                    };
+                    state::select_difficulty(cur_state, Difficulty::Easy);
                 } else if normal_button.set(self.normal_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing {
-                        difficulty: Difficulty::Normal,
-                        score: 0,
-                        fruit: None,
-                    };
+                    state::select_difficulty(cur_state, Difficulty::Normal);
                 } else if hard_button.set(self.hard_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::Playing {
-                        difficulty: Difficulty::Hard,
-                        score: 0,
-                        fruit: None,
-                    };
+                    state::select_difficulty(cur_state, Difficulty::Hard);
                 } else if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::MainMenu;
+                    state::press_back(cur_state);
                 }
             }
-            &mut GameState::Playing { difficulty, score, fruit } => {
+            &mut GameState::Playing { .. } => {
                 Canvas::new()
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)), (self.mango_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
                     .set(self.main_canvas, &mut ui_wdgts);
 
-                // Difficulty's numeric value is inverted here
-                let mut rng = thread_rng();
-                let change_fruit = rng.gen_weighted_bool(25 * (4 - difficulty.numeric()));
-                let new_fruit = if change_fruit {
-                    match fruit {
-                        None => Some(rng.gen_range(0, FRUITS.len())),
-                        Some(_) => None,
-                    }
-                } else {
-                    fruit
-                };
+                let last_fruit = state::tick_mango(cur_state);
 
                 Widgets::paddded_text("Poke a mango!", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
-                let mut mango_button = Widgets::padded_butan(if let Some(fruit_idx) = new_fruit {
-                                                                 FRUITS[fruit_idx]
-                                                             } else {
-                                                                 "Mango"
-                                                             },
-                                                             self.mango_button_canvas);
+                let mut mango_button = Widgets::padded_butan(fruit_name(&last_fruit), self.mango_button_canvas);
                 set_button_style(&mut mango_button);
 
                 let mango_button_clicked = mango_button.set(self.mango_button, &mut ui_wdgts).was_clicked();
-                if mango_button_clicked && fruit.is_none() {
-                    *cur_state = GameState::GameOver {
-                        difficulty: difficulty,
-                        score: score,
-                        name: "Your name".to_string(),
-                    };
-                } else {
-                    *cur_state = GameState::Playing {
-                        difficulty: difficulty,
-                        score: score + mango_button_clicked as u64,
-                        fruit: new_fruit,
-                    }
-                }
+                state::end_mango(cur_state, mango_button_clicked, last_fruit.is_none());
             }
-            &mut GameState::GameOver { difficulty, score, name: _ } => {
+            &mut GameState::GameOver { difficulty: _, score, name: _ } => {
                 Canvas::new()
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.score_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -302,8 +263,7 @@ impl Widgets {
                 Widgets::paddded_text("Game over", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
                 Widgets::paddded_text(&format!("Score: {}", score), self.score_label_canvas, Align::Middle).set(self.score_label, &mut ui_wdgts);
 
-                let mut pressed = false;
-                let name = if let &mut GameState::GameOver { difficulty: _, score: _, ref mut name } = cur_state {
+                let (mut pressed, correct_name) = if let &mut GameState::GameOver { difficulty: _, score: _, ref mut name } = cur_state {
                     let name_c = name.clone();
                     let name_input = TextBox::new(&name_c)
                         .color(DARK_CHARCOAL)
@@ -311,32 +271,31 @@ impl Widgets {
                         .border(0.0)
                         .padded_w_of(self.name_input_canvas, 20.0)
                         .mid_left_with_margin_on(self.name_input_canvas, 20.0);
+
+                    let mut pressed = false;
                     for ev in name_input.set(self.name_input, &mut ui_wdgts) {
                         match ev {
                             TextBoxEvent::Update(iname) => *name = iname,
                             TextBoxEvent::Enter => pressed = true,
                         }
                     }
-                    name.clone()
+                    (pressed, name != "" && name != "Your name")
                 } else {
-                    "".to_string()
+                    (false, false)
                 };
 
                 let mut done_button = Widgets::padded_butan("Done", self.done_button_canvas);
                 set_button_style(&mut done_button);
-                pressed = pressed | done_button.set(self.done_button, &mut ui_wdgts).was_clicked();
+                pressed = pressed || done_button.set(self.done_button, &mut ui_wdgts).was_clicked();
 
                 let mut back_button = Widgets::padded_butan("Back", self.back_button_canvas);
                 set_button_style(&mut back_button);
                 let back_pressed = back_button.set(self.back_button, &mut ui_wdgts).was_clicked();
 
-                if pressed && name != "" && name != "Your name" {
-                    *cur_state = GameState::GameEnded {
-                        name: name,
-                        score: ((score as f64) * difficulty.point_weight()).floor() as u64,
-                    };
+                if pressed && correct_name {
+                    state::submit_name(cur_state);
                 } else if back_pressed {
-                    *cur_state = GameState::MainMenu;
+                    state::press_back(cur_state);
                 }
             }
             &mut GameState::DisplayLeaderboard(_) => {
@@ -362,7 +321,7 @@ impl Widgets {
                 let mut back_button = Widgets::padded_butan("Back", self.back_button_canvas);
                 set_button_style(&mut back_button);
                 if back_button.set(self.back_button, &mut ui_wdgts).was_clicked() {
-                    *cur_state = GameState::MainMenu;
+                    state::press_back(cur_state);
                 }
             }
             &mut GameState::GameEnded { .. } |

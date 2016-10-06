@@ -1,166 +1,229 @@
-use self::super::Leader;
+//! Manual `GameState` manipulation, to be used when implementing a UI.
+//!
+//! For a UI implementing the use of this see the implementation of `Widgets::update()`.
 
 
-/// Game's all possible states.
+use self::super::{Difficulty, GameState};
+use self::super::super::util::FRUITS;
+use rand::{Rng, thread_rng};
+
+
+/// Press the Start button in MainMenu, transforming it into ChooseDifficulty.
 ///
-/// `Widgets::update()` takes care of proper state transformation.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum GameState {
-    /// Display the main menu.
-    ///
-    /// Main menu contains a Start button and an Exit button.
-    ///
-    /// Can transform into:
-    ///
-    ///   * `ChooseDifficulty`
-    ///   * `DisplayHighscores`
-    ///   * `Exit`
-    MainMenu,
-    /// Display the screen where the player chooses the difficulty.
-    ///
-    /// The screen contains one button for each difficulty and the Back button.
-    ///
-    /// Can transform into:
-    ///
-    ///   * `Playing`
-    ///   * `MainMenu`
-    ChooseDifficulty,
-    /// The game is currently in progress.
-    ///
-    /// This also contains the game's difficulty, the player's current score and whether the current fruit is a mango.
-    ///
-    /// Can transform into `GameOver`.
-    Playing {
-        /// The game difficulty, as chosen in the `ChooseDifficulty` stage.
-        difficulty: Difficulty,
-        /// The user's current score.
-        score: u64,
-        /// The current fruit index.
-        ///
-        /// If `None` - it's a mango, else it's an index of fruit from `util::FRUITS`.
-        fruit: Option<usize>,
-    },
-    /// The game was lost after a valiant battle.
-    ///
-    /// Contains the game's difficulty and the players final score.
-    ///
-    /// In this stage the player enters its name.
-    ///
-    /// Can transform into:
-    ///
-    ///   * `GameEnded`
-    ///   * `MainMenu`
-    GameOver {
-        /// The game difficulty, as same as in the `Playing` stage.
-        difficulty: Difficulty,
-        /// The user's final score.
-        score: u64,
-        /// The user's name, mostly partial.
-        name: String,
-    },
-    /// The game cycle has ended. Semi-meta-state
-    ///
-    /// Contains the game's difficulty and the players final score.
-    ///
-    /// In this stage the player enters its name.
-    ///
-    /// Transforms into `MainMenu`.
-    GameEnded {
-        /// The user's name.
-        name: String,
-        /// User's final score, weighted.
-        score: u64,
-    },
-    /// Meta-state indicating that the leaderboard needs to be loaded.
-    ///
-    /// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.
-    ///
-    /// Leaderboards are loaded via `Leader::load()`.
-    ///
-    /// Transforms into `DisplayLeaderboard`
-    LoadLeaderboard,
-    /// Display top 10 high scores.
-    ///
-    /// This screen also contains the Back button.
-    ///
-    /// Can transform into:
-    ///
-    ///   * `MainMenu`
-    ///   * `Exit`
-    DisplayLeaderboard(Vec<Leader>),
-    /// Pseudo-state, signifying that the game window should be closed.
-    ///
-    /// Can transform into: nothing. This is the final state all others seek.
-    Exit,
-}
-
-/// The game's difficulty, chosen in the `ChooseDifficulty` step.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Difficulty {
-    /// Easy difficulty, points are halved when sorting.
-    Easy,
-    /// Normal difficulty, points are untouched when sorting.
-    Normal,
-    /// Hard difficulty, points are doubled when sorting.
-    Hard,
-}
-
-impl GameState {
-    /// Check whether this state currently means that the game has ended.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// # use poke_a_mango::ops::GameState;
-    /// assert!(GameState::Exit.should_exit());
-    /// ```
-    pub fn should_exit(&self) -> bool {
-        *self == GameState::Exit
-    }
-
-    /// Check whether this state requires usercode to load the leaderboard.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// # use poke_a_mango::ops::GameState;
-    /// assert!(GameState::LoadLeaderboard.should_load_leaderboard());
-    /// ```
-    pub fn should_load_leaderboard(&self) -> bool {
-        *self == GameState::LoadLeaderboard
+/// If the supplied argument is not MainMenu, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, GameState};
+/// # let start_button_pressed = true;
+/// let mut state = GameState::MainMenu;
+/// if start_button_pressed {
+///     state::press_start(&mut state);
+/// }
+/// ```
+pub fn press_start(s: &mut GameState) {
+    match s {
+        &mut GameState::MainMenu => *s = GameState::ChooseDifficulty,
+        _ => {}
     }
 }
 
-impl Difficulty {
-    /// The difficulty's numeric value, from `1` to `3`.
-    pub fn numeric(&self) -> u32 {
-        match *self {
-            Difficulty::Easy => 1,
-            Difficulty::Normal => 2,
-            Difficulty::Hard => 3,
+/// Press the Display Highscores button in MainMenu, transforming it into LoadLeaderboard.
+///
+/// If the supplied argument is not MainMenu, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, GameState};
+/// # let display_highscores_button_pressed = true;
+/// let mut state = GameState::MainMenu;
+/// if display_highscores_button_pressed {
+///     state::press_display_highscores(&mut state);
+///     // Then probably load the leaderboard
+/// }
+/// ```
+pub fn press_display_highscores(s: &mut GameState) {
+    match s {
+        &mut GameState::MainMenu => *s = GameState::LoadLeaderboard,
+        _ => {}
+    }
+}
+
+/// Press the Exit button in MainMenu, transforming it into Exit.
+///
+/// If the supplied argument is not MainMenu, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, GameState};
+/// # let exit_button_pressed = true;
+/// let mut state = GameState::MainMenu;
+/// if exit_button_pressed {
+///     state::press_exit(&mut state);
+///     // Then probably close the window
+/// }
+/// ```
+pub fn press_exit(s: &mut GameState) {
+    match s {
+        &mut GameState::MainMenu => *s = GameState::Exit,
+        _ => {}
+    }
+}
+
+/// Press one of the Difficulty buttons in ChooseDifficulty, transforming it into Exit.
+///
+/// If the supplied argument is not ChooseDifficulty, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, Difficulty, GameState};
+/// # let difficulty_easy_button_pressed = false;
+/// # let difficulty_normal_button_pressed = true;
+/// # let difficulty_hard_button_pressed = false;
+/// let mut state = GameState::ChooseDifficulty;
+/// if difficulty_easy_button_pressed {
+///     state::select_difficulty(&mut state, Difficulty::Easy);
+/// } else if difficulty_normal_button_pressed {
+///     state::select_difficulty(&mut state, Difficulty::Normal);
+/// } else if difficulty_hard_button_pressed {
+///     state::select_difficulty(&mut state, Difficulty::Hard);
+/// }
+/// ```
+pub fn select_difficulty(s: &mut GameState, difficulty: Difficulty) {
+    match s {
+        &mut GameState::ChooseDifficulty => {
+            *s = GameState::Playing {
+                difficulty: difficulty,
+                score: 0,
+                fruit: None,
+            }
+        }
+        _ => {}
+    }
+}
+
+/// Press the Back button in ChooseDifficulty, GameOver or DisplayLeaderboard, transforming them into MainMenu.
+///
+/// If the supplied argument is not ChooseDifficulty, GameOver or DisplayLeaderboard, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, GameState};
+/// # let back_button_pressed = false;
+/// let mut state = GameState::ChooseDifficulty;
+/// if back_button_pressed {
+///     state::press_back(&mut state);
+/// }
+/// ```
+pub fn press_back(s: &mut GameState) {
+    match s {
+        &mut GameState::ChooseDifficulty |
+        &mut GameState::GameOver { difficulty: _, score: _, name: _ } |
+        &mut GameState::DisplayLeaderboard(_) => *s = GameState::MainMenu,
+        _ => {}
+    }
+}
+
+/// Tick the mango in Playing state.
+///
+/// Call this before displaying/updating the label of the mango button. Returns the original fruit.
+///
+/// If the supplied argument is not Playing, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, Difficulty, GameState};
+/// # use poke_a_mango::util::fruit_name;
+/// # let mango_button = ();
+/// # fn update_label(_: &(), _: &'static str) {}
+/// let mut state = GameState::Playing {
+///     difficulty: Difficulty::Hard,
+///     score: 12,
+///     fruit: None,
+/// };
+/// let fruit = state::tick_mango(&mut state);
+/// update_label(&mango_button, fruit_name(&fruit));
+/// ```
+pub fn tick_mango(s: &mut GameState) -> Option<usize> {
+    match s {
+        &mut GameState::Playing { difficulty, score: _, ref mut fruit } => {
+            let original_fruit = *fruit;
+
+            // Difficulty's numeric value is inverted here
+            let mut rng = thread_rng();
+            let change_fruit = rng.gen_weighted_bool(25 * (4 - difficulty.numeric()));
+            if change_fruit {
+                *fruit = if fruit.is_none() {
+                    Some(rng.gen_range(0, FRUITS.len()))
+                } else {
+                    None
+                };
+            }
+
+            original_fruit
+        }
+        _ => None,
+    }
+}
+
+/// End the mango processing sequence, given whether it was clicked and whether it was actually a mango.
+///
+/// If the supplied argument is not Playing or the button wasn't clicked, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, Difficulty, GameState};
+/// # use poke_a_mango::util::fruit_name;
+/// # let was_mango = true;
+/// # let mango_button_clicked = true;
+/// let mut state = GameState::Playing {
+///     difficulty: Difficulty::Hard,
+///     score: 12,
+///     fruit: None,
+/// };
+/// state::end_mango(&mut state, mango_button_clicked, was_mango);
+/// ```
+pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
+    if clicked {
+        if was_mango {
+            match s {
+                &mut GameState::Playing { difficulty: _, ref mut score, fruit: _ } => *score += 1,
+                _ => {}
+            }
+        } else {
+            match s {
+                &mut GameState::Playing { difficulty, score, fruit: _ } => {
+                    *s = GameState::GameOver {
+                        difficulty: difficulty,
+                        score: score,
+                        name: "Your name".to_string(),
+                    };
+                }
+                _ => {}
+            }
         }
     }
+}
 
-    /// How to much to multiply the player's points for sorting.
-    ///
-    /// Points on Easy are worth half, and on Hard - twice the normal amount.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// # use poke_a_mango::ops::Difficulty;
-    /// // Normally you'd get these by playing
-    /// let points = 20;
-    /// let difficulty = Difficulty::Hard;
-    ///
-    /// let real_points = (points as f64) * difficulty.point_weight();
-    /// assert_eq!(real_points, 40.0);
-    /// ```
-    pub fn point_weight(&self) -> f64 {
-        match *self {
-            Difficulty::Easy => 0.5,
-            Difficulty::Normal => 1.0,
-            Difficulty::Hard => 2.0,
+pub fn submit_name(s: &mut GameState) {
+    match s {
+        &mut GameState::GameOver { difficulty, score, name: _ } => {
+            let name = match s {
+                &mut GameState::GameOver { difficulty: _, score: _, ref name } => name.clone(),
+                _ => "".to_string(),
+            };
+            *s = GameState::GameEnded {
+                name: name,
+                score: ((score as f64) * difficulty.point_weight()).floor() as u64,
+            };
         }
+        _ => {}
     }
 }

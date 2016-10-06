@@ -6,6 +6,8 @@
 //!
 //! ## Data flow
 //!
+//! #### With `conrod`
+//!
 //! ```plaintext
 //! Options::parse()
 //! |> create_window()
@@ -19,26 +21,27 @@
 //! |> [check for states requiring usercode handling and act accordingly]
 //! ```
 //!
+//! #### With a different UI
+//!
+//! ```plaintext
+//! Options::parse()
+//! |> state::*()
+//! |> [check for states requiring usercode handling and act accordingly]
+//! ```
+//!
 //! ### Prose explanation
 //!
 //! First, get an `Options` instance, be it via a struct-literal or `Options::parse()`;
 //! or don't and just create the individual arguments manually.
 //!
-//! Then, use `ops::load_image()`. If you know your image's format, great. If you don't, get it via `ops::guess_format()`.
+//! Then, use `create_window()` and a new `conrod::Ui`, follow up with creating a new `Widgets` instance.
 //!
-//! After that resize the image to an output-ready size provided by `ops::image_resized_size()` with `resize_image()`.
-//! `ops::image_resized_size()` takes into consideration using two pixels per cell in the output functions,
-//! so the size it returns is twice as tall as the terminal output size passed to it.
-//!
-//! Finally, call `ops::write_ansi()`/`ops::write_ansi_truecolor()`/`ops::write_no_ansi()` depending on your liking with the
-//! resulting image.
-//!
-//! Or, if you want to display images manually, use `ops::create_colourtable()` to create an approximate colours table and
-//! display it, for example, with `ncurses`.
+//! After that, among normally displaying and processing events with `conrod::Ui` call `Widgets::update()` each update event.
+//! That sometimes produces `GameState`s that need action from you and you need to handle them manually.
 //!
 //! ### Example
 //!
-//! This is a semi-complete example, the only thing it lacks is event handling and rendering.
+//! This is a semi-complete example, as it lacks event handling, rendering and UI setup which have been omitted for brevity.
 //!
 //! ```no_run
 //! # extern crate conrod;
