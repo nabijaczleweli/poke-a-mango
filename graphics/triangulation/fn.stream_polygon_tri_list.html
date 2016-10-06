@@ -64,9 +64,9 @@ one chunk (buffer) at a time.</p>
 <span class='comment'>//      ^--------------------^  ^------------^</span>
 <span class='comment'>//        3 Points of triangle   3 points of second triangle,</span></pre>
 
-<p>Together all the chunks comprise the full tri list. Each time the buffer size is 
+<p>Together all the chunks comprise the full tri list. Each time the buffer size is
 reached, that chunk is fed to <code>f</code>, then this function proceeds using a new buffer
-until a call to <code>polygon</code> returns <code>None</code>, indicating there are no points left in 
+until a call to <code>polygon</code> returns <code>None</code>, indicating there are no points left in
 the polygon. (in which case the last partially filled buffer is sent to <code>f</code>)</p>
 </div></section>
     <section id='search' class="content hidden"></section>

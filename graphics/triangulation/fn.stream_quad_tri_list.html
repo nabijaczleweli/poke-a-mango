@@ -57,7 +57,7 @@ defining the next edge.</p>
 <p><code>quad_edge</code> is a function that returns two vertices, which together comprise
 one edge of a quad</p>
 
-<p><code>f</code> is a function that consumes the tri list constructed by the output of 
+<p><code>f</code> is a function that consumes the tri list constructed by the output of
 <code>quad_edge</code>, one chunk (buffer) at a time</p>
 
 <p>The tri list is series of buffers (fixed size array) of the format:</p>
@@ -71,9 +71,9 @@ one edge of a quad</p>
 <span class='comment'>//                                                   |1\\ |</span>
 <span class='comment'>//                                                   |__\\|</span></pre>
 
-<p>Together all the chunks comprise the full tri list. Each time the buffer size is 
+<p>Together all the chunks comprise the full tri list. Each time the buffer size is
 reached, that chunk is fed to <code>f</code>, then this function proceeds using a new buffer
-until a call to <code>quad_edge</code> returns <code>None</code>, indicating there are no more edges left. 
+until a call to <code>quad_edge</code> returns <code>None</code>, indicating there are no more edges left.
 (in which case the last partially filled buffer is sent to <code>f</code>)</p>
 </div></section>
     <section id='search' class="content hidden"></section>

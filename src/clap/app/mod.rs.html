@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.13.0/src/app/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.14.0/src/app/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -2564,7 +2564,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>subcommands</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>subcmds</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
         <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>App</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>
     {
-        <span class='kw'>for</span> <span class='ident'>subcmd</span> <span class='kw'>in</span> <span class='ident'>subcmds</span>.<span class='ident'>into_iter</span>() {
+        <span class='kw'>for</span> <span class='ident'>subcmd</span> <span class='kw'>in</span> <span class='ident'>subcmds</span> {
             <span class='self'>self</span>.<span class='ident'>p</span>.<span class='ident'>add_subcommand</span>(<span class='ident'>subcmd</span>);
         }
         <span class='self'>self</span>

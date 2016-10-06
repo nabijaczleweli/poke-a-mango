@@ -52,7 +52,7 @@
     // some fields omitted
 }</pre><div class='docblock'><p><strong>FixedBitSet</strong> is a simple fixed size set of bits that can
 be enabled (1 / <strong>true</strong>) or disabled (0 / <strong>false</strong>).</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-99' class='srclink' href='../src/fixedbitset/lib.rs.html#27-145' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-99' class='srclink' href='../src/fixedbitset/lib.rs.html#27-158' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.with_capacity' class='method'><code>fn <a href='#method.with_capacity' class='fnname'>with_capacity</a>(bits: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Create a new <strong>FixedBitSet</strong> with a specific number of bits,
 all initially clear.</p>
@@ -65,10 +65,18 @@ all initially clear.</p>
 <strong>false</strong> otherwise.</p>
 
 <p>Note: bits outside the capacity are always disabled.</p>
+
+<p>Note: Also available with index syntax: <code>bitset[bit]</code>.</p>
 </div><h4 id='method.clear' class='method'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Clear all bits.</p>
 </div><h4 id='method.insert' class='method'><code>fn <a href='#method.insert' class='fnname'>insert</a>(&amp;mut self, bit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
-<div class='docblock'><p><strong>Panics</strong> if <strong>bit</strong> is out of bounds.</p>
+<div class='docblock'><p>Enable <code>bit</code>.</p>
+
+<p><strong>Panics</strong> if <strong>bit</strong> is out of bounds.</p>
+</div><h4 id='method.put' class='method'><code>fn <a href='#method.put' class='fnname'>put</a>(&amp;mut self, bit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Enable <code>bit</code>, and return its previous value.</p>
+
+<p><strong>Panics</strong> if <strong>bit</strong> is out of bounds.</p>
 </div><h4 id='method.set' class='method'><code>fn <a href='#method.set' class='fnname'>set</a>(&amp;mut self, bit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, enabled: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></h4>
 <div class='docblock'><p><strong>Panics</strong> if <strong>bit</strong> is out of bounds.</p>
 </div><h4 id='method.copy_bit' class='method'><code>fn <a href='#method.copy_bit' class='fnname'>copy_bit</a>(&amp;mut self, from: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, to: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
@@ -111,12 +119,12 @@ will cause <code>contains</code> to return potentially incorrect results for bit
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-89' class='srclink' href='../src/fixedbitset/lib.rs.html#20' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-151' class='srclink' href='../src/fixedbitset/lib.rs.html#147-156' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-156' class='srclink' href='../src/fixedbitset/lib.rs.html#160-169' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; Self</code></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
 </div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-154' class='srclink' href='../src/fixedbitset/lib.rs.html#163-176' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='struct' href='../fixedbitset/struct.FixedBitSet.html' title='fixedbitset::FixedBitSet'>FixedBitSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-159' class='srclink' href='../src/fixedbitset/lib.rs.html#176-189' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>Return <strong>true</strong> if the bit is enabled in the bitset,
 or <strong>false</strong> otherwise.</p>
 

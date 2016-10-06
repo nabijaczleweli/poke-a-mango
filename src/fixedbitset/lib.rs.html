@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/fixedbitset-0.1.2/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/fixedbitset-0.1.4/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -283,6 +283,21 @@
 <span id="239">239</span>
 <span id="240">240</span>
 <span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! **FixedBitSet** is a simple fixed size set of bits.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;https://docs.rs/fixedbitset/0.1/&quot;</span>)]</span>
@@ -326,17 +341,11 @@
     
     <span class='doccomment'>/// Grow capacity to **bits**, all new bits initialized to zero</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>grow</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bits</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>let</span> (<span class='kw-2'>mut</span> <span class='ident'>cur_blocks</span>, <span class='ident'>rem</span>) <span class='op'>=</span> <span class='ident'>div_rem</span>(<span class='self'>self</span>.<span class='ident'>length</span>, <span class='ident'>BITS</span>);
-        <span class='ident'>cur_blocks</span> <span class='op'>+=</span> (<span class='ident'>rem</span> <span class='op'>&gt;</span> <span class='number'>0</span>) <span class='kw'>as</span> <span class='ident'>usize</span>;
-
         <span class='kw'>let</span> (<span class='kw-2'>mut</span> <span class='ident'>blocks</span>, <span class='ident'>rem</span>) <span class='op'>=</span> <span class='ident'>div_rem</span>(<span class='ident'>bits</span>, <span class='ident'>BITS</span>);
         <span class='ident'>blocks</span> <span class='op'>+=</span> (<span class='ident'>rem</span> <span class='op'>&gt;</span> <span class='number'>0</span>) <span class='kw'>as</span> <span class='ident'>usize</span>;
         <span class='kw'>if</span> <span class='ident'>bits</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>length</span> {
             <span class='self'>self</span>.<span class='ident'>length</span> <span class='op'>=</span> <span class='ident'>bits</span>;
-            <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>reserve</span>(<span class='ident'>blocks</span> <span class='op'>-</span> <span class='ident'>cur_blocks</span>);
-            <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>blocks</span> <span class='op'>-</span> <span class='ident'>cur_blocks</span> {
-                <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
-            }
+            <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>resize</span>(<span class='ident'>blocks</span>, <span class='number'>0</span>);
         }
     }
 
@@ -348,6 +357,8 @@
     <span class='doccomment'>/// **false** otherwise.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Note: bits outside the capacity are always disabled.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Note: Also available with index syntax: `bitset[bit]`.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>bit</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
@@ -367,6 +378,8 @@
         }
     }
 
+    <span class='doccomment'>/// Enable `bit`.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// **Panics** if **bit** is out of bounds.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bit</span>: <span class='ident'>usize</span>)
@@ -375,6 +388,22 @@
         <span class='kw'>let</span> (<span class='ident'>block</span>, <span class='ident'>i</span>) <span class='op'>=</span> <span class='ident'>div_rem</span>(<span class='ident'>bit</span>, <span class='ident'>BITS</span>);
         <span class='kw'>unsafe</span> {
             <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>block</span>) <span class='op'>|=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='ident'>i</span>;
+        }
+    }
+
+    <span class='doccomment'>/// Enable `bit`, and return its previous value.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// **Panics** if **bit** is out of bounds.</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>put</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bit</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
+    {
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>bit</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>length</span>);
+        <span class='kw'>let</span> (<span class='ident'>block</span>, <span class='ident'>i</span>) <span class='op'>=</span> <span class='ident'>div_rem</span>(<span class='ident'>bit</span>, <span class='ident'>BITS</span>);
+        <span class='kw'>unsafe</span> {
+            <span class='kw'>let</span> <span class='ident'>word</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>block</span>);
+            <span class='kw'>let</span> <span class='ident'>prev</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>word</span> <span class='kw-2'>&amp;</span> (<span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='ident'>i</span>) <span class='op'>!=</span> <span class='number'>0</span>;
+            <span class='op'>*</span><span class='ident'>word</span> <span class='op'>|=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='ident'>i</span>;
+            <span class='ident'>prev</span>
         }
     }
 
@@ -400,7 +429,6 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_bit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>from</span>: <span class='ident'>usize</span>, <span class='ident'>to</span>: <span class='ident'>usize</span>)
     {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>from</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>length</span>);
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>to</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>length</span>);
         <span class='kw'>let</span> (<span class='ident'>to_block</span>, <span class='ident'>t</span>) <span class='op'>=</span> <span class='ident'>div_rem</span>(<span class='ident'>to</span>, <span class='ident'>BITS</span>);
         <span class='kw'>let</span> <span class='ident'>enabled</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>contains</span>(<span class='ident'>from</span>);
@@ -518,6 +546,8 @@
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>fb</span>.<span class='ident'>contains</span>(<span class='number'>1</span>));
     <span class='ident'>fb</span>.<span class='ident'>copy_bit</span>(<span class='number'>1</span>, <span class='number'>42</span>);
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>fb</span>.<span class='ident'>contains</span>(<span class='number'>42</span>));
+    <span class='ident'>fb</span>.<span class='ident'>copy_bit</span>(<span class='number'>1024</span>, <span class='number'>42</span>);
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>fb</span>[<span class='number'>42</span>]);
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>

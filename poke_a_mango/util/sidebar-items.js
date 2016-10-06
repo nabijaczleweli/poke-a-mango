@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["uppercase_first","Uppercase the first character of the supplied string."]],"static":[["FRUITS","Default fruit names."]]});
+initSidebarItems({"fn":[["fruit_name","Get the fruit name from the format used in `GameStatus::Playing::fruit`."],["uppercase_first","Uppercase the first character of the supplied string."]],"static":[["FRUITS","Default fruit names."]]});

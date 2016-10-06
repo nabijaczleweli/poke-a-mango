@@ -47,13 +47,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/poke_a_mango/src/lib.rs.html#1-157' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/poke_a_mango/src/lib.rs.html#1-160' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>What all the kool kidz are playing these days</p>
 
 <h1 id='library-doc' class='section-header'><a href='#library-doc'>Library doc</a></h1>
 <p>This library is used by <code>poke-a-mango</code> itself for all its function and is therefore contains all necessary functions.</p>
 
 <h2 id='data-flow' class='section-header'><a href='#data-flow'>Data flow</a></h2>
+<h4 id='with-conrod' class='section-header'><a href='#with-conrod'>With <code>conrod</code></a></h4>
 <pre><code class="language-plaintext">Options::parse()
 |&gt; create_window()
 |&gt; Widgets::new()
@@ -65,24 +66,23 @@
 |&gt; [check for states requiring usercode handling and act accordingly]
 </code></pre>
 
+<h4 id='with-a-different-ui' class='section-header'><a href='#with-a-different-ui'>With a different UI</a></h4>
+<pre><code class="language-plaintext">Options::parse()
+|&gt; state::*()
+|&gt; [check for states requiring usercode handling and act accordingly]
+</code></pre>
+
 <h3 id='prose-explanation' class='section-header'><a href='#prose-explanation'>Prose explanation</a></h3>
 <p>First, get an <code>Options</code> instance, be it via a struct-literal or <code>Options::parse()</code>;
 or don&#39;t and just create the individual arguments manually.</p>
 
-<p>Then, use <code>ops::load_image()</code>. If you know your image&#39;s format, great. If you don&#39;t, get it via <code>ops::guess_format()</code>.</p>
+<p>Then, use <code>create_window()</code> and a new <code>conrod::Ui</code>, follow up with creating a new <code>Widgets</code> instance.</p>
 
-<p>After that resize the image to an output-ready size provided by <code>ops::image_resized_size()</code> with <code>resize_image()</code>.
-<code>ops::image_resized_size()</code> takes into consideration using two pixels per cell in the output functions,
-so the size it returns is twice as tall as the terminal output size passed to it.</p>
-
-<p>Finally, call <code>ops::write_ansi()</code>/<code>ops::write_ansi_truecolor()</code>/<code>ops::write_no_ansi()</code> depending on your liking with the
-resulting image.</p>
-
-<p>Or, if you want to display images manually, use <code>ops::create_colourtable()</code> to create an approximate colours table and
-display it, for example, with <code>ncurses</code>.</p>
+<p>After that, among normally displaying and processing events with <code>conrod::Ui</code> call <code>Widgets::update()</code> each update event.
+That sometimes produces <code>GameState</code>s that need action from you and you need to handle them manually.</p>
 
 <h3 id='example' class='section-header'><a href='#example'>Example</a></h3>
-<p>This is a semi-complete example, the only thing it lacks is event handling and rendering.</p>
+<p>This is a semi-complete example, as it lacks event handling, rendering and UI setup which have been omitted for brevity.</p>
 
 <pre class='rust rust-example-rendered'>
 <span class='kw'>let</span> <span class='ident'>opts</span> <span class='op'>=</span> <span class='ident'>Options</span>::<span class='ident'>parse</span>();
