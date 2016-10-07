@@ -455,14 +455,14 @@
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # use poke_a_mango::ops::{state, Difficulty, GameState};</span>
 <span class='doccomment'>/// # use poke_a_mango::util::fruit_name;</span>
-<span class='doccomment'>/// # let was_mango = true;</span>
+<span class='doccomment'>/// # let previous_fruit = None;</span>
 <span class='doccomment'>/// # let mango_button_clicked = true;</span>
 <span class='doccomment'>/// let mut state = GameState::Playing {</span>
 <span class='doccomment'>///     difficulty: Difficulty::Hard,</span>
 <span class='doccomment'>///     score: 12,</span>
 <span class='doccomment'>///     fruit: None,</span>
 <span class='doccomment'>/// };</span>
-<span class='doccomment'>/// state::end_mango(&amp;mut state, mango_button_clicked, was_mango);</span>
+<span class='doccomment'>/// state::end_mango(&amp;mut state, mango_button_clicked, previous_fruit.is_none());</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end_mango</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>, <span class='ident'>clicked</span>: <span class='ident'>bool</span>, <span class='ident'>was_mango</span>: <span class='ident'>bool</span>) {
     <span class='kw'>if</span> <span class='ident'>clicked</span> {
