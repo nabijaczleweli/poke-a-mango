@@ -181,14 +181,14 @@ pub fn tick_mango(s: &mut GameState) -> Option<usize> {
 /// ```
 /// # use poke_a_mango::ops::{state, Difficulty, GameState};
 /// # use poke_a_mango::util::fruit_name;
-/// # let was_mango = true;
+/// # let previous_fruit = Some(0);
 /// # let mango_button_clicked = true;
 /// let mut state = GameState::Playing {
 ///     difficulty: Difficulty::Hard,
 ///     score: 12,
 ///     fruit: None,
 /// };
-/// state::end_mango(&mut state, mango_button_clicked, was_mango);
+/// state::end_mango(&mut state, mango_button_clicked, previous_fruit.is_none());
 /// ```
 pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
     if clicked {
