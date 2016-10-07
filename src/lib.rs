@@ -1,5 +1,23 @@
 //! What all the kool kidz are playing these days
 //!
+//! ## Features
+//!
+//! Easily navigable menus!
+//!
+//! ![Start menu screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_start_menu.png)
+//!
+//! Extensive leaderboard system!
+//!
+//! ![Leaderboard screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_leaderboard.png)
+//!
+//! A wide variety of difficulty modes!
+//!
+//! ![Difficulty selection screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)
+//!
+//! Exciting gameplay that will have you glued to the screen for hours on end!
+//!
+//! ![Gameplay screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_gameplay.png)
+//!
 //! # Library doc
 //!
 //! This library is used by `poke-a-mango` itself for all its function and is therefore contains all necessary functions.
