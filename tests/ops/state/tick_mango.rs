@@ -26,7 +26,7 @@ fn from_playing_mango() {
     assert_eq!(state::tick_mango(&mut s), None);
 
     match s {
-        GameState::Playing { difficulty, score, fruit: _ } => {
+        GameState::Playing { difficulty, score, .. } => {
             assert_eq!(score, 101);
             assert_eq!(difficulty, Difficulty::Easy);
         }
@@ -44,7 +44,7 @@ fn from_playing_not_mango() {
     assert_eq!(state::tick_mango(&mut s), Some(0));
 
     match s {
-        GameState::Playing { difficulty, score, fruit: _ } => {
+        GameState::Playing { difficulty, score, .. } => {
             assert_eq!(score, 101);
             assert_eq!(difficulty, Difficulty::Easy);
         }

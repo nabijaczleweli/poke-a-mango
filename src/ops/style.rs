@@ -23,7 +23,7 @@ use conrod::widget::Button;
 /// butan.set(buttid, &mut ui_widgets);
 /// # }
 /// ```
-pub fn set_button_style<'a, S>(button: &mut Button<'a, S>) {
+pub fn set_button_style<S>(button: &mut Button<S>) {
     button.style.color = Some(TRANSPARENT);
     button.style.border = None;
     button.style.border_color = Some(TRANSPARENT);

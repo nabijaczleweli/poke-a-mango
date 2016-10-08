@@ -187,8 +187,8 @@ impl Widgets {
     /// # }
     /// ```
     pub fn update(&self, mut ui_wdgts: UiCell, mut cur_state: &mut GameState) {
-        match cur_state {
-            &mut GameState::MainMenu => {
+        match *cur_state {
+            GameState::MainMenu => {
                 Canvas::new()
                     .flow_down(&[(self.start_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.leaderboard_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -210,7 +210,7 @@ impl Widgets {
                     state::press_exit(cur_state);
                 }
             }
-            &mut GameState::ChooseDifficulty => {
+            GameState::ChooseDifficulty => {
                 Canvas::new()
                     .flow_down(&[(self.easy_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.normal_button_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -237,7 +237,7 @@ impl Widgets {
                     state::press_back(cur_state);
                 }
             }
-            &mut GameState::Playing { .. } => {
+            GameState::Playing { .. } => {
                 Canvas::new()
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)), (self.mango_button_canvas, Canvas::new().color(DARK_CHARCOAL))])
                     .set(self.main_canvas, &mut ui_wdgts);
@@ -251,7 +251,7 @@ impl Widgets {
                 let mango_button_clicked = mango_button.set(self.mango_button, &mut ui_wdgts).was_clicked();
                 state::end_mango(cur_state, mango_button_clicked, last_fruit.is_none());
             }
-            &mut GameState::GameOver { difficulty: _, score, name: _ } => {
+            GameState::GameOver { score, .. } => {
                 Canvas::new()
                     .flow_down(&[(self.top_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
                                  (self.score_label_canvas, Canvas::new().color(DARK_CHARCOAL)),
@@ -263,7 +263,7 @@ impl Widgets {
                 Widgets::paddded_text("Game over", self.top_label_canvas, Align::Middle).set(self.top_label, &mut ui_wdgts);
                 Widgets::paddded_text(&format!("Score: {}", score), self.score_label_canvas, Align::Middle).set(self.score_label, &mut ui_wdgts);
 
-                let (mut pressed, correct_name) = if let &mut GameState::GameOver { difficulty: _, score: _, ref mut name } = cur_state {
+                let (mut pressed, correct_name) = if let GameState::GameOver { ref mut name, .. } = *cur_state {
                     let name_c = name.clone();
                     let name_input = TextBox::new(&name_c)
                         .color(DARK_CHARCOAL)
@@ -298,8 +298,8 @@ impl Widgets {
                     state::press_back(cur_state);
                 }
             }
-            &mut GameState::DisplayLeaderboard(_) => {
-                if let &mut GameState::DisplayLeaderboard(ref ldrbrd) = cur_state {
+            GameState::DisplayLeaderboard(_) => {
+                if let GameState::DisplayLeaderboard(ref ldrbrd) = *cur_state {
                     let leader_n = cmp::min(ldrbrd.len(), 10);
 
                     let mut canvases = Vec::with_capacity(leader_n + 2);
@@ -324,9 +324,9 @@ impl Widgets {
                     state::press_back(cur_state);
                 }
             }
-            &mut GameState::GameEnded { .. } |
-            &mut GameState::LoadLeaderboard |
-            &mut GameState::Exit => {
+            GameState::GameEnded { .. } |
+            GameState::LoadLeaderboard |
+            GameState::Exit => {
                 Canvas::new().color(DARK_CHARCOAL).set(self.main_canvas, &mut ui_wdgts);
             }
         }
@@ -339,7 +339,7 @@ impl Widgets {
             .mid_top_with_margin_on(canvas, 20.0)
     }
 
-    fn paddded_text<'a>(label: &'a str, canvas: Id, alignment: Align) -> Text<'a> {
+    fn paddded_text(label: &str, canvas: Id, alignment: Align) -> Text {
         Text::new(label)
             .color(WHITE)
             .padded_w_of(canvas, 5.0)
