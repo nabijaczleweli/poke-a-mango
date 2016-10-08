@@ -92,7 +92,7 @@ impl Options {
     fn size_validator(s: String) -> Result<(), String> {
         match Options::parse_size(&s) {
             None => Err(format!("\"{}\" is not a valid size (in format \"NNNxMMM\")", s)),
-            Some((0, _)) | Some((_, 0)) => Err(format!("Can't resize image to size 0")),
+            Some((0, _)) | Some((_, 0)) => Err("Can't resize image to size 0".to_string()),
             Some(_) => Ok(()),
         }
     }

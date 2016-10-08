@@ -52,13 +52,13 @@ impl Error {
     /// ```
     pub fn print_error<W: Write>(&self, err_out: &mut W) {
         match *self {
-            Error::FileParsingFailed { ref desc, ref errors } => {
+            Error::FileParsingFailed { desc, ref errors } => {
                 writeln!(err_out, "Failed to parse {}{}", desc, if errors.is_empty() { '.' } else { ':' }).unwrap();
                 for err in errors {
                     writeln!(err_out, "  {}", err).unwrap()
                 }
             }
-            Error::Io { ref desc, ref op } => {
+            Error::Io { desc, op } => {
                 // Strip the last 'e', if any, so we get correct inflection for continuous times
                 let op = uppercase_first(if op.ends_with('e') {
                     &op[..op.len() - 1]
@@ -67,7 +67,7 @@ impl Error {
                 });
                 writeln!(err_out, "{}ing {} failed.", op, desc).unwrap()
             }
-            Error::Ui { ref desc, ref error } => writeln!(err_out, "Failed to {}: {}.", desc, error).unwrap(),
+            Error::Ui { desc, ref error } => writeln!(err_out, "Failed to {}: {}.", desc, error).unwrap(),
         }
     }
 

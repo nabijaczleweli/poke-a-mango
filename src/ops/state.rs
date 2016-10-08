@@ -2,15 +2,15 @@
 //!
 //! For a UI implementing the use of this see the implementation of `Widgets::update()`.
 
-
 use self::super::{Difficulty, GameState};
 use self::super::super::util::FRUITS;
+use std::mem;
 use rand::{Rng, thread_rng};
 
 
-/// Press the Start button in MainMenu, transforming it into ChooseDifficulty.
+/// Press the Start button in `MainMenu`, transforming it into `ChooseDifficulty`.
 ///
-/// If the supplied argument is not MainMenu, it remains unchanged.
+/// If the supplied argument is not `MainMenu`, it remains unchanged.
 ///
 /// # Examples
 ///
@@ -23,15 +23,14 @@ use rand::{Rng, thread_rng};
 /// }
 /// ```
 pub fn press_start(s: &mut GameState) {
-    match s {
-        &mut GameState::MainMenu => *s = GameState::ChooseDifficulty,
-        _ => {}
+    if let GameState::MainMenu = *s {
+        *s = GameState::ChooseDifficulty
     }
 }
 
-/// Press the Display Highscores button in MainMenu, transforming it into LoadLeaderboard.
+/// Press the Display Highscores button in `MainMenu`, transforming it into `LoadLeaderboard`.
 ///
-/// If the supplied argument is not MainMenu, it remains unchanged.
+/// If the supplied argument is not `MainMenu`, it remains unchanged.
 ///
 /// # Examples
 ///
@@ -45,15 +44,14 @@ pub fn press_start(s: &mut GameState) {
 /// }
 /// ```
 pub fn press_display_highscores(s: &mut GameState) {
-    match s {
-        &mut GameState::MainMenu => *s = GameState::LoadLeaderboard,
-        _ => {}
+    if let GameState::MainMenu = *s {
+        *s = GameState::LoadLeaderboard;
     }
 }
 
-/// Press the Exit button in MainMenu, transforming it into Exit.
+/// Press the Exit button in `MainMenu`, transforming it into `Exit`.
 ///
-/// If the supplied argument is not MainMenu, it remains unchanged.
+/// If the supplied argument is not `MainMenu`, it remains unchanged.
 ///
 /// # Examples
 ///
@@ -67,15 +65,14 @@ pub fn press_display_highscores(s: &mut GameState) {
 /// }
 /// ```
 pub fn press_exit(s: &mut GameState) {
-    match s {
-        &mut GameState::MainMenu => *s = GameState::Exit,
-        _ => {}
+    if let GameState::MainMenu = *s {
+        *s = GameState::Exit;
     }
 }
 
-/// Press one of the Difficulty buttons in ChooseDifficulty, transforming it into Exit.
+/// Press one of the Difficulty buttons in `ChooseDifficulty`, transforming it into `Exit`.
 ///
-/// If the supplied argument is not ChooseDifficulty, it remains unchanged.
+/// If the supplied argument is not `ChooseDifficulty`, it remains unchanged.
 ///
 /// # Examples
 ///
@@ -94,21 +91,18 @@ pub fn press_exit(s: &mut GameState) {
 /// }
 /// ```
 pub fn select_difficulty(s: &mut GameState, difficulty: Difficulty) {
-    match s {
-        &mut GameState::ChooseDifficulty => {
-            *s = GameState::Playing {
-                difficulty: difficulty,
-                score: 0,
-                fruit: None,
-            }
+    if let GameState::ChooseDifficulty = *s {
+        *s = GameState::Playing {
+            difficulty: difficulty,
+            score: 0,
+            fruit: None,
         }
-        _ => {}
     }
 }
 
-/// Press the Back button in ChooseDifficulty, GameOver or DisplayLeaderboard, transforming them into MainMenu.
+/// Press the Back button in `ChooseDifficulty`, `GameOver` or `DisplayLeaderboard`, transforming them into `MainMenu`.
 ///
-/// If the supplied argument is not ChooseDifficulty, GameOver or DisplayLeaderboard, it remains unchanged.
+/// If the supplied argument is not `ChooseDifficulty`, `GameOver` or `DisplayLeaderboard`, it remains unchanged.
 ///
 /// # Examples
 ///
@@ -121,10 +115,10 @@ pub fn select_difficulty(s: &mut GameState, difficulty: Difficulty) {
 /// }
 /// ```
 pub fn press_back(s: &mut GameState) {
-    match s {
-        &mut GameState::ChooseDifficulty |
-        &mut GameState::GameOver { difficulty: _, score: _, name: _ } |
-        &mut GameState::DisplayLeaderboard(_) => *s = GameState::MainMenu,
+    match *s {
+        GameState::ChooseDifficulty |
+        GameState::GameOver { .. } |
+        GameState::DisplayLeaderboard(_) => *s = GameState::MainMenu,
         _ => {}
     }
 }
@@ -151,8 +145,8 @@ pub fn press_back(s: &mut GameState) {
 /// update_label(&mango_button, fruit_name(&fruit));
 /// ```
 pub fn tick_mango(s: &mut GameState) -> Option<usize> {
-    match s {
-        &mut GameState::Playing { difficulty, score: _, ref mut fruit } => {
+    match *s {
+        GameState::Playing { difficulty, ref mut fruit, .. } => {
             let original_fruit = *fruit;
 
             // Difficulty's numeric value is inverted here
@@ -191,39 +185,28 @@ pub fn tick_mango(s: &mut GameState) -> Option<usize> {
 /// state::end_mango(&mut state, mango_button_clicked, previous_fruit.is_none());
 /// ```
 pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
-    if clicked {
-        if was_mango {
-            match s {
-                &mut GameState::Playing { difficulty: _, ref mut score, fruit: _ } => *score += 1,
-                _ => {}
-            }
-        } else {
-            match s {
-                &mut GameState::Playing { difficulty, score, fruit: _ } => {
-                    *s = GameState::GameOver {
-                        difficulty: difficulty,
-                        score: score,
-                        name: "Your name".to_string(),
-                    };
-                }
-                _ => {}
-            }
+    if !clicked { return; }
+    if was_mango {
+        if let GameState::Playing { ref mut score, .. } = *s {
+            *score += 1
         }
+    } else if let GameState::Playing { difficulty, score, .. } = *s {
+        *s = GameState::GameOver {
+            difficulty: difficulty,
+            score: score,
+            name: "Your name".to_string(),
+        };
     }
 }
 
 pub fn submit_name(s: &mut GameState) {
-    match s {
-        &mut GameState::GameOver { difficulty, score, name: _ } => {
-            let name = match s {
-                &mut GameState::GameOver { difficulty: _, score: _, ref name } => name.clone(),
-                _ => "".to_string(),
-            };
-            *s = GameState::GameEnded {
-                name: name,
-                score: ((score as f64) * difficulty.point_weight()).floor() as u64,
-            };
-        }
-        _ => {}
+    let args = if let GameState::GameOver { difficulty, score, ref mut name } = *s {
+        Some((difficulty, score, mem::replace(name, "".to_string())))
+    } else { None };
+    if let Some((difficulty, score, name)) = args {
+        *s = GameState::GameEnded {
+            name: name,
+            score: ((score as f64) * difficulty.point_weight()).floor() as u64,
+        };
     }
 }
