@@ -1,4 +1,4 @@
-version: 0.2.0-{build}
+version: 0.2.1-{build}
 
 branches:
   except:
@@ -24,19 +24,19 @@ build: off
 build_script:
   - git submodule update --init --recursive
   - cargo build --verbose --release
-  - cp target\release\poke-a-mango.exe poke-a-mango-v0.2.0.exe
-  - strip --strip-all --remove-section=.comment --remove-section=.note poke-a-mango-v0.2.0.exe
+  - cp target\release\poke-a-mango.exe poke-a-mango-v0.2.1.exe
+  - strip --strip-all --remove-section=.comment --remove-section=.note poke-a-mango-v0.2.1.exe
 
 test: off
 test_script:
   - cargo test --verbose --release
 
 artifacts:
-  - path: poke-a-mango-v0.2.0.exe
+  - path: poke-a-mango-v0.2.1.exe
 
 deploy:
   provider: GitHub
-  artifact: poke-a-mango-v0.2.0.exe
+  artifact: poke-a-mango-v0.2.1.exe
   auth_token:
     secure: JW6d3ZTAKvL6sKdltMr7B232ZiVV2Noc0onZrVKIV7TmmD55LMSa9HTSd0fWcxd+
   on:

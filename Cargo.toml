@@ -7,9 +7,10 @@ readme = "README.md"
 keywords = ["pokemon", "game", "sfml", "meme"]
 license = "MIT"
 # Remember to also update in appveyor.yml
-version = "0.2.0"
+version = "0.2.1"
 # Remember to also update in poke-a-mango.md
-authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
+           "Andre Bogus <bogusandre@gmail.com>"]
 exclude = ["*.enc"]
 
 
