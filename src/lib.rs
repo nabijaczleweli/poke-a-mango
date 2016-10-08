@@ -12,7 +12,8 @@
 //!
 //! A wide variety of difficulty modes!
 //!
-//! ![Difficulty selection screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)
+//! ![Difficulty selection
+//! screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)
 //!
 //! Exciting gameplay that will have you glued to the screen for hours on end!
 //!
@@ -91,7 +92,8 @@
 //!                 ops::GameState::DisplayLeaderboard(ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml")).unwrap());
 //!         } else if let ops::GameState::GameEnded { .. } = game_state {
 //!             if let ops::GameState::GameEnded { ref name, score } = game_state {
-//!                 ops::Leader::append(ops::Leader::now(name.clone(), score), &opts.config_dir.1.join("leaderboard.toml")).unwrap();
+//!                 ops::Leader::append(ops::Leader::now(name.clone(), score),
+//!                                     &opts.config_dir.1.join("leaderboard.toml")).unwrap();
 //!             }
 //!             game_state = ops::GameState::MainMenu;
 //!         }

@@ -2,10 +2,11 @@
 //!
 //! For a UI implementing the use of this see the implementation of `Widgets::update()`.
 
+
 use self::super::{Difficulty, GameState};
 use self::super::super::util::FRUITS;
-use std::mem;
 use rand::{Rng, thread_rng};
+use std::mem;
 
 
 /// Press the Start button in `MainMenu`, transforming it into `ChooseDifficulty`.
@@ -185,7 +186,10 @@ pub fn tick_mango(s: &mut GameState) -> Option<usize> {
 /// state::end_mango(&mut state, mango_button_clicked, previous_fruit.is_none());
 /// ```
 pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
-    if !clicked { return; }
+    if !clicked {
+        return;
+    }
+
     if was_mango {
         if let GameState::Playing { ref mut score, .. } = *s {
             *score += 1
@@ -202,7 +206,9 @@ pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
 pub fn submit_name(s: &mut GameState) {
     let args = if let GameState::GameOver { difficulty, score, ref mut name } = *s {
         Some((difficulty, score, mem::replace(name, "".to_string())))
-    } else { None };
+    } else {
+        None
+    };
     if let Some((difficulty, score, name)) = args {
         *s = GameState::GameEnded {
             name: name,
