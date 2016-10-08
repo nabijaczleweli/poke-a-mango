@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Absolute","Absolute direction (up, down, left, right)."],["Direction","Represents a direction, either absolute or orientation-dependent."],["Orientation","Describes a vertical or horizontal orientation for a view."],["Relative","Direction relative to an orientation."]]});

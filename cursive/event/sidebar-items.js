@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Event","Represents an event as seen by the application."],["EventResult","Answer to an event notification. The event can be consumed or ignored."],["Key","A non-character key on the keyboard"]],"struct":[["Callback","Callback is a function that can be triggered by an event. It has a mutable access to the cursive root."]]});

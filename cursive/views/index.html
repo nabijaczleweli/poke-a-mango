@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `views` mod in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, views">
+
+    <title>cursive::views - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'views', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class='mod' href=''>views</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-698' class='srclink' href='../../src/cursive/views/mod.rs.html#1-83' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Various views to use when creating the layout.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.BoxView.html'
+                                  title='cursive::views::BoxView'>BoxView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper around another view, with a controlled size.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Button.html'
+                                  title='cursive::views::Button'>Button</a></td>
+                           <td class='docblock short'>
+                                <p>Simple text label with a callback when <Enter> is pressed.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Checkbox.html'
+                                  title='cursive::views::Checkbox'>Checkbox</a></td>
+                           <td class='docblock short'>
+                                <p>Checkable box.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Counter.html'
+                                  title='cursive::views::Counter'>Counter</a></td>
+                           <td class='docblock short'>
+                                <p>Atomic counter used by <code>ProgressBar</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Dialog.html'
+                                  title='cursive::views::Dialog'>Dialog</a></td>
+                           <td class='docblock short'>
+                                <p>Popup-like view with a main content, and optional buttons under it.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.DummyView.html'
+                                  title='cursive::views::DummyView'>DummyView</a></td>
+                           <td class='docblock short'>
+                                <p>Dummy view.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.EditView.html'
+                                  title='cursive::views::EditView'>EditView</a></td>
+                           <td class='docblock short'>
+                                <p>Input box where the user can enter and edit text.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.IdView.html'
+                                  title='cursive::views::IdView'>IdView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper view that allows to select its content with a fixed string id.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.KeyEventView.html'
+                                  title='cursive::views::KeyEventView'>KeyEventView</a></td>
+                           <td class='docblock short'>
+                                <p>A simple wrapper view that catches some ignored event from its child.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.LinearLayout.html'
+                                  title='cursive::views::LinearLayout'>LinearLayout</a></td>
+                           <td class='docblock short'>
+                                <p>Arranges its children linearly according to its orientation.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ListView.html'
+                                  title='cursive::views::ListView'>ListView</a></td>
+                           <td class='docblock short'>
+                                <p>Displays a scrollable list of elements.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.MenuPopup.html'
+                                  title='cursive::views::MenuPopup'>MenuPopup</a></td>
+                           <td class='docblock short'>
+                                <p>Popup that shows a list of items.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Menubar.html'
+                                  title='cursive::views::Menubar'>Menubar</a></td>
+                           <td class='docblock short'>
+                                <p>Shows a single-line list of items, with pop-up menus when one is selected.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Panel.html'
+                                  title='cursive::views::Panel'>Panel</a></td>
+                           <td class='docblock short'>
+                                <p>Draws a border around a wrapped view.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ProgressBar.html'
+                                  title='cursive::views::ProgressBar'>ProgressBar</a></td>
+                           <td class='docblock short'>
+                                <p>Animated bar showing a progress value.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.RadioButton.html'
+                                  title='cursive::views::RadioButton'>RadioButton</a></td>
+                           <td class='docblock short'>
+                                <p>Variant of <code>Checkbox</code> arranged in group.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.RadioGroup.html'
+                                  title='cursive::views::RadioGroup'>RadioGroup</a></td>
+                           <td class='docblock short'>
+                                <p>Group to coordinate multiple radio buttons.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SelectView.html'
+                                  title='cursive::views::SelectView'>SelectView</a></td>
+                           <td class='docblock short'>
+                                <p>View to select an item among a list.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ShadowView.html'
+                                  title='cursive::views::ShadowView'>ShadowView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper view that adds a shadow.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SizedView.html'
+                                  title='cursive::views::SizedView'>SizedView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper around a view that remembers its size.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SliderView.html'
+                                  title='cursive::views::SliderView'>SliderView</a></td>
+                           <td class='docblock short'>
+                                <p>A horizontal or vertical slider.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.StackView.html'
+                                  title='cursive::views::StackView'>StackView</a></td>
+                           <td class='docblock short'>
+                                <p>Simple stack of views.
+Only the top-most view is active and can receive input.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TextArea.html'
+                                  title='cursive::views::TextArea'>TextArea</a></td>
+                           <td class='docblock short'>
+                                <p>Multi-lines text editor.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TextView.html'
+                                  title='cursive::views::TextView'>TextView</a></td>
+                           <td class='docblock short'>
+                                <p>A simple view showing a fixed text</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TrackedView.html'
+                                  title='cursive::views::TrackedView'>TrackedView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper around a view that remembers its position.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

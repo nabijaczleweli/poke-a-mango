@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ProgressBar` struct in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ProgressBar">
+
+    <title>cursive::views::ProgressBar - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'ProgressBar', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class='struct' href=''>ProgressBar</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1798' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#64-70' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ProgressBar {
+    // some fields omitted
+}</pre><div class='docblock'><p>Animated bar showing a progress value.</p>
+
+<p>This bar has an internal counter, and adapts the length of the displayed
+bar to the relative position of the counter between a minimum and maximum
+values.</p>
+
+<p>It also prints a customizable text in the center of the bar, which
+defaults to the progression percentage.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>bar</span> <span class='op'>=</span> <span class='ident'>ProgressBar</span>::<span class='ident'>new</span>()
+                      .<span class='ident'>with_task</span>(<span class='op'>|</span><span class='ident'>counter</span><span class='op'>|</span> {
+                          <span class='comment'>// This closure is called in parallel.</span>
+                          <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>100</span> {
+                              <span class='comment'>// Here we can communicate some</span>
+                              <span class='comment'>// advancement back to the bar.</span>
+                              <span class='ident'>counter</span>.<span class='ident'>tick</span>(<span class='number'>1</span>);
+                          }
+                      });</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1815' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#86-196' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
+<div class='docblock'><p>Creates a new progress bar.</p>
+
+<p>Default values:</p>
+
+<ul>
+<li><code>min</code>: 0</li>
+<li><code>max</code>: 100</li>
+<li><code>value</code>: 0</li>
+</ul>
+</div><h4 id='method.with_value' class='method'><code>fn <a href='#method.with_value' class='fnname'>with_value</a>(self, value: <a class='struct' href='../../cursive/views/struct.Counter.html' title='cursive::views::Counter'>Counter</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the value to follow.</p>
+
+<p>Use this to manually control the progress to display
+by directly modifying the value pointed to by <code>value</code>.</p>
+</div><h4 id='method.start' class='method'><code>fn <a href='#method.start' class='fnname'>start</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='struct' href='../../cursive/views/struct.Counter.html' title='cursive::views::Counter'>Counter</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;(&amp;mut self, f: F)</code></h4>
+<div class='docblock'><p>Starts a function in a separate thread, and monitor the progress.</p>
+
+<p><code>f</code> will be given a <code>Counter</code> to increment the bar&#39;s progress.</p>
+
+<p>This does not reset the value, so it can be called several times
+to advance the progress in multiple sessions.</p>
+</div><h4 id='method.with_task' class='method'><code>fn <a href='#method.with_task' class='fnname'>with_task</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='struct' href='../../cursive/views/struct.Counter.html' title='cursive::views::Counter'>Counter</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;(self, task: F) -&gt; Self</code></h4>
+<div class='docblock'><p>Starts a function in a separate thread, and monitor the progress.</p>
+
+<p>Chainable variant.</p>
+</div><h4 id='method.with_label' class='method'><code>fn <a href='#method.with_label' class='fnname'>with_label</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a> + 'static&gt;(self, label_maker: F) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the label generator.</p>
+
+<p>The given function will be called with <code>(value, (min, max))</code>.
+Its output will be used as the label to print inside the progress bar.</p>
+
+<p>The default one shows a percentage progress:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>fn</span> <span class='ident'>make_percentage</span>(<span class='ident'>value</span>: <span class='ident'>usize</span>, (<span class='ident'>min</span>, <span class='ident'>max</span>): (<span class='ident'>usize</span>, <span class='ident'>usize</span>)) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
+    <span class='kw'>let</span> <span class='ident'>percent</span> <span class='op'>=</span> <span class='number'>101</span> <span class='op'>*</span> (<span class='ident'>value</span> <span class='op'>-</span> <span class='ident'>min</span>) <span class='op'>/</span> (<span class='number'>1</span> <span class='op'>+</span> <span class='ident'>max</span> <span class='op'>-</span> <span class='ident'>min</span>);
+    <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{} %&quot;</span>, <span class='ident'>percent</span>)
+}</pre>
+</div><h4 id='method.min' class='method'><code>fn <a href='#method.min' class='fnname'>min</a>(self, min: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the minimum value.</p>
+
+<p>When <code>value</code> equals <code>min</code>, the bar is at the minimum level.</p>
+
+<p>If <code>self.min &gt; max</code>, <code>self.min</code> is set to <code>max</code>.</p>
+</div><h4 id='method.max' class='method'><code>fn <a href='#method.max' class='fnname'>max</a>(self, max: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the maximum value.</p>
+
+<p>When <code>value</code> equals <code>max</code>, the bar is at the maximum level.</p>
+
+<p>If <code>min &gt; self.max</code>, <code>self.max</code> is set to <code>min</code>.</p>
+</div><h4 id='method.range' class='method'><code>fn <a href='#method.range' class='fnname'>range</a>(self, min: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, max: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the <code>min</code> and <code>max</code> range for the value.</p>
+
+<p>If <code>min &gt; max</code>, swap the two values.</p>
+</div><h4 id='method.set_value' class='method'><code>fn <a href='#method.set_value' class='fnname'>set_value</a>(&amp;mut self, value: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+<div class='docblock'><p>Sets the current value.</p>
+
+<p>Value is clamped between <code>min</code> and <code>max</code>.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1813' class='srclink' href='../../src/cursive/lib.rs.html#75-79' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1847' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#198-226' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.draw' class='method'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></h4>
+<div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
+</div><h4 id='method.on_event' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h4>
+<div class='docblock'><p>Called when a key was pressed. <a href="../../cursive/view/trait.View.html#method.on_event">Read more</a></p>
+</div><h4 id='method.get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, constraint: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+<div class='docblock'><p>Returns the minimum size the view requires with the given restrictions. <a href="../../cursive/view/trait.View.html#method.get_min_size">Read more</a></p>
+</div><h4 id='method.needs_relayout' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Returns <code>true</code> if the view content changed since last layout phase. <a href="../../cursive/view/trait.View.html#method.needs_relayout">Read more</a></p>
+</div><h4 id='method.layout' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.layout' class='fnname'>layout</a>(&amp;mut self, <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></h4>
+<div class='docblock'><p>Called once the size for this view has been decided, <a href="../../cursive/view/trait.View.html#method.layout">Read more</a></p>
+</div><h4 id='method.find_any' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.find_any' class='fnname'>find_any</a>(&amp;mut self, &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></h4>
+<div class='docblock'><p>Finds the view pointed to by the given path. <a href="../../cursive/view/trait.View.html#method.find_any">Read more</a></p>
+</div><h4 id='method.take_focus' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This view is offered focus. Will it take it? <a href="../../cursive/view/trait.View.html#method.take_focus">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

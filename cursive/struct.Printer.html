@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Printer` struct in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Printer">
+
+    <title>cursive::Printer - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'Printer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>cursive</a>::<wbr><a class='struct' href=''>Printer</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-3522' class='srclink' href='../src/cursive/printer.rs.html#15-26' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Printer&lt;'a&gt; {
+    pub offset: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>,
+    pub size: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>,
+    pub focused: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
+    pub theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a>,
+    // some fields omitted
+}</pre><div class='docblock'><p>Convenient interface to draw on a subset of the screen.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.offset' class='structfield'><code>offset: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code>
+                           </span><span class='stab '></span><div class='docblock'><p>Offset into the window this printer should start drawing at.</p>
+</div><span id='structfield.size' class='structfield'><code>size: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code>
+                           </span><span class='stab '></span><div class='docblock'><p>Size of the area we are allowed to draw on.</p>
+</div><span id='structfield.focused' class='structfield'><code>focused: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
+                           </span><span class='stab '></span><div class='docblock'><p>Whether the view to draw is currently focused or not.</p>
+</div><span id='structfield.theme' class='structfield'><code>theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code>
+                           </span><span class='stab '></span><div class='docblock'><p>Currently used theme</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3529' class='srclink' href='../src/cursive/printer.rs.html#28-244' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.print' class='method'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, pos: S, text: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
+<div class='docblock'><p>Prints some text at the given position relative to the window.</p>
+</div><h4 id='method.print_vline' class='method'><code>fn <a href='#method.print_vline' class='fnname'>print_vline</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, start: T, len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, c: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
+<div class='docblock'><p>Prints a vertical line using the given character.</p>
+</div><h4 id='method.print_hline' class='method'><code>fn <a href='#method.print_hline' class='fnname'>print_hline</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, start: T, len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, c: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
+<div class='docblock'><p>Prints a horizontal line using the given character.</p>
+</div><h4 id='method.with_color' class='method'><code>fn <a href='#method.with_color' class='fnname'>with_color</a>&lt;F&gt;(&amp;self, c: <a class='enum' href='../cursive/theme/enum.ColorStyle.html' title='cursive::theme::ColorStyle'>ColorStyle</a>, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</span></code></h4>
+<div class='docblock'><p>Call the given closure with a colored printer,
+that will apply the given color on prints.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
+    <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>,<span class='number'>0</span>), <span class='string'>&quot;This text is highlighted!&quot;</span>);
+});</pre>
+</div><h4 id='method.with_effect' class='method'><code>fn <a href='#method.with_effect' class='fnname'>with_effect</a>&lt;F&gt;(&amp;self, effect: <a class='enum' href='../cursive/theme/enum.Effect.html' title='cursive::theme::Effect'>Effect</a>, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</span></code></h4>
+<div class='docblock'><p>Same as <code>with_color</code>, but apply a ncurses style instead,
+like <code>ncurses::A_BOLD()</code> or <code>ncurses::A_REVERSE()</code>.</p>
+
+<p>Will probably use a cursive enum some day.</p>
+</div><h4 id='method.print_box' class='method'><code>fn <a href='#method.print_box' class='fnname'>print_box</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;,&nbsp;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, start: T, size: S, invert: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></h4>
+<div class='docblock'><p>Prints a rectangular box.</p>
+
+<p>If <code>invert</code> is <code>true</code>, and the theme uses <code>Outset</code> borders, then the
+box will use an &quot;inset&quot; style instead.</p>
+
+<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='ident'>printer</span>.<span class='ident'>print_box</span>((<span class='number'>0</span>,<span class='number'>0</span>), (<span class='number'>6</span>,<span class='number'>4</span>), <span class='bool-val'>false</span>);</pre>
+</div><h4 id='method.with_high_border' class='method'><code>fn <a href='#method.with_high_border' class='fnname'>with_high_border</a>&lt;F&gt;(&amp;self, invert: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</span></code></h4>
+<div class='docblock'><p>Runs the given function using a color depending on the theme.</p>
+
+<ul>
+<li>If the theme&#39;s borders is <code>None</code>, return without calling <code>f</code>.</li>
+<li>If the theme&#39;s borders is &quot;outset&quot; and <code>invert</code> is <code>false</code>,
+use <code>ColorStyle::Tertiary</code>.</li>
+<li>Otherwise, use <code>ColorStyle::Primary</code>.</li>
+</ul>
+</div><h4 id='method.with_low_border' class='method'><code>fn <a href='#method.with_low_border' class='fnname'>with_low_border</a>&lt;F&gt;(&amp;self, invert: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</span></code></h4>
+<div class='docblock'><p>Runs the given function using a color depending on the theme.</p>
+
+<ul>
+<li>If the theme&#39;s borders is <code>None</code>, return without calling <code>f</code>.</li>
+<li>If the theme&#39;s borders is &quot;outset&quot; and <code>invert</code> is <code>true</code>,
+use <code>ColorStyle::Tertiary</code>.</li>
+<li>Otherwise, use <code>ColorStyle::Primary</code>.</li>
+</ul>
+</div><h4 id='method.with_selection' class='method'><code>fn <a href='#method.with_selection' class='fnname'>with_selection</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)&gt;(&amp;self, selection: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, f: F)</code></h4>
+<div class='docblock'><p>Apply a selection style and call the given function.</p>
+
+<ul>
+<li>If <code>selection</code> is <code>false</code>, simply uses <code>ColorStyle::Primary</code>.</li>
+<li>If <code>selection</code> is <code>true</code>:
+
+<ul>
+<li>If the printer currently has the focus,
+uses <code>ColorStyle::Highlight</code>.</li>
+<li>Otherwise, uses <code>ColorStyle::HighlightInactive</code>.</li>
+</ul></li>
+</ul>
+</div><h4 id='method.print_hdelim' class='method'><code>fn <a href='#method.print_hdelim' class='fnname'>print_hdelim</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, start: T, len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+<div class='docblock'><p>Prints a horizontal delimiter with side border <code>├</code> and <code>┤</code>.</p>
+</div><h4 id='method.sub_printer' class='method'><code>fn <a href='#method.sub_printer' class='fnname'>sub_printer</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;,&nbsp;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;'a self, offset: S, size: T, focused: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Returns a printer on a subset of this one&#39;s area.</p>
+</div><h4 id='method.offset' class='method'><code>fn <a href='#method.offset' class='fnname'>offset</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, offset: S, focused: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a></code></h4>
+<div class='docblock'><p>Returns a sub-printer with the given offset.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

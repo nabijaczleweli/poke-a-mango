@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `MenuPopup` struct in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, MenuPopup">
+
+    <title>cursive::views::MenuPopup - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'MenuPopup', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class='struct' href=''>MenuPopup</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1646' class='srclink' href='../../src/cursive/views/menu_popup.rs.html#18-25' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct MenuPopup {
+    // some fields omitted
+}</pre><div class='docblock'><p>Popup that shows a list of items.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/views/struct.MenuPopup.html' title='cursive::views::MenuPopup'>MenuPopup</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1653' class='srclink' href='../../src/cursive/views/menu_popup.rs.html#27-146' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(menu: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html' title='alloc::rc::Rc'>Rc</a>&lt;<a class='struct' href='../../cursive/menu/struct.MenuTree.html' title='cursive::menu::MenuTree'>MenuTree</a>&gt;) -&gt; Self</code></h4>
+<div class='docblock'><p>Creates a new <code>MenuPopup</code> using the given menu tree.</p>
+</div><h4 id='method.set_focus' class='method'><code>fn <a href='#method.set_focus' class='fnname'>set_focus</a>(&amp;mut self, focus: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+<div class='docblock'><p>Sets the currently focused element.</p>
+</div><h4 id='method.focus' class='method'><code>fn <a href='#method.focus' class='fnname'>focus</a>(self, focus: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the currently focused element.</p>
+
+<p>Chainable variant.</p>
+</div><h4 id='method.align' class='method'><code>fn <a href='#method.align' class='fnname'>align</a>(self, align: <a class='struct' href='../../cursive/align/struct.Align.html' title='cursive::align::Align'>Align</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets the alignment for this view.</p>
+</div><h4 id='method.on_dismiss' class='method'><code>fn <a href='#method.on_dismiss' class='fnname'>on_dismiss</a>&lt;F:&nbsp;'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>)&gt;(self, f: F) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets a callback to be used when this view is actively dismissed.</p>
+
+<p>(When the user hits <ESC>)</p>
+</div><h4 id='method.on_action' class='method'><code>fn <a href='#method.on_action' class='fnname'>on_action</a>&lt;F:&nbsp;'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>)&gt;(self, f: F) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets a callback to be used when a leaf is activated.</p>
+
+<p>Will also be called if a leaf from a subtree is activated.</p>
+
+<p>Usually used to hide the parent view.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/views/struct.MenuPopup.html' title='cursive::views::MenuPopup'>MenuPopup</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1702' class='srclink' href='../../src/cursive/views/menu_popup.rs.html#148-279' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.draw' class='method'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></h4>
+<div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
+</div><h4 id='method.get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+<div class='docblock'><p>Returns the minimum size the view requires with the given restrictions. <a href="../../cursive/view/trait.View.html#method.get_min_size">Read more</a></p>
+</div><h4 id='method.on_event' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, event: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h4>
+<div class='docblock'><p>Called when a key was pressed. <a href="../../cursive/view/trait.View.html#method.on_event">Read more</a></p>
+</div><h4 id='method.layout' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.layout' class='fnname'>layout</a>(&amp;mut self, size: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></h4>
+<div class='docblock'><p>Called once the size for this view has been decided, <a href="../../cursive/view/trait.View.html#method.layout">Read more</a></p>
+</div><h4 id='method.needs_relayout' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Returns <code>true</code> if the view content changed since last layout phase. <a href="../../cursive/view/trait.View.html#method.needs_relayout">Read more</a></p>
+</div><h4 id='method.find_any' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.find_any' class='fnname'>find_any</a>(&amp;mut self, &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></h4>
+<div class='docblock'><p>Finds the view pointed to by the given path. <a href="../../cursive/view/trait.View.html#method.find_any">Read more</a></p>
+</div><h4 id='method.take_focus' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This view is offered focus. Will it take it? <a href="../../cursive/view/trait.View.html#method.take_focus">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

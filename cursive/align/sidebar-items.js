@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["HAlign","Horizontal alignment"],["VAlign","Vertical alignment"]],"struct":[["Align","Specifies the alignment along both horizontal and vertical directions."]]});
