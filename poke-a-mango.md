@@ -49,6 +49,7 @@ Exit values and possible errors:
 ## AUTHOR
 
 Written by nabijaczleweli &lt;<nabijaczleweli@gmail.com>&gt;
+       and Andre Bogus &lt;<bogusandre@gmail.com>&gt;
 
 ## REPORTING BUGS
 
