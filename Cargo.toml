@@ -30,8 +30,20 @@ rand = "0.3"
 version = "0.2"
 features = ["rustc-serialize"]
 
+[dependencies.cursive]
+version = "0.3"
+features = ["pancurses"]
+default-features = false
+
 
 [[bin]]
 name = "poke-a-mango"
+path = "src/main-gui.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "poke-a-mango-tui"
+path = "src/main-tui.rs"
 test = false
 doc = false
