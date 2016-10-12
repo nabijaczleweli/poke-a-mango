@@ -1,10 +1,10 @@
 [package]
 name = "poke-a-mango"
-description = "Display images in your terminal, kind of"
+description = "What all the kool kidz are playing these days"
 documentation = "https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/doc/poke_a_mango/index.html"
 repository = "https://github.com/nabijaczleweli/poke-a-mango"
 readme = "README.md"
-keywords = ["pokemon", "game", "sfml", "meme"]
+keywords = ["pokemon", "go", "game", "meme"]
 license = "MIT"
 # Remember to also update in appveyor.yml
 version = "0.2.1"
