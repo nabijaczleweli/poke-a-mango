@@ -4,7 +4,7 @@ cache: cargo
 
 matrix:
   include:
-    - env: LANGUAGE=Rust DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../poke-a-mango-$TRAVIS_TAG"
+    - env: LANGUAGE=Rust DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../poke-a-mango*-$TRAVIS_TAG"
       language: rust
       rust: stable
     - env: LANGUAGE=Rust
@@ -51,7 +51,9 @@ script:
 after_success:
   - if [ "$LANGUAGE" == "Rust" ] && [ "$DEPLOY" ] && [ "$TRAVIS_TAG" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
       cp target/release/poke-a-mango "$TRAVIS_BUILD_DIR/../poke-a-mango-$TRAVIS_TAG";
+      cp target/release/poke-a-mango-tui "$TRAVIS_BUILD_DIR/../poke-a-mango-tui-$TRAVIS_TAG";
       strip --strip-all --remove-section=.comment --remove-section=.note "$TRAVIS_BUILD_DIR/../poke-a-mango-$TRAVIS_TAG";
+      strip --strip-all --remove-section=.comment --remove-section=.note "$TRAVIS_BUILD_DIR/../poke-a-mango-tui-$TRAVIS_TAG";
     fi
   - if [ "$LANGUAGE" == "Rust-doc" ]; then
       curl -SL https://keybase.io/nabijaczleweli/key.asc | gpg --import;
@@ -94,6 +96,7 @@ deploy:
   provider: releases
   api_key:
     secure: "Kup10FaHwewIzHn/KyZv/loMVT+RL/U8l+Me1oduCTHf71p2G+iMUwXGip14zYi7Z2lrZZU+X+uz6jNKt7vhbDxy/ebcqZJ5pyahqsIlNFqJKzOHxCXolnuFYV1BKpA61i7mh8jrkJjFUZCh9U/B4NNhoRHl+b+VZlJszrcgfXsveC8BlYKi7qivNwdBvYtjYSCtFsVETW67fWOhzZjmuJEZXdLyBnhroe+TAVa4P8Ti4HIGggnjWS+LqV3M3sQCWn18Kfn74dWYbs3d3E92Phw7wRmRyuLTAp2RCoxDWcbXbgJDBFhkh80vlW8EOK0Hrf8bdsSbZznMHMrkJ9Med536QrFSmIQRWEd4NVQ0so9eIOPZi3nKxfAfSqGfHz7+LdfORlmNAUtPHhZTTJasZdcxUk3tdaA+PYY8RzBlbec2hXcuPVNKw6XOc+D6Th+olwDMbafx61dQB4th5WvmhwHfZYgLNzzw8EuMPePs1ZHyG3KFpCNR6Q0/fshCK1NbDbiw8v5BUWrQ7mwnx3Tkeb5NJ2MXjBdjb0KAXQIZsPcc5vfhliACRbEayDwo8gDzA/wjU4dCS2gsK5uSrIGVxRZIQEz98shRzjyt3zFP4Kqf2cFRaHdm4dkUyboZ6YtbxMvc3lHdNtd5wf/7ne2gtD9Odqc8Eim0cGNZ9rD4xcA="
+  file_glob: true
   file: "$DEPLOY_FILE"
   skip_cleanup: true
   on:

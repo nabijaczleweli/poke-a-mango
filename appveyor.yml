@@ -25,7 +25,9 @@ build_script:
   - git submodule update --init --recursive
   - cargo build --verbose --release
   - cp target\release\poke-a-mango.exe poke-a-mango-v0.2.1.exe
+  - cp target\release\poke-a-mango-tui.exe poke-a-mango-tui-v0.2.1.exe
   - strip --strip-all --remove-section=.comment --remove-section=.note poke-a-mango-v0.2.1.exe
+  - strip --strip-all --remove-section=.comment --remove-section=.note poke-a-mango-tui-v0.2.1.exe
 
 test: off
 test_script:
@@ -33,10 +35,11 @@ test_script:
 
 artifacts:
   - path: poke-a-mango-v0.2.1.exe
+  - path: poke-a-mango-tui-v0.2.1.exe
 
 deploy:
   provider: GitHub
-  artifact: poke-a-mango-v0.2.1.exe
+  artifact: /.*\.exe/
   auth_token:
     secure: JW6d3ZTAKvL6sKdltMr7B232ZiVV2Noc0onZrVKIV7TmmD55LMSa9HTSd0fWcxd+
   on:
