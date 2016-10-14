@@ -260,6 +260,28 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Manual `GameState` manipulation, to be used when implementing a UI.</span>
 <span class='doccomment'>//!</span>
@@ -466,6 +488,28 @@
     }
 }
 
+<span class='doccomment'>/// Finalise name editing and sum up the score.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// If the supplied argument is not `GameOver`, it remains unchanged.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// # Examples</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// ```</span>
+<span class='doccomment'>/// # use poke_a_mango::ops::{state, Difficulty, GameState};</span>
+<span class='doccomment'>/// # struct TextEdit;</span>
+<span class='doccomment'>/// # impl TextEdit {</span>
+<span class='doccomment'>/// #     fn text(&amp;self) -&gt; &amp;&#39;static str {</span>
+<span class='doccomment'>/// #         &quot;наб&quot;</span>
+<span class='doccomment'>/// #     }</span>
+<span class='doccomment'>/// # }</span>
+<span class='doccomment'>/// # let name_input = TextEdit;</span>
+<span class='doccomment'>/// let mut state = GameState::GameOver {</span>
+<span class='doccomment'>///     difficulty: Difficulty::Hard,</span>
+<span class='doccomment'>///     score: 12,</span>
+<span class='doccomment'>///     name: name_input.text().to_string(),</span>
+<span class='doccomment'>/// };</span>
+<span class='doccomment'>/// state::submit_name(&amp;mut state);</span>
+<span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>submit_name</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>) {
     <span class='kw'>let</span> <span class='ident'>args</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { <span class='ident'>difficulty</span>, <span class='ident'>score</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>name</span> } <span class='op'>=</span> <span class='op'>*</span><span class='ident'>s</span> {
         <span class='prelude-val'>Some</span>((<span class='ident'>difficulty</span>, <span class='ident'>score</span>, <span class='ident'>mem</span>::<span class='ident'>replace</span>(<span class='ident'>name</span>, <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>())))
