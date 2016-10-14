@@ -1,6 +1,9 @@
 //! Module containing various utility functions.
 
 
+use std::iter;
+
+
 /// Default fruit names.
 pub static FRUITS: &'static [&'static str] = &["Avocado", "Banana", "Melon", "Orange", "Pear", "Watermelon"];
 
@@ -36,4 +39,16 @@ pub fn fruit_name(fruit: &Option<usize>) -> &'static str {
         Some(i) => FRUITS[i],
         None => "Mango",
     }
+}
+
+/// Create a string consisting of `n` repetitions of `what`.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::util::mul_str;
+/// assert_eq!(mul_str("Го! ", 3), "Го! Го! Го! ".to_string());
+/// ```
+pub fn mul_str(what: &str, n: usize) -> String {
+    iter::repeat(what).take(n).collect()
 }
