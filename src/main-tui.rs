@@ -41,10 +41,6 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
 fn setup_ui(screens: (ScreenId, ScreenId, ScreenId), ui: &mut Cursive, p: &Path) {
     let (main_menu_screen, choose_difficulty_screen, highscores_screen) = screens;
 
-    // ui.set_screen(highscores_screen);
-    // TODO: load the leaderboard
-    // ui.add_layer(LinearLayout::vertical().child(Button::new("Back", move |ui| ui.set_screen(main_menu_screen))));
-
     ui.set_screen(choose_difficulty_screen);
     // TODO: difficulty selection
     ui.add_layer(LinearLayout::vertical().child(Button::new("Back", move |ui| ui.set_screen(main_menu_screen))));
@@ -65,7 +61,6 @@ fn setup_leaderboard(screen: ScreenId, back_screen: ScreenId, ui: &mut Cursive, 
     screen.pop_layer();
 
     let ldrbrd = leaderboard_to_string_form(poke_a_mango::ops::Leader::read(&p.join("leaderboard.toml")).expect("Failed to load leaderboard"));
-    write!(&mut stderr(), "{:?}", ldrbrd).unwrap();
     let mut layout = LinearLayout::vertical();
     for ldr in ldrbrd.into_iter() {
         layout.add_child(TextView::new(ldr));
