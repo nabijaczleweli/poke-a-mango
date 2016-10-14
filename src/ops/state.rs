@@ -203,6 +203,28 @@ pub fn end_mango(s: &mut GameState, clicked: bool, was_mango: bool) {
     }
 }
 
+/// Finalise name editing and sum up the score.
+///
+/// If the supplied argument is not `GameOver`, it remains unchanged.
+///
+/// # Examples
+///
+/// ```
+/// # use poke_a_mango::ops::{state, Difficulty, GameState};
+/// # struct TextEdit;
+/// # impl TextEdit {
+/// #     fn text(&self) -> &'static str {
+/// #         "наб"
+/// #     }
+/// # }
+/// # let name_input = TextEdit;
+/// let mut state = GameState::GameOver {
+///     difficulty: Difficulty::Hard,
+///     score: 12,
+///     name: name_input.text().to_string(),
+/// };
+/// state::submit_name(&mut state);
+/// ```
 pub fn submit_name(s: &mut GameState) {
     let args = if let GameState::GameOver { difficulty, score, ref mut name } = *s {
         Some((difficulty, score, mem::replace(name, "".to_string())))
