@@ -138,6 +138,16 @@ impl Difficulty {
         }
     }
 
+    /// Get the difficulty from its numeric value.
+    pub fn from_numeric(num: u32) -> Option<Self> {
+        match num {
+            1 => Some(Difficulty::Easy),
+            2 => Some(Difficulty::Normal),
+            3 => Some(Difficulty::Hard),
+            _ => None,
+        }
+    }
+
     /// How to much to multiply the player's points for sorting.
     ///
     /// Points on Easy are worth half, and on Hard - twice the normal amount.
