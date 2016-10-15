@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/backend/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/backend/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -71,21 +71,42 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>event</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>;
 
-<span class='comment'>// Module is not named `ncurses` to avoir naming conflict</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;termion&quot;</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>termion</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;bear-lib-terminal&quot;</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>blt</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ncurses&quot;</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;pancurses&quot;</span>))]</span>
 <span class='kw'>mod</span> <span class='ident'>curses</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>curses</span>::<span class='ident'>NcursesBackend</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ncurses&quot;</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;pancurses&quot;</span>))]</span>
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>curses</span>::<span class='op'>*</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;termion&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>termion</span>::<span class='op'>*</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;bear-lib-terminal&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>blt</span>::<span class='op'>*</span>;
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Backend</span> {
     <span class='kw'>fn</span> <span class='ident'>init</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class='comment'>// TODO: take `self` by value?</span>
     <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>clear</span>();
-    <span class='kw'>fn</span> <span class='ident'>refresh</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+    <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+    <span class='kw'>fn</span> <span class='ident'>refresh</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
 
     <span class='kw'>fn</span> <span class='ident'>has_colors</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
@@ -98,6 +119,7 @@
     <span class='kw'>fn</span> <span class='ident'>set_refresh_rate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fps</span>: <span class='ident'>u32</span>);
     <span class='kw'>fn</span> <span class='ident'>screen_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>);
 
+    <span class='comment'>// TODO: unify those into a single method?</span>
     <span class='kw'>fn</span> <span class='ident'>with_color</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
     <span class='kw'>fn</span> <span class='ident'>with_effect</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>effect</span>: <span class='ident'>theme</span>::<span class='ident'>Effect</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
 }

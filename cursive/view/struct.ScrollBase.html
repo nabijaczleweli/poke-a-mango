@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-533' class='srclink' href='../../src/cursive/view/scroll.rs.html#12-30' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-542' class='srclink' href='../../src/cursive/view/scroll.rs.html#12-30' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ScrollBase {
     pub start_line: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
     pub content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
@@ -74,7 +74,7 @@ but it can be helpful if you create your own Views.</p>
 to draw the scrollbar inside.)</p>
 </div><span id='structfield.right_padding' class='structfield'><code>right_padding: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
                            </span><span class='stab '></span><div class='docblock'><p>Blank between the text and the scrollbar.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-539' class='srclink' href='../../src/cursive/view/scroll.rs.html#32-205' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-548' class='srclink' href='../../src/cursive/view/scroll.rs.html#32-205' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new, uninitialized scrollbar.</p>
 </div><h4 id='method.scrollbar_offset' class='method'><code>fn <a href='#method.scrollbar_offset' class='fnname'>scrollbar_offset</a>(self, offset: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
@@ -123,7 +123,7 @@ so it should only print on the first line.</p>
 <span class='ident'>scrollbase</span>.<span class='ident'>draw</span>(<span class='ident'>printer</span>, <span class='op'>|</span><span class='ident'>printer</span>, <span class='ident'>i</span><span class='op'>|</span> {
     <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>,<span class='number'>0</span>), <span class='ident'>lines</span>[<span class='ident'>i</span>]);
 });</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-531' class='srclink' href='../../src/cursive/view/scroll.rs.html#11' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-540' class='srclink' href='../../src/cursive/view/scroll.rs.html#11' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
 </div></div></section>

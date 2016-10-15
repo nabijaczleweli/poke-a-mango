@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/event.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/event.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>event.rs.html -- source</title>
@@ -260,6 +260,25 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! User-input events and their effects.</span>
 <span class='doccomment'>//!</span>
@@ -341,6 +360,15 @@
             <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
         }
     }
+
+    <span class='doccomment'>/// Process this result if it is a callback.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Does nothing otherwise.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>process</span>(<span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) {
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='self'>self</span> {
+            <span class='ident'>cb</span>(<span class='ident'>s</span>);
+        }
+    }
 }
 
 <span class='doccomment'>/// A non-character key on the keyboard</span>
@@ -377,9 +405,14 @@
     <span class='doccomment'>/// Page Down key</span>
     <span class='ident'>PageDown</span>,
 
+    <span class='doccomment'>/// Pause Break key</span>
+    <span class='ident'>PauseBreak</span>,
+
     <span class='doccomment'>/// The 5 in the center of the keypad, when numlock is disabled.</span>
     <span class='ident'>NumpadCenter</span>,
 
+    <span class='doccomment'>/// F0 key</span>
+    <span class='ident'>F0</span>,
     <span class='doccomment'>/// F1 key</span>
     <span class='ident'>F1</span>,
     <span class='doccomment'>/// F2 key</span>
@@ -416,6 +449,7 @@
     <span class='doccomment'>/// If `n == 0 || n &gt; 12`</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_f</span>(<span class='ident'>n</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Key</span> {
         <span class='kw'>match</span> <span class='ident'>n</span> {
+            <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>Key</span>::<span class='ident'>F0</span>,
             <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='ident'>Key</span>::<span class='ident'>F1</span>,
             <span class='number'>2</span> <span class='op'>=&gt;</span> <span class='ident'>Key</span>::<span class='ident'>F2</span>,
             <span class='number'>3</span> <span class='op'>=&gt;</span> <span class='ident'>Key</span>::<span class='ident'>F3</span>,
@@ -466,6 +500,10 @@
 
     <span class='doccomment'>/// An unknown event was received.</span>
     <span class='ident'>Unknown</span>(<span class='ident'>i32</span>),
+
+    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+    <span class='doccomment'>/// The application is about to exit.</span>
+    <span class='ident'>Exit</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Event</span> {

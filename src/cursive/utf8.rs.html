@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/utf8.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/utf8.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>utf8.rs.html -- source</title>
@@ -107,7 +107,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// Returns an error if the stream is invalid utf-8.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_char</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>first</span>: <span class='ident'>u8</span>, <span class='ident'>next</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>char</span>, <span class='ident'>String</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>() <span class='op'>-&gt;</span> <span class='ident'>u8</span>
+    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>
 {
     <span class='kw'>if</span> <span class='ident'>first</span> <span class='op'>&lt;</span> <span class='number'>0x80</span> {
         <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>first</span> <span class='kw'>as</span> <span class='ident'>char</span>);
@@ -128,7 +128,7 @@
 
     <span class='comment'>// We already have one byte, now read the others.</span>
     <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>1</span>..<span class='ident'>n_bytes</span> {
-        <span class='kw'>let</span> <span class='ident'>byte</span> <span class='op'>=</span> <span class='ident'>next</span>();
+        <span class='kw'>let</span> <span class='ident'>byte</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>next</span>().<span class='ident'>ok_or</span>(<span class='string'>&quot;Missing UTF-8 byte&quot;</span>.<span class='ident'>to_string</span>()));
         <span class='kw'>if</span> <span class='ident'>byte</span> <span class='kw-2'>&amp;</span> <span class='number'>0xC0</span> <span class='op'>!=</span> <span class='number'>0x80</span> {
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Found non-continuation byte after leading: \
                                 {}&quot;</span>,

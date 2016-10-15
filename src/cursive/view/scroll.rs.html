@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/view/scroll.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/view/scroll.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>scroll.rs.html -- source</title>
@@ -380,13 +380,13 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # use cursive::view::ScrollBase;</span>
     <span class='doccomment'>/// # use cursive::Printer;</span>
     <span class='doccomment'>/// # use cursive::theme;</span>
-    <span class='doccomment'>/// # use cursive::B;</span>
+    <span class='doccomment'>/// # use cursive::backend::{self, Backend};</span>
     <span class='doccomment'>/// # let scrollbase = ScrollBase::new();</span>
-    <span class='doccomment'>/// # let b = B{};</span>
+    <span class='doccomment'>/// # let b = backend::Concrete::init();</span>
     <span class='doccomment'>/// # let printer = Printer::new((5,1), theme::load_default(), &amp;b);</span>
     <span class='doccomment'>/// # let printer = &amp;printer;</span>
     <span class='doccomment'>/// let lines = [&quot;Line 1&quot;, &quot;Line number 2&quot;];</span>

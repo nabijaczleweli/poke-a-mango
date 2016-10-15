@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/theme.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/theme.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>theme.rs.html -- source</title>
@@ -561,8 +561,6 @@
 <span id="517">517</span>
 <span id="518">518</span>
 <span id="519">519</span>
-<span id="520">520</span>
-<span id="521">521</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Handle colors and themes in the UI.</span>
 <span class='doccomment'>//!</span>
@@ -681,9 +679,7 @@
 <span class='doccomment'>//! ```</span>
 
 
-<span class='kw'>use</span> <span class='ident'>B</span>;
-
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
+<span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='self'>self</span>, <span class='ident'>Backend</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Read</span>;
@@ -796,7 +792,7 @@
     <span class='doccomment'>/// **Don&#39;t use this directly.** Uses [`Cursive::set_theme`] instead.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// [`Cursive::set_theme`]: ../struct.Cursive.html#method.set_theme</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>) {
         <span class='comment'>// Initialize each color with the backend</span>
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>,
                                  <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,

@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-3522' class='srclink' href='../src/cursive/printer.rs.html#15-26' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-3547' class='srclink' href='../src/cursive/printer.rs.html#16-30' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Printer&lt;'a&gt; {
     pub offset: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>,
     pub size: <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>,
@@ -63,8 +63,14 @@
                            </span><span class='stab '></span><div class='docblock'><p>Whether the view to draw is currently focused or not.</p>
 </div><span id='structfield.theme' class='structfield'><code>theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code>
                            </span><span class='stab '></span><div class='docblock'><p>Currently used theme</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3529' class='srclink' href='../src/cursive/printer.rs.html#28-244' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.print' class='method'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, pos: S, text: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3555' class='srclink' href='../src/cursive/printer.rs.html#32-269' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clear' class='method'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;self)</code></h4>
+<div class='docblock'><p>Clear the screen.</p>
+
+<p>Careful with this method, it will discard anything drawn before.</p>
+</div><h4 id='method.is_new' class='method'><code>fn <a href='#method.is_new' class='fnname'>is_new</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Returns <code>true</code> if nothing has been printed yet.</p>
+</div><h4 id='method.print' class='method'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, pos: S, text: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
 <div class='docblock'><p>Prints some text at the given position relative to the window.</p>
 </div><h4 id='method.print_vline' class='method'><code>fn <a href='#method.print_vline' class='fnname'>print_vline</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, start: T, len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, c: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h4>
 <div class='docblock'><p>Prints a vertical line using the given character.</p>

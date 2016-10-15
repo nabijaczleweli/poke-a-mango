@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.82.0/src/ncurses.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.83.0/src/ncurses.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ncurses.rs.html -- source</title>
@@ -3827,15 +3827,15 @@
 {
   <span class='kw'>unsafe</span>
   {
-    <span class='kw'>if</span> <span class='ident'>newscr</span> <span class='op'>!=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>()
+    <span class='kw'>if</span> <span class='ident'>newscr</span>() <span class='op'>!=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>()
     {
-      <span class='kw'>if</span> <span class='ident'>ll</span>::<span class='ident'>is_leaveok</span>(<span class='ident'>newscr</span>) <span class='op'>==</span> <span class='ident'>TRUE</span>
+      <span class='kw'>if</span> <span class='ident'>ll</span>::<span class='ident'>is_leaveok</span>(<span class='ident'>newscr</span>()) <span class='op'>==</span> <span class='ident'>TRUE</span>
       {
         <span class='op'>*</span><span class='ident'>x</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span> <span class='kw'>as</span> <span class='ident'>i32</span>;
         <span class='op'>*</span><span class='ident'>y</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span> <span class='kw'>as</span> <span class='ident'>i32</span>;
       }
       <span class='kw'>else</span>
-      { <span class='ident'>getyx</span>(<span class='ident'>newscr</span>, (<span class='ident'>y</span>), (<span class='ident'>x</span>)); }
+      { <span class='ident'>getyx</span>(<span class='ident'>newscr</span>(), (<span class='ident'>y</span>), (<span class='ident'>x</span>)); }
     }
   }
 }
@@ -3845,16 +3845,16 @@
 {
   <span class='kw'>unsafe</span>
   {
-    <span class='kw'>if</span> <span class='ident'>newscr</span> <span class='op'>!=</span>(<span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>WINDOW</span>)
+    <span class='kw'>if</span> <span class='ident'>newscr</span>() <span class='op'>!=</span>(<span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>WINDOW</span>)
     {
       <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>y</span> <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> <span class='op'>&amp;&amp;</span> <span class='op'>*</span><span class='ident'>x</span> <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span>
       {
-        <span class='ident'>ll</span>::<span class='ident'>leaveok</span>(<span class='ident'>newscr</span>, <span class='number'>1</span>);
+        <span class='ident'>ll</span>::<span class='ident'>leaveok</span>(<span class='ident'>newscr</span>(), <span class='number'>1</span>);
       }
       <span class='kw'>else</span>
       {
-        <span class='ident'>ll</span>::<span class='ident'>leaveok</span>(<span class='ident'>newscr</span>, <span class='number'>0</span>);
-        <span class='ident'>ll</span>::<span class='ident'>wmove</span>(<span class='ident'>newscr</span>, <span class='op'>*</span><span class='ident'>y</span>, <span class='op'>*</span><span class='ident'>x</span>);
+        <span class='ident'>ll</span>::<span class='ident'>leaveok</span>(<span class='ident'>newscr</span>(), <span class='number'>0</span>);
+        <span class='ident'>ll</span>::<span class='ident'>wmove</span>(<span class='ident'>newscr</span>(), <span class='op'>*</span><span class='ident'>y</span>, <span class='op'>*</span><span class='ident'>x</span>);
       }
     }
   }
@@ -3862,7 +3862,7 @@
 
 <span class='comment'>/* Line graphics */</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>NCURSES_ACS</span>(<span class='ident'>c</span>: <span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='ident'>chtype</span> {
-    <span class='kw'>unsafe</span> { <span class='op'>*</span><span class='ident'>acs_map</span>.<span class='ident'>as_ptr</span>().<span class='ident'>offset</span>(<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>isize</span>) }
+    <span class='kw'>unsafe</span> { <span class='op'>*</span><span class='ident'>acs_map</span>().<span class='ident'>as_ptr</span>().<span class='ident'>offset</span>(<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>isize</span>) }
 }
 
 <span class='comment'>/* VT100 symbols begin here */</span>

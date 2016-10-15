@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-703' class='srclink' href='../../src/cursive/views/box_view.rs.html#22-35' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-712' class='srclink' href='../../src/cursive/views/box_view.rs.html#22-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct BoxView&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Wrapper around another view, with a controlled size.</p>
@@ -66,7 +66,7 @@
 <pre class='rust rust-example-rendered'>
 <span class='comment'>// Creates a 20x4 BoxView with a TextView content.</span>
 <span class='kw'>let</span> <span class='ident'>view</span> <span class='op'>=</span> <span class='ident'>BoxView</span>::<span class='ident'>with_fixed_size</span>((<span class='number'>20</span>,<span class='number'>4</span>), <span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='string'>&quot;Hello!&quot;</span>));</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-708' class='srclink' href='../../src/cursive/views/box_view.rs.html#37-150' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-717' class='srclink' href='../../src/cursive/views/box_view.rs.html#37-150' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(width: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>, height: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>, view: T) -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new <code>BoxView</code> with the given width and height requirements.</p>
 
@@ -112,7 +112,7 @@ would normally ask for, return the child size.</p>
 <div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will enforce a minimum height.</p>
 
 <p>The resulting height will never be less than <code>min_height</code>.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-755' class='srclink' href='../../src/cursive/views/box_view.rs.html#152-179' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-764' class='srclink' href='../../src/cursive/views/box_view.rs.html#152-179' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.V' class='type'><code>type <a href='../../cursive/view/trait.ViewWrapper.html#associatedtype.V' class='type'>V</a> = T</code></h4>
 <div class='docblock'><p>Type that this view wraps.</p>
 </div><h4 id='method.get_view' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::V</code></h4>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -596,6 +596,22 @@
 <span id="552">552</span>
 <span id="553">553</span>
 <span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
@@ -655,7 +671,6 @@
 <span class='doccomment'>//! and log to it instead of stdout.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncurses</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>toml</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_segmentation</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_width</span>;
@@ -701,10 +716,11 @@
 <span class='kw'>mod</span> <span class='ident'>div</span>;
 <span class='kw'>mod</span> <span class='ident'>utf8</span>;
 
-<span class='kw'>mod</span> <span class='ident'>backend</span>;
+<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>backend</span>;
 
 
-<span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='ident'>Backend</span>, <span class='ident'>NcursesBackend</span>};
+<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
 
@@ -739,11 +755,15 @@
     <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Event</span>, <span class='ident'>Callback</span><span class='op'>&gt;</span>,
     <span class='ident'>menubar</span>: <span class='ident'>views</span>::<span class='ident'>Menubar</span>,
 
+    <span class='comment'>// Last layer sizes of the stack view.</span>
+    <span class='comment'>// If it changed, clear the screen.</span>
+    <span class='ident'>last_sizes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>,
+
     <span class='ident'>active_screen</span>: <span class='ident'>ScreenId</span>,
 
     <span class='ident'>running</span>: <span class='ident'>bool</span>,
 
-    <span class='ident'>backend</span>: <span class='ident'>B</span>,
+    <span class='ident'>backend</span>: <span class='ident'>backend</span>::<span class='ident'>Concrete</span>,
 
     <span class='ident'>cb_source</span>: <span class='ident'>mpsc</span>::<span class='ident'>Receiver</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='ident'>Send</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>cb_sink</span>: <span class='ident'>mpsc</span>::<span class='ident'>Sender</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='ident'>Send</span><span class='op'>&gt;&gt;</span>,
@@ -751,16 +771,11 @@
 
 <span class='macro'>new_default</span><span class='macro'>!</span>(<span class='ident'>Cursive</span>);
 
-<span class='comment'>// Use the Ncurses backend.</span>
-<span class='comment'>// TODO: make this feature-driven</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>B</span> <span class='op'>=</span> <span class='ident'>NcursesBackend</span>;
-
 <span class='kw'>impl</span> <span class='ident'>Cursive</span> {
-    <span class='doccomment'>/// Creates a new Cursive root, and initialize ncurses.</span>
+    <span class='doccomment'>/// Creates a new Cursive root, and initialize the back-end.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='comment'>// Default delay is way too long. 25 is imperceptible yet works fine.</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>backend</span> <span class='op'>=</span> <span class='ident'>B</span>::<span class='ident'>init</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>backend</span> <span class='op'>=</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>::<span class='ident'>init</span>();
 
         <span class='kw'>let</span> <span class='ident'>theme</span> <span class='op'>=</span> <span class='ident'>theme</span>::<span class='ident'>load_default</span>();
         <span class='ident'>theme</span>.<span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>backend</span>);
@@ -771,6 +786,7 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>Cursive</span> {
             <span class='ident'>theme</span>: <span class='ident'>theme</span>,
             <span class='ident'>screens</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+            <span class='ident'>last_sizes</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
             <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
             <span class='ident'>menubar</span>: <span class='ident'>views</span>::<span class='ident'>Menubar</span>::<span class='ident'>new</span>(),
             <span class='ident'>active_screen</span>: <span class='number'>0</span>,
@@ -803,7 +819,7 @@
 
     <span class='doccomment'>/// Sets the menubar autohide_menubar feature.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * When enabled, the menu is only visible when selected.</span>
+    <span class='doccomment'>/// * When enabled (default), the menu is only visible when selected.</span>
     <span class='doccomment'>/// * When disabled, the menu is always visible and reserves the top row.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_autohide_menu</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>autohide</span>: <span class='ident'>bool</span>) {
         <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>autohide</span> <span class='op'>=</span> <span class='ident'>autohide</span>;
@@ -815,7 +831,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # extern crate cursive;</span>
     <span class='doccomment'>/// #</span>
     <span class='doccomment'>/// # use cursive::{Cursive, event};</span>
@@ -872,7 +888,14 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_theme</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>theme</span>: <span class='ident'>theme</span>::<span class='ident'>Theme</span>) {
         <span class='self'>self</span>.<span class='ident'>theme</span> <span class='op'>=</span> <span class='ident'>theme</span>;
         <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>backend</span>);
-        <span class='ident'>B</span>::<span class='ident'>clear</span>();
+        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
+    }
+
+    <span class='doccomment'>/// Clears the screen.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// If a view becomes smaller, clearing the screen may be necessary.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
+        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
     }
 
     <span class='doccomment'>/// Loads a theme from the given file.</span>
@@ -945,7 +968,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # extern crate cursive;</span>
     <span class='doccomment'>/// # use cursive::{Cursive, views, view};</span>
     <span class='doccomment'>/// # use cursive::traits::*;</span>
@@ -971,7 +994,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # extern crate cursive;</span>
     <span class='doccomment'>/// # use cursive::{Cursive, views};</span>
     <span class='doccomment'>/// # use cursive::traits::*;</span>
@@ -998,7 +1021,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # extern crate cursive;</span>
     <span class='doccomment'>/// # use cursive::*;</span>
     <span class='doccomment'>/// # fn main() {</span>
@@ -1017,7 +1040,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # extern crate cursive;</span>
     <span class='doccomment'>/// # use cursive::*;</span>
     <span class='doccomment'>/// # fn main() {</span>
@@ -1033,6 +1056,7 @@
     <span class='doccomment'>/// Convenient method to remove a layer from the current screen.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pop_layer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>pop_layer</span>();
+        <span class='self'>self</span>.<span class='ident'>clear</span>();
     }
 
     <span class='comment'>// Handles a key event when it was ignored by the current view</span>
@@ -1063,6 +1087,13 @@
     <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='comment'>// TODO: don&#39;t clone the theme</span>
         <span class='comment'>// Reference it or something</span>
+
+        <span class='kw'>let</span> <span class='ident'>sizes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>screen</span>().<span class='ident'>layer_sizes</span>();
+        <span class='kw'>if</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>last_sizes</span> <span class='op'>!=</span> <span class='kw-2'>&amp;</span><span class='ident'>sizes</span> {
+            <span class='self'>self</span>.<span class='ident'>clear</span>();
+            <span class='self'>self</span>.<span class='ident'>last_sizes</span> <span class='op'>=</span> <span class='ident'>sizes</span>;
+        }
+
         <span class='kw'>let</span> <span class='ident'>printer</span> <span class='op'>=</span> <span class='ident'>Printer</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>screen_size</span>(),
                                    <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>clone</span>(),
                                    <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>backend</span>);
@@ -1085,7 +1116,6 @@
         <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>active_screen</span>;
         <span class='self'>self</span>.<span class='ident'>screens</span>.<span class='ident'>get_mut</span>(<span class='ident'>id</span>).<span class='ident'>unwrap</span>().<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>);
 
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>refresh</span>();
     }
 
     <span class='doccomment'>/// Runs the event loop.</span>
@@ -1110,12 +1140,17 @@
             <span class='comment'>// TODO: Do we need to redraw every view every time?</span>
             <span class='comment'>// (Is this getting repetitive? :p)</span>
             <span class='self'>self</span>.<span class='ident'>draw</span>();
+            <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>refresh</span>();
 
             <span class='comment'>// Wait for next event.</span>
             <span class='comment'>// (If set_fps was called, this returns -1 now and then)</span>
             <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>poll_event</span>();
+            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>Exit</span> {
+                <span class='self'>self</span>.<span class='ident'>quit</span>();
+            }
+
             <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>WindowResize</span> {
-                <span class='ident'>B</span>::<span class='ident'>clear</span>();
+                <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
             }
 
             <span class='comment'>// Event dispatch order:</span>
@@ -1124,10 +1159,7 @@
             <span class='comment'>//     * Current screen (top layer)</span>
             <span class='comment'>// * Global callbacks</span>
             <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>() {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menubar</span>
-                    .<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
-                    <span class='ident'>cb</span>(<span class='self'>self</span>);
-                }
+                <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>).<span class='ident'>process</span>(<span class='self'>self</span>);
             } <span class='kw'>else</span> {
                 <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
                     <span class='comment'>// If the event was ignored,</span>

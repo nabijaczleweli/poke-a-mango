@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1798' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#64-70' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1808' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#64-70' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ProgressBar {
     // some fields omitted
 }</pre><div class='docblock'><p>Animated bar showing a progress value.</p>
@@ -70,7 +70,7 @@ defaults to the progression percentage.</p>
                               <span class='ident'>counter</span>.<span class='ident'>tick</span>(<span class='number'>1</span>);
                           }
                       });</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1815' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#86-196' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1825' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#86-196' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new progress bar.</p>
 
@@ -130,10 +130,10 @@ Its output will be used as the label to print inside the progress bar.</p>
 <div class='docblock'><p>Sets the current value.</p>
 
 <p>Value is clamped between <code>min</code> and <code>max</code>.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1813' class='srclink' href='../../src/cursive/lib.rs.html#75-79' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1823' class='srclink' href='../../src/cursive/lib.rs.html#74-78' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1847' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#198-226' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/views/struct.ProgressBar.html' title='cursive::views::ProgressBar'>ProgressBar</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1857' class='srclink' href='../../src/cursive/views/progress_bar.rs.html#198-226' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.draw' class='method'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></h4>
 <div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
 </div><h4 id='method.on_event' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h4>

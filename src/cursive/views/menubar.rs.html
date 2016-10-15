@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/views/menubar.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/views/menubar.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>menubar.rs.html -- source</title>
@@ -244,10 +244,10 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
+<span id="203">203</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 <span class='kw'>use</span> <span class='ident'>direction</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>menu</span>::<span class='ident'>MenuTree</span>;
@@ -308,7 +308,6 @@
     <span class='doccomment'>/// Hides the menubar.</span>
     <span class='kw'>fn</span> <span class='ident'>hide</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>Inactive</span>;
-        ::<span class='ident'>B</span>::<span class='ident'>clear</span>();
     }
 
     <span class='doccomment'>/// True if we should be receiving events.</span>
@@ -349,7 +348,7 @@
                 <span class='ident'>s</span>.<span class='ident'>pop_layer</span>();
                 <span class='ident'>s</span>.<span class='ident'>select_menubar</span>();
                 <span class='comment'>// Act as if we sent &quot;Right&quot; then &quot;Down&quot;</span>
-                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>));
+                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>)).<span class='ident'>process</span>(<span class='ident'>s</span>);
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>menubar</span>()
                     .<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>)) {
                     <span class='ident'>cb</span>(<span class='ident'>s</span>);
@@ -359,7 +358,7 @@
                 <span class='ident'>s</span>.<span class='ident'>pop_layer</span>();
                 <span class='ident'>s</span>.<span class='ident'>select_menubar</span>();
                 <span class='comment'>// Act as if we sent &quot;Left&quot; then &quot;Down&quot;</span>
-                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>));
+                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>)).<span class='ident'>process</span>(<span class='ident'>s</span>);
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>menubar</span>()
                     .<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>)) {
                     <span class='ident'>cb</span>(<span class='ident'>s</span>);
@@ -391,7 +390,10 @@
 
     <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
         <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Esc</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>hide</span>(),
+            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Esc</span>) <span class='op'>=&gt;</span> {
+                <span class='self'>self</span>.<span class='ident'>hide</span>();
+                <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>with_cb</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>clear</span>());
+            }
             <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
                     <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>-=</span> <span class='number'>1</span>

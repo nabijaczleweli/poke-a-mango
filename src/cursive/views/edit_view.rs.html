@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/views/edit_view.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/views/edit_view.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>edit_view.rs.html -- source</title>
@@ -458,10 +458,6 @@
 <span id="414">414</span>
 <span id="415">415</span>
 <span id="416">416</span>
-<span id="417">417</span>
-<span id="418">418</span>
-<span id="419">419</span>
-<span id="420">420</span>
 </pre><pre class='rust '>
 
 
@@ -486,7 +482,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// [edit example]: https://github.com/gyscos/Cursive/blob/master/examples/edit.rs</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
+<span class='doccomment'>/// ```no_run</span>
 <span class='doccomment'>/// # extern crate cursive;</span>
 <span class='doccomment'>/// # use cursive::Cursive;</span>
 <span class='doccomment'>/// # use cursive::traits::*;</span>
@@ -817,11 +813,7 @@
     <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
 
         <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='ident'>Event</span>::<span class='ident'>Char</span>(<span class='ident'>ch</span>) <span class='op'>=&gt;</span> {
-                <span class='comment'>// Find the byte index of the char at self.cursor</span>
-
-                <span class='self'>self</span>.<span class='ident'>insert</span>(<span class='ident'>ch</span>);
-            }
+            <span class='ident'>Event</span>::<span class='ident'>Char</span>(<span class='ident'>ch</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>insert</span>(<span class='ident'>ch</span>),
             <span class='comment'>// TODO: handle ctrl-key?</span>
             <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Home</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='number'>0</span>,
             <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>End</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>(),

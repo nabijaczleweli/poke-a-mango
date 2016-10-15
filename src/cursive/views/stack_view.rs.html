@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.1/src/views/stack_view.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/views/stack_view.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>stack_view.rs.html -- source</title>
@@ -190,7 +190,6 @@
 <span id="146">146</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
@@ -248,7 +247,6 @@
     <span class='doccomment'>/// Remove the top-most layer.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pop_layer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>pop</span>();
-        ::<span class='ident'>B</span>::<span class='ident'>clear</span>();
     }
 
     <span class='doccomment'>/// Computes the offset of the current top view.</span>
@@ -260,6 +258,11 @@
             <span class='ident'>previous</span> <span class='op'>=</span> <span class='ident'>offset</span>;
         }
         <span class='ident'>previous</span>
+    }
+
+    <span class='doccomment'>/// Returns the size for each layer in this view.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>layer_sizes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>layer</span><span class='op'>|</span> <span class='ident'>layer</span>.<span class='ident'>size</span>).<span class='ident'>collect</span>()
     }
 }
 
@@ -297,9 +300,6 @@
         <span class='kw'>for</span> <span class='ident'>layer</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>layers</span> {
             <span class='comment'>// Give each guy what he asks for, within the budget constraints.</span>
             <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='ident'>size</span>, <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>size</span>));
-            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>layer</span>.<span class='ident'>size</span>.<span class='ident'>fits_in</span>(<span class='ident'>size</span>) {
-                ::<span class='ident'>B</span>::<span class='ident'>clear</span>();
-            }
             <span class='ident'>layer</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>;
             <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>layout</span>(<span class='ident'>layer</span>.<span class='ident'>size</span>);
 

@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-41' class='srclink' href='../../src/cursive/event.rs.html#61-66' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-40' class='srclink' href='../../src/cursive/event.rs.html#61-66' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum EventResult {
     Ignored,
     Consumed(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../cursive/event/struct.Callback.html' title='cursive::event::Callback'>Callback</a>&gt;),
@@ -56,11 +56,15 @@ The event can be consumed or ignored.</p>
 </div><h2 class='variants'>Variants</h2>
 <span id='variant.Ignored' class='variant'><code>Ignored</code></span><div class='docblock'><p>The event was ignored. The parent can keep handling it.</p>
 </div><span id='variant.Consumed' class='variant'><code>Consumed(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../cursive/event/struct.Callback.html' title='cursive::event::Callback'>Callback</a>&gt;)</code></span><div class='docblock'><p>The event was consumed. An optionnal callback to run is attached.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-45' class='srclink' href='../../src/cursive/event.rs.html#68-81' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-44' class='srclink' href='../../src/cursive/event.rs.html#68-90' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.with_cb' class='method'><code>fn <a href='#method.with_cb' class='fnname'>with_cb</a>&lt;F:&nbsp;'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>)&gt;(f: F) -&gt; Self</code></h4>
 <div class='docblock'><p>Convenient method to create <code>Consumed(Some(f))</code></p>
 </div><h4 id='method.is_consumed' class='method'><code>fn <a href='#method.is_consumed' class='fnname'>is_consumed</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Returns <code>true</code> if <code>self</code> is <code>EventResult::Consumed</code>.</p>
+</div><h4 id='method.process' class='method'><code>fn <a href='#method.process' class='fnname'>process</a>(self, s: &amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>)</code></h4>
+<div class='docblock'><p>Process this result if it is a callback.</p>
+
+<p>Does nothing otherwise.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
