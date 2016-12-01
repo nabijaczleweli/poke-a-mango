@@ -1,3 +1,8 @@
+#[cfg(target_os="windows")]
+#[link(name="poke-a-mango-manifest", kind="static")]
+extern "C" {}
+
+
 extern crate piston_window;
 extern crate poke_a_mango;
 extern crate rusttype;

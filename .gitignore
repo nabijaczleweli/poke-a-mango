@@ -6,6 +6,8 @@
 !LICENSE
 !Cargo.toml
 !rustfmt.toml
+!build.rs
+!poke-a-mango-manifest.rc
 !*.sublime-project
 !*.md
 !src

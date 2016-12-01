@@ -6,6 +6,7 @@ repository = "https://github.com/nabijaczleweli/poke-a-mango"
 readme = "README.md"
 keywords = ["pokemon", "go", "game", "meme"]
 license = "MIT"
+build = "build.rs"
 # Remember to also update in appveyor.yml
 version = "0.3.0"
 # Remember to also update in poke-a-mango.md
