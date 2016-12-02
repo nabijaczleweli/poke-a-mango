@@ -16,5 +16,6 @@ fn button() {
                    label_color: Some(WHITE),
                    label_font_size: None,
                    label_x_align: None,
+                   label_font_id: None,
                });
 }

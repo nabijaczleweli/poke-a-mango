@@ -29,7 +29,8 @@ use std::cmp;
 /// #     }
 /// # }
 /// # fn main() {
-/// let mut ui = conrod::UiBuilder::new().build();
+/// # let window_size = [1.0, 2.0];
+/// let mut ui = conrod::UiBuilder::new(window_size).build();
 /// let widgets = Widgets::new(ui.widget_id_generator());
 ///
 /// let mut game_state = GameState::MainMenu;
@@ -92,7 +93,8 @@ impl Widgets {
     /// # extern crate conrod;
     /// # use poke_a_mango::ops::Widgets;
     /// # fn main() {
-    /// let mut ui = conrod::UiBuilder::new().build();
+    /// # let window_size = [1.0, 2.0];
+    /// let mut ui = conrod::UiBuilder::new(window_size).build();
     /// let widgets = Widgets::new(ui.widget_id_generator());
     /// # }
     /// ```
@@ -177,7 +179,7 @@ impl Widgets {
     /// #     }
     /// # }
     /// # fn main() {
-    /// # let mut ui = conrod::UiBuilder::new().build();
+    /// # let mut ui = conrod::UiBuilder::new([1.0, 2.0]).build();
     /// # let widgets = Widgets::new(ui.widget_id_generator());
     /// # let event = Event;
     /// let mut game_state = GameState::MainMenu;

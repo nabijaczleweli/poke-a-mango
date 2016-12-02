@@ -64,9 +64,11 @@
 //!
 //! ```no_run
 //! # extern crate conrod;
+//! # extern crate window;
 //! # extern crate poke_a_mango;
-//! # extern crate piston_window;
-//! # use piston_window::{PistonWindow, UpdateEvent, Window};
+//! # use window::Window;
+//! # use conrod::backend::piston::event::UpdateEvent;
+//! # use conrod::backend::piston::window::{WindowEvents, EventWindow, Window as PistonWindow};
 //! # use poke_a_mango::*;
 //! # fn main() {
 //! #   not_main();
@@ -75,13 +77,15 @@
 //! let opts = Options::parse();
 //!
 //! let mut window: PistonWindow = try!(ops::create_window(opts.desktop_size));
-//! let mut ui = conrod::UiBuilder::new().build();
+//! let window_s = ops::window_size(opts.desktop_size);
+//! let mut ui = conrod::UiBuilder::new([window_s[0] as f64, window_s[1] as f64]).build();
 //! // Set up the UI like normal
 //!
 //! let mut game_state = ops::GameState::MainMenu;
 //! let widgets = ops::Widgets::new(ui.widget_id_generator());
 //!
-//! while let Some(event) = window.next() {
+//! let mut events = WindowEvents::new();
+//! while let Some(event) = window.next(&mut events) {
 //!     event.update(|_| {
 //!         widgets.update(ui.set_widgets(), &mut game_state);
 //!
@@ -158,7 +162,6 @@
 
 
 extern crate rustc_serialize;
-extern crate piston_window;
 #[macro_use]
 extern crate lazy_static;
 extern crate chrono;

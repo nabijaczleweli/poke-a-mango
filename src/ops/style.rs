@@ -13,7 +13,7 @@ use conrod::widget::Button;
 /// # use conrod::widget::{Button, Id};
 /// # use conrod::{UiBuilder, Widget};
 /// # fn main() {
-/// # let mut ui = UiBuilder::new().build();
+/// # let mut ui = UiBuilder::new([1.0, 2.0]).build();
 /// # let mut ui_widgets = ui.set_widgets();
 /// # let buttid = Id::new(1);
 /// let mut butan = Button::new();

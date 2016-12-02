@@ -22,9 +22,9 @@ pub mod state;
 
 pub use self::leader::Leader;
 pub use self::widgets::Widgets;
-pub use self::window::create_window;
 pub use self::style::set_button_style;
 pub use self::game_state::{Difficulty, GameState};
+pub use self::window::{create_window, window_size};
 
 
 fn read_toml_file<T: Decodable>(p: &Path, desc: &'static str) -> Result<T, Error> {

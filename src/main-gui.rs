@@ -3,16 +3,17 @@
 extern "C" {}
 
 
-extern crate piston_window;
 extern crate poke_a_mango;
 extern crate rusttype;
 extern crate conrod;
+extern crate window;
 
+use window::Window;
 use std::io::stderr;
 use std::process::exit;
 use rusttype::FontCollection;
-use conrod::backend::piston_window as conrod_backend;
-use piston_window::{PistonWindow, UpdateEvent, Window};
+use conrod::backend::piston::event::UpdateEvent;
+use conrod::backend::piston::window::{self as conrod_backend, WindowEvents, EventWindow, Window as PistonWindow};
 
 
 fn main() {
@@ -33,7 +34,11 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
     let opts = poke_a_mango::Options::parse();
 
     let mut window: PistonWindow = try!(poke_a_mango::ops::create_window(opts.desktop_size));
-    let mut ui = conrod::UiBuilder::new().build();
+    let mut ui = conrod::UiBuilder::new({
+            let win_s = poke_a_mango::ops::window_size(opts.desktop_size);
+            [win_s[0] as f64, win_s[1] as f64]
+        })
+        .build();
     let mut glyph_cache = conrod_backend::GlyphCache::new(&mut window, opts.desktop_size.0, opts.desktop_size.1);
     let image_map = conrod::image::Map::new();
 
@@ -42,7 +47,8 @@ fn result_main() -> Result<(), poke_a_mango::Error> {
     let mut game_state = poke_a_mango::ops::GameState::MainMenu;
     let widgets = poke_a_mango::ops::Widgets::new(ui.widget_id_generator());
 
-    while let Some(event) = window.next() {
+    let mut events = WindowEvents::new();
+    while let Some(event) = window.next(&mut events) {
         if let Some(e) = conrod_backend::convert_event(event.clone(), &window) {
             ui.handle_event(e);
         }

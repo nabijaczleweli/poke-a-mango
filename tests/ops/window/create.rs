@@ -1,4 +1,4 @@
-use piston_window::{AdvancedWindow, NoWindow, Window};
+use window::{AdvancedWindow, NoWindow, Window};
 use poke_a_mango::ops::create_window;
 use poke_a_mango::Error;
 

@@ -1,4 +1,4 @@
-use piston_window::{BuildFromWindowSettings, WindowSettings};
+use conrod::backend::piston::window::{BuildFromWindowSettings, WindowSettings};
 use self::super::super::Error;
 
 
@@ -14,17 +14,16 @@ use self::super::super::Error;
 /// Create a window for an HD monitor:
 ///
 /// ```
-/// # extern crate piston_window;
 /// # extern crate poke_a_mango;
+/// # extern crate window;
 /// # use poke_a_mango::ops::create_window;
-/// # use piston_window::NoWindow as PistonWindow;
+/// # use window::NoWindow as PistonWindow;
 /// # fn main() {
 /// let window: PistonWindow = create_window((1280, 720)).unwrap();
 /// # }
 /// ```
 pub fn create_window<W: BuildFromWindowSettings>(desktop_size: (u32, u32)) -> Result<W, Error> {
-    let window_w = desktop_size.1 / 3;
-    WindowSettings::new("poke-a-mango", [window_w, window_w * 2])
+    WindowSettings::new("poke-a-mango", window_size(desktop_size))
         .vsync(true)
         .samples(8)
         .build()
@@ -34,4 +33,19 @@ pub fn create_window<W: BuildFromWindowSettings>(desktop_size: (u32, u32)) -> Re
                 error: e,
             }
         })
+}
+
+/// Get the window size from the size of the target desktop.
+///
+/// # Examples
+///
+/// Window size for an HD monitor:
+///
+/// ```
+/// # use poke_a_mango::ops::window_size;
+/// assert_eq!(window_size((1280, 720)), [240, 480]);
+/// ```
+pub fn window_size(desktop_size: (u32, u32)) -> [u32; 2]  {
+    let window_w = desktop_size.1 / 3;
+    [window_w, window_w * 2]
 }
