@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-175' class='srclink' href='../../src/odds/string.rs.html#183-194' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-201' class='srclink' href='../../src/odds/string.rs.html#184-195' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait StrChunksWindows {
     fn <a href='#tymethod.char_chunks' class='fnname'>char_chunks</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharChunks.html' title='odds::string::CharChunks'>CharChunks</a>;
     fn <a href='#tymethod.char_windows' class='fnname'>char_windows</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharWindows.html' title='odds::string::CharWindows'>CharWindows</a>;
@@ -55,10 +55,10 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.char_chunks' class='method stab '><code>fn <a href='#tymethod.char_chunks' class='fnname'>char_chunks</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharChunks.html' title='odds::string::CharChunks'>CharChunks</a></code></h3><div class='docblock'><p>Return an iterator that splits the string in substrings of each <code>n</code>
+        <h3 id='tymethod.char_chunks' class='method stab '><span id='char_chunks.v' class='invisible'><code>fn <a href='#tymethod.char_chunks' class='fnname'>char_chunks</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharChunks.html' title='odds::string::CharChunks'>CharChunks</a></code></span></h3><div class='docblock'><p>Return an iterator that splits the string in substrings of each <code>n</code>
 <code>char</code> per substring. The last item will contain the remainder if
 <code>n</code> does not divide the char length of the string evenly.</p>
-</div><h3 id='tymethod.char_windows' class='method stab '><code>fn <a href='#tymethod.char_windows' class='fnname'>char_windows</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharWindows.html' title='odds::string::CharWindows'>CharWindows</a></code></h3><div class='docblock'><p>Return an iterator that produces substrings of each <code>n</code>
+</div><h3 id='tymethod.char_windows' class='method stab '><span id='char_windows.v' class='invisible'><code>fn <a href='#tymethod.char_windows' class='fnname'>char_windows</a>(&amp;self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../odds/string/struct.CharWindows.html' title='odds::string::CharWindows'>CharWindows</a></code></span></h3><div class='docblock'><p>Return an iterator that produces substrings of each <code>n</code>
 <code>char</code> per substring in a sliding window that advances one char at a time.</p>
 
 <p><strong><em>Panics</em></strong> if <code>n</code> is zero.</p>

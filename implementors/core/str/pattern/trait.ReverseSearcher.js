@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["lazy_static"] = [];implementors["regex_syntax"] = [];implementors["libc"] = [];implementors["shared_library"] = [];implementors["tempfile"] = [];implementors["gl"] = [];implementors["gfx_gl"] = [];implementors["enum_primitive"] = [];implementors["libloading"] = [];implementors["wayland_sys"] = [];implementors["wayland_kbd"] = [];implementors["glutin"] = [];
+implementors["lazy_static"] = [];implementors["libc"] = [];implementors["regex_syntax"] = [];implementors["graphics"] = [];implementors["arrayvec"] = [];implementors["daggy"] = [];implementors["shared_library"] = [];implementors["pancurses"] = [];implementors["tempfile"] = [];implementors["num"] = [];implementors["enum_primitive"] = [];implementors["chrono"] = [];implementors["gfx_core"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);
