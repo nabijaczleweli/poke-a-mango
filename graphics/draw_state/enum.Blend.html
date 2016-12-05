@@ -60,24 +60,24 @@ per blending technique.</p>
 </div><h2 class='variants'>Variants</h2>
 <span id='variant.Alpha' class='variant'><span id='Alpha.v' class='invisible'><code>Alpha</code></span></span><div class='docblock'><p>Alpha blending (allows semi-transparent pixels).</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='ident'>new_dest_color</span> <span class='op'>=</span> <span class='ident'>src_color</span> <span class='op'>*</span> <span class='ident'>src_alpha</span> <span class='op'>+</span> <span class='ident'>dest_color</span> <span class='op'>*</span> (<span class='number'>1</span> <span class='op'>-</span> <span class='ident'>src_alpha</span>)
-<span class='ident'>new_dest_alpha</span> <span class='op'>=</span> <span class='ident'>src_alpha</span> <span class='op'>+</span> <span class='ident'>dest_alpha</span><a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<pre><code class="language-not_rust">new_dest_color = src_color * src_alpha + dest_color * (1 - src_alpha)
+new_dest_alpha = src_alpha + dest_alpha
+</code></pre>
 </div><span id='variant.Add' class='variant'><span id='Add.v' class='invisible'><code>Add</code></span></span><div class='docblock'><p>Additive blending.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='ident'>new_dest_color</span> <span class='op'>=</span> <span class='ident'>src_color</span> <span class='op'>+</span> <span class='ident'>dest_color</span>
-<span class='ident'>new_dest_alpha</span> <span class='op'>=</span> <span class='ident'>src_alpha</span> <span class='op'>+</span> <span class='ident'>dest_alpha</span><a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<pre><code class="language-not_rust">new_dest_color = src_color + dest_color
+new_dest_alpha = src_alpha + dest_alpha
+</code></pre>
 </div><span id='variant.Multiply' class='variant'><span id='Multiply.v' class='invisible'><code>Multiply</code></span></span><div class='docblock'><p>Multiply color components.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='ident'>new_dest_color</span> <span class='op'>=</span> <span class='ident'>src_color</span> <span class='op'>*</span> <span class='ident'>dest_color</span>
-<span class='ident'>new_dest_alpha</span> <span class='op'>=</span> <span class='ident'>src_alpha</span> <span class='op'>*</span> <span class='ident'>dest_alpha</span><a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<pre><code class="language-not_rust">new_dest_color = src_color * dest_color
+new_dest_alpha = src_alpha * dest_alpha
+</code></pre>
 </div><span id='variant.Invert' class='variant'><span id='Invert.v' class='invisible'><code>Invert</code></span></span><div class='docblock'><p>Invert colors when rendering a white shape.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='ident'>new_dest_color</span> <span class='op'>=</span> <span class='ident'>ref_color</span> <span class='op'>-</span> <span class='ident'>src_color</span>
-<span class='ident'>new_dest_alpha</span> <span class='op'>=</span> <span class='ident'>dest_alpha</span><a class='test-arrow' target='_blank' href=''>Run</a></pre>
+<pre><code class="language-not_rust">new_dest_color = ref_color - src_color
+new_dest_alpha = dest_alpha
+</code></pre>
 
 <p>When combining two fragments, subtract the destination color from a constant color
 using the source color as weight. Has an invert effect with the constant color
