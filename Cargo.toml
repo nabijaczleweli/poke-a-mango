@@ -5,6 +5,7 @@ documentation = "https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/doc/poke_a_m
 repository = "https://github.com/nabijaczleweli/poke-a-mango"
 readme = "README.md"
 keywords = ["pokemon", "go", "game", "meme"]
+categories = ["games"]
 license = "MIT"
 build = "build.rs"
 # Remember to also update in appveyor.yml
