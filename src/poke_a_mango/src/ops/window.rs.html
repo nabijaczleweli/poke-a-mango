@@ -79,8 +79,22 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>piston_window</span>::{<span class='ident'>BuildFromWindowSettings</span>, <span class='ident'>WindowSettings</span>};
+<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>backend</span>::<span class='ident'>piston</span>::<span class='ident'>window</span>::{<span class='ident'>BuildFromWindowSettings</span>, <span class='ident'>WindowSettings</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>Error</span>;
 
 
@@ -96,17 +110,16 @@
 <span class='doccomment'>/// Create a window for an HD monitor:</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # extern crate piston_window;</span>
 <span class='doccomment'>/// # extern crate poke_a_mango;</span>
+<span class='doccomment'>/// # extern crate window;</span>
 <span class='doccomment'>/// # use poke_a_mango::ops::create_window;</span>
-<span class='doccomment'>/// # use piston_window::NoWindow as PistonWindow;</span>
+<span class='doccomment'>/// # use window::NoWindow as PistonWindow;</span>
 <span class='doccomment'>/// # fn main() {</span>
 <span class='doccomment'>/// let window: PistonWindow = create_window((1280, 720)).unwrap();</span>
 <span class='doccomment'>/// # }</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_window</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>BuildFromWindowSettings</span><span class='op'>&gt;</span>(<span class='ident'>desktop_size</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>W</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>window_w</span> <span class='op'>=</span> <span class='ident'>desktop_size</span>.<span class='number'>1</span> <span class='op'>/</span> <span class='number'>3</span>;
-    <span class='ident'>WindowSettings</span>::<span class='ident'>new</span>(<span class='string'>&quot;poke-a-mango&quot;</span>, [<span class='ident'>window_w</span>, <span class='ident'>window_w</span> <span class='op'>*</span> <span class='number'>2</span>])
+    <span class='ident'>WindowSettings</span>::<span class='ident'>new</span>(<span class='string'>&quot;poke-a-mango&quot;</span>, <span class='ident'>window_size</span>(<span class='ident'>desktop_size</span>))
         .<span class='ident'>vsync</span>(<span class='bool-val'>true</span>)
         .<span class='ident'>samples</span>(<span class='number'>8</span>)
         .<span class='ident'>build</span>()
@@ -116,6 +129,21 @@
                 <span class='ident'>error</span>: <span class='ident'>e</span>,
             }
         })
+}
+
+<span class='doccomment'>/// Get the window size from the size of the target desktop.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// # Examples</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Window size for an HD monitor:</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// ```</span>
+<span class='doccomment'>/// # use poke_a_mango::ops::window_size;</span>
+<span class='doccomment'>/// assert_eq!(window_size((1280, 720)), [240, 480]);</span>
+<span class='doccomment'>/// ```</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>window_size</span>(<span class='ident'>desktop_size</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> [<span class='ident'>u32</span>; <span class='number'>2</span>]  {
+    <span class='kw'>let</span> <span class='ident'>window_w</span> <span class='op'>=</span> <span class='ident'>desktop_size</span>.<span class='number'>1</span> <span class='op'>/</span> <span class='number'>3</span>;
+    [<span class='ident'>window_w</span>, <span class='ident'>window_w</span> <span class='op'>*</span> <span class='number'>2</span>]
 }
 </pre>
 </section>
@@ -174,11 +202,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "poke_a_mango";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

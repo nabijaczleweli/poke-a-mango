@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.44.0/./src/widget/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.47.4/./src/widget/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -1270,6 +1270,7 @@
 <span id="1226">1226</span>
 <span id="1227">1227</span>
 <span id="1228">1228</span>
+<span id="1229">1229</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Widgets are the core building blocks for every conrod user interface.</span>
 <span class='doccomment'>//!</span>
@@ -1285,7 +1286,6 @@
 
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>id</span>::<span class='ident'>Id</span>;
-<span class='comment'>//pub use self::index::Index;</span>
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>primitive</span>::<span class='ident'>line</span>::{<span class='self'>self</span>, <span class='ident'>Line</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>primitive</span>::<span class='ident'>image</span>::{<span class='self'>self</span>, <span class='ident'>Image</span>};
@@ -1308,6 +1308,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>number_dialer</span>::<span class='ident'>NumberDialer</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>plot_path</span>::<span class='ident'>PlotPath</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>range_slider</span>::<span class='ident'>RangeSlider</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>rounded_rectangle</span>::<span class='ident'>RoundedRectangle</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>scrollbar</span>::<span class='ident'>Scrollbar</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>slider</span>::<span class='ident'>Slider</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>tabs</span>::<span class='ident'>Tabs</span>;
@@ -1330,18 +1331,19 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>primitive</span>;
 
 <span class='comment'>// Widget modules.</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bordered_rectangle</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>button</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>canvas</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>drop_down_list</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>list_select</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>envelope_editor</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>file_navigator</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bordered_rectangle</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>list</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>list_select</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>matrix</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>number_dialer</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>plot_path</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>range_slider</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rounded_rectangle</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>scrollbar</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>slider</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>tabs</span>;
@@ -2556,11 +2558,9 @@
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

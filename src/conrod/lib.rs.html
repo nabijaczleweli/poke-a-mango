@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.44.0/./src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.47.4/./src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -83,6 +83,8 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Conrod</span>
 <span class='doccomment'>//!</span>
@@ -97,6 +99,8 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>input</span> <span class='kw'>as</span> <span class='ident'>piston_input</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rusttype</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;glium&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>glium</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>color</span>::{<span class='ident'>Color</span>, <span class='ident'>Colorable</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>border</span>::{<span class='ident'>Bordering</span>, <span class='ident'>Borderable</span>};
@@ -182,11 +186,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "conrod";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

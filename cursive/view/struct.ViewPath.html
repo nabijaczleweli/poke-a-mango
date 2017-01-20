@@ -47,20 +47,22 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-519' class='srclink' href='../../src/cursive/view/view_path.rs.html#2-6' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-177' class='srclink' href='../../src/cursive/view/view_path.rs.html#2-6' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ViewPath {
     pub path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
 }</pre><div class='docblock'><p>Represents a path to a single view in the layout.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.path' class='structfield'><code>path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code>
-                           </span><span class='stab '></span><div class='docblock'><p>List of turns to make on decision nodes when descending the view tree.
+</div><h2 class='fields'>Fields</h2><span id='structfield.path' class='structfield'>
+                           <span id='path.v' class='invisible'>
+                           <code>path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>List of turns to make on decision nodes when descending the view tree.
 Simple nodes (with one fixed child) are skipped.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ViewPath.html' title='cursive::view::ViewPath'>ViewPath</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-523' class='srclink' href='../../src/cursive/view/view_path.rs.html#10-20' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ViewPath.html' title='cursive::view::ViewPath'>ViewPath</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-179' class='srclink' href='../../src/cursive/view/view_path.rs.html#10-20' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Creates a new empty path.</p>
-</div><h4 id='method.from' class='method'><code>fn <a href='#method.from' class='fnname'>from</a>&lt;T:&nbsp;ToPath&gt;(path: T) -&gt; Self</code></h4>
+</div><h4 id='method.from' class='method'><span id='from.v' class='invisible'><code>fn <a href='#method.from' class='fnname'>from</a>&lt;T:&nbsp;ToPath&gt;(path: T) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Creates a path from the given item.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ViewPath.html' title='cursive::view::ViewPath'>ViewPath</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-521' class='srclink' href='../../src/cursive/lib.rs.html#74-78' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ViewPath.html' title='cursive::view::ViewPath'>ViewPath</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3525' class='srclink' href='../../src/cursive/lib.rs.html#81-85' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -118,11 +120,9 @@ Simple nodes (with one fixed child) are skipped.</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

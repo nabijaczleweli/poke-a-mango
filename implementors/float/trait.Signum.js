@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["float"] = [];implementors["graphics"] = [];
+implementors["float"] = [];implementors["graphics"] = [];implementors["glutin_window"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

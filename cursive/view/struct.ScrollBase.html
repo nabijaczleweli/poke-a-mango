@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-542' class='srclink' href='../../src/cursive/view/scroll.rs.html#12-30' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-3527' class='srclink' href='../../src/cursive/view/scroll.rs.html#12-30' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ScrollBase {
     pub start_line: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
     pub content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
@@ -58,58 +58,68 @@
 
 <p>You&#39;re not supposed to use this directly,
 but it can be helpful if you create your own Views.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.start_line' class='structfield'><code>start_line: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span><span class='stab '></span><div class='docblock'><p>First line visible</p>
-</div><span id='structfield.content_height' class='structfield'><code>content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span><span class='stab '></span><div class='docblock'><p>Content height</p>
-</div><span id='structfield.view_height' class='structfield'><code>view_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span><span class='stab '></span><div class='docblock'><p>Number of lines displayed</p>
-</div><span id='structfield.scrollbar_offset' class='structfield'><code>scrollbar_offset: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span><span class='stab '></span><div class='docblock'><p>Padding for the scrollbar</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.start_line' class='structfield'>
+                           <span id='start_line.v' class='invisible'>
+                           <code>start_line: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>First line visible</p>
+</div><span id='structfield.content_height' class='structfield'>
+                           <span id='content_height.v' class='invisible'>
+                           <code>content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Content height</p>
+</div><span id='structfield.view_height' class='structfield'>
+                           <span id='view_height.v' class='invisible'>
+                           <code>view_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Number of lines displayed</p>
+</div><span id='structfield.scrollbar_offset' class='structfield'>
+                           <span id='scrollbar_offset.v' class='invisible'>
+                           <code>scrollbar_offset: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Padding for the scrollbar</p>
 
 <p>If present, the scrollbar will be shifted
 <code>scrollbar_offset</code> columns to the left.</p>
 
 <p>(Useful when each item includes its own side borders,
 to draw the scrollbar inside.)</p>
-</div><span id='structfield.right_padding' class='structfield'><code>right_padding: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span><span class='stab '></span><div class='docblock'><p>Blank between the text and the scrollbar.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-548' class='srclink' href='../../src/cursive/view/scroll.rs.html#32-205' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
+</div><span id='structfield.right_padding' class='structfield'>
+                           <span id='right_padding.v' class='invisible'>
+                           <code>right_padding: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Blank between the text and the scrollbar.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-196' class='srclink' href='../../src/cursive/view/scroll.rs.html#32-205' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Creates a new, uninitialized scrollbar.</p>
-</div><h4 id='method.scrollbar_offset' class='method'><code>fn <a href='#method.scrollbar_offset' class='fnname'>scrollbar_offset</a>(self, offset: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+</div><h4 id='method.scrollbar_offset' class='method'><span id='scrollbar_offset.v-1' class='invisible'><code>fn <a href='#method.scrollbar_offset' class='fnname'>scrollbar_offset</a>(self, offset: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Shifts the scrollbar toward the inside of the view.</p>
 
 <p>Used by views that draw their side borders in the children.
 Pushing the scrollbar to the left allows it to stay inside
 the borders.</p>
-</div><h4 id='method.right_padding' class='method'><code>fn <a href='#method.right_padding' class='fnname'>right_padding</a>(self, padding: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></h4>
+</div><h4 id='method.right_padding' class='method'><span id='right_padding.v-1' class='invisible'><code>fn <a href='#method.right_padding' class='fnname'>right_padding</a>(self, padding: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Sets the number of blank cells between the text and the scrollbar.</p>
 
 <p>Defaults to 1.</p>
-</div><h4 id='method.set_heights' class='method'><code>fn <a href='#method.set_heights' class='fnname'>set_heights</a>(&amp;mut self, view_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+</div><h4 id='method.set_heights' class='method'><span id='set_heights.v' class='invisible'><code>fn <a href='#method.set_heights' class='fnname'>set_heights</a>(&amp;mut self, view_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, content_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></span></h4>
 <div class='docblock'><p>Call this method whem the content or the view changes.</p>
-</div><h4 id='method.scrollable' class='method'><code>fn <a href='#method.scrollable' class='fnname'>scrollable</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h4 id='method.scrollable' class='method'><span id='scrollable.v' class='invisible'><code>fn <a href='#method.scrollable' class='fnname'>scrollable</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>TRUE</code> if the view needs to scroll.</p>
-</div><h4 id='method.can_scroll_up' class='method'><code>fn <a href='#method.can_scroll_up' class='fnname'>can_scroll_up</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h4 id='method.can_scroll_up' class='method'><span id='can_scroll_up.v' class='invisible'><code>fn <a href='#method.can_scroll_up' class='fnname'>can_scroll_up</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>TRUE</code> unless we are at the top.</p>
-</div><h4 id='method.can_scroll_down' class='method'><code>fn <a href='#method.can_scroll_down' class='fnname'>can_scroll_down</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h4 id='method.can_scroll_down' class='method'><span id='can_scroll_down.v' class='invisible'><code>fn <a href='#method.can_scroll_down' class='fnname'>can_scroll_down</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>TRUE</code> unless we are at the bottom.</p>
-</div><h4 id='method.scroll_top' class='method'><code>fn <a href='#method.scroll_top' class='fnname'>scroll_top</a>(&amp;mut self)</code></h4>
+</div><h4 id='method.scroll_top' class='method'><span id='scroll_top.v' class='invisible'><code>fn <a href='#method.scroll_top' class='fnname'>scroll_top</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Scroll to the top of the view.</p>
-</div><h4 id='method.scroll_to' class='method'><code>fn <a href='#method.scroll_to' class='fnname'>scroll_to</a>(&amp;mut self, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+</div><h4 id='method.scroll_to' class='method'><span id='scroll_to.v' class='invisible'><code>fn <a href='#method.scroll_to' class='fnname'>scroll_to</a>(&amp;mut self, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></span></h4>
 <div class='docblock'><p>Makes sure that the given line is visible, scrolling if needed.</p>
-</div><h4 id='method.scroll_bottom' class='method'><code>fn <a href='#method.scroll_bottom' class='fnname'>scroll_bottom</a>(&amp;mut self)</code></h4>
+</div><h4 id='method.scroll_bottom' class='method'><span id='scroll_bottom.v' class='invisible'><code>fn <a href='#method.scroll_bottom' class='fnname'>scroll_bottom</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Scroll to the bottom of the view.</p>
-</div><h4 id='method.scroll_down' class='method'><code>fn <a href='#method.scroll_down' class='fnname'>scroll_down</a>(&amp;mut self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+</div><h4 id='method.scroll_down' class='method'><span id='scroll_down.v' class='invisible'><code>fn <a href='#method.scroll_down' class='fnname'>scroll_down</a>(&amp;mut self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></span></h4>
 <div class='docblock'><p>Scroll down by the given number of line.</p>
 
 <p>Never further than the bottom of the view.</p>
-</div><h4 id='method.scroll_up' class='method'><code>fn <a href='#method.scroll_up' class='fnname'>scroll_up</a>(&amp;mut self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+</div><h4 id='method.scroll_up' class='method'><span id='scroll_up.v' class='invisible'><code>fn <a href='#method.scroll_up' class='fnname'>scroll_up</a>(&amp;mut self, n: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></span></h4>
 <div class='docblock'><p>Scroll up by the given number of lines.</p>
 
 <p>Never above the top of the view.</p>
-</div><h4 id='method.draw' class='method'><code>fn <a href='#method.draw' class='fnname'>draw</a>&lt;F&gt;(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>, line_drawer: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</span></code></h4>
+</div><h4 id='method.draw' class='method'><span id='draw.v' class='invisible'><code>fn <a href='#method.draw' class='fnname'>draw</a>&lt;F&gt;(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>, line_drawer: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</span></code></span></h4>
 <div class='docblock'><p>Draws the scroll bar and the content using the given drawer.</p>
 
 <p><code>line_drawer</code> will be called once for each line that needs to be drawn.
@@ -123,8 +133,8 @@ so it should only print on the first line.</p>
 <span class='ident'>scrollbase</span>.<span class='ident'>draw</span>(<span class='ident'>printer</span>, <span class='op'>|</span><span class='ident'>printer</span>, <span class='ident'>i</span><span class='op'>|</span> {
     <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>,<span class='number'>0</span>), <span class='ident'>lines</span>[<span class='ident'>i</span>]);
 });</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-540' class='srclink' href='../../src/cursive/view/scroll.rs.html#11' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3533' class='srclink' href='../../src/cursive/view/scroll.rs.html#11' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../cursive/view/struct.ScrollBase.html' title='cursive::view::ScrollBase'>ScrollBase</a></code></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -182,11 +192,9 @@ so it should only print on the first line.</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

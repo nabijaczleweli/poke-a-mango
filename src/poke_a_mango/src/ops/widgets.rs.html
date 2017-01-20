@@ -392,6 +392,8 @@
 <span id="348">348</span>
 <span id="349">349</span>
 <span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Positionable</span>, <span class='ident'>Borderable</span>, <span class='ident'>Colorable</span>, <span class='ident'>Labelable</span>, <span class='ident'>Sizeable</span>, <span class='ident'>Widget</span>, <span class='ident'>UiCell</span>, <span class='ident'>Align</span>};
 <span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>text_box</span>::{<span class='ident'>TextBox</span>, <span class='ident'>Event</span> <span class='kw'>as</span> <span class='ident'>TextBoxEvent</span>};
@@ -424,7 +426,8 @@
 <span class='doccomment'>/// #     }</span>
 <span class='doccomment'>/// # }</span>
 <span class='doccomment'>/// # fn main() {</span>
-<span class='doccomment'>/// let mut ui = conrod::UiBuilder::new().build();</span>
+<span class='doccomment'>/// # let window_size = [1.0, 2.0];</span>
+<span class='doccomment'>/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
 <span class='doccomment'>/// let widgets = Widgets::new(ui.widget_id_generator());</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// let mut game_state = GameState::MainMenu;</span>
@@ -487,7 +490,8 @@
     <span class='doccomment'>/// # extern crate conrod;</span>
     <span class='doccomment'>/// # use poke_a_mango::ops::Widgets;</span>
     <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// let mut ui = conrod::UiBuilder::new().build();</span>
+    <span class='doccomment'>/// # let window_size = [1.0, 2.0];</span>
+    <span class='doccomment'>/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
     <span class='doccomment'>/// let widgets = Widgets::new(ui.widget_id_generator());</span>
     <span class='doccomment'>/// # }</span>
     <span class='doccomment'>/// ```</span>
@@ -572,7 +576,7 @@
     <span class='doccomment'>/// #     }</span>
     <span class='doccomment'>/// # }</span>
     <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// # let mut ui = conrod::UiBuilder::new().build();</span>
+    <span class='doccomment'>/// # let mut ui = conrod::UiBuilder::new([1.0, 2.0]).build();</span>
     <span class='doccomment'>/// # let widgets = Widgets::new(ui.widget_id_generator());</span>
     <span class='doccomment'>/// # let event = Event;</span>
     <span class='doccomment'>/// let mut game_state = GameState::MainMenu;</span>
@@ -800,11 +804,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "poke_a_mango";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

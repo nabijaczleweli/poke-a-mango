@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/printer.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.7/src/printer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>printer.rs.html -- source</title>
@@ -311,6 +311,8 @@
 <span id="267">267</span>
 <span id="268">268</span>
 <span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
 
@@ -361,7 +363,9 @@
 
     <span class='doccomment'>/// Clear the screen.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Careful with this method, it will discard anything drawn before.</span>
+    <span class='doccomment'>/// It will discard anything drawn before.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Users rarely need to call this directly.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
     }
@@ -638,11 +642,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

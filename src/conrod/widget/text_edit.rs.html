@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.44.0/./src/widget/text_edit.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/conrod-0.47.4/./src/widget/text_edit.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>text_edit.rs.html -- source</title>
@@ -815,6 +815,124 @@
 <span id="771">771</span>
 <span id="772">772</span>
 <span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A widget for displaying and mutating multi-line text, given as a `String`.</span>
 
@@ -822,6 +940,7 @@
     <span class='ident'>Align</span>,
     <span class='ident'>Color</span>,
     <span class='ident'>Colorable</span>,
+    <span class='ident'>Dimension</span>,
     <span class='ident'>FontSize</span>,
     <span class='ident'>Point</span>,
     <span class='ident'>Positionable</span>,
@@ -830,6 +949,7 @@
     <span class='ident'>Scalar</span>,
     <span class='ident'>Sizeable</span>,
     <span class='ident'>Widget</span>,
+    <span class='ident'>Ui</span>,
 };
 <span class='kw'>use</span> <span class='ident'>event</span>;
 <span class='kw'>use</span> <span class='ident'>input</span>;
@@ -910,6 +1030,9 @@
         <span class='doccomment'>/// The `start` is always the &quot;anchor&quot; point.</span>
         <span class='ident'>start</span>: <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span>,
         <span class='doccomment'>/// The `end` may be either greater or less than the `start`.</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>/// The `end` is always the logical cursor position, if one is required. For example, when</span>
+        <span class='doccomment'>/// selecting text using `Shift+Right`, `end` is moved.</span>
         <span class='ident'>end</span>: <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span>,
     },
 }
@@ -977,6 +1100,12 @@
         <span class='self'>self</span>.<span class='ident'>align_text_x_middle</span>().<span class='ident'>align_text_y_middle</span>()
     }
 
+    <span class='doccomment'>/// Specify the font used for displaying the text.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>font_id</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>font_id</span>: <span class='ident'>text</span>::<span class='ident'>font</span>::<span class='ident'>Id</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>font_id</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Some</span>(<span class='ident'>font_id</span>));
+        <span class='self'>self</span>
+    }
+
     <span class='macro'>builder_methods</span><span class='macro'>!</span>{
         <span class='kw'>pub</span> <span class='ident'>font_size</span> { <span class='ident'>style</span>.<span class='ident'>font_size</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>FontSize</span>) }
         <span class='kw'>pub</span> <span class='ident'>x_align_text</span> { <span class='ident'>style</span>.<span class='ident'>x_align</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Align</span>) }
@@ -1016,6 +1145,43 @@
 
     <span class='kw'>fn</span> <span class='ident'>style</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Style</span> {
         <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>clone</span>()
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>default_y_dimension</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>ui</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ui</span>) <span class='op'>-&gt;</span> <span class='ident'>Dimension</span> {
+        <span class='comment'>// If the user has specified `restrict_to_height = true`, then we should infer the height</span>
+        <span class='comment'>// using the previous widget as is the default case.</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>restrict_to_height</span>(<span class='kw-2'>&amp;</span><span class='ident'>ui</span>.<span class='ident'>theme</span>) {
+            <span class='kw'>return</span> <span class='ident'>widget</span>::<span class='ident'>default_y_dimension</span>(<span class='self'>self</span>, <span class='ident'>ui</span>);
+        }
+
+        <span class='comment'>// Otherwise the height is unrestricted, and we should infer the height as the total height</span>
+        <span class='comment'>// of the fully styled, wrapped text.</span>
+        <span class='kw'>let</span> <span class='ident'>font</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>font_id</span>(<span class='kw-2'>&amp;</span><span class='ident'>ui</span>.<span class='ident'>theme</span>)
+            .<span class='ident'>or</span>(<span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>ids</span>().<span class='ident'>next</span>())
+            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>id</span><span class='op'>|</span> <span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>get</span>(<span class='ident'>id</span>))
+        {
+            <span class='prelude-val'>Some</span>(<span class='ident'>font</span>) <span class='op'>=&gt;</span> <span class='ident'>font</span>,
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>Dimension</span>::<span class='ident'>Absolute</span>(<span class='number'>0.0</span>),
+        };
+
+        <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>text</span>;
+        <span class='kw'>let</span> <span class='ident'>font_size</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>font_size</span>(<span class='kw-2'>&amp;</span><span class='ident'>ui</span>.<span class='ident'>theme</span>);
+        <span class='kw'>let</span> <span class='ident'>num_lines</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>get_w</span>(<span class='ident'>ui</span>) {
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>text</span>.<span class='ident'>lines</span>().<span class='ident'>count</span>(),
+            <span class='prelude-val'>Some</span>(<span class='ident'>max_w</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>line_wrap</span>(<span class='kw-2'>&amp;</span><span class='ident'>ui</span>.<span class='ident'>theme</span>) {
+                <span class='ident'>Wrap</span>::<span class='ident'>Character</span> <span class='op'>=&gt;</span>
+                    <span class='ident'>text</span>::<span class='ident'>line</span>::<span class='ident'>infos</span>(<span class='ident'>text</span>, <span class='ident'>font</span>, <span class='ident'>font_size</span>)
+                        .<span class='ident'>wrap_by_character</span>(<span class='ident'>max_w</span>)
+                        .<span class='ident'>count</span>(),
+                <span class='ident'>Wrap</span>::<span class='ident'>Whitespace</span> <span class='op'>=&gt;</span>
+                    <span class='ident'>text</span>::<span class='ident'>line</span>::<span class='ident'>infos</span>(<span class='ident'>text</span>, <span class='ident'>font</span>, <span class='ident'>font_size</span>)
+                        .<span class='ident'>wrap_by_whitespace</span>(<span class='ident'>max_w</span>)
+                        .<span class='ident'>count</span>(),
+            },
+        };
+        <span class='kw'>let</span> <span class='ident'>line_spacing</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>style</span>.<span class='ident'>line_spacing</span>(<span class='kw-2'>&amp;</span><span class='ident'>ui</span>.<span class='ident'>theme</span>);
+        <span class='kw'>let</span> <span class='ident'>height</span> <span class='op'>=</span> <span class='ident'>text</span>::<span class='ident'>height</span>(<span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>num_lines</span>, <span class='number'>1</span>), <span class='ident'>font_size</span>, <span class='ident'>line_spacing</span>);
+        <span class='ident'>Dimension</span>::<span class='ident'>Absolute</span>(<span class='ident'>height</span>)
     }
 
     <span class='doccomment'>/// Update the state of the TextEdit.</span>
@@ -1073,6 +1239,25 @@
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>new_line_infos</span>) <span class='op'>=</span> <span class='ident'>maybe_new_line_infos</span> {
                 <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>new_line_infos</span>);
             }
+        }
+
+        <span class='comment'>// Validate the position of the cursor. Ensure the indices lie within the text.</span>
+        <span class='kw'>match</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> {
+            <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>index</span>) <span class='op'>=&gt;</span> {
+                <span class='kw'>let</span> <span class='ident'>new_index</span> <span class='op'>=</span> <span class='ident'>index</span>.<span class='ident'>clamp_to_lines</span>(<span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>());
+                <span class='kw'>if</span> <span class='ident'>index</span> <span class='op'>!=</span> <span class='ident'>new_index</span> {
+                    <span class='kw'>let</span> <span class='ident'>new_cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_index</span>);
+                    <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>new_cursor</span>);
+                }
+            },
+            <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> {
+                <span class='kw'>let</span> <span class='ident'>new_start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>clamp_to_lines</span>(<span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>());
+                <span class='kw'>let</span> <span class='ident'>new_end</span> <span class='op'>=</span> <span class='ident'>end</span>.<span class='ident'>clamp_to_lines</span>(<span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>());
+                <span class='kw'>if</span> <span class='ident'>start</span> <span class='op'>!=</span> <span class='ident'>new_start</span> <span class='op'>||</span> <span class='ident'>end</span> <span class='op'>!=</span> <span class='ident'>new_end</span> {
+                    <span class='kw'>let</span> <span class='ident'>new_cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>: <span class='ident'>new_start</span>, <span class='ident'>end</span>: <span class='ident'>new_end</span> };
+                    <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>new_cursor</span>);
+                }
+            },
         }
 
         <span class='comment'>// Find the position of the cursor at the given index over the given text.</span>
@@ -1219,149 +1404,145 @@
 
                         <span class='comment'>// If `Cursor::Idx`, remove the `char` behind the cursor.</span>
                         <span class='comment'>// If `Cursor::Selection`, remove the selected text.</span>
-                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Backspace</span> <span class='op'>=&gt;</span> {
-                            <span class='kw'>match</span> <span class='ident'>cursor</span> {
+                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Backspace</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Delete</span> <span class='op'>=&gt;</span> {
+                            <span class='kw'>let</span> <span class='ident'>delete_word</span> <span class='op'>=</span> <span class='ident'>press</span>.<span class='ident'>modifiers</span>.<span class='ident'>contains</span>(<span class='ident'>input</span>::<span class='ident'>keyboard</span>::<span class='ident'>CTRL</span>);
 
+                            <span class='comment'>// Calculate start/end indices of text to remove</span>
+                            <span class='kw'>let</span> (<span class='ident'>start</span>, <span class='ident'>end</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>cursor</span> {
                                 <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>cursor_idx</span>) <span class='op'>=&gt;</span> {
-                                    <span class='kw'>let</span> <span class='ident'>idx_after_cursor</span> <span class='op'>=</span> {
-                                        <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                        <span class='ident'>text</span>::<span class='ident'>glyph</span>::<span class='ident'>index_after_cursor</span>(<span class='ident'>line_infos</span>, <span class='ident'>cursor_idx</span>)
-                                    };
-                                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>idx</span>) <span class='op'>=</span> <span class='ident'>idx_after_cursor</span> {
-                                        <span class='kw'>if</span> <span class='ident'>idx</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                                            <span class='kw'>let</span> <span class='ident'>idx_to_remove</span> <span class='op'>=</span> <span class='ident'>idx</span> <span class='op'>-</span> <span class='number'>1</span>;
+                                    <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
 
-                                            <span class='op'>*</span><span class='ident'>text</span>.<span class='ident'>to_mut</span>() <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>take</span>(<span class='ident'>idx_to_remove</span>)
-                                                .<span class='ident'>chain</span>(<span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>skip</span>(<span class='ident'>idx</span>))
-                                                .<span class='ident'>collect</span>();
-
-                                            <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> {
-                                                <span class='kw'>let</span> <span class='ident'>font</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>get</span>(<span class='ident'>font_id</span>).<span class='ident'>unwrap</span>();
-                                                <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>rect</span>.<span class='ident'>w</span>();
-                                                <span class='ident'>state</span>.<span class='ident'>line_infos</span> <span class='op'>=</span>
-                                                    <span class='ident'>line_infos</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>font</span>, <span class='ident'>font_size</span>, <span class='ident'>line_wrap</span>, <span class='ident'>w</span>)
-                                                        .<span class='ident'>collect</span>();
-                                            });
-
-                                            <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                            <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span>
-                                                 <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>index_before_char</span>(<span class='ident'>line_infos</span>,
-                                                                                 <span class='ident'>idx_to_remove</span>)
-                                                 <span class='comment'>// in case we removed the last character</span>
-                                                .<span class='ident'>unwrap_or</span>(<span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span> {<span class='ident'>line</span>: <span class='number'>0</span>, <span class='ident'>char</span>: <span class='number'>0</span>});
-                                            <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                                    <span class='kw'>let</span> <span class='ident'>end</span> <span class='op'>=</span> <span class='kw'>match</span> (<span class='ident'>key</span>, <span class='ident'>delete_word</span>) {
+                                        (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Backspace</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> {
+                                            <span class='ident'>cursor_idx</span>.<span class='ident'>previous</span>(<span class='ident'>line_infos</span>)
                                         }
-                                    }
-                                },
+                                        (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Backspace</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> {
+                                            <span class='ident'>cursor_idx</span>.<span class='ident'>previous_word_start</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
+                                        }
+                                        (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Delete</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> {
+                                            <span class='ident'>cursor_idx</span>.<span class='ident'>next</span>(<span class='ident'>line_infos</span>)
+                                        }
+                                        (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Delete</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> {
+                                            <span class='ident'>cursor_idx</span>.<span class='ident'>next_word_end</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
+                                        }
+                                        _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
+                                    }.<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>);
 
-                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> {
-                                    <span class='kw'>let</span> (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) <span class='op'>=</span> {
-                                        <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                        (<span class='ident'>text</span>::<span class='ident'>glyph</span>::<span class='ident'>index_after_cursor</span>(<span class='ident'>line_infos</span>.<span class='ident'>clone</span>(), <span class='ident'>start</span>)
-                                            .<span class='ident'>expect</span>(<span class='string'>&quot;text::cursor::Index was out of range&quot;</span>),
-                                         <span class='ident'>text</span>::<span class='ident'>glyph</span>::<span class='ident'>index_after_cursor</span>(<span class='ident'>line_infos</span>, <span class='ident'>end</span>)
-                                            .<span class='ident'>expect</span>(<span class='string'>&quot;text::cursor::Index was out of range&quot;</span>))
-                                    };
-                                    <span class='kw'>let</span> (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) <span class='op'>=</span>
-                                        <span class='kw'>if</span> <span class='ident'>start_idx</span> <span class='op'>&lt;=</span> <span class='ident'>end_idx</span> { (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) }
-                                        <span class='kw'>else</span>                    { (<span class='ident'>end_idx</span>, <span class='ident'>start_idx</span>) };
-                                    <span class='kw'>let</span> <span class='ident'>new_cursor_char_idx</span> <span class='op'>=</span>
-                                        <span class='kw'>if</span> <span class='ident'>start_idx</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='ident'>start_idx</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
-                                    <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
-                                        <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                        <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>index_before_char</span>(<span class='ident'>line_infos</span>,
-                                                                        <span class='ident'>new_cursor_char_idx</span>)
-                                            .<span class='ident'>expect</span>(<span class='string'>&quot;char index was out of range&quot;</span>)
-                                    };
-                                    <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
-                                    <span class='op'>*</span><span class='ident'>text</span>.<span class='ident'>to_mut</span>() <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>take</span>(<span class='ident'>start_idx</span>)
-                                        .<span class='ident'>chain</span>(<span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>skip</span>(<span class='ident'>end_idx</span>))
-                                        .<span class='ident'>collect</span>();
-                                    <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> {
-                                        <span class='kw'>let</span> <span class='ident'>font</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>get</span>(<span class='ident'>font_id</span>).<span class='ident'>unwrap</span>();
-                                        <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>rect</span>.<span class='ident'>w</span>();
-                                        <span class='ident'>state</span>.<span class='ident'>line_infos</span> <span class='op'>=</span>
-                                            <span class='ident'>line_infos</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>font</span>, <span class='ident'>font_size</span>, <span class='ident'>line_wrap</span>, <span class='ident'>w</span>)
-                                                .<span class='ident'>collect</span>();
-                                    });
-                                },
+                                    (<span class='ident'>cursor_idx</span>, <span class='ident'>end</span>)
+                                }
+                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> (<span class='ident'>start</span>, <span class='ident'>end</span>),
+                            };
 
+                            <span class='kw'>let</span> (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) <span class='op'>=</span> {
+                                <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                                (<span class='ident'>text</span>::<span class='ident'>glyph</span>::<span class='ident'>index_after_cursor</span>(<span class='ident'>line_infos</span>.<span class='ident'>clone</span>(), <span class='ident'>start</span>),
+                                 <span class='ident'>text</span>::<span class='ident'>glyph</span>::<span class='ident'>index_after_cursor</span>(<span class='ident'>line_infos</span>, <span class='ident'>end</span>))
+                            };
+
+                            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>start_idx</span>), <span class='prelude-val'>Some</span>(<span class='ident'>end_idx</span>)) <span class='op'>=</span> (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) {
+                                <span class='kw'>let</span> (<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>) <span class='op'>=</span> (<span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>),
+                                                            <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>start_idx</span>, <span class='ident'>end_idx</span>));
+
+                                <span class='kw'>let</span> <span class='ident'>new_cursor_char_idx</span> <span class='op'>=</span>
+                                    <span class='kw'>if</span> <span class='ident'>start_idx</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='ident'>start_idx</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
+                                <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
+                                    <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                                    <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>index_before_char</span>(<span class='ident'>line_infos</span>,
+                                                                    <span class='ident'>new_cursor_char_idx</span>)
+                                        .<span class='ident'>expect</span>(<span class='string'>&quot;char index was out of range&quot;</span>)
+                                };
+                                <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                                <span class='op'>*</span><span class='ident'>text</span>.<span class='ident'>to_mut</span>() <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>take</span>(<span class='ident'>start_idx</span>)
+                                    .<span class='ident'>chain</span>(<span class='ident'>text</span>.<span class='ident'>chars</span>().<span class='ident'>skip</span>(<span class='ident'>end_idx</span>))
+                                    .<span class='ident'>collect</span>();
+                                <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> {
+                                    <span class='kw'>let</span> <span class='ident'>font</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>get</span>(<span class='ident'>font_id</span>).<span class='ident'>unwrap</span>();
+                                    <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>rect</span>.<span class='ident'>w</span>();
+                                    <span class='ident'>state</span>.<span class='ident'>line_infos</span> <span class='op'>=</span>
+                                        <span class='ident'>line_infos</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>font</span>, <span class='ident'>font_size</span>, <span class='ident'>line_wrap</span>, <span class='ident'>w</span>)
+                                            .<span class='ident'>collect</span>();
+                                });
                             }
                         },
 
-                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='op'>=&gt;</span> {
-                            <span class='kw'>let</span> <span class='ident'>left_move</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>key</span> {
-                                    <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-                                    <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
-                                    _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
-                            };
-                            <span class='kw'>let</span> <span class='ident'>move_word</span> <span class='op'>=</span> <span class='ident'>press</span>.<span class='ident'>modifiers</span>.<span class='ident'>contains</span>(<span class='ident'>input</span>::<span class='ident'>keyboard</span>::<span class='ident'>CTRL</span>);
-
-                            <span class='kw'>match</span> <span class='ident'>cursor</span> {
-                                <span class='comment'>// Move the cursor to the previous/next position or word.</span>
-                                <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>cursor_idx</span>) <span class='op'>=&gt;</span> {
-                                    <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
-                                        <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                        <span class='kw'>match</span> (<span class='ident'>left_move</span>, <span class='ident'>move_word</span>) {
-                                            (<span class='bool-val'>true</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
-                                                .<span class='ident'>previous_word_start</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
-                                                .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>),
-                                            (<span class='bool-val'>false</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
-                                                .<span class='ident'>next_word_end</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
-                                                .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>),
-                                            (<span class='bool-val'>true</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
-                                                .<span class='ident'>previous</span>(<span class='ident'>line_infos</span>)
-                                                .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>),
-                                            (<span class='bool-val'>false</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
-                                                .<span class='ident'>next</span>(<span class='ident'>line_infos</span>)
-                                                .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>),
-                                        }
-                                    };
-                                    <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
-                                },
-                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> {
-                                    <span class='comment'>// Move the cursor to the start/end of the current selection.</span>
-                                    <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
-                                        <span class='kw'>let</span> <span class='ident'>cursor_idx</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>left_move</span> { <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>start</span>, <span class='ident'>end</span>) }
-                                                         <span class='kw'>else</span> { <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>start</span>, <span class='ident'>end</span>) };
-                                        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>move_word</span> {
-                                            <span class='ident'>cursor_idx</span>
-                                        } <span class='kw'>else</span> {
-                                            <span class='comment'>// Move by word from the beginning or end of selection</span>
-                                            <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
-                                            <span class='kw'>if</span> <span class='ident'>left_move</span> {
-                                                <span class='ident'>cursor_idx</span>.<span class='ident'>previous_word_start</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
-                                                          .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>)
-                                            } <span class='kw'>else</span> {
-                                                <span class='ident'>cursor_idx</span>.<span class='ident'>next_word_end</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
-                                                          .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>)
-                                            }
-                                        }
-                                    };
-                                    <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
-                                },
-                            }
-                        },
-
-                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span> {
-                            <span class='kw'>let</span> <span class='ident'>cursor_idx</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>cursor</span> {
-                                <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>cursor_idx</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>,
-                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, .. } <span class='op'>=&gt;</span> <span class='ident'>start</span>,
-                            };
+                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span> {
                             <span class='kw'>let</span> <span class='ident'>font</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>fonts</span>.<span class='ident'>get</span>(<span class='ident'>font_id</span>).<span class='ident'>unwrap</span>();
-                            <span class='kw'>let</span> <span class='ident'>infos</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>state</span>.<span class='ident'>line_infos</span>;
-                            <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> <span class='ident'>cursor_xy_at</span>(<span class='ident'>cursor_idx</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>infos</span>, <span class='ident'>font</span>)
-                                .<span class='ident'>and_then</span>(<span class='op'>|</span>(<span class='ident'>x_pos</span>,_)<span class='op'>|</span> {
-                                    <span class='kw'>let</span> <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span> { <span class='ident'>line</span>, .. } <span class='op'>=</span> <span class='ident'>cursor_idx</span>;
-                                    <span class='kw'>let</span> <span class='ident'>next_line</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>key</span> {
-                                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>line</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='ident'>line</span> <span class='op'>-</span> <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> },
-                                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span> <span class='ident'>line</span> <span class='op'>+</span> <span class='number'>1</span>,
-                                        _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
-                                    };
-                                    <span class='ident'>closest_cursor_index_on_line</span>(<span class='ident'>x_pos</span>, <span class='ident'>next_line</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>infos</span>, <span class='ident'>font</span>)
-                                })
-                                .<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>);
-                            <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                            <span class='kw'>let</span> <span class='ident'>move_word</span> <span class='op'>=</span> <span class='ident'>press</span>.<span class='ident'>modifiers</span>.<span class='ident'>contains</span>(<span class='ident'>input</span>::<span class='ident'>keyboard</span>::<span class='ident'>CTRL</span>);
+                            <span class='kw'>let</span> <span class='ident'>select</span> <span class='op'>=</span> <span class='ident'>press</span>.<span class='ident'>modifiers</span>.<span class='ident'>contains</span>(<span class='ident'>input</span>::<span class='ident'>keyboard</span>::<span class='ident'>SHIFT</span>);
+
+                            <span class='kw'>let</span> (<span class='ident'>old_selection_start</span>, <span class='ident'>cursor_idx</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>cursor</span> {
+                                <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>idx</span>) <span class='op'>=&gt;</span> (<span class='ident'>idx</span>, <span class='ident'>idx</span>),
+                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> (<span class='ident'>start</span>, <span class='ident'>end</span>),
+                            };
+
+                            <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
+                                <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                                <span class='kw'>match</span> (<span class='ident'>key</span>, <span class='ident'>move_word</span>) {
+                                    (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
+                                        .<span class='ident'>previous_word_start</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>),
+                                    (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
+                                        .<span class='ident'>next_word_end</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>),
+                                    (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
+                                        .<span class='ident'>previous</span>(<span class='ident'>line_infos</span>),
+                                    (<span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='ident'>cursor_idx</span>
+                                        .<span class='ident'>next</span>(<span class='ident'>line_infos</span>),
+
+                                    <span class='comment'>// Up/Down movement</span>
+                                    _ <span class='op'>=&gt;</span> <span class='ident'>cursor_xy_at</span>(<span class='ident'>cursor_idx</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='kw-2'>&amp;</span><span class='ident'>state</span>.<span class='ident'>line_infos</span>, <span class='ident'>font</span>)
+                                        .<span class='ident'>and_then</span>(<span class='op'>|</span>(<span class='ident'>x_pos</span>, _)<span class='op'>|</span> {
+                                            <span class='kw'>let</span> <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span> { <span class='ident'>line</span>, .. } <span class='op'>=</span> <span class='ident'>cursor_idx</span>;
+                                            <span class='kw'>let</span> <span class='ident'>next_line</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>key</span> {
+                                                <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>=&gt;</span> <span class='ident'>line</span>.<span class='ident'>saturating_sub</span>(<span class='number'>1</span>),
+                                                <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span> <span class='ident'>line</span> <span class='op'>+</span> <span class='number'>1</span>,
+                                                _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
+                                            };
+                                            <span class='ident'>closest_cursor_index_on_line</span>(<span class='ident'>x_pos</span>, <span class='ident'>next_line</span>, <span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='kw-2'>&amp;</span><span class='ident'>state</span>.<span class='ident'>line_infos</span>, <span class='ident'>font</span>)
+                                        })
+                                }.<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>)
+                            };
+
+                            <span class='kw'>if</span> <span class='ident'>select</span> {
+                                <span class='comment'>// Expand the selection (or create a new one)</span>
+                                <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> {
+                                    <span class='ident'>start</span>: <span class='ident'>old_selection_start</span>,
+                                    <span class='ident'>end</span>: <span class='ident'>new_cursor_idx</span>,
+                                };
+                            } <span class='kw'>else</span> {
+                                <span class='kw'>match</span> <span class='ident'>cursor</span> {
+                                    <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(_) <span class='op'>=&gt;</span> {
+                                        <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                                    },
+                                    <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=&gt;</span> {
+                                        <span class='comment'>// Move the cursor to the start/end of the current selection.</span>
+                                        <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> {
+                                            <span class='kw'>let</span> <span class='ident'>cursor_idx</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>key</span> {
+                                                <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>=&gt;</span>
+                                                    <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>start</span>, <span class='ident'>end</span>),
+                                                <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span>
+                                                    <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>start</span>, <span class='ident'>end</span>),
+                                                _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
+                                            };
+
+                                            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>move_word</span> {
+                                                <span class='ident'>cursor_idx</span>
+                                            } <span class='kw'>else</span> {
+                                                <span class='comment'>// Move by word from the beginning or end of selection</span>
+                                                <span class='kw'>let</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                                                <span class='kw'>match</span> <span class='ident'>key</span> {
+                                                    <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Up</span> <span class='op'>=&gt;</span> {
+                                                        <span class='ident'>cursor_idx</span>.<span class='ident'>previous_word_start</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
+                                                    },
+                                                    <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='op'>|</span> <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Down</span> <span class='op'>=&gt;</span> {
+                                                        <span class='ident'>cursor_idx</span>.<span class='ident'>next_word_end</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>, <span class='ident'>line_infos</span>)
+                                                    }
+                                                    _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
+                                                }.<span class='ident'>unwrap_or</span>(<span class='ident'>cursor_idx</span>)
+                                            }
+                                        };
+                                        <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                                    },
+                                }
+                            }
                         },
 
                         <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>A</span> <span class='op'>=&gt;</span> {
@@ -1390,6 +1571,32 @@
                                     },
                                     _ <span class='op'>=&gt;</span> (),
                                 }
+                            }
+                        },
+
+                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> { <span class='comment'>// move cursor to end.</span>
+                            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                            <span class='kw'>let</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>cursor</span> {
+                                <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>idx</span>) <span class='op'>=&gt;</span> <span class='ident'>idx</span>.<span class='ident'>line</span>,
+                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> {<span class='ident'>end</span>, ..} <span class='op'>=&gt;</span> <span class='ident'>end</span>.<span class='ident'>line</span>, <span class='comment'>// use last line of selection</span>
+                            };
+                            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>line_info</span>) <span class='op'>=</span> <span class='ident'>line_infos</span>.<span class='ident'>nth</span>(<span class='ident'>line</span>) {
+                                <span class='kw'>let</span> <span class='ident'>char</span> <span class='op'>=</span> <span class='ident'>line_info</span>.<span class='ident'>end_char</span>() <span class='op'>-</span> <span class='ident'>line_info</span>.<span class='ident'>start_char</span>;
+                                <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span> { <span class='ident'>line</span>: <span class='ident'>line</span>, <span class='ident'>char</span>: <span class='ident'>char</span> };
+                                <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
+                            }
+                        },
+
+                        <span class='ident'>input</span>::<span class='ident'>Key</span>::<span class='ident'>Home</span> <span class='op'>=&gt;</span> { <span class='comment'>// move cursor to beginning.</span>
+                            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line_infos</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>line_infos</span>.<span class='ident'>iter</span>().<span class='ident'>cloned</span>();
+                            <span class='kw'>let</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>cursor</span> {
+                                <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>idx</span>) <span class='op'>=&gt;</span> <span class='ident'>idx</span>.<span class='ident'>line</span>,
+                                <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> {<span class='ident'>start</span>, ..} <span class='op'>=&gt;</span> <span class='ident'>start</span>.<span class='ident'>line</span>, <span class='comment'>// use first line of selection</span>
+                            };
+                            <span class='kw'>if</span> <span class='ident'>line_infos</span>.<span class='ident'>nth</span>(<span class='ident'>line</span>).<span class='ident'>is_some</span>() {
+                                <span class='kw'>let</span> <span class='ident'>char</span> <span class='op'>=</span> <span class='number'>0</span>;
+                                <span class='kw'>let</span> <span class='ident'>new_cursor_idx</span> <span class='op'>=</span> <span class='ident'>text</span>::<span class='ident'>cursor</span>::<span class='ident'>Index</span> { <span class='ident'>line</span>: <span class='ident'>line</span>, <span class='ident'>char</span>: <span class='ident'>char</span> };
+                                <span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>Cursor</span>::<span class='ident'>Idx</span>(<span class='ident'>new_cursor_idx</span>);
                             }
                         },
 
@@ -1481,7 +1688,8 @@
             }
         }
 
-        <span class='kw'>if</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> <span class='op'>!=</span> <span class='ident'>cursor</span> {
+        <span class='kw'>let</span> <span class='ident'>cursor_has_changed</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> <span class='op'>!=</span> <span class='ident'>cursor</span>;
+        <span class='kw'>if</span> <span class='ident'>cursor_has_changed</span> {
             <span class='ident'>state</span>.<span class='ident'>update</span>(<span class='op'>|</span><span class='ident'>state</span><span class='op'>|</span> <span class='ident'>state</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>cursor</span>);
         }
 
@@ -1508,9 +1716,11 @@
             <span class='ident'>Wrap</span>::<span class='ident'>Whitespace</span> <span class='op'>=&gt;</span> <span class='ident'>widget</span>::<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>).<span class='ident'>wrap_by_word</span>(),
             <span class='ident'>Wrap</span>::<span class='ident'>Character</span> <span class='op'>=&gt;</span> <span class='ident'>widget</span>::<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>).<span class='ident'>wrap_by_character</span>(),
         }
+            .<span class='ident'>font_id</span>(<span class='ident'>font_id</span>)
             .<span class='ident'>wh</span>(<span class='ident'>text_rect</span>.<span class='ident'>dim</span>())
             .<span class='ident'>xy</span>(<span class='ident'>text_rect</span>.<span class='ident'>xy</span>())
             .<span class='ident'>align_text_to</span>(<span class='ident'>x_align</span>)
+            .<span class='ident'>parent</span>(<span class='ident'>id</span>)
             .<span class='ident'>graphics_for</span>(<span class='ident'>id</span>)
             .<span class='ident'>color</span>(<span class='ident'>color</span>)
             .<span class='ident'>line_spacing</span>(<span class='ident'>line_spacing</span>)
@@ -1540,12 +1750,38 @@
 
         <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> [<span class='number'>0.0</span>, <span class='ident'>cursor_y_range</span>.<span class='ident'>start</span>];
         <span class='kw'>let</span> <span class='ident'>end</span> <span class='op'>=</span> [<span class='number'>0.0</span>, <span class='ident'>cursor_y_range</span>.<span class='ident'>end</span>];
+        <span class='kw'>let</span> <span class='ident'>prev_cursor_rect</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>rect_of</span>(<span class='ident'>state</span>.<span class='ident'>ids</span>.<span class='ident'>cursor</span>);
         <span class='ident'>widget</span>::<span class='ident'>Line</span>::<span class='ident'>centred</span>(<span class='ident'>start</span>, <span class='ident'>end</span>)
             .<span class='ident'>x_y</span>(<span class='ident'>cursor_x</span>, <span class='ident'>cursor_y_range</span>.<span class='ident'>middle</span>())
             .<span class='ident'>graphics_for</span>(<span class='ident'>id</span>)
             .<span class='ident'>parent</span>(<span class='ident'>id</span>)
             .<span class='ident'>color</span>(<span class='ident'>color</span>)
             .<span class='ident'>set</span>(<span class='ident'>state</span>.<span class='ident'>ids</span>.<span class='ident'>cursor</span>, <span class='ident'>ui</span>);
+
+        <span class='comment'>// If the cursor position has changed due to input AND one of our parent widgets are</span>
+        <span class='comment'>// scrollable AND the change in cursor position would cause the cursor to fall outside the</span>
+        <span class='comment'>// scrollable parent&#39;s `Rect`, attempt to scroll the scrollable parent so that the cursor</span>
+        <span class='comment'>// would be visible.</span>
+        <span class='kw'>if</span> <span class='ident'>cursor_has_changed</span> {
+            <span class='kw'>let</span> <span class='ident'>cursor_rect</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>rect_of</span>(<span class='ident'>state</span>.<span class='ident'>ids</span>.<span class='ident'>cursor</span>).<span class='ident'>unwrap</span>();
+            <span class='kw'>if</span> <span class='ident'>prev_cursor_rect</span> <span class='op'>!=</span> <span class='prelude-val'>Some</span>(<span class='ident'>cursor_rect</span>) {
+                <span class='kw'>use</span> <span class='ident'>graph</span>::<span class='ident'>Walker</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>scrollable_parents</span> <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>widget_graph</span>().<span class='ident'>scrollable_y_parent_recursion</span>(<span class='ident'>id</span>);
+                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>parent_id</span>) <span class='op'>=</span> <span class='ident'>scrollable_parents</span>.<span class='ident'>next_node</span>(<span class='ident'>ui</span>.<span class='ident'>widget_graph</span>()) {
+                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>parent_rect</span>) <span class='op'>=</span> <span class='ident'>ui</span>.<span class='ident'>rect_of</span>(<span class='ident'>parent_id</span>) {
+                        <span class='comment'>// If cursor is below, scroll down.</span>
+                        <span class='kw'>if</span> <span class='ident'>cursor_rect</span>.<span class='ident'>bottom</span>() <span class='op'>&lt;</span> <span class='ident'>parent_rect</span>.<span class='ident'>bottom</span>() {
+                            <span class='kw'>let</span> <span class='ident'>distance</span> <span class='op'>=</span> <span class='ident'>parent_rect</span>.<span class='ident'>bottom</span>() <span class='op'>-</span> <span class='ident'>cursor_rect</span>.<span class='ident'>bottom</span>();
+                            <span class='ident'>ui</span>.<span class='ident'>scroll_widget</span>(<span class='ident'>parent_id</span>, [<span class='number'>0.0</span>, <span class='ident'>distance</span>]);
+                        <span class='comment'>// If cursor is above, scroll up.</span>
+                        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>cursor_rect</span>.<span class='ident'>top</span>() <span class='op'>&gt;</span> <span class='ident'>parent_rect</span>.<span class='ident'>top</span>() {
+                            <span class='kw'>let</span> <span class='ident'>distance</span> <span class='op'>=</span> <span class='ident'>cursor_rect</span>.<span class='ident'>top</span>() <span class='op'>-</span> <span class='ident'>parent_rect</span>.<span class='ident'>top</span>();
+                            <span class='ident'>ui</span>.<span class='ident'>scroll_widget</span>(<span class='ident'>parent_id</span>, [<span class='number'>0.0</span>, <span class='op'>-</span><span class='ident'>distance</span>]);
+                        }
+                    }
+                }
+            }
+        }
 
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>Cursor</span>::<span class='ident'>Selection</span> { <span class='ident'>start</span>, <span class='ident'>end</span> } <span class='op'>=</span> <span class='ident'>cursor</span> {
             <span class='kw'>let</span> (<span class='ident'>start</span>, <span class='ident'>end</span>) <span class='op'>=</span> (<span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>start</span>, <span class='ident'>end</span>), <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>start</span>, <span class='ident'>end</span>));
@@ -1646,11 +1882,9 @@
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

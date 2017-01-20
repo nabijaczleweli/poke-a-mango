@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/backend/curses/pan.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.7/src/backend/curses/pan.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>pan.rs.html -- source</title>
@@ -316,7 +316,7 @@
         <span class='ident'>pancurses</span>::<span class='ident'>cbreak</span>();
         <span class='ident'>pancurses</span>::<span class='ident'>start_color</span>();
         <span class='ident'>pancurses</span>::<span class='ident'>curs_set</span>(<span class='number'>0</span>);
-        <span class='ident'>window</span>.<span class='ident'>bkgd</span>(<span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>u64</span>));
+        <span class='ident'>window</span>.<span class='ident'>bkgd</span>(<span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>pancurses</span>::<span class='ident'>chtype</span>));
 
         <span class='ident'>Concrete</span> {
             <span class='ident'>window</span>: <span class='ident'>window</span>,
@@ -351,7 +351,7 @@
         <span class='comment'>// pancurses::attr_get(&amp;mut current_style, &amp;mut current_color);</span>
         <span class='kw'>let</span> <span class='ident'>current_style</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>current_style</span>.<span class='ident'>get</span>();
 
-        <span class='kw'>let</span> <span class='ident'>style</span> <span class='op'>=</span> <span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>color</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>u64</span>);
+        <span class='kw'>let</span> <span class='ident'>style</span> <span class='op'>=</span> <span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>color</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>pancurses</span>::<span class='ident'>chtype</span>);
         <span class='self'>self</span>.<span class='ident'>window</span>.<span class='ident'>attron</span>(<span class='ident'>style</span>);
 
         <span class='self'>self</span>.<span class='ident'>current_style</span>.<span class='ident'>set</span>(<span class='ident'>color</span>);
@@ -359,7 +359,7 @@
         <span class='self'>self</span>.<span class='ident'>current_style</span>.<span class='ident'>set</span>(<span class='ident'>current_style</span>);
 
         <span class='comment'>// self.window.attroff(style);</span>
-        <span class='self'>self</span>.<span class='ident'>window</span>.<span class='ident'>attron</span>(<span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>current_style</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>u64</span>));
+        <span class='self'>self</span>.<span class='ident'>window</span>.<span class='ident'>attron</span>(<span class='ident'>pancurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>current_style</span>.<span class='ident'>id</span>() <span class='kw'>as</span> <span class='ident'>pancurses</span>::<span class='ident'>chtype</span>));
     }
 
     <span class='kw'>fn</span> <span class='ident'>with_effect</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>effect</span>: <span class='ident'>Effect</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) {
@@ -393,10 +393,10 @@
                 <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\n&#39;</span>) <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Enter</span>),
                 <span class='comment'>// TODO: wait for a very short delay. If more keys are</span>
                 <span class='comment'>// pipelined, it may be an escape sequence.</span>
+                <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\u{7f}&#39;</span>) <span class='op'>|</span>
+                <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\u{8}&#39;</span>) <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Backspace</span>),
+                <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\u{9}&#39;</span>) <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Tab</span>),
                 <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\u{1b}&#39;</span>) <span class='op'>=&gt;</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Esc</span>),
-                <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='string'>&#39;\u{7f}&#39;</span>) <span class='op'>=&gt;</span> {
-                    <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Backspace</span>)
-                }
                 <span class='ident'>pancurses</span>::<span class='ident'>Input</span>::<span class='ident'>Character</span>(<span class='ident'>c</span>) <span class='kw'>if</span> <span class='number'>32</span> <span class='op'>&lt;=</span> (<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>u32</span>) <span class='op'>&amp;&amp;</span>
                                                   (<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>u32</span>) <span class='op'>&lt;=</span> <span class='number'>255</span> <span class='op'>=&gt;</span> {
                     <span class='ident'>Event</span>::<span class='ident'>Char</span>(<span class='ident'>utf8</span>::<span class='ident'>read_char</span>(<span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='op'>||</span> {
@@ -596,11 +596,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

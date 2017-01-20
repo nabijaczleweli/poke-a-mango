@@ -222,6 +222,9 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! What all the kool kidz are playing these days</span>
 <span class='doccomment'>//!</span>
@@ -289,9 +292,11 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```no_run</span>
 <span class='doccomment'>//! # extern crate conrod;</span>
+<span class='doccomment'>//! # extern crate window;</span>
 <span class='doccomment'>//! # extern crate poke_a_mango;</span>
-<span class='doccomment'>//! # extern crate piston_window;</span>
-<span class='doccomment'>//! # use piston_window::{PistonWindow, UpdateEvent, Window};</span>
+<span class='doccomment'>//! # use window::Window;</span>
+<span class='doccomment'>//! # use conrod::backend::piston::event::UpdateEvent;</span>
+<span class='doccomment'>//! # use conrod::backend::piston::window::{WindowEvents, EventWindow, Window as PistonWindow};</span>
 <span class='doccomment'>//! # use poke_a_mango::*;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! #   not_main();</span>
@@ -300,13 +305,15 @@
 <span class='doccomment'>//! let opts = Options::parse();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! let mut window: PistonWindow = try!(ops::create_window(opts.desktop_size));</span>
-<span class='doccomment'>//! let mut ui = conrod::UiBuilder::new().build();</span>
+<span class='doccomment'>//! let window_s = ops::window_size(opts.desktop_size);</span>
+<span class='doccomment'>//! let mut ui = conrod::UiBuilder::new([window_s[0] as f64, window_s[1] as f64]).build();</span>
 <span class='doccomment'>//! // Set up the UI like normal</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! let mut game_state = ops::GameState::MainMenu;</span>
 <span class='doccomment'>//! let widgets = ops::Widgets::new(ui.widget_id_generator());</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! while let Some(event) = window.next() {</span>
+<span class='doccomment'>//! let mut events = WindowEvents::new();</span>
+<span class='doccomment'>//! while let Some(event) = window.next(&amp;mut events) {</span>
 <span class='doccomment'>//!     event.update(|_| {</span>
 <span class='doccomment'>//!         widgets.update(ui.set_widgets(), &amp;mut game_state);</span>
 <span class='doccomment'>//!</span>
@@ -383,7 +390,6 @@
 
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>piston_window</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
@@ -460,11 +466,9 @@
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "poke_a_mango";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

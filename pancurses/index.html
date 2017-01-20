@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/pancurses/lib.rs.html#1-546' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/pancurses/lib.rs.html#1-749' title='goto source code'>[src]</a></span></h1>
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -307,10 +307,42 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='fn' href='fn.baudrate.html'
+                                  title='pancurses::baudrate'>baudrate</a></td>
+                           <td class='docblock-short'>
+                                <p>Return the output speed of the terminal. On Windows it simply returns INT_MAX</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.beep.html'
+                                  title='pancurses::beep'>beep</a></td>
+                           <td class='docblock-short'>
+                                <p>Sounds the audible bell on the terminal, if possible; if not, it calls flash().</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.can_change_color.html'
+                                  title='pancurses::can_change_color'>can_change_color</a></td>
+                           <td class='docblock-short'>
+                                <p>Indicates if the terminal has the capability to change the definition of its colors.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='fn' href='fn.cbreak.html'
                                   title='pancurses::cbreak'>cbreak</a></td>
                            <td class='docblock-short'>
                                 <p>Set cbreak mode.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.color_content.html'
+                                  title='pancurses::color_content'>color_content</a></td>
+                           <td class='docblock-short'>
+                                <p>This routine gives programmers a way to find the intensity of the red, green, and blue (RGB)
+components in a color. It takes the color number as an argument and returns three values
+that tell you the amounts of red, green, and blue components in the given color. The argument
+must be a legal color value, i.e., 0 through COLORS-1, inclusive. The values that are returned
+are in the range 0 (no component) through 1000 (maximum amount of component), inclusive.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -321,11 +353,19 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.delwin.html'
-                                  title='pancurses::delwin'>delwin</a></td>
+                           <td><a class='fn' href='fn.def_prog_mode.html'
+                                  title='pancurses::def_prog_mode'>def_prog_mode</a></td>
                            <td class='docblock-short'>
-                                <p>Deletes the window, freeing all associated memory. In the case of overlapping windows,
-subwindows should be deleted before the main window.</p>
+                                <p>Save the current terminal modes as the &quot;program&quot; (in curses) state for use by the
+reset_prog_mode() and reset_shell_mode() functions.  This is done automatically by initscr().</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.def_shell_mode.html'
+                                  title='pancurses::def_shell_mode'>def_shell_mode</a></td>
+                           <td class='docblock-short'>
+                                <p>Save the current terminal modes as the &quot;shell&quot; (not in curses) state for use by the
+reset_prog_mode() and reset_shell_mode() functions.  This is done automatically by initscr().</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -333,6 +373,13 @@ subwindows should be deleted before the main window.</p>
                                   title='pancurses::endwin'>endwin</a></td>
                            <td class='docblock-short'>
                                 <p>Should be called before exiting or escaping from curses mode temporarily.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.flash.html'
+                                  title='pancurses::flash'>flash</a></td>
+                           <td class='docblock-short'>
+                                <p>Flashes the screen, if possible; if not, it calls beep().</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -362,6 +409,17 @@ program.</p>
                                   title='pancurses::has_colors'>has_colors</a></td>
                            <td class='docblock-short'>
                                 <p>Indicates if the terminal supports, and can maniplulate color.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.init_color.html'
+                                  title='pancurses::init_color'>init_color</a></td>
+                           <td class='docblock-short'>
+                                <p>Changes the definition of a color. It takes four arguments: the number of the color to be
+changed followed by three RGB values (for the amounts of red, green, and blue components).
+The first argument must be a legal color value; default colors are not allowed here.
+Each of the last three arguments must be a value in the range 0 through 1000. When init_color
+is used, all occurrences of that color on the screen immediately change to the new definition.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -419,6 +477,23 @@ setting it.</p>
                                   title='pancurses::noecho'>noecho</a></td>
                            <td class='docblock-short'>
                                 <p>Disables echoing typed characters.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.reset_prog_mode.html'
+                                  title='pancurses::reset_prog_mode'>reset_prog_mode</a></td>
+                           <td class='docblock-short'>
+                                <p>Restore the terminal to &quot;program&quot; (in curses) state. This is done
+automatically by endwin() and doupdate() after an endwin(), so this would normally not be
+called before.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.reset_shell_mode.html'
+                                  title='pancurses::reset_shell_mode'>reset_shell_mode</a></td>
+                           <td class='docblock-short'>
+                                <p>Restore the terminal to &quot;shell&quot; (not in curses) state. This is done automatically by
+endwin() and doupdate() after an endwin(), so this would normally not be called before.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -530,11 +605,9 @@ maximum number of colors and color-pairs the terminal is capable of displaying).
     <script>
         window.rootPath = "../";
         window.currentCrate = "pancurses";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

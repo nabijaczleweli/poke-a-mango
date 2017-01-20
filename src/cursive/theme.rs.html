@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/theme.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.7/src/theme.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>theme.rs.html -- source</title>
@@ -561,6 +561,8 @@
 <span id="517">517</span>
 <span id="518">518</span>
 <span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Handle colors and themes in the UI.</span>
 <span class='doccomment'>//!</span>
@@ -694,6 +696,7 @@
     <span class='ident'>Simple</span>,
     <span class='doccomment'>/// Reverses foreground and background colors</span>
     <span class='ident'>Reverse</span>,
+    <span class='comment'>// TODO: bold, italic, underline</span>
 }
 
 <span class='doccomment'>/// Possible color style for a cell.</span>
@@ -743,7 +746,7 @@
 <span class='doccomment'>/// Represents the style a Cursive application will use.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Theme</span> {
-    <span class='doccomment'>/// Wheter views in a StackView should have shadows.</span>
+    <span class='doccomment'>/// Whether views in a StackView should have shadows.</span>
     <span class='kw'>pub</span> <span class='ident'>shadow</span>: <span class='ident'>bool</span>,
     <span class='doccomment'>/// How view borders should be drawn.</span>
     <span class='kw'>pub</span> <span class='ident'>borders</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>BorderStyle</span><span class='op'>&gt;</span>,
@@ -821,6 +824,7 @@
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span>,
                                  <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
                                  <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight_inactive</span>);
+        <span class='ident'>backend</span>.<span class='ident'>clear</span>();
     }
 }
 
@@ -1138,11 +1142,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

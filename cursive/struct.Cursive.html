@@ -47,20 +47,18 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-3909' class='srclink' href='../src/cursive/lib.rs.html#137-155' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Cursive {
-    // some fields omitted
-}</pre><div class='docblock'><p>Central part of the cursive library.</p>
+               </span><a id='src-3092' class='srclink' href='../src/cursive/lib.rs.html#144-162' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Cursive { /* fields omitted */ }</pre><div class='docblock'><p>Central part of the cursive library.</p>
 
 <p>It initializes ncurses on creation and cleans up on drop.
 To use it, you should populate it with views, layouts and callbacks,
 then start the event loop with run().</p>
 
 <p>It uses a list of screen, with one screen active at a time.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3922' class='srclink' href='../src/cursive/lib.rs.html#159-564' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3103' class='srclink' href='../src/cursive/lib.rs.html#166-601' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Creates a new Cursive root, and initialize the back-end.</p>
-</div><h4 id='method.cb_sink' class='method'><code>fn <a href='#method.cb_sink' class='fnname'>cb_sink</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/sync/mpsc/struct.Sender.html' title='std::sync::mpsc::Sender'>Sender</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt;&gt;</code></h4>
+</div><h4 id='method.cb_sink' class='method'><span id='cb_sink.v' class='invisible'><code>fn <a href='#method.cb_sink' class='fnname'>cb_sink</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/sync/mpsc/struct.Sender.html' title='std::sync::mpsc::Sender'>Sender</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Returns a sink for asynchronous callbacks.</p>
 
 <p>Returns the sender part of a channel, that allows to send
@@ -68,17 +66,20 @@ callbacks to <code>self</code> from other threads.</p>
 
 <p>Callbacks will be executed in the order
 of arrival on the next event cycle.</p>
-</div><h4 id='method.select_menubar' class='method'><code>fn <a href='#method.select_menubar' class='fnname'>select_menubar</a>(&amp;mut self)</code></h4>
-<div class='docblock'><p>Selects the menubar</p>
-</div><h4 id='method.set_autohide_menu' class='method'><code>fn <a href='#method.set_autohide_menu' class='fnname'>set_autohide_menu</a>(&amp;mut self, autohide: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></h4>
-<div class='docblock'><p>Sets the menubar autohide_menubar feature.</p>
+
+<p>Note that you currently need to call <a href="#method.set_fps"><code>set_fps</code></a> to force cursive to
+regularly check for messages.</p>
+</div><h4 id='method.select_menubar' class='method'><span id='select_menubar.v' class='invisible'><code>fn <a href='#method.select_menubar' class='fnname'>select_menubar</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>Selects the menubar.</p>
+</div><h4 id='method.set_autohide_menu' class='method'><span id='set_autohide_menu.v' class='invisible'><code>fn <a href='#method.set_autohide_menu' class='fnname'>set_autohide_menu</a>(&amp;mut self, autohide: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></span></h4>
+<div class='docblock'><p>Sets the menubar autohide feature.</p>
 
 <ul>
 <li>When enabled (default), the menu is only visible when selected.</li>
 <li>When disabled, the menu is always visible and reserves the top row.</li>
 </ul>
-</div><h4 id='method.menubar' class='method'><code>fn <a href='#method.menubar' class='fnname'>menubar</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../cursive/views/struct.Menubar.html' title='cursive::views::Menubar'>Menubar</a></code></h4>
-<div class='docblock'><p>Retrieve the menu tree used by the menubar.</p>
+</div><h4 id='method.menubar' class='method'><span id='menubar.v' class='invisible'><code>fn <a href='#method.menubar' class='fnname'>menubar</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../cursive/views/struct.Menubar.html' title='cursive::views::Menubar'>Menubar</a></code></span></h4>
+<div class='docblock'><p>Access the menu tree used by the menubar.</p>
 
 <p>This allows to add menu items to the menubar.</p>
 
@@ -117,39 +118,42 @@ of arrival on the next event cycle.</p>
                   <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>add_layer</span>(<span class='ident'>Dialog</span>::<span class='ident'>info</span>(<span class='string'>&quot;Cursive v0.0.0&quot;</span>))));
 
 <span class='ident'>siv</span>.<span class='ident'>add_global_callback</span>(<span class='ident'>event</span>::<span class='ident'>Key</span>::<span class='ident'>Esc</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>select_menubar</span>());</pre>
-</div><h4 id='method.current_theme' class='method'><code>fn <a href='#method.current_theme' class='fnname'>current_theme</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code></h4>
-<div class='docblock'><p>Returns the currently used theme</p>
-</div><h4 id='method.set_theme' class='method'><code>fn <a href='#method.set_theme' class='fnname'>set_theme</a>(&amp;mut self, theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a>)</code></h4>
+</div><h4 id='method.current_theme' class='method'><span id='current_theme.v' class='invisible'><code>fn <a href='#method.current_theme' class='fnname'>current_theme</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code></span></h4>
+<div class='docblock'><p>Returns the currently used theme.</p>
+</div><h4 id='method.set_theme' class='method'><span id='set_theme.v' class='invisible'><code>fn <a href='#method.set_theme' class='fnname'>set_theme</a>(&amp;mut self, theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a>)</code></span></h4>
 <div class='docblock'><p>Sets the current theme.</p>
-</div><h4 id='method.clear' class='method'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;self)</code></h4>
+</div><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;self)</code></span></h4>
 <div class='docblock'><p>Clears the screen.</p>
 
-<p>If a view becomes smaller, clearing the screen may be necessary.</p>
-</div><h4 id='method.load_theme_file' class='method'><code>fn <a href='#method.load_theme_file' class='fnname'>load_theme_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, filename: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>,&nbsp;<a class='enum' href='../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</code></h4>
+<p>Users rarely have to call this directly.</p>
+</div><h4 id='method.load_theme_file' class='method'><span id='load_theme_file.v' class='invisible'><code>fn <a href='#method.load_theme_file' class='fnname'>load_theme_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, filename: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</code></span></h4>
 <div class='docblock'><p>Loads a theme from the given file.</p>
 
 <p><code>filename</code> must point to a valid toml file.</p>
-</div><h4 id='method.load_theme' class='method'><code>fn <a href='#method.load_theme' class='fnname'>load_theme</a>(&amp;mut self, content: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>,&nbsp;<a class='enum' href='../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.load_theme' class='method'><span id='load_theme.v' class='invisible'><code>fn <a href='#method.load_theme' class='fnname'>load_theme</a>(&amp;mut self, content: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</code></span></h4>
 <div class='docblock'><p>Loads a theme from the given string content.</p>
 
 <p>Content must be valid toml.</p>
-</div><h4 id='method.set_fps' class='method'><code>fn <a href='#method.set_fps' class='fnname'>set_fps</a>(&amp;mut self, fps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></h4>
+</div><h4 id='method.set_fps' class='method'><span id='set_fps.v' class='invisible'><code>fn <a href='#method.set_fps' class='fnname'>set_fps</a>(&amp;mut self, fps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></span></h4>
 <div class='docblock'><p>Sets the refresh rate, in frames per second.</p>
 
-<p>Regularly redraws everything, even when no input is given.
-Between 0 and 1000.
-Call with fps=0 to disable (default value).</p>
-</div><h4 id='method.screen' class='method'><code>fn <a href='#method.screen' class='fnname'>screen</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/views/struct.StackView.html' title='cursive::views::StackView'>StackView</a></code></h4>
+<p>Regularly redraws everything, even when no input is given.</p>
+
+<p>You currently need this to regularly check
+for events sent using <a href="#method.cb_sink"><code>cb_sink</code></a>.</p>
+
+<p>Between 0 and 1000. Call with <code>fps = 0</code> to disable (default value).</p>
+</div><h4 id='method.screen' class='method'><span id='screen.v' class='invisible'><code>fn <a href='#method.screen' class='fnname'>screen</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/views/struct.StackView.html' title='cursive::views::StackView'>StackView</a></code></span></h4>
 <div class='docblock'><p>Returns a reference to the currently active screen.</p>
-</div><h4 id='method.screen_mut' class='method'><code>fn <a href='#method.screen_mut' class='fnname'>screen_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../cursive/views/struct.StackView.html' title='cursive::views::StackView'>StackView</a></code></h4>
+</div><h4 id='method.screen_mut' class='method'><span id='screen_mut.v' class='invisible'><code>fn <a href='#method.screen_mut' class='fnname'>screen_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../cursive/views/struct.StackView.html' title='cursive::views::StackView'>StackView</a></code></span></h4>
 <div class='docblock'><p>Returns a mutable reference to the currently active screen.</p>
-</div><h4 id='method.add_screen' class='method'><code>fn <a href='#method.add_screen' class='fnname'>add_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></h4>
+</div><h4 id='method.add_screen' class='method'><span id='add_screen.v' class='invisible'><code>fn <a href='#method.add_screen' class='fnname'>add_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></span></h4>
 <div class='docblock'><p>Adds a new screen, and returns its ID.</p>
-</div><h4 id='method.add_active_screen' class='method'><code>fn <a href='#method.add_active_screen' class='fnname'>add_active_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></h4>
+</div><h4 id='method.add_active_screen' class='method'><span id='add_active_screen.v' class='invisible'><code>fn <a href='#method.add_active_screen' class='fnname'>add_active_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></span></h4>
 <div class='docblock'><p>Convenient method to create a new screen, and set it as active.</p>
-</div><h4 id='method.set_screen' class='method'><code>fn <a href='#method.set_screen' class='fnname'>set_screen</a>(&amp;mut self, screen_id: <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a>)</code></h4>
+</div><h4 id='method.set_screen' class='method'><span id='set_screen.v' class='invisible'><code>fn <a href='#method.set_screen' class='fnname'>set_screen</a>(&amp;mut self, screen_id: <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a>)</code></span></h4>
 <div class='docblock'><p>Sets the active screen. Panics if no such screen exist.</p>
-</div><h4 id='method.find' class='method'><code>fn <a href='#method.find' class='fnname'>find</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, sel: &amp;<a class='enum' href='../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></h4>
+</div><h4 id='method.find' class='method'><span id='find.v' class='invisible'><code>fn <a href='#method.find' class='fnname'>find</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, sel: &amp;<a class='enum' href='../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></span></h4>
 <div class='docblock'><p>Tries to find the view pointed to by the given selector.</p>
 
 <p>If the view is not found, or if it is not of the asked type,
@@ -167,7 +171,7 @@ it returns None.</p>
      .<span class='ident'>unwrap</span>()
      .<span class='ident'>set_content</span>(<span class='string'>&quot;Text #2&quot;</span>);
 });</pre>
-</div><h4 id='method.find_id' class='method'><code>fn <a href='#method.find_id' class='fnname'>find_id</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, id: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></h4>
+</div><h4 id='method.find_id' class='method'><span id='find_id.v' class='invisible'><code>fn <a href='#method.find_id' class='fnname'>find_id</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, id: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></span></h4>
 <div class='docblock'><p>Convenient method to use <code>find</code> with a <code>view::Selector::Id</code>.</p>
 
 <h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
@@ -182,7 +186,7 @@ it returns None.</p>
      .<span class='ident'>unwrap</span>()
      .<span class='ident'>set_content</span>(<span class='string'>&quot;Text #2&quot;</span>);
 });</pre>
-</div><h4 id='method.add_global_callback' class='method'><code>fn <a href='#method.add_global_callback' class='fnname'>add_global_callback</a>&lt;F,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>&gt;&gt;(&amp;mut self, event: E, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></h4>
+</div><h4 id='method.add_global_callback' class='method'><span id='add_global_callback.v' class='invisible'><code>fn <a href='#method.add_global_callback' class='fnname'>add_global_callback</a>&lt;F, E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>&gt;&gt;(&amp;mut self, event: E, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></span></h4>
 <div class='docblock'><p>Adds a global callback.</p>
 
 <p>Will be triggered on the given key press when no view catches it.</p>
@@ -192,7 +196,7 @@ it returns None.</p>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>siv</span> <span class='op'>=</span> <span class='ident'>Cursive</span>::<span class='ident'>new</span>();
 
 <span class='ident'>siv</span>.<span class='ident'>add_global_callback</span>(<span class='string'>&#39;q&#39;</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>quit</span>());</pre>
-</div><h4 id='method.add_layer' class='method'><code>fn <a href='#method.add_layer' class='fnname'>add_layer</a>&lt;T:&nbsp;'static + <a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt;(&amp;mut self, view: T)</code></h4>
+</div><h4 id='method.add_layer' class='method'><span id='add_layer.v' class='invisible'><code>fn <a href='#method.add_layer' class='fnname'>add_layer</a>&lt;T:&nbsp;'static + <a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt;(&amp;mut self, view: T)</code></span></h4>
 <div class='docblock'><p>Convenient method to add a layer to the current screen.</p>
 
 <h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
@@ -200,24 +204,31 @@ it returns None.</p>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>siv</span> <span class='op'>=</span> <span class='ident'>Cursive</span>::<span class='ident'>new</span>();
 
 <span class='ident'>siv</span>.<span class='ident'>add_layer</span>(<span class='ident'>views</span>::<span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='string'>&quot;Hello world!&quot;</span>));</pre>
-</div><h4 id='method.pop_layer' class='method'><code>fn <a href='#method.pop_layer' class='fnname'>pop_layer</a>(&amp;mut self)</code></h4>
+</div><h4 id='method.pop_layer' class='method'><span id='pop_layer.v' class='invisible'><code>fn <a href='#method.pop_layer' class='fnname'>pop_layer</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Convenient method to remove a layer from the current screen.</p>
-</div><h4 id='method.screen_size' class='method'><code>fn <a href='#method.screen_size' class='fnname'>screen_size</a>(&amp;self) -&gt; <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+</div><h4 id='method.screen_size' class='method'><span id='screen_size.v' class='invisible'><code>fn <a href='#method.screen_size' class='fnname'>screen_size</a>(&amp;self) -&gt; <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></span></h4>
 <div class='docblock'><p>Returns the size of the screen, in characters.</p>
-</div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></h4>
+</div><h4 id='method.is_running' class='method'><span id='is_running.v' class='invisible'><code>fn <a href='#method.is_running' class='fnname'>is_running</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns <code>true</code> until <a href="#method.quit"><code>quit(&amp;mut self)</code></a> is called.</p>
+</div><h4 id='method.run' class='method'><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Runs the event loop.</p>
 
 <p>It will wait for user input (key presses)
 and trigger callbacks accordingly.</p>
 
-<p>Blocks until quit() is called.</p>
-</div><h4 id='method.quit' class='method'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></h4>
+<p>Calls <a href="#method.step"><code>step(&amp;mut self)</code></a> until <a href="#method.quit"><code>quit(&amp;mut self)</code></a> is called.</p>
+</div><h4 id='method.step' class='method'><span id='step.v' class='invisible'><code>fn <a href='#method.step' class='fnname'>step</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>Performs a single step from the event loop.</p>
+
+<p>Useful if you need tighter control on the event loop.
+Otherwise, <a href="#method.run"><code>run(&amp;mut self)</code></a> might be more convenient.</p>
+</div><h4 id='method.quit' class='method'><span id='quit.v' class='invisible'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Stops the event loop.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3920' class='srclink' href='../src/cursive/lib.rs.html#74-78' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4023' class='srclink' href='../src/cursive/lib.rs.html#81-85' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4028' class='srclink' href='../src/cursive/lib.rs.html#566-570' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3205' class='srclink' href='../src/cursive/lib.rs.html#603-607' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -275,11 +286,9 @@ and trigger callbacks accordingly.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

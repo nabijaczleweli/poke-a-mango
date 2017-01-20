@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Signal","The set of subscribable signals."]],"fn":[["notify","Create a new channel subscribed to the given signals."],["notify_on","Subscribe to a signal on a channel."]]});

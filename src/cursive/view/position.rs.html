@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.4/src/view/position.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/cursive-0.3.7/src/view/position.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>position.rs.html -- source</title>
@@ -159,7 +159,7 @@
     }
 
     <span class='doccomment'>/// Returns a position relative to the parent on both axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parent</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>offset</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parent</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>isize</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='ident'>offset</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>offset</span>.<span class='ident'>into</span>();
         <span class='ident'>Position</span>::<span class='ident'>new</span>(<span class='ident'>Offset</span>::<span class='ident'>Parent</span>(<span class='ident'>offset</span>.<span class='ident'>x</span>), <span class='ident'>Offset</span>::<span class='ident'>Parent</span>(<span class='ident'>offset</span>.<span class='ident'>y</span>))
     }
@@ -196,7 +196,7 @@
     <span class='doccomment'>/// Offset from the previous layer&#39;s top-left corner.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// If this is the first layer, behaves like `Absolute`.</span>
-    <span class='ident'>Parent</span>(<span class='ident'>usize</span>), <span class='comment'>// TODO: use a signed vec for negative offset?</span>
+    <span class='ident'>Parent</span>(<span class='ident'>isize</span>),
 }
 
 <span class='kw'>impl</span> <span class='ident'>Offset</span> {
@@ -211,7 +211,7 @@
                 <span class='ident'>Offset</span>::<span class='ident'>Center</span> <span class='op'>=&gt;</span> (<span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>) <span class='op'>/</span> <span class='number'>2</span>,
                 <span class='ident'>Offset</span>::<span class='ident'>Absolute</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> <span class='ident'>min</span>(<span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>),
                 <span class='ident'>Offset</span>::<span class='ident'>Parent</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> {
-                    <span class='ident'>min</span>(<span class='ident'>parent</span> <span class='op'>+</span> <span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>)
+                    <span class='ident'>min</span>((<span class='ident'>parent</span> <span class='kw'>as</span> <span class='ident'>isize</span> <span class='op'>+</span> <span class='ident'>offset</span>) <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>)
                 }
             }
         }
@@ -292,11 +292,9 @@
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

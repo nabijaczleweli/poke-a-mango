@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/poke_a_mango/src/lib.rs.html#1-180' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/poke_a_mango/src/lib.rs.html#1-183' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>What all the kool kidz are playing these days</p>
 
 <h2 id='features' class='section-header'><a href='#features'>Features</a></h2>
@@ -106,13 +106,15 @@ That sometimes produces <code>GameState</code>s that need action from you and yo
 <span class='kw'>let</span> <span class='ident'>opts</span> <span class='op'>=</span> <span class='ident'>Options</span>::<span class='ident'>parse</span>();
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>window</span>: <span class='ident'>PistonWindow</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>ops</span>::<span class='ident'>create_window</span>(<span class='ident'>opts</span>.<span class='ident'>desktop_size</span>));
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ui</span> <span class='op'>=</span> <span class='ident'>conrod</span>::<span class='ident'>UiBuilder</span>::<span class='ident'>new</span>().<span class='ident'>build</span>();
+<span class='kw'>let</span> <span class='ident'>window_s</span> <span class='op'>=</span> <span class='ident'>ops</span>::<span class='ident'>window_size</span>(<span class='ident'>opts</span>.<span class='ident'>desktop_size</span>);
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ui</span> <span class='op'>=</span> <span class='ident'>conrod</span>::<span class='ident'>UiBuilder</span>::<span class='ident'>new</span>([<span class='ident'>window_s</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>f64</span>, <span class='ident'>window_s</span>[<span class='number'>1</span>] <span class='kw'>as</span> <span class='ident'>f64</span>]).<span class='ident'>build</span>();
 <span class='comment'>// Set up the UI like normal</span>
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>game_state</span> <span class='op'>=</span> <span class='ident'>ops</span>::<span class='ident'>GameState</span>::<span class='ident'>MainMenu</span>;
 <span class='kw'>let</span> <span class='ident'>widgets</span> <span class='op'>=</span> <span class='ident'>ops</span>::<span class='ident'>Widgets</span>::<span class='ident'>new</span>(<span class='ident'>ui</span>.<span class='ident'>widget_id_generator</span>());
 
-<span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>event</span>) <span class='op'>=</span> <span class='ident'>window</span>.<span class='ident'>next</span>() {
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>events</span> <span class='op'>=</span> <span class='ident'>WindowEvents</span>::<span class='ident'>new</span>();
+<span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>event</span>) <span class='op'>=</span> <span class='ident'>window</span>.<span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>events</span>) {
     <span class='ident'>event</span>.<span class='ident'>update</span>(<span class='op'>|</span>_<span class='op'>|</span> {
         <span class='ident'>widgets</span>.<span class='ident'>update</span>(<span class='ident'>ui</span>.<span class='ident'>set_widgets</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>game_state</span>);
 
@@ -180,14 +182,14 @@ Format: NxM
                        <tr class=' module-item'>
                            <td><a class='mod' href='ops/index.html'
                                   title='poke_a_mango::ops'>ops</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Main functions doing actual work.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class='mod' href='util/index.html'
                                   title='poke_a_mango::util'>util</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Module containing various utility functions.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -195,7 +197,7 @@ Format: NxM
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.Options.html'
                                   title='poke_a_mango::Options'>Options</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Representation of the application&#39;s all configurable values.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -203,7 +205,7 @@ Format: NxM
                        <tr class=' module-item'>
                            <td><a class='enum' href='enum.Error.html'
                                   title='poke_a_mango::Error'>Error</a></td>
-                           <td class='docblock short'>
+                           <td class='docblock-short'>
                                 <p>Enum representing all possible ways the application can fail.</p>
                            </td>
                        </tr></table></section>
@@ -262,11 +264,9 @@ Format: NxM
     <script>
         window.rootPath = "../";
         window.currentCrate = "poke_a_mango";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>
