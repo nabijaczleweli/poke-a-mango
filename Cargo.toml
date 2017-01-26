@@ -39,7 +39,7 @@ features = ["pancurses"]
 default-features = false
 
 [build-dependencies]
-embed-resource = "0.1"
+embed-resource = "1.1"
 
 
 [[bin]]

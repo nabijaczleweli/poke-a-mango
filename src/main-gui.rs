@@ -1,8 +1,3 @@
-#[cfg(target_os="windows")]
-#[link(name="poke-a-mango-manifest", kind="static")]
-extern "C" {}
-
-
 extern crate poke_a_mango;
 extern crate rusttype;
 extern crate conrod;

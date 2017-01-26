@@ -2,5 +2,5 @@ extern crate embed_resource;
 
 
 fn main() {
-    embed_resource::compile("poke-a-mango-manifest.rc", None, None);
+    embed_resource::compile("poke-a-mango-manifest.rc");
 }
