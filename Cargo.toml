@@ -38,6 +38,9 @@ version = "0.3"
 features = ["pancurses"]
 default-features = false
 
+[build-dependencies]
+embed-resource = "0.1"
+
 
 [[bin]]
 name = "poke-a-mango"
