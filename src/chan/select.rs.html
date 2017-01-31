@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.18/src/select.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.19/src/select.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>select.rs.html -- source</title>
@@ -424,15 +424,6 @@
 <span id="380">380</span>
 <span id="381">381</span>
 <span id="382">382</span>
-<span id="383">383</span>
-<span id="384">384</span>
-<span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
-<span id="390">390</span>
-<span id="391">391</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>btree_map</span>::{<span class='ident'>BTreeMap</span>, <span class='ident'>Entry</span>};
@@ -556,7 +547,6 @@
         <span class='self'>self</span>.<span class='ident'>maybe_try_select</span>(<span class='bool-val'>true</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_assignments</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>maybe_try_select</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>try</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ChannelId</span><span class='op'>&gt;</span> {
         <span class='kw'>fn</span> <span class='ident'>try_sync</span><span class='op'>&lt;</span><span class='lifetime'>&#39;c</span><span class='op'>&gt;</span>(
             <span class='ident'>ids</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ChannelId</span><span class='op'>&gt;&gt;</span>,
@@ -627,32 +617,27 @@
         <span class='comment'>// the `Select` and block. This guarantees that notifications to this</span>
         <span class='comment'>// `Select` are synchronized with waiting on the condition variable.</span>
         <span class='comment'>//</span>
-        <span class='comment'>// Once the condition variable is notified, we immediately lock the</span>
-        <span class='comment'>// channels and repeat the process.</span>
-        <span class='kw'>for</span> (_, <span class='ident'>choice</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span> {
-            <span class='ident'>choice</span>.<span class='ident'>lock</span>();
-        }
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cond_lock</span>;
+        <span class='comment'>// Once the condition variable is notified, we repeat the process.</span>
         <span class='kw'>loop</span> {
+            <span class='kw'>for</span> (_, <span class='ident'>choice</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span> {
+                <span class='ident'>choice</span>.<span class='ident'>lock</span>();
+            }
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>key</span>) <span class='op'>=</span> <span class='ident'>try_sync</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>ids</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span>) {
                 <span class='kw'>for</span> (_, <span class='ident'>choice</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span> {
                     <span class='ident'>choice</span>.<span class='ident'>unlock</span>();
                 }
                 <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>key</span>);
             }
-            <span class='ident'>cond_lock</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cond_mutex</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
+            <span class='kw'>let</span> <span class='ident'>cond_lock</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cond_mutex</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
             <span class='kw'>for</span> (_, <span class='ident'>choice</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span> {
                 <span class='ident'>choice</span>.<span class='ident'>unlock</span>();
             }
             <span class='ident'>drop</span>(<span class='self'>self</span>.<span class='ident'>cond</span>.<span class='ident'>wait</span>(<span class='ident'>cond_lock</span>).<span class='ident'>unwrap</span>());
-            <span class='kw'>for</span> (_, <span class='ident'>choice</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>choices</span> {
-                <span class='ident'>choice</span>.<span class='ident'>lock</span>();
-            }
         }
     }
 
     <span class='doccomment'>/// Register a new send operation with the select.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>: <span class='lifetime'>&#39;c</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>: <span class='lifetime'>&#39;c</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
         <span class='ident'>chan</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;s</span> <span class='ident'>Sender</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
         <span class='ident'>val</span>: <span class='ident'>T</span>,
@@ -678,7 +663,7 @@
     }
 
     <span class='doccomment'>/// Register a new receive operation with the select.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>recv</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span>: <span class='lifetime'>&#39;c</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>recv</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span>: <span class='lifetime'>&#39;c</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
         <span class='ident'>chan</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> <span class='ident'>Receiver</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
     ) <span class='op'>-&gt;</span> <span class='ident'>SelectRecvHandle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -718,9 +703,8 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>unsubscribe</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>id</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>chan</span>.<span class='ident'>inner</span>().<span class='ident'>notify</span>.<span class='ident'>unsubscribe</span>(<span class='ident'>id</span>),
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {}
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>id</span> {
+            <span class='self'>self</span>.<span class='ident'>chan</span>.<span class='ident'>inner</span>().<span class='ident'>notify</span>.<span class='ident'>unsubscribe</span>(<span class='ident'>id</span>)
         }
     }
 
@@ -766,9 +750,8 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>unsubscribe</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>id</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>chan</span>.<span class='ident'>inner</span>().<span class='ident'>notify</span>.<span class='ident'>unsubscribe</span>(<span class='ident'>id</span>),
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {}
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>id</span> {
+            <span class='self'>self</span>.<span class='ident'>chan</span>.<span class='ident'>inner</span>().<span class='ident'>notify</span>.<span class='ident'>unsubscribe</span>(<span class='ident'>id</span>)
         }
     }
 
@@ -821,8 +804,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Panics if this channel was not chosen to synchronize.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_value</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>val</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>take</span>().<span class='ident'>unwrap</span>();
-        <span class='ident'>val</span>
+        <span class='self'>self</span>.<span class='ident'>val</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>take</span>().<span class='ident'>unwrap</span>()
     }
 }
 </pre>

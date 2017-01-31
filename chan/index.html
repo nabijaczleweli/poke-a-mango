@@ -65,7 +65,7 @@ synchronize, they are said to <em>rendezvous</em>.</li>
 are created with <code>chan::sync(k)</code> where <code>k</code> is the buffer size. Rendezvous
 channels are created with <code>chan::sync(0)</code>.</p>
 
-<p>all channels are split into the same two types upon creation: a <code>Sender</code> and
+<p>All channels are split into the same two types upon creation: a <code>Sender</code> and
 a <code>Receiver</code>. Additional senders and receivers can be created with reckless
 abandon by calling <code>clone</code>.</p>
 
@@ -260,9 +260,9 @@ like this:</p>
     <span class='ident'>rdone</span>.<span class='ident'>recv</span>();
 }</pre>
 
-<p>We no longer need to explicitly do anything with the <code>done</code> channel. We give
+<p>We no longer need to explicitly do anything with the <code>_done</code> channel. We give
 <code>do_work</code> ownership of the channel, but as soon as the function stops
-executing, <code>done</code> is dropped, the channel is closed and <code>rdone.recv()</code>
+executing, <code>_done</code> is dropped, the channel is closed and <code>rdone.recv()</code>
 unblocks.</p>
 
 <h1 id='example-i-want-more' class='section-header'><a href='#example-i-want-more'>Example: I want more!</a></h1>
@@ -404,7 +404,7 @@ exist in <code>chan</code>.</li>
 <li><code>chan</code> does not expose <code>len</code> or <code>cap</code> methods. (For no reason other than
 to start with a totally minimal API. In particular, calling <code>len</code> or <code>cap</code>
 on a channel is often The Wrong Thing. But not always. So this restriction
-will probably be lifted.)</li>
+may be lifted in the future.)</li>
 <li>In <code>chan</code>, all channels are either senders or receivers. There is no
 &quot;bidirectional&quot; channel. This is manifest in how channel memory is managed:
 channels are closed when all senders are dropped.</li>
@@ -449,7 +449,7 @@ languages.</p>
                            <td><a class='struct' href='struct.WaitGroup.html'
                                   title='chan::WaitGroup'>WaitGroup</a></td>
                            <td class='docblock-short'>
-                                <p>WaitGroup provides synchronization on the completion of threads.</p>
+                                <p><code>WaitGroup</code> provides synchronization on the completion of threads.</p>
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>

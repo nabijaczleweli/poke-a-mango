@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.18/src/wait_group.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.19/src/wait_group.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>wait_group.rs.html -- source</title>
@@ -130,7 +130,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>Condvar</span>, <span class='ident'>Mutex</span>};
 
-<span class='doccomment'>/// WaitGroup provides synchronization on the completion of threads.</span>
+<span class='doccomment'>/// `WaitGroup` provides synchronization on the completion of threads.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// For each thread involved in the synchronization, `add(1)` should be</span>
 <span class='doccomment'>/// called. Just before a thread terminates, it should call `done`.</span>
