@@ -93,7 +93,8 @@
 //!             window.set_should_close(true);
 //!         } else if game_state.should_load_leaderboard() {
 //!             game_state =
-//!                 ops::GameState::DisplayLeaderboard(ops::Leader::read(&opts.config_dir.1.join("leaderboard.toml")).unwrap());
+//!                 ops::GameState::DisplayLeaderboard(ops::Leader::read(
+//!                     &opts.config_dir.1.join("leaderboard.toml")).unwrap());
 //!         } else if let ops::GameState::GameEnded { .. } = game_state {
 //!             if let ops::GameState::GameEnded { ref name, score } = game_state {
 //!                 ops::Leader::append(ops::Leader::now(name.clone(), score),
