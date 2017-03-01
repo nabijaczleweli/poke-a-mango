@@ -1,5 +1,7 @@
 (function() {var implementors = {};
-implementors["unicode_segmentation"] = [];implementors["cursive"] = [];implementors["poke_a_mango"] = [];
+implementors["cursive"] = [];
+implementors["poke_a_mango"] = [];
+implementors["unicode_segmentation"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

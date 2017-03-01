@@ -47,11 +47,11 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-66' class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#18-62' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#18-62' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ViewWrapper {
     type <a href='#associatedtype.V' class='type'>V</a>: <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>;
-    fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::V;
-    fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::V;
+    fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a>;
+    fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a>;
 
     fn <a href='#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>) { ... }
     fn <a href='#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
@@ -74,8 +74,8 @@ Overrides some methods as desired.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.get_view' class='method stab '><span id='get_view.v' class='invisible'><code>fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::V</code></span></h3><div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
-</div><h3 id='tymethod.get_view_mut' class='method stab '><span id='get_view_mut.v' class='invisible'><code>fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::V</code></span></h3><div class='docblock'><p>Get a mutable reference to the wrapped view.</p>
+        <h3 id='tymethod.get_view' class='method stab '><span id='get_view.v' class='invisible'><code>fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h3><div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
+</div><h3 id='tymethod.get_view_mut' class='method stab '><span id='get_view_mut.v' class='invisible'><code>fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h3><div class='docblock'><p>Get a mutable reference to the wrapped view.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>

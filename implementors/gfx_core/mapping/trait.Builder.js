@@ -1,5 +1,8 @@
 (function() {var implementors = {};
-implementors["gfx_core"] = [];implementors["gfx"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["conrod"] = [];
+implementors["gfx"] = [];
+implementors["gfx_core"] = [];
+implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/num-complex-0.1.35/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/num-complex-0.1.36/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
-    
+    <link rel="shortcut icon" href="https://rust-num.github.io/num/favicon.ico">
     
 </head>
 <body class="rustdoc">
@@ -27,7 +27,7 @@
     
 
     <nav class="sidebar">
-        
+        <a href='../../num_complex/index.html'><img src='https://rust-num.github.io/num/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         
     </nav>
 
@@ -1295,6 +1295,24 @@
 <span id="1251">1251</span>
 <span id="1252">1252</span>
 <span id="1253">1253</span>
+<span id="1254">1254</span>
+<span id="1255">1255</span>
+<span id="1256">1256</span>
+<span id="1257">1257</span>
+<span id="1258">1258</span>
+<span id="1259">1259</span>
+<span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2013 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -1307,6 +1325,10 @@
 <span class='comment'>// except according to those terms.</span>
 
 <span class='doccomment'>//! Complex numbers.</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;https://rust-num.github.io/num/rust-logo-128x128-blk-v2.png&quot;</span>,
+       <span class='ident'>html_favicon_url</span> <span class='op'>=</span> <span class='string'>&quot;https://rust-num.github.io/num/favicon.ico&quot;</span>,
+       <span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;https://rust-num.github.io/num/&quot;</span>,
+       <span class='ident'>html_playground_url</span> <span class='op'>=</span> <span class='string'>&quot;http://play.integer32.com/&quot;</span>)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_traits</span> <span class='kw'>as</span> <span class='ident'>traits</span>;
 
@@ -1327,7 +1349,7 @@
 <span class='comment'>// probably doesn&#39;t map to C&#39;s _Complex correctly.</span>
 
 <span class='doccomment'>/// A complex number in Cartesian form.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Default</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Default</span>)]</span>
 <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Complex</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Real portion of the complex number</span>
@@ -2512,6 +2534,20 @@
         <span class='macro'>assert</span><span class='macro'>!</span>(::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>) <span class='op'>!=</span> ::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>));
         <span class='macro'>assert</span><span class='macro'>!</span>(::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>) <span class='op'>!=</span> ::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>));
         <span class='macro'>assert</span><span class='macro'>!</span>(::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>) <span class='op'>!=</span> ::<span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>));
+    }
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>test_hashset</span>() {
+        <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashSet</span>;
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Complex</span>::<span class='ident'>new</span>(<span class='number'>0i32</span>, <span class='number'>0i32</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Complex</span>::<span class='ident'>new</span>(<span class='number'>1i32</span>, <span class='number'>0i32</span>);
+        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>Complex</span>::<span class='ident'>new</span>(<span class='number'>0i32</span>, <span class='number'>1i32</span>);
+
+        <span class='kw'>let</span> <span class='ident'>set</span>: <span class='ident'>HashSet</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> [<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>].<span class='ident'>iter</span>().<span class='ident'>cloned</span>().<span class='ident'>collect</span>();
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>set</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>));
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>set</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>));
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>set</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>));
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>set</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span>(<span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span> <span class='op'>+</span> <span class='ident'>c</span>)));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>

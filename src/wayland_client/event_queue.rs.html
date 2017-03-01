@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/wayland-client-0.7.6/src/event_queue.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/wayland-client-0.7.8/src/event_queue.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>event_queue.rs.html -- source</title>
@@ -523,13 +523,13 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Deref</span>, <span class='ident'>DerefMut</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_void</span>, <span class='ident'>c_int</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>AtomicBool</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicBool</span>, <span class='ident'>AtomicPtr</span>};
 
 <span class='kw'>use</span> <span class='ident'>wayland_sys</span>::<span class='ident'>client</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>wayland_sys</span>::<span class='ident'>common</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> {<span class='ident'>Handler</span>, <span class='ident'>Proxy</span>};
 
-<span class='kw'>type</span> <span class='ident'>ProxyUserData</span> <span class='op'>=</span> (<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>EventQueueHandle</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>AtomicBool</span><span class='op'>&gt;</span>);
+<span class='kw'>type</span> <span class='ident'>ProxyUserData</span> <span class='op'>=</span> (<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>EventQueueHandle</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span>(<span class='ident'>AtomicBool</span>, <span class='ident'>AtomicPtr</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>)<span class='op'>&gt;</span>);
 
 <span class='doccomment'>/// Handle to an event queue</span>
 <span class='doccomment'>///</span>

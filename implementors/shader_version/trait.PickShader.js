@@ -1,5 +1,8 @@
 (function() {var implementors = {};
-implementors["shader_version"] = [];implementors["glutin_window"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["conrod"] = [];
+implementors["glutin_window"] = [];
+implementors["poke_a_mango"] = [];
+implementors["shader_version"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

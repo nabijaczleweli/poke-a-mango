@@ -1,5 +1,11 @@
 (function() {var implementors = {};
-implementors["num_traits"] = [];implementors["enum_primitive"] = [];implementors["cursive"] = [];implementors["chrono"] = [];implementors["image"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["chrono"] = [];
+implementors["conrod"] = [];
+implementors["cursive"] = [];
+implementors["enum_primitive"] = [];
+implementors["image"] = [];
+implementors["num_traits"] = [];
+implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -1,5 +1,7 @@
 (function() {var implementors = {};
-implementors["cursive"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["conrod"] = [];
+implementors["cursive"] = [];
+implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -1,5 +1,9 @@
 (function() {var implementors = {};
-implementors["odds"] = [];implementors["arrayvec"] = [];implementors["cursive"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["arrayvec"] = [];
+implementors["conrod"] = [];
+implementors["cursive"] = [];
+implementors["odds"] = [];
+implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

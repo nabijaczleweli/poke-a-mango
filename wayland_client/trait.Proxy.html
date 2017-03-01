@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-313' class='srclink' href='../src/wayland_client/lib.rs.html#156-189' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/wayland_client/lib.rs.html#156-203' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Proxy {
     fn <a href='#tymethod.ptr' class='fnname'>ptr</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='enum' href='../wayland_sys/client/enum.wl_proxy.html' title='wayland_sys::client::wl_proxy'>wl_proxy</a>;
     unsafe fn <a href='#tymethod.from_ptr_new' class='fnname'>from_ptr_new</a>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='enum' href='../wayland_sys/client/enum.wl_proxy.html' title='wayland_sys::client::wl_proxy'>wl_proxy</a>) -&gt; Self;
@@ -58,6 +58,8 @@
     fn <a href='#tymethod.version' class='fnname'>version</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>;
     fn <a href='#tymethod.is_alive' class='fnname'>is_alive</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.equals' class='fnname'>equals</a>(&amp;self, &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.set_user_data' class='fnname'>set_user_data</a>(&amp;self, ptr: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>);
+    fn <a href='#tymethod.get_user_data' class='fnname'>get_user_data</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>;
 }</pre><div class='docblock'><p>Common routines for wayland proxy objects.</p>
 
 <p>All wayland objects automatically implement this trait
@@ -92,6 +94,18 @@ user_data contains a certain kind of data).</p>
 </div><h3 id='tymethod.equals' class='method stab '><span id='equals.v' class='invisible'><code>fn <a href='#tymethod.equals' class='fnname'>equals</a>(&amp;self, &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Check of two handles are actually the same wayland object</p>
 
 <p>Returns <code>false</code> if any of the objects has already been destroyed</p>
+</div><h3 id='tymethod.set_user_data' class='method stab '><span id='set_user_data.v' class='invisible'><code>fn <a href='#tymethod.set_user_data' class='fnname'>set_user_data</a>(&amp;self, ptr: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>)</code></span></h3><div class='docblock'><p>Set a pointer associated as user data on this proxy</p>
+
+<p>All proxies to the same wayland object share the same user data pointer.</p>
+
+<p>The get/set operations are atomic, no more guarantee is given. If you need
+to synchronise access to this data, it is your responsibility to add a Mutex
+or any other similar mechanism.</p>
+</div><h3 id='tymethod.get_user_data' class='method stab '><span id='get_user_data.v' class='invisible'><code>fn <a href='#tymethod.get_user_data' class='fnname'>get_user_data</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></code></span></h3><div class='docblock'><p>Get the pointer associated as user data on this proxy</p>
+
+<p>All proxies to the same wayland object share the same user data pointer.</p>
+
+<p>See <code>set_user_data</code> for synchronisation guarantee.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

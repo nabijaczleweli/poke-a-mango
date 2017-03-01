@@ -1,5 +1,33 @@
 (function() {var implementors = {};
-implementors["lazy_static"] = [];implementors["regex_syntax"] = [];implementors["graphics"] = [];implementors["libc"] = [];implementors["enum_primitive"] = [];implementors["arrayvec"] = [];implementors["daggy"] = [];implementors["shared_library"] = [];implementors["pancurses"] = [];implementors["tempfile"] = [];implementors["chan_signal"] = [];implementors["num"] = [];implementors["libloading"] = [];implementors["cursive"] = [];implementors["dlib"] = [];implementors["chrono"] = [];implementors["wayland_sys"] = [];implementors["gfx_core"] = [];implementors["image"] = [];implementors["wayland_window"] = [];implementors["gfx_gl"] = [];implementors["wayland_kbd"] = [];implementors["gl"] = [];implementors["winit"] = [];implementors["gfx"] = [];implementors["glutin"] = [];implementors["glutin_window"] = [];implementors["conrod"] = [];implementors["poke_a_mango"] = [];
+implementors["arrayvec"] = [];
+implementors["chan_signal"] = [];
+implementors["chrono"] = [];
+implementors["conrod"] = [];
+implementors["cursive"] = [];
+implementors["daggy"] = [];
+implementors["dlib"] = [];
+implementors["enum_primitive"] = [];
+implementors["gfx"] = [];
+implementors["gfx_core"] = [];
+implementors["gfx_gl"] = [];
+implementors["gl"] = [];
+implementors["glutin"] = [];
+implementors["glutin_window"] = [];
+implementors["graphics"] = [];
+implementors["image"] = [];
+implementors["lazy_static"] = [];
+implementors["libc"] = [];
+implementors["libloading"] = [];
+implementors["num"] = [];
+implementors["pancurses"] = [];
+implementors["poke_a_mango"] = [];
+implementors["regex_syntax"] = [];
+implementors["shared_library"] = [];
+implementors["tempfile"] = [];
+implementors["wayland_kbd"] = [];
+implementors["wayland_sys"] = [];
+implementors["wayland_window"] = [];
+implementors["winit"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

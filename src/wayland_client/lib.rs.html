@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/wayland-client-0.7.6/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/wayland-client-0.7.8/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -304,6 +304,20 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Client-side Wayland connector</span>
 <span class='doccomment'>//!</span>
@@ -493,6 +507,20 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Returns `false` if any of the objects has already been destroyed</span>
     <span class='kw'>fn</span> <span class='ident'>equals</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+    <span class='doccomment'>/// Set a pointer associated as user data on this proxy</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// All proxies to the same wayland object share the same user data pointer.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// The get/set operations are atomic, no more guarantee is given. If you need</span>
+    <span class='doccomment'>/// to synchronise access to this data, it is your responsibility to add a Mutex</span>
+    <span class='doccomment'>/// or any other similar mechanism.</span>
+    <span class='kw'>fn</span> <span class='ident'>set_user_data</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>ptr</span>: <span class='op'>*</span><span class='kw-2'>mut</span> ());
+    <span class='doccomment'>/// Get the pointer associated as user data on this proxy</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// All proxies to the same wayland object share the same user data pointer.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// See `set_user_data` for synchronisation guarantee.</span>
+    <span class='kw'>fn</span> <span class='ident'>get_user_data</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> ();
 }
 
 <span class='doccomment'>/// Possible outcome of the call of a request on a proxy</span>

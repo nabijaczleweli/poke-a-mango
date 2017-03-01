@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/poke_a_mango/src/lib.rs.html#1-183' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/poke_a_mango/lib.rs.html#1-184' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>What all the kool kidz are playing these days</p>
 
 <h2 id='features' class='section-header'><a href='#features'>Features</a></h2>
@@ -122,7 +122,8 @@ That sometimes produces <code>GameState</code>s that need action from you and yo
             <span class='ident'>window</span>.<span class='ident'>set_should_close</span>(<span class='bool-val'>true</span>);
         } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>game_state</span>.<span class='ident'>should_load_leaderboard</span>() {
             <span class='ident'>game_state</span> <span class='op'>=</span>
-                <span class='ident'>ops</span>::<span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(<span class='ident'>ops</span>::<span class='ident'>Leader</span>::<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='ident'>opts</span>.<span class='ident'>config_dir</span>.<span class='number'>1</span>.<span class='ident'>join</span>(<span class='string'>&quot;leaderboard.toml&quot;</span>)).<span class='ident'>unwrap</span>());
+                <span class='ident'>ops</span>::<span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(<span class='ident'>ops</span>::<span class='ident'>Leader</span>::<span class='ident'>read</span>(
+                    <span class='kw-2'>&amp;</span><span class='ident'>opts</span>.<span class='ident'>config_dir</span>.<span class='number'>1</span>.<span class='ident'>join</span>(<span class='string'>&quot;leaderboard.toml&quot;</span>)).<span class='ident'>unwrap</span>());
         } <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>ops</span>::<span class='ident'>GameState</span>::<span class='ident'>GameEnded</span> { .. } <span class='op'>=</span> <span class='ident'>game_state</span> {
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>ops</span>::<span class='ident'>GameState</span>::<span class='ident'>GameEnded</span> { <span class='kw-2'>ref</span> <span class='ident'>name</span>, <span class='ident'>score</span> } <span class='op'>=</span> <span class='ident'>game_state</span> {
                 <span class='ident'>ops</span>::<span class='ident'>Leader</span>::<span class='ident'>append</span>(<span class='ident'>ops</span>::<span class='ident'>Leader</span>::<span class='ident'>now</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>score</span>),
