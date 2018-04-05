@@ -9,14 +9,18 @@
 
     <title>poke_a_mango::ops::GameState - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>poke_a_mango</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'GameState', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum GameState</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.MainMenu">MainMenu</a><a href="#variant.ChooseDifficulty">ChooseDifficulty</a><a href="#variant.Playing">Playing</a><a href="#variant.GameOver">GameOver</a><a href="#variant.GameEnded">GameEnded</a><a href="#variant.LoadLeaderboard">LoadLeaderboard</a><a href="#variant.DisplayLeaderboard">DisplayLeaderboard</a><a href="#variant.Exit">Exit</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.should_exit">should_exit</a><a href="#method.should_load_leaderboard">should_load_leaderboard</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Ord">Ord</a></div></div><p class='location'><a href='../index.html'>poke_a_mango</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'GameState', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>poke_a_mango</a>::<wbr><a href='index.html'>ops</a>::<wbr><a class='enum' href=''>GameState</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>poke_a_mango</a>::<wbr><a href='index.html'>ops</a>::<wbr><a class="enum" href=''>GameState</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,143 +64,131 @@
     MainMenu,
     ChooseDifficulty,
     Playing {
-        difficulty: <a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a>,
-        score: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
-        fruit: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
+        difficulty: <a class="enum" href="../../poke_a_mango/ops/enum.Difficulty.html" title="enum poke_a_mango::ops::Difficulty">Difficulty</a>,
+        score: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
+        fruit: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;,
     },
     GameOver {
-        difficulty: <a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a>,
-        score: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
-        name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+        difficulty: <a class="enum" href="../../poke_a_mango/ops/enum.Difficulty.html" title="enum poke_a_mango::ops::Difficulty">Difficulty</a>,
+        score: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
+        name: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     },
     GameEnded {
-        name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
-        score: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+        name: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
+        score: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     },
     LoadLeaderboard,
-    DisplayLeaderboard(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../poke_a_mango/ops/struct.Leader.html' title='poke_a_mango::ops::Leader'>Leader</a>&gt;),
+    DisplayLeaderboard(<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../poke_a_mango/ops/struct.Leader.html" title="struct poke_a_mango::ops::Leader">Leader</a>&gt;),
     Exit,
-}</pre><div class='docblock'><p>Game&#39;s all possible states.</p>
-
+}</pre><div class='docblock'><p>Game's all possible states.</p>
 <p><code>Widgets::update()</code> takes care of proper state transformation.</p>
-</div><h2 class='variants'>Variants</h2>
-<span id='variant.MainMenu' class='variant'><span id='MainMenu.v' class='invisible'><code>MainMenu</code></span></span><div class='docblock'><p>Display the main menu.</p>
-
+</div><h2 id='variants' class='variants small-section-header'>
+                   Variants<a href='#variants' class='anchor'></a></h2>
+<span id="variant.MainMenu" class="variant small-section-header"><a href="#variant.MainMenu" class="anchor field"></a><span id='MainMenu.v' class='invisible'><code>MainMenu</code></span></span><div class='docblock'><p>Display the main menu.</p>
 <p>Main menu contains a Start button, a button to Display Highscores, an Exit button.</p>
-
 <p>Can transform into:</p>
-
 <ul>
 <li><code>ChooseDifficulty</code></li>
 <li><code>DisplayHighscores</code></li>
 <li><code>Exit</code></li>
 </ul>
-</div><span id='variant.ChooseDifficulty' class='variant'><span id='ChooseDifficulty.v' class='invisible'><code>ChooseDifficulty</code></span></span><div class='docblock'><p>Display the screen where the player chooses the difficulty.</p>
-
+</div><span id="variant.ChooseDifficulty" class="variant small-section-header"><a href="#variant.ChooseDifficulty" class="anchor field"></a><span id='ChooseDifficulty.v' class='invisible'><code>ChooseDifficulty</code></span></span><div class='docblock'><p>Display the screen where the player chooses the difficulty.</p>
 <p>The screen contains one button for each difficulty and the Back button.</p>
-
 <p>Can transform into:</p>
-
 <ul>
 <li><code>Playing</code></li>
 <li><code>MainMenu</code></li>
 </ul>
-</div><span id='variant.Playing' class='variant'><span id='Playing.v' class='invisible'><code>Playing</code></span></span><div class='docblock'><p>The game is currently in progress.</p>
-
-<p>This also contains the game&#39;s difficulty, the player&#39;s current score and whether the current fruit is a mango.</p>
-
+</div><span id="variant.Playing" class="variant small-section-header"><a href="#variant.Playing" class="anchor field"></a><span id='Playing.v' class='invisible'><code>Playing</code></span></span><div class='docblock'><p>The game is currently in progress.</p>
+<p>This also contains the game's difficulty, the player's current score and whether the current fruit is a mango.</p>
 <p>Can transform into <code>GameOver</code>.</p>
 </div><span class='docblock autohide sub-variant' id='variant.Playing.fields'><h3 class='fields'>Fields of <code>Playing</code></h3>
 
-                           <table><tr><td id='variant.Playing.field.difficulty'><span id='Playing.v.difficulty.v' class='invisible'><code>difficulty:&nbsp;<a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a></code></span></td><td><div class='docblock'><p>The game difficulty, as chosen in the <code>ChooseDifficulty</code> stage.</p>
-</div></td></tr><tr><td id='variant.Playing.field.score'><span id='Playing.v.score.v' class='invisible'><code>score:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></td><td><div class='docblock'><p>The user&#39;s current score.</p>
-</div></td></tr><tr><td id='variant.Playing.field.fruit'><span id='Playing.v.fruit.v' class='invisible'><code>fruit:&nbsp;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></span></td><td><div class='docblock'><p>The current fruit index.</p>
-
-<p>If <code>None</code> - it&#39;s a mango, else it&#39;s an index of fruit from <code>util::FRUITS</code>.</p>
-</div></td></tr></table></span><span id='variant.GameOver' class='variant'><span id='GameOver.v' class='invisible'><code>GameOver</code></span></span><div class='docblock'><p>The game was lost after a valiant battle.</p>
-
-<p>Contains the game&#39;s difficulty, the player&#39;s final score and the Back button.</p>
-
+                           <table><tr><td id='variant.Playing.field.difficulty'><span id='Playing.v.difficulty.v' class='invisible'><code>difficulty:&nbsp;<a class="enum" href="../../poke_a_mango/ops/enum.Difficulty.html" title="enum poke_a_mango::ops::Difficulty">Difficulty</a></code></span></td><td><div class='docblock'><p>The game difficulty, as chosen in the <code>ChooseDifficulty</code> stage.</p>
+</div></td></tr><tr><td id='variant.Playing.field.score'><span id='Playing.v.score.v' class='invisible'><code>score:&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></td><td><div class='docblock'><p>The user's current score.</p>
+</div></td></tr><tr><td id='variant.Playing.field.fruit'><span id='Playing.v.fruit.v' class='invisible'><code>fruit:&nbsp;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code></span></td><td><div class='docblock'><p>The current fruit index.</p>
+<p>If <code>None</code> - it's a mango, else it's an index of fruit from <code>util::FRUITS</code>.</p>
+</div></td></tr></table></span><span id="variant.GameOver" class="variant small-section-header"><a href="#variant.GameOver" class="anchor field"></a><span id='GameOver.v' class='invisible'><code>GameOver</code></span></span><div class='docblock'><p>The game was lost after a valiant battle.</p>
+<p>Contains the game's difficulty, the player's final score and the Back button.</p>
 <p>In this stage the player enters its name.</p>
-
 <p>Can transform into:</p>
-
 <ul>
 <li><code>GameEnded</code></li>
 <li><code>MainMenu</code></li>
 </ul>
 </div><span class='docblock autohide sub-variant' id='variant.GameOver.fields'><h3 class='fields'>Fields of <code>GameOver</code></h3>
 
-                           <table><tr><td id='variant.GameOver.field.difficulty'><span id='GameOver.v.difficulty.v' class='invisible'><code>difficulty:&nbsp;<a class='enum' href='../../poke_a_mango/ops/enum.Difficulty.html' title='poke_a_mango::ops::Difficulty'>Difficulty</a></code></span></td><td><div class='docblock'><p>The game difficulty, as same as in the <code>Playing</code> stage.</p>
-</div></td></tr><tr><td id='variant.GameOver.field.score'><span id='GameOver.v.score.v' class='invisible'><code>score:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></td><td><div class='docblock'><p>The user&#39;s final score.</p>
-</div></td></tr><tr><td id='variant.GameOver.field.name'><span id='GameOver.v.name.v' class='invisible'><code>name:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td><div class='docblock'><p>The user&#39;s name, mostly partial.</p>
-</div></td></tr></table></span><span id='variant.GameEnded' class='variant'><span id='GameEnded.v' class='invisible'><code>GameEnded</code></span></span><div class='docblock'><p>The game cycle has ended. Semi-meta-state</p>
-
-<p>Contains the game&#39;s difficulty and the players final score.</p>
-
+                           <table><tr><td id='variant.GameOver.field.difficulty'><span id='GameOver.v.difficulty.v' class='invisible'><code>difficulty:&nbsp;<a class="enum" href="../../poke_a_mango/ops/enum.Difficulty.html" title="enum poke_a_mango::ops::Difficulty">Difficulty</a></code></span></td><td><div class='docblock'><p>The game difficulty, as same as in the <code>Playing</code> stage.</p>
+</div></td></tr><tr><td id='variant.GameOver.field.score'><span id='GameOver.v.score.v' class='invisible'><code>score:&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></td><td><div class='docblock'><p>The user's final score.</p>
+</div></td></tr><tr><td id='variant.GameOver.field.name'><span id='GameOver.v.name.v' class='invisible'><code>name:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></td><td><div class='docblock'><p>The user's name, mostly partial.</p>
+</div></td></tr></table></span><span id="variant.GameEnded" class="variant small-section-header"><a href="#variant.GameEnded" class="anchor field"></a><span id='GameEnded.v' class='invisible'><code>GameEnded</code></span></span><div class='docblock'><p>The game cycle has ended. Semi-meta-state</p>
+<p>Contains the game's difficulty and the players final score.</p>
 <p>In this stage the player enters its name.</p>
-
 <p>Transforms into <code>MainMenu</code>.</p>
 </div><span class='docblock autohide sub-variant' id='variant.GameEnded.fields'><h3 class='fields'>Fields of <code>GameEnded</code></h3>
 
-                           <table><tr><td id='variant.GameEnded.field.name'><span id='GameEnded.v.name.v' class='invisible'><code>name:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td><div class='docblock'><p>The user&#39;s name.</p>
-</div></td></tr><tr><td id='variant.GameEnded.field.score'><span id='GameEnded.v.score.v' class='invisible'><code>score:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></td><td><div class='docblock'><p>User&#39;s final score, weighted.</p>
-</div></td></tr></table></span><span id='variant.LoadLeaderboard' class='variant'><span id='LoadLeaderboard.v' class='invisible'><code>LoadLeaderboard</code></span></span><div class='docblock'><p>Meta-state indicating that the leaderboard needs to be loaded.</p>
-
+                           <table><tr><td id='variant.GameEnded.field.name'><span id='GameEnded.v.name.v' class='invisible'><code>name:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></td><td><div class='docblock'><p>The user's name.</p>
+</div></td></tr><tr><td id='variant.GameEnded.field.score'><span id='GameEnded.v.score.v' class='invisible'><code>score:&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></td><td><div class='docblock'><p>User's final score, weighted.</p>
+</div></td></tr></table></span><span id="variant.LoadLeaderboard" class="variant small-section-header"><a href="#variant.LoadLeaderboard" class="anchor field"></a><span id='LoadLeaderboard.v' class='invisible'><code>LoadLeaderboard</code></span></span><div class='docblock'><p>Meta-state indicating that the leaderboard needs to be loaded.</p>
 <p>Needs to be handled in usercode, place the leaderboard into <code>DisplayLeaderboard</code> after loading it.</p>
-
 <p>Leaderboards are loaded via <code>Leader::load()</code>.</p>
-
 <p>Transforms into <code>DisplayLeaderboard</code></p>
-</div><span id='variant.DisplayLeaderboard' class='variant'><span id='DisplayLeaderboard.v' class='invisible'><code>DisplayLeaderboard(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../poke_a_mango/ops/struct.Leader.html' title='poke_a_mango::ops::Leader'>Leader</a>&gt;)</code></span></span><div class='docblock'><p>Display top 10 high scores.</p>
-
+</div><span id="variant.DisplayLeaderboard" class="variant small-section-header"><a href="#variant.DisplayLeaderboard" class="anchor field"></a><span id='DisplayLeaderboard.v' class='invisible'><code>DisplayLeaderboard(<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../poke_a_mango/ops/struct.Leader.html" title="struct poke_a_mango::ops::Leader">Leader</a>&gt;)</code></span></span><div class='docblock'><p>Display top 10 high scores.</p>
 <p>This screen also contains the Back button.</p>
-
 <p>Can transform into <code>MainMenu</code></p>
-</div><span id='variant.Exit' class='variant'><span id='Exit.v' class='invisible'><code>Exit</code></span></span><div class='docblock'><p>Pseudo-state, signifying that the game window should be closed.</p>
-
+</div><span id="variant.Exit" class="variant small-section-header"><a href="#variant.Exit" class="anchor field"></a><span id='Exit.v' class='invisible'><code>Exit</code></span></span><div class='docblock'><p>Pseudo-state, signifying that the game window should be closed.</p>
 <p>Can transform into: nothing. This is the final state all others seek.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#105-129' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.should_exit' class='method'><span id='should_exit.v' class='invisible'><code>fn <a href='#method.should_exit' class='fnname'>should_exit</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#105-129' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.should_exit' class="method"><span id='should_exit.v' class='invisible'><code>pub fn <a href='#method.should_exit' class='fnname'>should_exit</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#114-116' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Check whether this state currently means that the game has ended.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>GameState</span>::<span class='ident'>Exit</span>.<span class='ident'>should_exit</span>());</pre>
-</div><h4 id='method.should_load_leaderboard' class='method'><span id='should_load_leaderboard.v' class='invisible'><code>fn <a href='#method.should_load_leaderboard' class='fnname'>should_load_leaderboard</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">GameState</span>::<span class="ident">Exit</span>.<span class="ident">should_exit</span>());</pre>
+</div><h4 id='method.should_load_leaderboard' class="method"><span id='should_load_leaderboard.v' class='invisible'><code>pub fn <a href='#method.should_load_leaderboard' class='fnname'>should_load_leaderboard</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#126-128' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Check whether this state requires usercode to load the leaderboard.</p>
-
-<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>GameState</span>::<span class='ident'>LoadLeaderboard</span>.<span class='ident'>should_load_leaderboard</span>());</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span></h4>
+<h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">GameState</span>::<span class="ident">LoadLeaderboard</span>.<span class="ident">should_load_leaderboard</span>());</pre>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div></div><h3 id='impl-PartialEq' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-PartialEq' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
-</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.partial_cmp' class='method'><span id='partial_cmp.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#tymethod.partial_cmp' class='fnname'>partial_cmp</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>&gt;</code></span></h4>
+</div></div><h3 id='impl-Eq' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-Eq' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 id='impl-PartialOrd' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html" title="trait core::cmp::PartialOrd">PartialOrd</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-PartialOrd' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.partial_cmp' class="method"><span id='partial_cmp.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#tymethod.partial_cmp' class='fnname'>partial_cmp</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method returns an ordering between <code>self</code> and <code>other</code> values if one exists. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#tymethod.partial_cmp">Read more</a></p>
-</div><h4 id='method.lt' class='method'><span id='lt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.lt' class='fnname'>lt</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.lt' class="method"><span id='lt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.lt' class='fnname'>lt</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests less than (for <code>self</code> and <code>other</code>) and is used by the <code>&lt;</code> operator. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.lt">Read more</a></p>
-</div><h4 id='method.le' class='method'><span id='le.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.le' class='fnname'>le</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.le' class="method"><span id='le.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.le' class='fnname'>le</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests less than or equal to (for <code>self</code> and <code>other</code>) and is used by the <code>&lt;=</code> operator. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.le">Read more</a></p>
-</div><h4 id='method.gt' class='method'><span id='gt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.gt' class='fnname'>gt</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.gt' class="method"><span id='gt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.gt' class='fnname'>gt</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests greater than (for <code>self</code> and <code>other</code>) and is used by the <code>&gt;</code> operator. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.gt">Read more</a></p>
-</div><h4 id='method.ge' class='method'><span id='ge.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.ge' class='fnname'>ge</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.ge' class="method"><span id='ge.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.ge' class='fnname'>ge</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests greater than or equal to (for <code>self</code> and <code>other</code>) and is used by the <code>&gt;=</code> operator. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.ge">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> for <a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.cmp' class='method'><span id='cmp.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#tymethod.cmp' class='fnname'>cmp</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../poke_a_mango/ops/enum.GameState.html' title='poke_a_mango::ops::GameState'>GameState</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a></code></span></h4>
+</div></div><h3 id='impl-Ord' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html" title="trait core::cmp::Ord">Ord</a> for <a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a></code><a href='#impl-Ord' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.cmp' class="method"><span id='cmp.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#tymethod.cmp' class='fnname'>cmp</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../poke_a_mango/ops/enum.GameState.html" title="enum poke_a_mango::ops::GameState">GameState</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/poke_a_mango/ops/game_state.rs.html#7' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method returns an <code>Ordering</code> between <code>self</code> and <code>other</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#tymethod.cmp">Read more</a></p>
+</div><h4 id='method.max' class="method"><span id='max.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#method.max' class='fnname'>max</a>(self, other: Self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.21.0'>1.21.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/cmp.rs.html#460-463' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Compares and returns the maximum of two values. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#method.max">Read more</a></p>
+</div><h4 id='method.min' class="method"><span id='min.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#method.min' class='fnname'>min</a>(self, other: Self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.21.0'>1.21.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/cmp.rs.html#476-479' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Compares and returns the minimum of two values. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#method.min">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -202,18 +202,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -246,7 +250,6 @@
         window.rootPath = "../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

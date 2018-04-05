@@ -9,14 +9,18 @@
 
     <title>box_view.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -289,252 +301,252 @@
 <span id="245">245</span>
 <span id="246">246</span>
 <span id="247">247</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>XY</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>SizeConstraint</span>, <span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">XY</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">SizeConstraint</span>, <span class="ident">View</span>, <span class="ident">ViewWrapper</span>};
 
-<span class='doccomment'>/// Wrapper around another view, with a controlled size.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Each axis can independently be set to:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// * Keep a **fixed** size</span>
-<span class='doccomment'>/// * Use **all** available size</span>
-<span class='doccomment'>/// * Use **at most** a given size</span>
-<span class='doccomment'>/// * Use **at least** a given size</span>
-<span class='doccomment'>/// * Let the wrapped view decide.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # use cursive::views::{BoxView,TextView};</span>
-<span class='doccomment'>/// // Creates a 20x4 BoxView with a TextView content.</span>
-<span class='doccomment'>/// let view = BoxView::with_fixed_size((20,4), TextView::new(&quot;Hello!&quot;));</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Constraint on each axis</span>
-    <span class='ident'>size</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>SizeConstraint</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Wrapper around another view, with a controlled size.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Each axis can independently be set to:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * Keep a **fixed** size</span>
+<span class="doccomment">/// * Use **all** available size</span>
+<span class="doccomment">/// * Use **at most** a given size</span>
+<span class="doccomment">/// * Use **at least** a given size</span>
+<span class="doccomment">/// * Let the wrapped view decide.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use cursive::views::{BoxView,TextView};</span>
+<span class="doccomment">/// // Creates a 20x4 BoxView with a TextView content.</span>
+<span class="doccomment">/// let view = BoxView::with_fixed_size((20,4), TextView::new(&quot;Hello!&quot;));</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">View</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Constraint on each axis</span>
+    <span class="ident">size</span>: <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">SizeConstraint</span><span class="op">&gt;</span>,
 
-    <span class='doccomment'>/// `true` if the view can be squished.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This means if the required size is less than the computed size,</span>
-    <span class='doccomment'>/// consider returning a smaller size.</span>
-    <span class='doccomment'>/// For instance, try to return the child&#39;s desires size.</span>
-    <span class='ident'>squishable</span>: <span class='ident'>bool</span>,
+    <span class="doccomment">/// `true` if the view can be squished.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This means if the required size is less than the computed size,</span>
+    <span class="doccomment">/// consider returning a smaller size.</span>
+    <span class="doccomment">/// For instance, try to return the child&#39;s desires size.</span>
+    <span class="ident">squishable</span>: <span class="ident">bool</span>,
 
-    <span class='doccomment'>/// The actual view we&#39;re wrapping.</span>
-    <span class='ident'>view</span>: <span class='ident'>T</span>,
+    <span class="doccomment">/// The actual view we&#39;re wrapping.</span>
+    <span class="ident">view</span>: <span class="ident">T</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new `BoxView` with the given width and height requirements.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// `None` values will use the wrapped view&#39;s preferences.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>width</span>: <span class='ident'>SizeConstraint</span>, <span class='ident'>height</span>: <span class='ident'>SizeConstraint</span>, <span class='ident'>view</span>: <span class='ident'>T</span>)
-               <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span> {
-            <span class='ident'>size</span>: (<span class='ident'>width</span>, <span class='ident'>height</span>).<span class='ident'>into</span>(),
-            <span class='ident'>squishable</span>: <span class='bool-val'>false</span>,
-            <span class='ident'>view</span>: <span class='ident'>view</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new `BoxView` with the given width and height requirements.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `None` values will use the wrapped view&#39;s preferences.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">width</span>: <span class="ident">SizeConstraint</span>, <span class="ident">height</span>: <span class="ident">SizeConstraint</span>, <span class="ident">view</span>: <span class="ident">T</span>)
+               <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span> {
+            <span class="ident">size</span>: (<span class="ident">width</span>, <span class="ident">height</span>).<span class="ident">into</span>(),
+            <span class="ident">squishable</span>: <span class="bool-val">false</span>,
+            <span class="ident">view</span>: <span class="ident">view</span>,
         }
     }
 
-    <span class='doccomment'>/// Sets `self` to be squishable.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A squishable `BoxView` will take a smaller size than it should when</span>
-    <span class='doccomment'>/// the available space is too small. In that case, it will allow the</span>
-    <span class='doccomment'>/// child view to contract, if it can.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// More specifically, if the available space is less than the size we</span>
-    <span class='doccomment'>/// would normally ask for, return the child size.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>squishable</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>squishable</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
-        <span class='self'>self</span>
+    <span class="doccomment">/// Sets `self` to be squishable.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A squishable `BoxView` will take a smaller size than it should when</span>
+    <span class="doccomment">/// the available space is too small. In that case, it will allow the</span>
+    <span class="doccomment">/// child view to contract, if it can.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// More specifically, if the available space is less than the size we</span>
+    <span class="doccomment">/// would normally ask for, return the child size.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">squishable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">squishable</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Wraps `view` in a new `BoxView` with the given size.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_fixed_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>size</span>: <span class='ident'>S</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
+    <span class="doccomment">/// Wraps `view` in a new `BoxView` with the given size.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_fixed_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="ident">size</span>: <span class="ident">S</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">into</span>();
 
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Fixed</span>(<span class='ident'>size</span>.<span class='ident'>x</span>),
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>Fixed</span>(<span class='ident'>size</span>.<span class='ident'>y</span>),
-                     <span class='ident'>view</span>)
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Fixed</span>(<span class="ident">size</span>.<span class="ident">x</span>),
+                     <span class="ident">SizeConstraint</span>::<span class="ident">Fixed</span>(<span class="ident">size</span>.<span class="ident">y</span>),
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a new `BoxView` with fixed width.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_fixed_width</span>(<span class='ident'>width</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Fixed</span>(<span class='ident'>width</span>), <span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>, <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a new `BoxView` with fixed width.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_fixed_width</span>(<span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Fixed</span>(<span class="ident">width</span>), <span class="ident">SizeConstraint</span>::<span class="ident">Free</span>, <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a new `BoxView` with fixed height.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_fixed_height</span>(<span class='ident'>height</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>, <span class='ident'>SizeConstraint</span>::<span class='ident'>Fixed</span>(<span class='ident'>height</span>), <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a new `BoxView` with fixed height.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_fixed_height</span>(<span class="ident">height</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Free</span>, <span class="ident">SizeConstraint</span>::<span class="ident">Fixed</span>(<span class="ident">height</span>), <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will take all available space.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_full_screen</span>(<span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Full</span>, <span class='ident'>SizeConstraint</span>::<span class='ident'>Full</span>, <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will take all available space.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_full_screen</span>(<span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Full</span>, <span class="ident">SizeConstraint</span>::<span class="ident">Full</span>, <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will take all available width.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_full_width</span>(<span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Full</span>, <span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>, <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will take all available width.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_full_width</span>(<span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Full</span>, <span class="ident">SizeConstraint</span>::<span class="ident">Free</span>, <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will take all available height.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_full_height</span>(<span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>, <span class='ident'>SizeConstraint</span>::<span class='ident'>Full</span>, <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will take all available height.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_full_height</span>(<span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Free</span>, <span class="ident">SizeConstraint</span>::<span class="ident">Full</span>, <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will never be bigger than `size`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_max_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>size</span>: <span class='ident'>S</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will never be bigger than `size`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_max_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="ident">size</span>: <span class="ident">S</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">into</span>();
 
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>AtMost</span>(<span class='ident'>size</span>.<span class='ident'>x</span>),
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>AtMost</span>(<span class='ident'>size</span>.<span class='ident'>y</span>),
-                     <span class='ident'>view</span>)
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">AtMost</span>(<span class="ident">size</span>.<span class="ident">x</span>),
+                     <span class="ident">SizeConstraint</span>::<span class="ident">AtMost</span>(<span class="ident">size</span>.<span class="ident">y</span>),
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will enforce a maximum width.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The resulting width will never be more than `max_width`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_max_width</span>(<span class='ident'>max_width</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>AtMost</span>(<span class='ident'>max_width</span>),
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>,
-                     <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will enforce a maximum width.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting width will never be more than `max_width`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_max_width</span>(<span class="ident">max_width</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">AtMost</span>(<span class="ident">max_width</span>),
+                     <span class="ident">SizeConstraint</span>::<span class="ident">Free</span>,
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will enforce a maximum height.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The resulting height will never be more than `max_height`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_max_height</span>(<span class='ident'>max_height</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>,
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>AtMost</span>(<span class='ident'>max_height</span>),
-                     <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will enforce a maximum height.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting height will never be more than `max_height`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_max_height</span>(<span class="ident">max_height</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Free</span>,
+                     <span class="ident">SizeConstraint</span>::<span class="ident">AtMost</span>(<span class="ident">max_height</span>),
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will never be smaller than `size`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_min_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>size</span>: <span class='ident'>S</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will never be smaller than `size`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_min_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="ident">size</span>: <span class="ident">S</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">into</span>();
 
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>AtLeast</span>(<span class='ident'>size</span>.<span class='ident'>x</span>),
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>AtLeast</span>(<span class='ident'>size</span>.<span class='ident'>y</span>),
-                     <span class='ident'>view</span>)
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">AtLeast</span>(<span class="ident">size</span>.<span class="ident">x</span>),
+                     <span class="ident">SizeConstraint</span>::<span class="ident">AtLeast</span>(<span class="ident">size</span>.<span class="ident">y</span>),
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will enforce a minimum width.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The resulting width will never be less than `min_width`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_min_width</span>(<span class='ident'>min_width</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>AtLeast</span>(<span class='ident'>min_width</span>),
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>,
-                     <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will enforce a minimum width.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting width will never be less than `min_width`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_min_width</span>(<span class="ident">min_width</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">AtLeast</span>(<span class="ident">min_width</span>),
+                     <span class="ident">SizeConstraint</span>::<span class="ident">Free</span>,
+                     <span class="ident">view</span>)
     }
 
-    <span class='doccomment'>/// Wraps `view` in a `BoxView` which will enforce a minimum height.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The resulting height will never be less than `min_height`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_min_height</span>(<span class='ident'>min_height</span>: <span class='ident'>usize</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>SizeConstraint</span>::<span class='ident'>Free</span>,
-                     <span class='ident'>SizeConstraint</span>::<span class='ident'>AtLeast</span>(<span class='ident'>min_height</span>),
-                     <span class='ident'>view</span>)
+    <span class="doccomment">/// Wraps `view` in a `BoxView` which will enforce a minimum height.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting height will never be less than `min_height`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_min_height</span>(<span class="ident">min_height</span>: <span class="ident">usize</span>, <span class="ident">view</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">SizeConstraint</span>::<span class="ident">Free</span>,
+                     <span class="ident">SizeConstraint</span>::<span class="ident">AtLeast</span>(<span class="ident">min_height</span>),
+                     <span class="ident">view</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>view</span>: <span class='ident'>T</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">ViewWrapper</span> <span class="kw">for</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="macro">wrap_impl</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">view</span>: <span class="ident">T</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+    <span class="kw">fn</span> <span class="ident">wrap_get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">req</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
 
-        <span class='kw'>let</span> <span class='ident'>req</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>zip_map</span>(<span class='ident'>req</span>, <span class='ident'>SizeConstraint</span>::<span class='ident'>available</span>);
-        <span class='kw'>let</span> <span class='ident'>child_size</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>req</span>);
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>size</span>
-            .<span class='ident'>zip_map</span>(<span class='ident'>child_size</span>.<span class='ident'>zip</span>(<span class='ident'>req</span>), <span class='ident'>SizeConstraint</span>::<span class='ident'>result</span>);
+        <span class="kw">let</span> <span class="ident">req</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">zip_map</span>(<span class="ident">req</span>, <span class="ident">SizeConstraint</span>::<span class="ident">available</span>);
+        <span class="kw">let</span> <span class="ident">child_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">view</span>.<span class="ident">get_min_size</span>(<span class="ident">req</span>);
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">size</span>
+            .<span class="ident">zip_map</span>(<span class="ident">child_size</span>.<span class="ident">zip</span>(<span class="ident">req</span>), <span class="ident">SizeConstraint</span>::<span class="ident">result</span>);
 
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>squishable</span> {
-            <span class='comment'>// We respect the request if we&#39;re less or equal.</span>
-            <span class='kw'>let</span> <span class='ident'>respect_req</span> <span class='op'>=</span> <span class='ident'>result</span>.<span class='ident'>zip_map</span>(<span class='ident'>req</span>, <span class='op'>|</span><span class='ident'>res</span>, <span class='ident'>req</span><span class='op'>|</span> <span class='ident'>res</span> <span class='op'>&lt;=</span> <span class='ident'>req</span>);
-            <span class='ident'>result</span>.<span class='ident'>zip_map</span>(<span class='ident'>respect_req</span>.<span class='ident'>zip</span>(<span class='ident'>child_size</span>),
-                           <span class='op'>|</span><span class='ident'>res</span>, (<span class='ident'>respect</span>, <span class='ident'>child</span>)<span class='op'>|</span> {
-                <span class='kw'>if</span> <span class='ident'>respect</span> {
-                    <span class='comment'>// If we respect the request, keep the result</span>
-                    <span class='ident'>res</span>
-                } <span class='kw'>else</span> {
-                    <span class='comment'>// Otherwise, take the child as squish attempt.</span>
-                    <span class='ident'>child</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">squishable</span> {
+            <span class="comment">// We respect the request if we&#39;re less or equal.</span>
+            <span class="kw">let</span> <span class="ident">respect_req</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">zip_map</span>(<span class="ident">req</span>, <span class="op">|</span><span class="ident">res</span>, <span class="ident">req</span><span class="op">|</span> <span class="ident">res</span> <span class="op">&lt;=</span> <span class="ident">req</span>);
+            <span class="ident">result</span>.<span class="ident">zip_map</span>(<span class="ident">respect_req</span>.<span class="ident">zip</span>(<span class="ident">child_size</span>),
+                           <span class="op">|</span><span class="ident">res</span>, (<span class="ident">respect</span>, <span class="ident">child</span>)<span class="op">|</span> {
+                <span class="kw">if</span> <span class="ident">respect</span> {
+                    <span class="comment">// If we respect the request, keep the result</span>
+                    <span class="ident">res</span>
+                } <span class="kw">else</span> {
+                    <span class="comment">// Otherwise, take the child as squish attempt.</span>
+                    <span class="ident">child</span>
                 }
             })
-        } <span class='kw'>else</span> {
-            <span class='ident'>result</span>
+        } <span class="kw">else</span> {
+            <span class="ident">result</span>
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
 
-    <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-    <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Boxable</span>, <span class='ident'>View</span>};
-    <span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>DummyView</span>;
+    <span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+    <span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">Boxable</span>, <span class="ident">View</span>};
+    <span class="kw">use</span> <span class="ident">views</span>::<span class="ident">DummyView</span>;
 
-    <span class='comment'>// No need to test `draw()` method as it&#39;s directly forwarded.</span>
+    <span class="comment">// No need to test `draw()` method as it&#39;s directly forwarded.</span>
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>min_size</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_w</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>min_width</span>(<span class='number'>5</span>);
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">min_size</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">min_w</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">min_width</span>(<span class="number">5</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>1</span>), <span class='ident'>min_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>10</span>), <span class='ident'>min_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>), <span class='ident'>min_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>), <span class='ident'>min_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">1</span>), <span class="ident">min_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">10</span>), <span class="ident">min_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>), <span class="ident">min_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>), <span class="ident">min_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_h</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>min_height</span>(<span class='number'>5</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">min_h</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">min_height</span>(<span class="number">5</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>5</span>), <span class='ident'>min_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>), <span class='ident'>min_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>5</span>), <span class='ident'>min_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>), <span class='ident'>min_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">5</span>), <span class="ident">min_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>), <span class="ident">min_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">5</span>), <span class="ident">min_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>), <span class="ident">min_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_s</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>min_size</span>((<span class='number'>5</span>, <span class='number'>5</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">min_s</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">min_size</span>((<span class="number">5</span>, <span class="number">5</span>));
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>5</span>), <span class='ident'>min_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>10</span>), <span class='ident'>min_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>5</span>), <span class='ident'>min_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>), <span class='ident'>min_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">5</span>), <span class="ident">min_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">10</span>), <span class="ident">min_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">5</span>), <span class="ident">min_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>), <span class="ident">min_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>max_size</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>max_w</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>max_width</span>(<span class='number'>5</span>);
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">max_size</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max_w</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">max_width</span>(<span class="number">5</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>max_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>), <span class='ident'>max_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>1</span>), <span class='ident'>max_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>10</span>), <span class='ident'>max_w</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">max_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>), <span class="ident">max_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">1</span>), <span class="ident">max_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">10</span>), <span class="ident">max_w</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>max_h</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>max_height</span>(<span class='number'>5</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max_h</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">max_height</span>(<span class="number">5</span>);
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>max_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>5</span>), <span class='ident'>max_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>), <span class='ident'>max_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>5</span>), <span class='ident'>max_h</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">max_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">5</span>), <span class="ident">max_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>), <span class="ident">max_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">5</span>), <span class="ident">max_h</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>max_s</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>().<span class='ident'>max_size</span>((<span class='number'>5</span>, <span class='number'>5</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max_s</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>().<span class="ident">max_size</span>((<span class="number">5</span>, <span class="number">5</span>));
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>max_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>5</span>), <span class='ident'>max_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>1</span>), <span class='ident'>max_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>5</span>), <span class='ident'>max_s</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">max_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">5</span>), <span class="ident">max_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">1</span>), <span class="ident">max_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">5</span>), <span class="ident">max_s</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>full_screen</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>full</span> <span class='op'>=</span> <span class='ident'>DummyView</span>.<span class='ident'>full_screen</span>();
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">full_screen</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">full</span> <span class="op">=</span> <span class="ident">DummyView</span>.<span class="ident">full_screen</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>full</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>), <span class='ident'>full</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>10</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>), <span class='ident'>full</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>1</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>), <span class='ident'>full</span>.<span class='ident'>get_min_size</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>10</span>, <span class='number'>10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">full</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>), <span class="ident">full</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">10</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>), <span class="ident">full</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>), <span class="ident">full</span>.<span class="ident">get_min_size</span>(<span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">10</span>)));
     }
 }
 </pre>
@@ -551,18 +563,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -595,7 +611,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>theme.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -563,527 +575,527 @@
 <span id="519">519</span>
 <span id="520">520</span>
 <span id="521">521</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Handle colors and themes in the UI.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Color palette</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! To achieve a customizable, yet unified look, Cursive uses a configurable</span>
-<span class='doccomment'>//! palette of colors to be used through the entire application.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! These colors are:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * **`background`**: used to color the application background</span>
-<span class='doccomment'>//!   (around views).</span>
-<span class='doccomment'>//!   Defaults to **blue**.</span>
-<span class='doccomment'>//! * **`shadow`**: used to color shadow around views.</span>
-<span class='doccomment'>//!   Defaults to **black**.</span>
-<span class='doccomment'>//! * **`view`**: used to color the background for views.</span>
-<span class='doccomment'>//!   Defaults to **white**.</span>
-<span class='doccomment'>//! * **`primary`**: used to print primary text.</span>
-<span class='doccomment'>//!   Defaults to **black**.</span>
-<span class='doccomment'>//! * **`secondary`**: used to print secondary text.</span>
-<span class='doccomment'>//!   Defaults to **blue**.</span>
-<span class='doccomment'>//! * **`tertiary`**: used to print tertiary text.</span>
-<span class='doccomment'>//!   Defaults to **white**.</span>
-<span class='doccomment'>//! * **`title_primary`**: used to print primary titles.</span>
-<span class='doccomment'>//!   Defaults to **red**.</span>
-<span class='doccomment'>//! * **`title_secondary`**: used to print secondary titles.</span>
-<span class='doccomment'>//!   Defaults to **yellow**.</span>
-<span class='doccomment'>//! * **`highlight`**: used to highlight selected items.</span>
-<span class='doccomment'>//!   Defaults to **red**.</span>
-<span class='doccomment'>//! * **`highlight_inactive`**: used to highlight selected but inactive items.</span>
-<span class='doccomment'>//!   Defaults to **blue**.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Color Styles</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Each cell of the terminal uses two colors: *foreground* and *background*.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Color styles are defined to easily refer to a pair of colors from the</span>
-<span class='doccomment'>//! palette.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * **`Background`**: style used to print the application background.</span>
-<span class='doccomment'>//!     * Its *background* color is `background`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is unimportant as no characters are ever</span>
-<span class='doccomment'>//!       printed in the background.</span>
-<span class='doccomment'>//! * **`Shadow`**: style used to print shadows behind views.</span>
-<span class='doccomment'>//!     * Its *background* color is `shadow`.</span>
-<span class='doccomment'>//!     * Here again, the *foreground* color is unimportant.</span>
-<span class='doccomment'>//! * **`Primary`**: style used to print primary text.</span>
-<span class='doccomment'>//!     * Its *background* color is `view`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `primary`.</span>
-<span class='doccomment'>//! * **`Secondary`**: style used to print secondary text.</span>
-<span class='doccomment'>//!     * Its *background* color is `view`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `secondary`.</span>
-<span class='doccomment'>//! * **`Tertiary`**: style used to print tertiary text.</span>
-<span class='doccomment'>//!     * Its *background* color is `view`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `tertiary`.</span>
-<span class='doccomment'>//! * **`TitlePrimary`**: style used to print titles.</span>
-<span class='doccomment'>//!     * Its *background* color is `view`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `title_primary`.</span>
-<span class='doccomment'>//! * **`TitleSecondary`**: style used to print secondary titles.</span>
-<span class='doccomment'>//!     * Its *background* color is `view`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `title_secondary`.</span>
-<span class='doccomment'>//! * **`Highlight`**: style used to print selected items.</span>
-<span class='doccomment'>//!     * Its *background* color is `highlight`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `view`.</span>
-<span class='doccomment'>//! * **`HighlightInactive`**: style used to print selected,</span>
-<span class='doccomment'>//!   but inactive items.</span>
-<span class='doccomment'>//!     * Its *background* color is `highlight_inactive`.</span>
-<span class='doccomment'>//!     * Its *foreground* color is `view`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Using one of these pairs when styling your application helps give it a</span>
-<span class='doccomment'>//! coherent look.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Effects</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! On top of a color style, some effects can be applied on cells: `Reverse`,</span>
-<span class='doccomment'>//! for instance, swaps the foreground and background colors of a cell.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Themes</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A theme defines the color palette an application will use, as well as</span>
-<span class='doccomment'>//! various options to style views.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Themes are described in toml configuration files. All fields are optional.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Here are the possible entries:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```toml</span>
-<span class='doccomment'>//! # Every field in a theme file is optional.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # First come some various options</span>
-<span class='doccomment'>//! shadow = false  # Don&#39;t draw shadows around stacked views</span>
-<span class='doccomment'>//! borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outset&quot;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Here we define the color palette.</span>
-<span class='doccomment'>//! [colors]</span>
-<span class='doccomment'>//! 	background = &quot;black&quot;</span>
-<span class='doccomment'>//! 	# If the value is an array, the first valid color will be used.</span>
-<span class='doccomment'>//! 	# If the terminal doesn&#39;t support custom color,</span>
-<span class='doccomment'>//! 	# non-base colors will be skipped.</span>
-<span class='doccomment'>//! 	shadow     = [&quot;#000000&quot;, &quot;black&quot;]</span>
-<span class='doccomment'>//! 	view       = &quot;#d3d7cf&quot;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! 	# Array and simple values have the same effect.</span>
-<span class='doccomment'>//! 	primary   = [&quot;#111111&quot;]</span>
-<span class='doccomment'>//! 	secondary = &quot;#EEEEEE&quot;</span>
-<span class='doccomment'>//! 	tertiary  = &quot;#444444&quot;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! 	# Hex values can use lower or uppercase.</span>
-<span class='doccomment'>//! 	# (base color MUST be lowercase)</span>
-<span class='doccomment'>//! 	title_primary   = &quot;#ff5555&quot;</span>
-<span class='doccomment'>//! 	title_secondary = &quot;#ffff55&quot;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! 	# Lower precision values can use only 3 digits.</span>
-<span class='doccomment'>//! 	highlight          = &quot;#F00&quot;</span>
-<span class='doccomment'>//! 	highlight_inactive = &quot;#5555FF&quot;</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Handle colors and themes in the UI.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Color palette</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! To achieve a customizable, yet unified look, Cursive uses a configurable</span>
+<span class="doccomment">//! palette of colors to be used through the entire application.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! These colors are:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * **`background`**: used to color the application background</span>
+<span class="doccomment">//!   (around views).</span>
+<span class="doccomment">//!   Defaults to **blue**.</span>
+<span class="doccomment">//! * **`shadow`**: used to color shadow around views.</span>
+<span class="doccomment">//!   Defaults to **black**.</span>
+<span class="doccomment">//! * **`view`**: used to color the background for views.</span>
+<span class="doccomment">//!   Defaults to **white**.</span>
+<span class="doccomment">//! * **`primary`**: used to print primary text.</span>
+<span class="doccomment">//!   Defaults to **black**.</span>
+<span class="doccomment">//! * **`secondary`**: used to print secondary text.</span>
+<span class="doccomment">//!   Defaults to **blue**.</span>
+<span class="doccomment">//! * **`tertiary`**: used to print tertiary text.</span>
+<span class="doccomment">//!   Defaults to **white**.</span>
+<span class="doccomment">//! * **`title_primary`**: used to print primary titles.</span>
+<span class="doccomment">//!   Defaults to **red**.</span>
+<span class="doccomment">//! * **`title_secondary`**: used to print secondary titles.</span>
+<span class="doccomment">//!   Defaults to **yellow**.</span>
+<span class="doccomment">//! * **`highlight`**: used to highlight selected items.</span>
+<span class="doccomment">//!   Defaults to **red**.</span>
+<span class="doccomment">//! * **`highlight_inactive`**: used to highlight selected but inactive items.</span>
+<span class="doccomment">//!   Defaults to **blue**.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Color Styles</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Each cell of the terminal uses two colors: *foreground* and *background*.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Color styles are defined to easily refer to a pair of colors from the</span>
+<span class="doccomment">//! palette.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * **`Background`**: style used to print the application background.</span>
+<span class="doccomment">//!     * Its *background* color is `background`.</span>
+<span class="doccomment">//!     * Its *foreground* color is unimportant as no characters are ever</span>
+<span class="doccomment">//!       printed in the background.</span>
+<span class="doccomment">//! * **`Shadow`**: style used to print shadows behind views.</span>
+<span class="doccomment">//!     * Its *background* color is `shadow`.</span>
+<span class="doccomment">//!     * Here again, the *foreground* color is unimportant.</span>
+<span class="doccomment">//! * **`Primary`**: style used to print primary text.</span>
+<span class="doccomment">//!     * Its *background* color is `view`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `primary`.</span>
+<span class="doccomment">//! * **`Secondary`**: style used to print secondary text.</span>
+<span class="doccomment">//!     * Its *background* color is `view`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `secondary`.</span>
+<span class="doccomment">//! * **`Tertiary`**: style used to print tertiary text.</span>
+<span class="doccomment">//!     * Its *background* color is `view`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `tertiary`.</span>
+<span class="doccomment">//! * **`TitlePrimary`**: style used to print titles.</span>
+<span class="doccomment">//!     * Its *background* color is `view`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `title_primary`.</span>
+<span class="doccomment">//! * **`TitleSecondary`**: style used to print secondary titles.</span>
+<span class="doccomment">//!     * Its *background* color is `view`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `title_secondary`.</span>
+<span class="doccomment">//! * **`Highlight`**: style used to print selected items.</span>
+<span class="doccomment">//!     * Its *background* color is `highlight`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `view`.</span>
+<span class="doccomment">//! * **`HighlightInactive`**: style used to print selected,</span>
+<span class="doccomment">//!   but inactive items.</span>
+<span class="doccomment">//!     * Its *background* color is `highlight_inactive`.</span>
+<span class="doccomment">//!     * Its *foreground* color is `view`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Using one of these pairs when styling your application helps give it a</span>
+<span class="doccomment">//! coherent look.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Effects</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! On top of a color style, some effects can be applied on cells: `Reverse`,</span>
+<span class="doccomment">//! for instance, swaps the foreground and background colors of a cell.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Themes</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A theme defines the color palette an application will use, as well as</span>
+<span class="doccomment">//! various options to style views.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Themes are described in toml configuration files. All fields are optional.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Here are the possible entries:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```toml</span>
+<span class="doccomment">//! # Every field in a theme file is optional.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # First come some various options</span>
+<span class="doccomment">//! shadow = false  # Don&#39;t draw shadows around stacked views</span>
+<span class="doccomment">//! borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outset&quot;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Here we define the color palette.</span>
+<span class="doccomment">//! [colors]</span>
+<span class="doccomment">//! 	background = &quot;black&quot;</span>
+<span class="doccomment">//! 	# If the value is an array, the first valid color will be used.</span>
+<span class="doccomment">//! 	# If the terminal doesn&#39;t support custom color,</span>
+<span class="doccomment">//! 	# non-base colors will be skipped.</span>
+<span class="doccomment">//! 	shadow     = [&quot;#000000&quot;, &quot;black&quot;]</span>
+<span class="doccomment">//! 	view       = &quot;#d3d7cf&quot;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! 	# Array and simple values have the same effect.</span>
+<span class="doccomment">//! 	primary   = [&quot;#111111&quot;]</span>
+<span class="doccomment">//! 	secondary = &quot;#EEEEEE&quot;</span>
+<span class="doccomment">//! 	tertiary  = &quot;#444444&quot;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! 	# Hex values can use lower or uppercase.</span>
+<span class="doccomment">//! 	# (base color MUST be lowercase)</span>
+<span class="doccomment">//! 	title_primary   = &quot;#ff5555&quot;</span>
+<span class="doccomment">//! 	title_secondary = &quot;#ffff55&quot;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! 	# Lower precision values can use only 3 digits.</span>
+<span class="doccomment">//! 	highlight          = &quot;#F00&quot;</span>
+<span class="doccomment">//! 	highlight_inactive = &quot;#5555FF&quot;</span>
+<span class="doccomment">//! ```</span>
 
 
-<span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='self'>self</span>, <span class='ident'>Backend</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Read</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
+<span class="kw">use</span> <span class="ident">backend</span>::{<span class="self">self</span>, <span class="ident">Backend</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Read</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
-<span class='kw'>use</span> <span class='ident'>toml</span>;
+<span class="kw">use</span> <span class="ident">toml</span>;
 
-<span class='doccomment'>/// Text effect</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Effect</span> {
-    <span class='doccomment'>/// No effect</span>
-    <span class='ident'>Simple</span>,
-    <span class='doccomment'>/// Reverses foreground and background colors</span>
-    <span class='ident'>Reverse</span>,
-    <span class='comment'>// TODO: bold, italic, underline</span>
+<span class="doccomment">/// Text effect</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Effect</span> {
+    <span class="doccomment">/// No effect</span>
+    <span class="ident">Simple</span>,
+    <span class="doccomment">/// Reverses foreground and background colors</span>
+    <span class="ident">Reverse</span>,
+    <span class="comment">// TODO: bold, italic, underline</span>
 }
 
-<span class='doccomment'>/// Possible color style for a cell.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Represents a color pair role to use when printing something.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The current theme will assign each role a foreground and background color.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ColorStyle</span> {
-    <span class='doccomment'>/// Application background, where no view is present.</span>
-    <span class='ident'>Background</span>,
-    <span class='doccomment'>/// Color used by view shadows. Only background matters.</span>
-    <span class='ident'>Shadow</span>,
-    <span class='doccomment'>/// Main text with default background.</span>
-    <span class='ident'>Primary</span>,
-    <span class='doccomment'>/// Secondary text color, with default background.</span>
-    <span class='ident'>Secondary</span>,
-    <span class='doccomment'>/// Tertiary text color, with default background.</span>
-    <span class='ident'>Tertiary</span>,
-    <span class='doccomment'>/// Title text color with default background.</span>
-    <span class='ident'>TitlePrimary</span>,
-    <span class='doccomment'>/// Alternative color for a title.</span>
-    <span class='ident'>TitleSecondary</span>,
-    <span class='doccomment'>/// Alternate text with highlight background.</span>
-    <span class='ident'>Highlight</span>,
-    <span class='doccomment'>/// Highlight color for inactive views (not in focus).</span>
-    <span class='ident'>HighlightInactive</span>,
+<span class="doccomment">/// Possible color style for a cell.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Represents a color pair role to use when printing something.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The current theme will assign each role a foreground and background color.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ColorStyle</span> {
+    <span class="doccomment">/// Application background, where no view is present.</span>
+    <span class="ident">Background</span>,
+    <span class="doccomment">/// Color used by view shadows. Only background matters.</span>
+    <span class="ident">Shadow</span>,
+    <span class="doccomment">/// Main text with default background.</span>
+    <span class="ident">Primary</span>,
+    <span class="doccomment">/// Secondary text color, with default background.</span>
+    <span class="ident">Secondary</span>,
+    <span class="doccomment">/// Tertiary text color, with default background.</span>
+    <span class="ident">Tertiary</span>,
+    <span class="doccomment">/// Title text color with default background.</span>
+    <span class="ident">TitlePrimary</span>,
+    <span class="doccomment">/// Alternative color for a title.</span>
+    <span class="ident">TitleSecondary</span>,
+    <span class="doccomment">/// Alternate text with highlight background.</span>
+    <span class="ident">Highlight</span>,
+    <span class="doccomment">/// Highlight color for inactive views (not in focus).</span>
+    <span class="ident">HighlightInactive</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>ColorStyle</span> {
-    <span class='doccomment'>/// Returns the ncurses pair ID associated with this color pair.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>id</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>i16</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Background</span> <span class='op'>=&gt;</span> <span class='number'>1</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Shadow</span> <span class='op'>=&gt;</span> <span class='number'>2</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span> <span class='op'>=&gt;</span> <span class='number'>3</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span> <span class='op'>=&gt;</span> <span class='number'>4</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span> <span class='op'>=&gt;</span> <span class='number'>5</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>TitlePrimary</span> <span class='op'>=&gt;</span> <span class='number'>6</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>TitleSecondary</span> <span class='op'>=&gt;</span> <span class='number'>7</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span> <span class='op'>=&gt;</span> <span class='number'>8</span>,
-            <span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span> <span class='op'>=&gt;</span> <span class='number'>9</span>,
+<span class="kw">impl</span> <span class="ident">ColorStyle</span> {
+    <span class="doccomment">/// Returns the ncurses pair ID associated with this color pair.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i16</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">ColorStyle</span>::<span class="ident">Background</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">Shadow</span> <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">Primary</span> <span class="op">=&gt;</span> <span class="number">3</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">Secondary</span> <span class="op">=&gt;</span> <span class="number">4</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">Tertiary</span> <span class="op">=&gt;</span> <span class="number">5</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">TitlePrimary</span> <span class="op">=&gt;</span> <span class="number">6</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">TitleSecondary</span> <span class="op">=&gt;</span> <span class="number">7</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">Highlight</span> <span class="op">=&gt;</span> <span class="number">8</span>,
+            <span class="ident">ColorStyle</span>::<span class="ident">HighlightInactive</span> <span class="op">=&gt;</span> <span class="number">9</span>,
         }
     }
 }
 
-<span class='doccomment'>/// Represents the style a Cursive application will use.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Theme</span> {
-    <span class='doccomment'>/// Whether views in a StackView should have shadows.</span>
-    <span class='kw'>pub</span> <span class='ident'>shadow</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// How view borders should be drawn.</span>
-    <span class='kw'>pub</span> <span class='ident'>borders</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>BorderStyle</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// What colors should be used through the application?</span>
-    <span class='kw'>pub</span> <span class='ident'>colors</span>: <span class='ident'>Palette</span>,
+<span class="doccomment">/// Represents the style a Cursive application will use.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Theme</span> {
+    <span class="doccomment">/// Whether views in a StackView should have shadows.</span>
+    <span class="kw">pub</span> <span class="ident">shadow</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// How view borders should be drawn.</span>
+    <span class="kw">pub</span> <span class="ident">borders</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BorderStyle</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// What colors should be used through the application?</span>
+    <span class="kw">pub</span> <span class="ident">colors</span>: <span class="ident">Palette</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Theme</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Theme</span> {
-            <span class='ident'>shadow</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>borders</span>: <span class='prelude-val'>Some</span>(<span class='ident'>BorderStyle</span>::<span class='ident'>Simple</span>),
-            <span class='ident'>colors</span>: <span class='ident'>Palette</span> {
-                <span class='ident'>background</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Blue</span>),
-                <span class='ident'>shadow</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Black</span>),
-                <span class='ident'>view</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>White</span>),
-                <span class='ident'>primary</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Black</span>),
-                <span class='ident'>secondary</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Blue</span>),
-                <span class='ident'>tertiary</span>: <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>White</span>),
-                <span class='ident'>title_primary</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Red</span>),
-                <span class='ident'>title_secondary</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Yellow</span>),
-                <span class='ident'>highlight</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Red</span>),
-                <span class='ident'>highlight_inactive</span>: <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Blue</span>),
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Theme</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Theme</span> {
+            <span class="ident">shadow</span>: <span class="bool-val">true</span>,
+            <span class="ident">borders</span>: <span class="prelude-val">Some</span>(<span class="ident">BorderStyle</span>::<span class="ident">Simple</span>),
+            <span class="ident">colors</span>: <span class="ident">Palette</span> {
+                <span class="ident">background</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Blue</span>),
+                <span class="ident">shadow</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Black</span>),
+                <span class="ident">view</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">White</span>),
+                <span class="ident">primary</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Black</span>),
+                <span class="ident">secondary</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Blue</span>),
+                <span class="ident">tertiary</span>: <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">White</span>),
+                <span class="ident">title_primary</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Red</span>),
+                <span class="ident">title_secondary</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Yellow</span>),
+                <span class="ident">highlight</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Red</span>),
+                <span class="ident">highlight_inactive</span>: <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Blue</span>),
             },
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Theme</span> {
-    <span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>table</span>: <span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Table</span>) {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Value</span>::<span class='ident'>Boolean</span>(<span class='ident'>shadow</span>)) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;shadow&quot;</span>) {
-            <span class='self'>self</span>.<span class='ident'>shadow</span> <span class='op'>=</span> <span class='ident'>shadow</span>;
+<span class="kw">impl</span> <span class="ident">Theme</span> {
+    <span class="kw">fn</span> <span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Table</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Value</span>::<span class="ident">Boolean</span>(<span class="ident">shadow</span>)) <span class="op">=</span> <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;shadow&quot;</span>) {
+            <span class="self">self</span>.<span class="ident">shadow</span> <span class="op">=</span> <span class="ident">shadow</span>;
         }
 
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Value</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>borders</span>)) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;borders&quot;</span>) {
-            <span class='self'>self</span>.<span class='ident'>borders</span> <span class='op'>=</span> <span class='ident'>BorderStyle</span>::<span class='ident'>from</span>(<span class='ident'>borders</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Value</span>::<span class="ident">String</span>(<span class="kw-2">ref</span> <span class="ident">borders</span>)) <span class="op">=</span> <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;borders&quot;</span>) {
+            <span class="self">self</span>.<span class="ident">borders</span> <span class="op">=</span> <span class="ident">BorderStyle</span>::<span class="ident">from</span>(<span class="ident">borders</span>);
         }
 
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Value</span>::<span class='ident'>Table</span>(<span class='kw-2'>ref</span> <span class='ident'>table</span>)) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;colors&quot;</span>) {
-            <span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>load</span>(<span class='ident'>table</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Value</span>::<span class="ident">Table</span>(<span class="kw-2">ref</span> <span class="ident">table</span>)) <span class="op">=</span> <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;colors&quot;</span>) {
+            <span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">load</span>(<span class="ident">table</span>);
         }
     }
 
-    <span class='doccomment'>/// Sets a theme as active.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// **Don&#39;t use this directly.** Uses [`Cursive::set_theme`] instead.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// [`Cursive::set_theme`]: ../struct.Cursive.html#method.set_theme</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>) {
-        <span class='comment'>// Initialize each color with the backend</span>
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>background</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Shadow</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>primary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>secondary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>tertiary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>TitlePrimary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_primary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>TitleSecondary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_secondary</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight</span>);
-        <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight_inactive</span>);
-        <span class='ident'>backend</span>.<span class='ident'>clear</span>();
-    }
-}
-
-<span class='doccomment'>/// Specifies how some borders should be drawn.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Borders are used around Dialogs, select popups, and panels.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>BorderStyle</span> {
-    <span class='doccomment'>/// Simple borders.</span>
-    <span class='ident'>Simple</span>,
-    <span class='doccomment'>/// Outset borders with a simple 3d effect.</span>
-    <span class='ident'>Outset</span>,
-}
-
-<span class='kw'>impl</span> <span class='ident'>BorderStyle</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>s</span> <span class='op'>==</span> <span class='string'>&quot;simple&quot;</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>BorderStyle</span>::<span class='ident'>Simple</span>)
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>s</span> <span class='op'>==</span> <span class='string'>&quot;outset&quot;</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>BorderStyle</span>::<span class='ident'>Outset</span>)
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>None</span>
-        }
+    <span class="doccomment">/// Sets a theme as active.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Don&#39;t use this directly.** Uses [`Cursive::set_theme`] instead.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Cursive::set_theme`]: ../struct.Cursive.html#method.set_theme</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">activate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">backend</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">backend</span>::<span class="ident">Concrete</span>) {
+        <span class="comment">// Initialize each color with the backend</span>
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Background</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">background</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Shadow</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">shadow</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">shadow</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Primary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">primary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Secondary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">secondary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Tertiary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">tertiary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">TitlePrimary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">title_primary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">TitleSecondary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">title_secondary</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">Highlight</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">highlight</span>);
+        <span class="ident">backend</span>.<span class="ident">init_color_style</span>(<span class="ident">ColorStyle</span>::<span class="ident">HighlightInactive</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">view</span>,
+                                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">colors</span>.<span class="ident">highlight_inactive</span>);
+        <span class="ident">backend</span>.<span class="ident">clear</span>();
     }
 }
 
-<span class='doccomment'>/// Color configuration for the application.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Assign each color role an actual color.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Palette</span> {
-    <span class='doccomment'>/// Color used for the application background.</span>
-    <span class='kw'>pub</span> <span class='ident'>background</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Color used for View shadows.</span>
-    <span class='kw'>pub</span> <span class='ident'>shadow</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Color used for View backgrounds.</span>
-    <span class='kw'>pub</span> <span class='ident'>view</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Primary color used for the text.</span>
-    <span class='kw'>pub</span> <span class='ident'>primary</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Secondary color used for the text.</span>
-    <span class='kw'>pub</span> <span class='ident'>secondary</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Tertiary color used for the text.</span>
-    <span class='kw'>pub</span> <span class='ident'>tertiary</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Primary color used for title text.</span>
-    <span class='kw'>pub</span> <span class='ident'>title_primary</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Secondary color used for title text.</span>
-    <span class='kw'>pub</span> <span class='ident'>title_secondary</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Color used for highlighting text.</span>
-    <span class='kw'>pub</span> <span class='ident'>highlight</span>: <span class='ident'>Color</span>,
-    <span class='doccomment'>/// Color used for highlighting inactive text.</span>
-    <span class='kw'>pub</span> <span class='ident'>highlight_inactive</span>: <span class='ident'>Color</span>,
+<span class="doccomment">/// Specifies how some borders should be drawn.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Borders are used around Dialogs, select popups, and panels.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BorderStyle</span> {
+    <span class="doccomment">/// Simple borders.</span>
+    <span class="ident">Simple</span>,
+    <span class="doccomment">/// Outset borders with a simple 3d effect.</span>
+    <span class="ident">Outset</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Palette</span> {
-    <span class='doccomment'>/// Fills `self` with the colors from the given `table`.</span>
-    <span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>table</span>: <span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Table</span>) {
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>background</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;background&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>shadow</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;shadow&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>view</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;view&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>primary</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;primary&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>secondary</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;secondary&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>tertiary</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;tertiary&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>title_primary</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;title_primary&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>title_secondary</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;title_secondary&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>highlight</span>, <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;highlight&quot;</span>));
-        <span class='ident'>load_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>highlight_inactive</span>,
-                   <span class='ident'>table</span>.<span class='ident'>get</span>(<span class='string'>&quot;highlight_inactive&quot;</span>));
+<span class="kw">impl</span> <span class="ident">BorderStyle</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;simple&quot;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">BorderStyle</span>::<span class="ident">Simple</span>)
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;outset&quot;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">BorderStyle</span>::<span class="ident">Outset</span>)
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
+        }
     }
 }
 
-<span class='doccomment'>/// Parses `value` and fills `target` if it&#39;s a valid color.</span>
-<span class='kw'>fn</span> <span class='ident'>load_color</span>(<span class='ident'>target</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Color</span>, <span class='ident'>value</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>toml</span>::<span class='ident'>Value</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>value</span>) <span class='op'>=</span> <span class='ident'>value</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>value</span> {
-            <span class='ident'>toml</span>::<span class='ident'>Value</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>value</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>color</span>) <span class='op'>=</span> <span class='ident'>Color</span>::<span class='ident'>parse</span>(<span class='ident'>value</span>) {
-                    <span class='op'>*</span><span class='ident'>target</span> <span class='op'>=</span> <span class='ident'>color</span>;
-                    <span class='bool-val'>true</span>
-                } <span class='kw'>else</span> {
-                    <span class='bool-val'>false</span>
+<span class="doccomment">/// Color configuration for the application.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Assign each color role an actual color.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Palette</span> {
+    <span class="doccomment">/// Color used for the application background.</span>
+    <span class="kw">pub</span> <span class="ident">background</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Color used for View shadows.</span>
+    <span class="kw">pub</span> <span class="ident">shadow</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Color used for View backgrounds.</span>
+    <span class="kw">pub</span> <span class="ident">view</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Primary color used for the text.</span>
+    <span class="kw">pub</span> <span class="ident">primary</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Secondary color used for the text.</span>
+    <span class="kw">pub</span> <span class="ident">secondary</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Tertiary color used for the text.</span>
+    <span class="kw">pub</span> <span class="ident">tertiary</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Primary color used for title text.</span>
+    <span class="kw">pub</span> <span class="ident">title_primary</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Secondary color used for title text.</span>
+    <span class="kw">pub</span> <span class="ident">title_secondary</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Color used for highlighting text.</span>
+    <span class="kw">pub</span> <span class="ident">highlight</span>: <span class="ident">Color</span>,
+    <span class="doccomment">/// Color used for highlighting inactive text.</span>
+    <span class="kw">pub</span> <span class="ident">highlight_inactive</span>: <span class="ident">Color</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">Palette</span> {
+    <span class="doccomment">/// Fills `self` with the colors from the given `table`.</span>
+    <span class="kw">fn</span> <span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Table</span>) {
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">background</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;background&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">shadow</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;shadow&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">view</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;view&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">primary</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;primary&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">secondary</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;secondary&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">tertiary</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;tertiary&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">title_primary</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;title_primary&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">title_secondary</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;title_secondary&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">highlight</span>, <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;highlight&quot;</span>));
+        <span class="ident">load_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">highlight_inactive</span>,
+                   <span class="ident">table</span>.<span class="ident">get</span>(<span class="string">&quot;highlight_inactive&quot;</span>));
+    }
+}
+
+<span class="doccomment">/// Parses `value` and fills `target` if it&#39;s a valid color.</span>
+<span class="kw">fn</span> <span class="ident">load_color</span>(<span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Color</span>, <span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">toml</span>::<span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">value</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">value</span> {
+            <span class="ident">toml</span>::<span class="ident">Value</span>::<span class="ident">String</span>(<span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">Color</span>::<span class="ident">parse</span>(<span class="ident">value</span>) {
+                    <span class="kw-2">*</span><span class="ident">target</span> <span class="op">=</span> <span class="ident">color</span>;
+                    <span class="bool-val">true</span>
+                } <span class="kw">else</span> {
+                    <span class="bool-val">false</span>
                 }
             }
-            <span class='ident'>toml</span>::<span class='ident'>Value</span>::<span class='ident'>Array</span>(<span class='kw-2'>ref</span> <span class='ident'>array</span>) <span class='op'>=&gt;</span> {
-                <span class='ident'>array</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>item</span><span class='op'>|</span> <span class='ident'>load_color</span>(<span class='ident'>target</span>, <span class='prelude-val'>Some</span>(<span class='ident'>item</span>)))
+            <span class="ident">toml</span>::<span class="ident">Value</span>::<span class="ident">Array</span>(<span class="kw-2">ref</span> <span class="ident">array</span>) <span class="op">=&gt;</span> {
+                <span class="ident">array</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="ident">load_color</span>(<span class="ident">target</span>, <span class="prelude-val">Some</span>(<span class="ident">item</span>)))
             }
-            _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
-    } <span class='kw'>else</span> {
-        <span class='bool-val'>false</span>
+    } <span class="kw">else</span> {
+        <span class="bool-val">false</span>
     }
 }
 
-<span class='doccomment'>/// One of the 8 base colors.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>BaseColor</span> {
-    <span class='doccomment'>/// Black color</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #0</span>
-    <span class='ident'>Black</span>,
-    <span class='doccomment'>/// Red color</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #1</span>
-    <span class='ident'>Red</span>,
-    <span class='doccomment'>/// Green color</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #2</span>
-    <span class='ident'>Green</span>,
-    <span class='doccomment'>/// Yellow color (Red + Green)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #3</span>
-    <span class='ident'>Yellow</span>,
-    <span class='doccomment'>/// Blue color</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #4</span>
-    <span class='ident'>Blue</span>,
-    <span class='doccomment'>/// Magenta color (Red + Blue)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #5</span>
-    <span class='ident'>Magenta</span>,
-    <span class='doccomment'>/// Cyan color (Green + Blue)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #6</span>
-    <span class='ident'>Cyan</span>,
-    <span class='doccomment'>/// White color (Red + Green + Blue)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Color #7</span>
-    <span class='ident'>White</span>,
+<span class="doccomment">/// One of the 8 base colors.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BaseColor</span> {
+    <span class="doccomment">/// Black color</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #0</span>
+    <span class="ident">Black</span>,
+    <span class="doccomment">/// Red color</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #1</span>
+    <span class="ident">Red</span>,
+    <span class="doccomment">/// Green color</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #2</span>
+    <span class="ident">Green</span>,
+    <span class="doccomment">/// Yellow color (Red + Green)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #3</span>
+    <span class="ident">Yellow</span>,
+    <span class="doccomment">/// Blue color</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #4</span>
+    <span class="ident">Blue</span>,
+    <span class="doccomment">/// Magenta color (Red + Blue)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #5</span>
+    <span class="ident">Magenta</span>,
+    <span class="doccomment">/// Cyan color (Green + Blue)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #6</span>
+    <span class="ident">Cyan</span>,
+    <span class="doccomment">/// White color (Red + Green + Blue)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Color #7</span>
+    <span class="ident">White</span>,
 }
 
-<span class='doccomment'>/// Represents a color used by the theme.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Color</span> {
-    <span class='doccomment'>/// One of the 8 base colors.</span>
-    <span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>),
-    <span class='doccomment'>/// Lighter version of a base color.</span>
-    <span class='ident'>Light</span>(<span class='ident'>BaseColor</span>),
-    <span class='doccomment'>/// True-color, 24-bit.</span>
-    <span class='ident'>Rgb</span>(<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>),
-    <span class='doccomment'>/// Low-resolution</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Each value should be `&lt;= 5` (you&#39;ll get panics otherwise).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// These 216 possible colors are part of the default color palette.</span>
-    <span class='ident'>RgbLowRes</span>(<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>),
+<span class="doccomment">/// Represents a color used by the theme.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Color</span> {
+    <span class="doccomment">/// One of the 8 base colors.</span>
+    <span class="ident">Dark</span>(<span class="ident">BaseColor</span>),
+    <span class="doccomment">/// Lighter version of a base color.</span>
+    <span class="ident">Light</span>(<span class="ident">BaseColor</span>),
+    <span class="doccomment">/// True-color, 24-bit.</span>
+    <span class="ident">Rgb</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>),
+    <span class="doccomment">/// Low-resolution</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Each value should be `&lt;= 5` (you&#39;ll get panics otherwise).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// These 216 possible colors are part of the default color palette.</span>
+    <span class="ident">RgbLowRes</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>Color</span> {}
+<span class="kw">impl</span> <span class="ident">Color</span> {}
 
-<span class='doccomment'>/// Possible error returned when loading a theme.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
-    <span class='doccomment'>/// An error occured when reading the file.</span>
-    <span class='ident'>Io</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
-    <span class='doccomment'>/// An error occured when parsing the toml content.</span>
-    <span class='ident'>Parse</span>,
+<span class="doccomment">/// Possible error returned when loading a theme.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
+    <span class="doccomment">/// An error occured when reading the file.</span>
+    <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
+    <span class="doccomment">/// An error occured when parsing the toml content.</span>
+    <span class="ident">Parse</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>io</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Error</span>::<span class='ident'>Io</span>(<span class='ident'>err</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">err</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Color</span> {
-    <span class='kw'>fn</span> <span class='ident'>parse</span>(<span class='ident'>value</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Some</span>(<span class='kw'>match</span> <span class='ident'>value</span> {
-            <span class='string'>&quot;black&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Black</span>),
-            <span class='string'>&quot;red&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Red</span>),
-            <span class='string'>&quot;green&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Green</span>),
-            <span class='string'>&quot;yellow&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Yellow</span>),
-            <span class='string'>&quot;blue&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Blue</span>),
-            <span class='string'>&quot;magenta&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Magenta</span>),
-            <span class='string'>&quot;cyan&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Cyan</span>),
-            <span class='string'>&quot;white&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Dark</span>(<span class='ident'>BaseColor</span>::<span class='ident'>White</span>),
-            <span class='string'>&quot;light black&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Black</span>),
-            <span class='string'>&quot;light red&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Red</span>),
-            <span class='string'>&quot;light green&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Green</span>),
-            <span class='string'>&quot;light yellow&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Yellow</span>),
-            <span class='string'>&quot;light blue&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Blue</span>),
-            <span class='string'>&quot;light magenta&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Magenta</span>),
-            <span class='string'>&quot;light cyan&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>Cyan</span>),
-            <span class='string'>&quot;light white&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Color</span>::<span class='ident'>Light</span>(<span class='ident'>BaseColor</span>::<span class='ident'>White</span>),
-            <span class='ident'>value</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>Color</span>::<span class='ident'>parse_special</span>(<span class='ident'>value</span>),
+<span class="kw">impl</span> <span class="ident">Color</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
+            <span class="string">&quot;black&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Black</span>),
+            <span class="string">&quot;red&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Red</span>),
+            <span class="string">&quot;green&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Green</span>),
+            <span class="string">&quot;yellow&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Yellow</span>),
+            <span class="string">&quot;blue&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Blue</span>),
+            <span class="string">&quot;magenta&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Magenta</span>),
+            <span class="string">&quot;cyan&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">Cyan</span>),
+            <span class="string">&quot;white&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Dark</span>(<span class="ident">BaseColor</span>::<span class="ident">White</span>),
+            <span class="string">&quot;light black&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Black</span>),
+            <span class="string">&quot;light red&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Red</span>),
+            <span class="string">&quot;light green&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Green</span>),
+            <span class="string">&quot;light yellow&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Yellow</span>),
+            <span class="string">&quot;light blue&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Blue</span>),
+            <span class="string">&quot;light magenta&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Magenta</span>),
+            <span class="string">&quot;light cyan&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">Cyan</span>),
+            <span class="string">&quot;light white&quot;</span> <span class="op">=&gt;</span> <span class="ident">Color</span>::<span class="ident">Light</span>(<span class="ident">BaseColor</span>::<span class="ident">White</span>),
+            <span class="ident">value</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">Color</span>::<span class="ident">parse_special</span>(<span class="ident">value</span>),
         })
     }
 
-    <span class='kw'>fn</span> <span class='ident'>parse_special</span>(<span class='ident'>value</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Color</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>value</span>.<span class='ident'>starts_with</span>(<span class='string'>&#39;#&#39;</span>) {
+    <span class="kw">fn</span> <span class="ident">parse_special</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">starts_with</span>(<span class="string">&#39;#&#39;</span>) {
 
-            <span class='kw'>let</span> <span class='ident'>value</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>value</span>[<span class='number'>1</span>..];
-            <span class='comment'>// Compute per-color length, and amplitude</span>
-            <span class='kw'>let</span> (<span class='ident'>l</span>, <span class='ident'>multiplier</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>value</span>.<span class='ident'>len</span>() {
-                <span class='number'>6</span> <span class='op'>=&gt;</span> (<span class='number'>2</span>, <span class='number'>1</span>),
-                <span class='number'>3</span> <span class='op'>=&gt;</span> (<span class='number'>1</span>, <span class='number'>17</span>),
-                _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot parse color: {}&quot;</span>, <span class='ident'>value</span>),
+            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">value</span>[<span class="number">1</span>..];
+            <span class="comment">// Compute per-color length, and amplitude</span>
+            <span class="kw">let</span> (<span class="ident">l</span>, <span class="ident">multiplier</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">len</span>() {
+                <span class="number">6</span> <span class="op">=&gt;</span> (<span class="number">2</span>, <span class="number">1</span>),
+                <span class="number">3</span> <span class="op">=&gt;</span> (<span class="number">1</span>, <span class="number">17</span>),
+                _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot parse color: {}&quot;</span>, <span class="ident">value</span>),
             };
-            <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>load_hex</span>(<span class='kw-2'>&amp;</span><span class='ident'>value</span>[<span class='number'>0</span>..<span class='ident'>l</span>]) <span class='op'>*</span> <span class='ident'>multiplier</span>;
-            <span class='kw'>let</span> <span class='ident'>g</span> <span class='op'>=</span> <span class='ident'>load_hex</span>(<span class='kw-2'>&amp;</span><span class='ident'>value</span>[<span class='ident'>l</span>..<span class='number'>2</span> <span class='op'>*</span> <span class='ident'>l</span>]) <span class='op'>*</span> <span class='ident'>multiplier</span>;
-            <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>load_hex</span>(<span class='kw-2'>&amp;</span><span class='ident'>value</span>[<span class='number'>2</span> <span class='op'>*</span> <span class='ident'>l</span>..<span class='number'>3</span> <span class='op'>*</span> <span class='ident'>l</span>]) <span class='op'>*</span> <span class='ident'>multiplier</span>;
-            <span class='prelude-val'>Some</span>(<span class='ident'>Color</span>::<span class='ident'>Rgb</span>(<span class='ident'>r</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='ident'>g</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='ident'>b</span> <span class='kw'>as</span> <span class='ident'>u8</span>))
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>value</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>3</span> {
-            <span class='comment'>// RGB values between 0 and 5 maybe?</span>
-            <span class='kw'>let</span> <span class='ident'>rgb</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span>
-                <span class='ident'>value</span>.<span class='ident'>chars</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> <span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>-</span> <span class='string'>&#39;0&#39;</span> <span class='kw'>as</span> <span class='ident'>i16</span>).<span class='ident'>collect</span>();
-            <span class='kw'>if</span> <span class='ident'>rgb</span>.<span class='ident'>iter</span>().<span class='ident'>all</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>i</span> <span class='op'>&lt;</span> <span class='number'>6</span>) {
-                <span class='prelude-val'>Some</span>(<span class='ident'>Color</span>::<span class='ident'>RgbLowRes</span>(<span class='ident'>rgb</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='ident'>u8</span>,
-                                      <span class='ident'>rgb</span>[<span class='number'>1</span>] <span class='kw'>as</span> <span class='ident'>u8</span>,
-                                      <span class='ident'>rgb</span>[<span class='number'>2</span>] <span class='kw'>as</span> <span class='ident'>u8</span>))
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>None</span>
+            <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">load_hex</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>[<span class="number">0</span>..<span class="ident">l</span>]) <span class="op">*</span> <span class="ident">multiplier</span>;
+            <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">load_hex</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>[<span class="ident">l</span>..<span class="number">2</span> <span class="op">*</span> <span class="ident">l</span>]) <span class="op">*</span> <span class="ident">multiplier</span>;
+            <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">load_hex</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>[<span class="number">2</span> <span class="op">*</span> <span class="ident">l</span>..<span class="number">3</span> <span class="op">*</span> <span class="ident">l</span>]) <span class="op">*</span> <span class="ident">multiplier</span>;
+            <span class="prelude-val">Some</span>(<span class="ident">Color</span>::<span class="ident">Rgb</span>(<span class="ident">r</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">g</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u8</span>))
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">3</span> {
+            <span class="comment">// RGB values between 0 and 5 maybe?</span>
+            <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span>
+                <span class="ident">value</span>.<span class="ident">chars</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">-</span> <span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">i16</span>).<span class="ident">collect</span>();
+            <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="number">6</span>) {
+                <span class="prelude-val">Some</span>(<span class="ident">Color</span>::<span class="ident">RgbLowRes</span>(<span class="ident">rgb</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">u8</span>,
+                                      <span class="ident">rgb</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="ident">u8</span>,
+                                      <span class="ident">rgb</span>[<span class="number">2</span>] <span class="kw">as</span> <span class="ident">u8</span>))
+            } <span class="kw">else</span> {
+                <span class="prelude-val">None</span>
             }
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>None</span>
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
         }
     }
 }
 
-<span class='doccomment'>/// Loads a theme from file and sets it as active.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load_theme_file</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Theme</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>filename</span>));
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>file</span>.<span class='ident'>read_to_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>content</span>));
-        <span class='ident'>content</span>
+<span class="doccomment">/// Loads a theme from file and sets it as active.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_theme_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Theme</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">filename</span>));
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">file</span>.<span class="ident">read_to_string</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">content</span>));
+        <span class="ident">content</span>
     };
 
-    <span class='ident'>load_theme</span>(<span class='kw-2'>&amp;</span><span class='ident'>content</span>)
+    <span class="ident">load_theme</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>)
 }
 
-<span class='doccomment'>/// Loads a theme string and sets it as active.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load_theme</span>(<span class='ident'>content</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Theme</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parser</span> <span class='op'>=</span> <span class='ident'>toml</span>::<span class='ident'>Parser</span>::<span class='ident'>new</span>(<span class='ident'>content</span>);
-    <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>parse</span>().<span class='ident'>ok_or</span>(<span class='ident'>Error</span>::<span class='ident'>Parse</span>));
+<span class="doccomment">/// Loads a theme string and sets it as active.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_theme</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Theme</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">toml</span>::<span class="ident">Parser</span>::<span class="ident">new</span>(<span class="ident">content</span>);
+    <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">parser</span>.<span class="ident">parse</span>().<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">Parse</span>));
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>theme</span> <span class='op'>=</span> <span class='ident'>Theme</span>::<span class='ident'>default</span>();
-    <span class='ident'>theme</span>.<span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='ident'>table</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">theme</span> <span class="op">=</span> <span class="ident">Theme</span>::<span class="ident">default</span>();
+    <span class="ident">theme</span>.<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">table</span>);
 
-    <span class='prelude-val'>Ok</span>(<span class='ident'>theme</span>)
+    <span class="prelude-val">Ok</span>(<span class="ident">theme</span>)
 }
 
-<span class='doccomment'>/// Loads the default theme, and returns its representation.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>load_default</span>() <span class='op'>-&gt;</span> <span class='ident'>Theme</span> {
-    <span class='ident'>Theme</span>::<span class='ident'>default</span>()
+<span class="doccomment">/// Loads the default theme, and returns its representation.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_default</span>() <span class="op">-&gt;</span> <span class="ident">Theme</span> {
+    <span class="ident">Theme</span>::<span class="ident">default</span>()
 }
 
-<span class='doccomment'>/// Loads a hexadecimal code</span>
-<span class='kw'>fn</span> <span class='ident'>load_hex</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>u16</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sum</span> <span class='op'>=</span> <span class='number'>0</span>;
-    <span class='kw'>for</span> <span class='ident'>c</span> <span class='kw'>in</span> <span class='ident'>s</span>.<span class='ident'>chars</span>() {
-        <span class='ident'>sum</span> <span class='op'>*=</span> <span class='number'>16</span>;
-        <span class='ident'>sum</span> <span class='op'>+=</span> <span class='kw'>match</span> <span class='ident'>c</span> {
-            <span class='ident'>n</span> @ <span class='string'>&#39;0&#39;</span>...<span class='string'>&#39;9&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>-</span> <span class='string'>&#39;0&#39;</span> <span class='kw'>as</span> <span class='ident'>i16</span>,
-            <span class='ident'>n</span> @ <span class='string'>&#39;a&#39;</span>...<span class='string'>&#39;f&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>-</span> <span class='string'>&#39;a&#39;</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>+</span> <span class='number'>10</span>,
-            <span class='ident'>n</span> @ <span class='string'>&#39;A&#39;</span>...<span class='string'>&#39;F&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>-</span> <span class='string'>&#39;A&#39;</span> <span class='kw'>as</span> <span class='ident'>i16</span> <span class='op'>+</span> <span class='number'>10</span>,
-            _ <span class='op'>=&gt;</span> <span class='number'>0</span>,
+<span class="doccomment">/// Loads a hexadecimal code</span>
+<span class="kw">fn</span> <span class="ident">load_hex</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sum</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">s</span>.<span class="ident">chars</span>() {
+        <span class="ident">sum</span> <span class="op">*=</span> <span class="number">16</span>;
+        <span class="ident">sum</span> <span class="op">+=</span> <span class="kw">match</span> <span class="ident">c</span> {
+            <span class="ident">n</span> @ <span class="string">&#39;0&#39;</span>...<span class="string">&#39;9&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">-</span> <span class="string">&#39;0&#39;</span> <span class="kw">as</span> <span class="ident">i16</span>,
+            <span class="ident">n</span> @ <span class="string">&#39;a&#39;</span>...<span class="string">&#39;f&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">-</span> <span class="string">&#39;a&#39;</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">+</span> <span class="number">10</span>,
+            <span class="ident">n</span> @ <span class="string">&#39;A&#39;</span>...<span class="string">&#39;F&#39;</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">-</span> <span class="string">&#39;A&#39;</span> <span class="kw">as</span> <span class="ident">i16</span> <span class="op">+</span> <span class="number">10</span>,
+            _ <span class="op">=&gt;</span> <span class="number">0</span>,
         };
     }
 
-    <span class='ident'>sum</span> <span class='kw'>as</span> <span class='ident'>u16</span>
+    <span class="ident">sum</span> <span class="kw">as</span> <span class="ident">u16</span>
 }
 </pre>
 </section>
@@ -1099,18 +1111,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -1143,7 +1159,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>conrod::text::glyph - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a></p><script>window.sidebarCurrent = {name: 'glyph', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module glyph</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a></p><script>window.sidebarCurrent = {name: 'glyph', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a>::<wbr><a class='mod' href=''>glyph</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a>::<wbr><a class="mod" href=''>glyph</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,72 +64,81 @@
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Rects.html'
-                                  title='conrod::text::glyph::Rects'>Rects</a></td>
+                           <td><a class="struct" href="struct.Rects.html"
+                                  title='struct conrod::text::glyph::Rects'>Rects</a></td>
                            <td class='docblock-short'>
-                                <p>An iterator yielding the <code>Rect</code> for each <code>char</code>&#39;s <code>Glyph</code> in the given <code>text</code>.</p>
+                                <p>An iterator yielding the <code>Rect</code> for each <code>char</code>'s <code>Glyph</code> in the given <code>text</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.RectsPerLine.html'
-                                  title='conrod::text::glyph::RectsPerLine'>RectsPerLine</a></td>
+                           <td><a class="struct" href="struct.RectsPerLine.html"
+                                  title='struct conrod::text::glyph::RectsPerLine'>RectsPerLine</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator that, for every <code>(line, line_rect)</code> pair yielded by the given iterator,
 produces an iterator that yields a <code>Rect</code> for every character in that line.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.SelectedRects.html'
-                                  title='conrod::text::glyph::SelectedRects'>SelectedRects</a></td>
+                           <td><a class="struct" href="struct.SelectedRects.html"
+                                  title='struct conrod::text::glyph::SelectedRects'>SelectedRects</a></td>
                            <td class='docblock-short'>
                                 <p>Yields a <code>Rect</code> for each selected character in a single line of text.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.SelectedRectsPerLine.html'
-                                  title='conrod::text::glyph::SelectedRectsPerLine'>SelectedRectsPerLine</a></td>
+                           <td><a class="struct" href="struct.SelectedRectsPerLine.html"
+                                  title='struct conrod::text::glyph::SelectedRectsPerLine'>SelectedRectsPerLine</a></td>
                            <td class='docblock-short'>
                                 <p>Yields an iteraor yielding <code>Rect</code>s for each selected character in each line of text within
 the given iterator yielding char <code>Rect</code>s.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.index_after_cursor.html'
-                                  title='conrod::text::glyph::index_after_cursor'>index_after_cursor</a></td>
+                           <td><a class="fn" href="fn.index_after_cursor.html"
+                                  title='fn conrod::text::glyph::index_after_cursor'>index_after_cursor</a></td>
                            <td class='docblock-short'>
                                 <p>Find the index of the character that directly follows the cursor at the given <code>cursor_idx</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.rects_per_line.html'
-                                  title='conrod::text::glyph::rects_per_line'>rects_per_line</a></td>
+                           <td><a class="fn" href="fn.rects_per_line.html"
+                                  title='fn conrod::text::glyph::rects_per_line'>rects_per_line</a></td>
                            <td class='docblock-short'>
                                 <p>Produce an iterator that, for every <code>(line, line_rect)</code> pair yielded by the given iterator,
 produces an iterator that yields a <code>Rect</code> for every character in that line.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.selected_rects_per_line.html'
-                                  title='conrod::text::glyph::selected_rects_per_line'>selected_rects_per_line</a></td>
+                           <td><a class="fn" href="fn.selected_rects_per_line.html"
+                                  title='fn conrod::text::glyph::selected_rects_per_line'>selected_rects_per_line</a></td>
                            <td class='docblock-short'>
                                 <p>Produces an iterator that yields iteraors yielding <code>Rect</code>s for each selected character in
 each line of text within the given iterator yielding char <code>Rect</code>s.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.HalfW.html'
-                                  title='conrod::text::glyph::HalfW'>HalfW</a></td>
+                           <td><a class="type" href="type.HalfW.html"
+                                  title='type conrod::text::glyph::HalfW'>HalfW</a></td>
                            <td class='docblock-short'>
                                 <p>The half of the width of some character (used within <code>CharXs</code>).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.X.html'
-                                  title='conrod::text::glyph::X'>X</a></td>
+                           <td><a class="type" href="type.X.html"
+                                  title='type conrod::text::glyph::X'>X</a></td>
                            <td class='docblock-short'>
                                 <p>Some position along the X axis (used within <code>CharXs</code>).</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -132,18 +153,22 @@ each line of text within the given iterator yielding char <code>Rect</code>s.</p
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -176,7 +201,6 @@ each line of text within the given iterator yielding char <code>Rect</code>s.</p
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

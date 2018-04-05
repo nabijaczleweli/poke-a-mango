@@ -9,14 +9,18 @@
 
     <title>wayland_sys::cursor - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>wayland_sys</a></p><script>window.sidebarCurrent = {name: 'cursor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module cursor</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>wayland_sys</a></p><script>window.sidebarCurrent = {name: 'cursor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,64 +54,63 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>wayland_sys</a>::<wbr><a class='mod' href=''>cursor</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>wayland_sys</a>::<wbr><a class="mod" href=''>cursor</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/wayland_sys/cursor.rs.html#1-54' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Bindings to the <code>wayland-cursor.so</code> library</p>
-
 <p>The created handle is named <code>WAYLAND_CURSOR_HANDLE</code>.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.WAYLAND_CURSOR_HANDLE.html'
-                                  title='wayland_sys::cursor::WAYLAND_CURSOR_HANDLE'>WAYLAND_CURSOR_HANDLE</a></td>
+                           <td><a class="struct" href="struct.WAYLAND_CURSOR_HANDLE.html"
+                                  title='struct wayland_sys::cursor::WAYLAND_CURSOR_HANDLE'>WAYLAND_CURSOR_HANDLE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.WAYLAND_CURSOR_OPTION.html'
-                                  title='wayland_sys::cursor::WAYLAND_CURSOR_OPTION'>WAYLAND_CURSOR_OPTION</a></td>
+                           <td><a class="struct" href="struct.WAYLAND_CURSOR_OPTION.html"
+                                  title='struct wayland_sys::cursor::WAYLAND_CURSOR_OPTION'>WAYLAND_CURSOR_OPTION</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.WaylandCursor.html'
-                                  title='wayland_sys::cursor::WaylandCursor'>WaylandCursor</a></td>
+                           <td><a class="struct" href="struct.WaylandCursor.html"
+                                  title='struct wayland_sys::cursor::WaylandCursor'>WaylandCursor</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.wl_cursor.html'
-                                  title='wayland_sys::cursor::wl_cursor'>wl_cursor</a></td>
+                           <td><a class="struct" href="struct.wl_cursor.html"
+                                  title='struct wayland_sys::cursor::wl_cursor'>wl_cursor</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.wl_cursor_image.html'
-                                  title='wayland_sys::cursor::wl_cursor_image'>wl_cursor_image</a></td>
+                           <td><a class="struct" href="struct.wl_cursor_image.html"
+                                  title='struct wayland_sys::cursor::wl_cursor_image'>wl_cursor_image</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.wl_cursor_theme.html'
-                                  title='wayland_sys::cursor::wl_cursor_theme'>wl_cursor_theme</a></td>
+                           <td><a class="enum" href="enum.wl_cursor_theme.html"
+                                  title='enum wayland_sys::cursor::wl_cursor_theme'>wl_cursor_theme</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.is_lib_available.html'
-                                  title='wayland_sys::cursor::is_lib_available'>is_lib_available</a></td>
+                           <td><a class="fn" href="fn.is_lib_available.html"
+                                  title='fn wayland_sys::cursor::is_lib_available'>is_lib_available</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -116,18 +127,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -160,7 +175,6 @@
         window.rootPath = "../../";
         window.currentCrate = "wayland_sys";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>radio.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -216,178 +228,178 @@
 <span id="172">172</span>
 <span id="173">173</span>
 <span id="174">174</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>Printer</span>, <span class='ident'>With</span>};
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> {<span class="ident">Printer</span>, <span class="ident">With</span>};
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::{<span class="ident">Event</span>, <span class="ident">EventResult</span>, <span class="ident">Key</span>};
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">theme</span>::<span class="ident">ColorStyle</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::<span class="ident">View</span>;
 
-<span class='kw'>struct</span> <span class='ident'>SharedState</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>selection</span>: <span class='ident'>usize</span>,
-    <span class='ident'>values</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
+<span class="kw">struct</span> <span class="ident">SharedState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">selection</span>: <span class="ident">usize</span>,
+    <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>SharedState</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>selection</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>values</span>[<span class='self'>self</span>.<span class='ident'>selection</span>].<span class='ident'>clone</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SharedState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">values</span>[<span class="self">self</span>.<span class="ident">selection</span>].<span class="ident">clone</span>()
     }
 }
 
-<span class='doccomment'>/// Group to coordinate multiple radio buttons.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A `RadioGroup` is used to create and manage [`RadioButton`]s.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A `RadioGroup` can be cloned; it will keep pointing to the same group.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`RadioButton`]: struct.RadioButton.html</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RadioGroup</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='comment'>// Given to every child button</span>
-    <span class='ident'>state</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>SharedState</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Group to coordinate multiple radio buttons.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A `RadioGroup` is used to create and manage [`RadioButton`]s.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A `RadioGroup` can be cloned; it will keep pointing to the same group.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`RadioButton`]: struct.RadioButton.html</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RadioGroup</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="comment">// Given to every child button</span>
+    <span class="ident">state</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">SharedState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>RadioGroup</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates an empty group for radio buttons.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>RadioGroup</span> {
-            <span class='ident'>state</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>SharedState</span> {
-                <span class='ident'>selection</span>: <span class='number'>0</span>,
-                <span class='ident'>values</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">RadioGroup</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates an empty group for radio buttons.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">RadioGroup</span> {
+            <span class="ident">state</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">SharedState</span> {
+                <span class="ident">selection</span>: <span class="number">0</span>,
+                <span class="ident">values</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             })),
         }
     }
 
-    <span class='doccomment'>/// Adds a new button to the group.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The button will display `label` next to it, and will embed `value`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>button</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>, <span class='ident'>label</span>: <span class='ident'>S</span>)
-                                   <span class='op'>-&gt;</span> <span class='ident'>RadioButton</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow</span>().<span class='ident'>values</span>.<span class='ident'>len</span>();
-        <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>values</span>.<span class='ident'>push</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>value</span>));
-        <span class='ident'>RadioButton</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>clone</span>(), <span class='ident'>count</span>, <span class='ident'>label</span>.<span class='ident'>into</span>())
+    <span class="doccomment">/// Adds a new button to the group.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The button will display `label` next to it, and will embed `value`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">button</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">label</span>: <span class="ident">S</span>)
+                                   <span class="op">-&gt;</span> <span class="ident">RadioButton</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow</span>().<span class="ident">values</span>.<span class="ident">len</span>();
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow_mut</span>().<span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">value</span>));
+        <span class="ident">RadioButton</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">state</span>.<span class="ident">clone</span>(), <span class="ident">count</span>, <span class="ident">label</span>.<span class="ident">into</span>())
     }
 
-    <span class='doccomment'>/// Returns the id of the selected button.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Buttons are indexed in the order they are created, starting from 0.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>selected_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow</span>().<span class='ident'>selection</span>
+    <span class="doccomment">/// Returns the id of the selected button.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Buttons are indexed in the order they are created, starting from 0.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selected_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow</span>().<span class="ident">selection</span>
     }
 
-    <span class='doccomment'>/// Returns the value associated with the selected button.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>selection</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow</span>().<span class='ident'>selection</span>()
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>RadioGroup</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Adds a button, using the label itself as value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>button_str</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>S</span>)
-                                       <span class='op'>-&gt;</span> <span class='ident'>RadioButton</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>into</span>();
-        <span class='self'>self</span>.<span class='ident'>button</span>(<span class='ident'>text</span>.<span class='ident'>clone</span>(), <span class='ident'>text</span>)
+    <span class="doccomment">/// Returns the value associated with the selected button.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow</span>().<span class="ident">selection</span>()
     }
 }
 
-<span class='doccomment'>/// Variant of `Checkbox` arranged in group.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `RadioButton`s are managed by a [`RadioGroup`]. A single group can contain</span>
-<span class='doccomment'>/// several radio buttons, but only one button per group can be active at a</span>
-<span class='doccomment'>/// time.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `RadioButton`s are not created directly, but through</span>
-<span class='doccomment'>/// [`RadioGroup::button()`].</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`RadioGroup`]: struct.RadioGroup.html</span>
-<span class='doccomment'>/// [`RadioGroup::button()`]: struct.RadioGroup.html#method.button</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RadioButton</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>state</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>SharedState</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
-    <span class='ident'>id</span>: <span class='ident'>usize</span>,
-    <span class='ident'>enabled</span>: <span class='ident'>bool</span>,
-    <span class='ident'>label</span>: <span class='ident'>String</span>,
-}
-
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>RadioButton</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='macro'>impl_enabled</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>enabled</span>);
-
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>state</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>SharedState</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>, <span class='ident'>id</span>: <span class='ident'>usize</span>, <span class='ident'>label</span>: <span class='ident'>String</span>)
-           <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>RadioButton</span> {
-            <span class='ident'>state</span>: <span class='ident'>state</span>,
-            <span class='ident'>id</span>: <span class='ident'>id</span>,
-            <span class='ident'>enabled</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>label</span>: <span class='ident'>label</span>,
-        }
-    }
-
-    <span class='doccomment'>/// Returns `true` if this button is selected.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_selected</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow</span>().<span class='ident'>selection</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>id</span>
-    }
-
-    <span class='doccomment'>/// Selects this button, un-selecting any other in the same group.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>select</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>selection</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>id</span>;
-    }
-
-    <span class='doccomment'>/// Selects this button, un-selecting any other in the same group.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>selected</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='self'>Self</span>::<span class='ident'>select</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>draw_internal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='string'>&quot;( )&quot;</span>);
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>is_selected</span>() {
-            <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>1</span>, <span class='number'>0</span>), <span class='string'>&quot;X&quot;</span>);
-        }
-
-        <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>label</span>.<span class='ident'>is_empty</span>() {
-            <span class='comment'>// We want the space to be highlighted if focused</span>
-            <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>3</span>, <span class='number'>0</span>), <span class='string'>&quot; &quot;</span>);
-            <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>4</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>label</span>);
-        }
+<span class="kw">impl</span> <span class="ident">RadioGroup</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Adds a button, using the label itself as value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">button_str</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">text</span>: <span class="ident">S</span>)
+                                       <span class="op">-&gt;</span> <span class="ident">RadioButton</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.<span class="ident">button</span>(<span class="ident">text</span>.<span class="ident">clone</span>(), <span class="ident">text</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>RadioButton</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>label</span>.<span class='ident'>is_empty</span>() {
-            <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>3</span>, <span class='number'>1</span>)
-        } <span class='kw'>else</span> {
-            <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>3</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>label</span>.<span class='ident'>len</span>(), <span class='number'>1</span>)
+<span class="doccomment">/// Variant of `Checkbox` arranged in group.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `RadioButton`s are managed by a [`RadioGroup`]. A single group can contain</span>
+<span class="doccomment">/// several radio buttons, but only one button per group can be active at a</span>
+<span class="doccomment">/// time.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `RadioButton`s are not created directly, but through</span>
+<span class="doccomment">/// [`RadioGroup::button()`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`RadioGroup`]: struct.RadioGroup.html</span>
+<span class="doccomment">/// [`RadioGroup::button()`]: struct.RadioGroup.html#method.button</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RadioButton</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">state</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">SharedState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">id</span>: <span class="ident">usize</span>,
+    <span class="ident">enabled</span>: <span class="ident">bool</span>,
+    <span class="ident">label</span>: <span class="ident">String</span>,
+}
+
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">RadioButton</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="macro">impl_enabled</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">enabled</span>);
+
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">state</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">SharedState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>, <span class="ident">id</span>: <span class="ident">usize</span>, <span class="ident">label</span>: <span class="ident">String</span>)
+           <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">RadioButton</span> {
+            <span class="ident">state</span>: <span class="ident">state</span>,
+            <span class="ident">id</span>: <span class="ident">id</span>,
+            <span class="ident">enabled</span>: <span class="bool-val">true</span>,
+            <span class="ident">label</span>: <span class="ident">label</span>,
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
+    <span class="doccomment">/// Returns `true` if this button is selected.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_selected</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow</span>().<span class="ident">selection</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">id</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>enabled</span> {
-            <span class='ident'>printer</span>.<span class='ident'>with_selection</span>(<span class='ident'>printer</span>.<span class='ident'>focused</span>,
-                                   <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>draw_internal</span>(<span class='ident'>printer</span>));
-        } <span class='kw'>else</span> {
-            <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>,
-                               <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>draw_internal</span>(<span class='ident'>printer</span>));
+    <span class="doccomment">/// Selects this button, un-selecting any other in the same group.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">select</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">borrow_mut</span>().<span class="ident">selection</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">id</span>;
+    }
+
+    <span class="doccomment">/// Selects this button, un-selecting any other in the same group.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selected</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="self">Self</span>::<span class="ident">select</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">draw_internal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="string">&quot;( )&quot;</span>);
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_selected</span>() {
+            <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">1</span>, <span class="number">0</span>), <span class="string">&quot;X&quot;</span>);
+        }
+
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">label</span>.<span class="ident">is_empty</span>() {
+            <span class="comment">// We want the space to be highlighted if focused</span>
+            <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">3</span>, <span class="number">0</span>), <span class="string">&quot; &quot;</span>);
+            <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">4</span>, <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">label</span>);
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">View</span> <span class="kw">for</span> <span class="ident">RadioButton</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">label</span>.<span class="ident">is_empty</span>() {
+            <span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">1</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">3</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">label</span>.<span class="ident">len</span>(), <span class="number">1</span>)
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Enter</span>) <span class='op'>|</span>
-            <span class='ident'>Event</span>::<span class='ident'>Char</span>(<span class='string'>&#39; &#39;</span>) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>select</span>();
-                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">enabled</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">enabled</span> {
+            <span class="ident">printer</span>.<span class="ident">with_selection</span>(<span class="ident">printer</span>.<span class="ident">focused</span>,
+                                   <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">draw_internal</span>(<span class="ident">printer</span>));
+        } <span class="kw">else</span> {
+            <span class="ident">printer</span>.<span class="ident">with_color</span>(<span class="ident">ColorStyle</span>::<span class="ident">Secondary</span>,
+                               <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">draw_internal</span>(<span class="ident">printer</span>));
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="kw">match</span> <span class="ident">event</span> {
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Enter</span>) <span class="op">|</span>
+            <span class="ident">Event</span>::<span class="ident">Char</span>(<span class="string">&#39; &#39;</span>) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">select</span>();
+                <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="prelude-val">None</span>)
             }
-            _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">EventResult</span>::<span class="ident">Ignored</span>,
         }
     }
 }
@@ -405,18 +417,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -449,7 +465,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

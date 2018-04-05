@@ -9,14 +9,18 @@
 
     <title>conrod::backend::piston - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>backend</a></p><script>window.sidebarCurrent = {name: 'piston', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module piston</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>backend</a></p><script>window.sidebarCurrent = {name: 'piston', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,59 +54,62 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>backend</a>::<wbr><a class='mod' href=''>piston</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>backend</a>::<wbr><a class="mod" href=''>piston</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/conrod/backend/piston/mod.rs.html#1-11' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Functionality for simplifying the work involved when using conrod along-side piston.</p>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub use self::<a class='mod'
-                                       href='./window/index.html'>window</a>::<a class='trait' href='../../../conrod/backend/piston/window/trait.EventWindow.html' title='conrod::backend::piston::window::EventWindow'>EventWindow</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
-                                       href='./window/index.html'>window</a>::<a class='struct' href='../../../conrod/backend/piston/window/struct.Window.html' title='conrod::backend::piston::window::Window'>Window</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use self::window::<a class="trait" href="../../../conrod/backend/piston/window/trait.EventWindow.html" title="trait conrod::backend::piston::window::EventWindow">EventWindow</a>;</code></td></tr><tr><td><code>pub use self::window::<a class="struct" href="../../../conrod/backend/piston/window/struct.Window.html" title="struct conrod::backend::piston::window::Window">Window</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='draw/index.html'
-                                  title='conrod::backend::piston::draw'>draw</a></td>
+                           <td><a class="mod" href="draw/index.html"
+                                  title='mod conrod::backend::piston::draw'>draw</a></td>
                            <td class='docblock-short'>
                                 <p>A piston backend for rendering conrod primitives.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='event/index.html'
-                                  title='conrod::backend::piston::event'>event</a></td>
+                           <td><a class="mod" href="event/index.html"
+                                  title='mod conrod::backend::piston::event'>event</a></td>
                            <td class='docblock-short'>
-                                <p>A backend for converting piston events to conrod&#39;s <code>Input</code> type.</p>
+                                <p>A backend for converting piston events to conrod's <code>Input</code> type.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='gfx/index.html'
-                                  title='conrod::backend::piston::gfx'>gfx</a></td>
+                           <td><a class="mod" href="gfx/index.html"
+                                  title='mod conrod::backend::piston::gfx'>gfx</a></td>
                            <td class='docblock-short'>
                                 <p>Contains the GfxContext wrapper for convenient integration with <code>backend::piston::Window</code></p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='window/index.html'
-                                  title='conrod::backend::piston::window'>window</a></td>
+                           <td><a class="mod" href="window/index.html"
+                                  title='mod conrod::backend::piston::window'>window</a></td>
                            <td class='docblock-short'>
                                 <p>This code is adapted from the <code>piston_window</code> crate for convenience when
 using the piston window API with a conrod app.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.WindowEvents.html'
-                                  title='conrod::backend::piston::WindowEvents'>WindowEvents</a></td>
+                           <td><a class="struct" href="struct.WindowEvents.html"
+                                  title='struct conrod::backend::piston::WindowEvents'>WindowEvents</a></td>
                            <td class='docblock-short'>
                                 <p>An event loop iterator</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.OpenGL.html'
-                                  title='conrod::backend::piston::OpenGL'>OpenGL</a></td>
+                           <td><a class="enum" href="enum.OpenGL.html"
+                                  title='enum conrod::backend::piston::OpenGL'>OpenGL</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -111,18 +126,22 @@ using the piston window API with a conrod app.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -155,7 +174,6 @@ using the piston window API with a conrod app.</p>
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

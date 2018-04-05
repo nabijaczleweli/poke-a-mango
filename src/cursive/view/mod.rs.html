@@ -9,14 +9,18 @@
 
     <title>mod.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -215,179 +227,179 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Base elements required to build views.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Views are the main building blocks of your UI.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A view can delegate part or all of its responsabilities to child views,</span>
-<span class='doccomment'>//! forming a view tree. The root of this tree is a `StackView` handled</span>
-<span class='doccomment'>//! directly by the `Cursive` element.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Layout</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The layout phase is when the size and location of each view is computed.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Each view is given an area of the screen by the `View::layout()` method.</span>
-<span class='doccomment'>//! With this, the view is free to plan its content, including calling</span>
-<span class='doccomment'>//! `View::layout()` on its own children.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! In order to determine how much space should be given each child, parents</span>
-<span class='doccomment'>//! can use `View::get_min_size()` on them.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Contracts</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! When building new Views, you should respect these contracts:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * By default, `View::layout()` should be called before any call to</span>
-<span class='doccomment'>//!   `View::draw()` with the same available size. The only exceptions is</span>
-<span class='doccomment'>//!   when both following conditions are met:</span>
-<span class='doccomment'>//!     * The available size has not changed since the last call to</span>
-<span class='doccomment'>//!       `View::layout()`</span>
-<span class='doccomment'>//!     * `View::needs_relayout()` returns `false`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!   In this case, it is safe to omit the call to `View::layout()`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * The value returned by `get_min_size` should be an actually viable size,</span>
-<span class='doccomment'>//!   no matter what the request is. This means calling `View::layout()` with</span>
-<span class='doccomment'>//!   a size returned by `get_min_size` is **never** an error.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Base elements required to build views.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Views are the main building blocks of your UI.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A view can delegate part or all of its responsabilities to child views,</span>
+<span class="doccomment">//! forming a view tree. The root of this tree is a `StackView` handled</span>
+<span class="doccomment">//! directly by the `Cursive` element.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Layout</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The layout phase is when the size and location of each view is computed.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Each view is given an area of the screen by the `View::layout()` method.</span>
+<span class="doccomment">//! With this, the view is free to plan its content, including calling</span>
+<span class="doccomment">//! `View::layout()` on its own children.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! In order to determine how much space should be given each child, parents</span>
+<span class="doccomment">//! can use `View::get_min_size()` on them.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Contracts</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! When building new Views, you should respect these contracts:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * By default, `View::layout()` should be called before any call to</span>
+<span class="doccomment">//!   `View::draw()` with the same available size. The only exceptions is</span>
+<span class="doccomment">//!   when both following conditions are met:</span>
+<span class="doccomment">//!     * The available size has not changed since the last call to</span>
+<span class="doccomment">//!       `View::layout()`</span>
+<span class="doccomment">//!     * `View::needs_relayout()` returns `false`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!   In this case, it is safe to omit the call to `View::layout()`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * The value returned by `get_min_size` should be an actually viable size,</span>
+<span class="doccomment">//!   no matter what the request is. This means calling `View::layout()` with</span>
+<span class="doccomment">//!   a size returned by `get_min_size` is **never** an error.</span>
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>mod</span> <span class='ident'>view_wrapper</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">view_wrapper</span>;
 
-<span class='comment'>// Essentials components</span>
-<span class='kw'>mod</span> <span class='ident'>position</span>;
-<span class='kw'>mod</span> <span class='ident'>size_cache</span>;
-<span class='kw'>mod</span> <span class='ident'>size_constraint</span>;
-<span class='kw'>mod</span> <span class='ident'>view_path</span>;
+<span class="comment">// Essentials components</span>
+<span class="kw">mod</span> <span class="ident">position</span>;
+<span class="kw">mod</span> <span class="ident">size_cache</span>;
+<span class="kw">mod</span> <span class="ident">size_constraint</span>;
+<span class="kw">mod</span> <span class="ident">view_path</span>;
 
-<span class='comment'>// Helper bases</span>
-<span class='kw'>mod</span> <span class='ident'>scroll</span>;
-<span class='kw'>mod</span> <span class='ident'>identifiable</span>;
-<span class='kw'>mod</span> <span class='ident'>boxable</span>;
-
-
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
-
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>boxable</span>::<span class='ident'>Boxable</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>identifiable</span>::<span class='ident'>Identifiable</span>;
-
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>position</span>::{<span class='ident'>Offset</span>, <span class='ident'>Position</span>};
-
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>scroll</span>::<span class='ident'>ScrollBase</span>;
-
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>size_cache</span>::<span class='ident'>SizeCache</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>size_constraint</span>::<span class='ident'>SizeConstraint</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>view_path</span>::<span class='ident'>ViewPath</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>view_wrapper</span>::<span class='ident'>ViewWrapper</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class="comment">// Helper bases</span>
+<span class="kw">mod</span> <span class="ident">scroll</span>;
+<span class="kw">mod</span> <span class="ident">identifiable</span>;
+<span class="kw">mod</span> <span class="ident">boxable</span>;
 
 
-<span class='doccomment'>/// Main trait defining a view behaviour.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>View</span> {
-    <span class='doccomment'>/// Called when a key was pressed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Default implementation just ignores it.</span>
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>
+<span class="kw">use</span> <span class="ident">Printer</span>;
+
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::{<span class="ident">Event</span>, <span class="ident">EventResult</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">boxable</span>::<span class="ident">Boxable</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">identifiable</span>::<span class="ident">Identifiable</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">position</span>::{<span class="ident">Offset</span>, <span class="ident">Position</span>};
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">scroll</span>::<span class="ident">ScrollBase</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">size_cache</span>::<span class="ident">SizeCache</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">size_constraint</span>::<span class="ident">SizeConstraint</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">view_path</span>::<span class="ident">ViewPath</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">view_wrapper</span>::<span class="ident">ViewWrapper</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+
+
+<span class="doccomment">/// Main trait defining a view behaviour.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">View</span> {
+    <span class="doccomment">/// Called when a key was pressed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default implementation just ignores it.</span>
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="ident">EventResult</span>::<span class="ident">Ignored</span>
     }
 
-    <span class='doccomment'>/// Returns the minimum size the view requires with the given restrictions.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the view is flexible (it has multiple size options), it can try</span>
-    <span class='doccomment'>/// to return one that fits the given `constraint`.</span>
-    <span class='doccomment'>/// It&#39;s also fine to ignore it and return a fixed value.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Default implementation always return `(1,1)`.</span>
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>constraint</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>constraint</span>;
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)
+    <span class="doccomment">/// Returns the minimum size the view requires with the given restrictions.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the view is flexible (it has multiple size options), it can try</span>
+    <span class="doccomment">/// to return one that fits the given `constraint`.</span>
+    <span class="doccomment">/// It&#39;s also fine to ignore it and return a fixed value.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default implementation always return `(1,1)`.</span>
+    <span class="kw">fn</span> <span class="ident">get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">constraint</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">constraint</span>;
+        <span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>)
     }
 
-    <span class='doccomment'>/// Returns `true` if the view content changed since last layout phase.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is mostly an optimisation for views where the layout phase is</span>
-    <span class='doccomment'>/// expensive.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * Views can ignore it and always return true (default implementation).</span>
-    <span class='doccomment'>///   They will always be assumed to have changed.</span>
-    <span class='doccomment'>/// * View Groups can ignore it and always re-layout their children.</span>
-    <span class='doccomment'>///     * If they call `get_min_size` or `layout` with stable parameters,</span>
-    <span class='doccomment'>///       the children may cache the result themselves and speed up the</span>
-    <span class='doccomment'>///       process anyway.</span>
-    <span class='kw'>fn</span> <span class='ident'>needs_relayout</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='bool-val'>true</span>
+    <span class="doccomment">/// Returns `true` if the view content changed since last layout phase.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is mostly an optimisation for views where the layout phase is</span>
+    <span class="doccomment">/// expensive.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * Views can ignore it and always return true (default implementation).</span>
+    <span class="doccomment">///   They will always be assumed to have changed.</span>
+    <span class="doccomment">/// * View Groups can ignore it and always re-layout their children.</span>
+    <span class="doccomment">///     * If they call `get_min_size` or `layout` with stable parameters,</span>
+    <span class="doccomment">///       the children may cache the result themselves and speed up the</span>
+    <span class="doccomment">///       process anyway.</span>
+    <span class="kw">fn</span> <span class="ident">needs_relayout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="bool-val">true</span>
     }
 
-    <span class='doccomment'>/// Called once the size for this view has been decided,</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// View groups should propagate the information to their children.</span>
-    <span class='kw'>fn</span> <span class='ident'>layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>Vec2</span>) {}
+    <span class="doccomment">/// Called once the size for this view has been decided,</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// View groups should propagate the information to their children.</span>
+    <span class="kw">fn</span> <span class="ident">layout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">Vec2</span>) {}
 
-    <span class='doccomment'>/// Draws the view with the given printer (includes bounds) and focus.</span>
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>);
+    <span class="doccomment">/// Draws the view with the given printer (includes bounds) and focus.</span>
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>);
 
-    <span class='doccomment'>/// Finds the view pointed to by the given path.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// See [`Finder::find`] for a nicer interface, implemented for all views.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// [`Finder::find`]: trait.Finder.html#method.find</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns None if the path doesn&#39;t lead to a view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Default implementation always return `None`.</span>
-    <span class='kw'>fn</span> <span class='ident'>find_any</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">/// Finds the view pointed to by the given path.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See [`Finder::find`] for a nicer interface, implemented for all views.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Finder::find`]: trait.Finder.html#method.find</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns None if the path doesn&#39;t lead to a view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default implementation always return `None`.</span>
+    <span class="kw">fn</span> <span class="ident">find_any</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Selector</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Any</span><span class="op">&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 
-    <span class='doccomment'>/// This view is offered focus. Will it take it?</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// `source` indicates where the focus comes from.</span>
-    <span class='doccomment'>/// When the source is unclear, `Front` is usually used.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Default implementation always return `false`.</span>
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>source</span>: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>source</span>;
-        <span class='bool-val'>false</span>
-    }
-}
-
-<span class='doccomment'>/// Provides `find&lt;V: View&gt;` to views.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait is mostly a wrapper around [`View::find_any`].</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It provides a nicer interface to find a view when you know its type.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`View::find_any`]: ./trait.View.html#method.find_any</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Finder</span> {
-    <span class='doccomment'>/// Tries to find the view pointed to by the given selector.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the view is not found, or if it is not of the asked type,</span>
-    <span class='doccomment'>/// it returns None.</span>
-    <span class='kw'>fn</span> <span class='ident'>find</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span>;
-
-    <span class='doccomment'>/// Convenient method to use `find` with a `view::Selector::Id`.</span>
-    <span class='kw'>fn</span> <span class='ident'>find_id</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>id</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='ident'>Selector</span>::<span class='ident'>Id</span>(<span class='ident'>id</span>))
+    <span class="doccomment">/// This view is offered focus. Will it take it?</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `source` indicates where the focus comes from.</span>
+    <span class="doccomment">/// When the source is unclear, `Front` is usually used.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default implementation always return `false`.</span>
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">source</span>;
+        <span class="bool-val">false</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>Finder</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>fn</span> <span class='ident'>find</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>find_any</span>(<span class='ident'>sel</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>b</span>.<span class='ident'>downcast_mut</span>::<span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>())
+<span class="doccomment">/// Provides `find&lt;V: View&gt;` to views.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait is mostly a wrapper around [`View::find_any`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It provides a nicer interface to find a view when you know its type.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`View::find_any`]: ./trait.View.html#method.find_any</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Finder</span> {
+    <span class="doccomment">/// Tries to find the view pointed to by the given selector.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the view is not found, or if it is not of the asked type,</span>
+    <span class="doccomment">/// it returns None.</span>
+    <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span> <span class="op">+</span> <span class="ident">Any</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sel</span>: <span class="kw-2">&amp;</span><span class="ident">Selector</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Convenient method to use `find` with a `view::Selector::Id`.</span>
+    <span class="kw">fn</span> <span class="ident">find_id</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span> <span class="op">+</span> <span class="ident">Any</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="ident">Selector</span>::<span class="ident">Id</span>(<span class="ident">id</span>))
     }
 }
 
-<span class='doccomment'>/// Selects a single view (if any) in the tree.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Selector</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Selects a view from its ID.</span>
-    <span class='ident'>Id</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>),
-    <span class='doccomment'>/// Selects a view from its path.</span>
-    <span class='ident'>Path</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>ViewPath</span>),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">Finder</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span> <span class="op">+</span> <span class="ident">Any</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sel</span>: <span class="kw-2">&amp;</span><span class="ident">Selector</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">find_any</span>(<span class="ident">sel</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span>.<span class="ident">downcast_mut</span>::<span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>())
+    }
+}
+
+<span class="doccomment">/// Selects a single view (if any) in the tree.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Selector</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Selects a view from its ID.</span>
+    <span class="ident">Id</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>),
+    <span class="doccomment">/// Selects a view from its path.</span>
+    <span class="ident">Path</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ViewPath</span>),
 }
 </pre>
 </section>
@@ -403,18 +415,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -447,7 +463,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

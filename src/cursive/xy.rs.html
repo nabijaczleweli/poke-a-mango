@@ -9,14 +9,18 @@
 
     <title>xy.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -152,115 +164,115 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Orientation</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Orientation</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
 
-<span class='doccomment'>/// A generic structure with a value for each axis.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>,<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// X-axis value</span>
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>T</span>,
-    <span class='doccomment'>/// Y-axis value</span>
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>T</span>,
+<span class="doccomment">/// A generic structure with a value for each axis.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>,<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// X-axis value</span>
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">T</span>,
+    <span class="doccomment">/// Y-axis value</span>
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">T</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new `XY` from the given values.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>x</span>: <span class='ident'>T</span>, <span class='ident'>y</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>XY</span> { <span class='ident'>x</span>: <span class='ident'>x</span>, <span class='ident'>y</span>: <span class='ident'>y</span> }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new `XY` from the given values.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">XY</span> { <span class="ident">x</span>: <span class="ident">x</span>, <span class="ident">y</span>: <span class="ident">y</span> }
     }
 
-    <span class='doccomment'>/// Creates a new `XY` by applying `f` to `x` and `y`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>map</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>x</span>), <span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>y</span>))
+    <span class="doccomment">/// Creates a new `XY` by applying `f` to `x` and `y`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="ident">f</span>(<span class="self">self</span>.<span class="ident">x</span>), <span class="ident">f</span>(<span class="self">self</span>.<span class="ident">y</span>))
     }
 
-    <span class='doccomment'>/// Destructure self into a pair.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pair</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>T</span>, <span class='ident'>T</span>) {
-        (<span class='self'>self</span>.<span class='ident'>x</span>, <span class='self'>self</span>.<span class='ident'>y</span>)
+    <span class="doccomment">/// Destructure self into a pair.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pair</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">T</span>, <span class="ident">T</span>) {
+        (<span class="self">self</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">y</span>)
     }
 
-    <span class='doccomment'>/// Return a `XY` with references to this one&#39;s values.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>x</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>y</span>)
+    <span class="doccomment">/// Return a `XY` with references to this one&#39;s values.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">x</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">y</span>)
     }
 
-    <span class='doccomment'>/// Creates an iterator that returns references to `x`, then `y`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>iter</span>::<span class='ident'>Chain</span><span class='op'>&lt;</span><span class='ident'>iter</span>::<span class='ident'>Once</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>iter</span>::<span class='ident'>Once</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>iter</span>::<span class='ident'>once</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>x</span>).<span class='ident'>chain</span>(<span class='ident'>iter</span>::<span class='ident'>once</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>y</span>))
+    <span class="doccomment">/// Creates an iterator that returns references to `x`, then `y`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">iter</span>::<span class="ident">Chain</span><span class="op">&lt;</span><span class="ident">iter</span>::<span class="ident">Once</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">iter</span>::<span class="ident">Once</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">iter</span>::<span class="ident">once</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">x</span>).<span class="ident">chain</span>(<span class="ident">iter</span>::<span class="ident">once</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">y</span>))
     }
 
-    <span class='doccomment'>/// Returns a reference to the value on the given axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>T</span> {
-        <span class='kw'>match</span> <span class='ident'>o</span> {
-            <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>x</span>,
-            <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>y</span>,
+    <span class="doccomment">/// Returns a reference to the value on the given axis.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o</span>: <span class="ident">Orientation</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+        <span class="kw">match</span> <span class="ident">o</span> {
+            <span class="ident">Orientation</span>::<span class="ident">Horizontal</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">x</span>,
+            <span class="ident">Orientation</span>::<span class="ident">Vertical</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">y</span>,
         }
     }
 
-    <span class='doccomment'>/// Returns a new `XY` of tuples made by zipping `self` and `other`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>zip</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span>(<span class='ident'>T</span>, <span class='ident'>U</span>)<span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>((<span class='self'>self</span>.<span class='ident'>x</span>, <span class='ident'>other</span>.<span class='ident'>x</span>), (<span class='self'>self</span>.<span class='ident'>y</span>, <span class='ident'>other</span>.<span class='ident'>y</span>))
+    <span class="doccomment">/// Returns a new `XY` of tuples made by zipping `self` and `other`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span>(<span class="ident">T</span>, <span class="ident">U</span>)<span class="op">&gt;</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>((<span class="self">self</span>.<span class="ident">x</span>, <span class="ident">other</span>.<span class="ident">x</span>), (<span class="self">self</span>.<span class="ident">y</span>, <span class="ident">other</span>.<span class="ident">y</span>))
     }
 
-    <span class='doccomment'>/// Returns a new `XY` by calling `f` on `self` and `other` for each axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>zip_map</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>V</span>, <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>T</span>, <span class='ident'>U</span>) <span class='op'>-&gt;</span> <span class='ident'>V</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>x</span>, <span class='ident'>other</span>.<span class='ident'>x</span>), <span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>y</span>, <span class='ident'>other</span>.<span class='ident'>y</span>))
-    }
-}
-
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Clone</span><span class='op'>&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Returns a new `XY` with the axis `o` set to `value`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_axis</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
-        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>new</span>) <span class='op'>=</span> <span class='ident'>value</span>;
-        <span class='ident'>new</span>
-    }
-
-    <span class='doccomment'>/// Returns a new `XY` with the axis `o` set to the value from `other`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_axis_from</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
-        <span class='ident'>new</span>.<span class='ident'>set_axis_from</span>(<span class='ident'>o</span>, <span class='ident'>other</span>);
-        <span class='ident'>new</span>
-    }
-
-    <span class='doccomment'>/// Sets the axis `o` on `self` to the value from `other`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_axis_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) {
-        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='self'>self</span>) <span class='op'>=</span> <span class='ident'>o</span>.<span class='ident'>get</span>(<span class='ident'>other</span>);
+    <span class="doccomment">/// Returns a new `XY` by calling `f` on `self` and `other` for each axis.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">zip_map</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">V</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">T</span>, <span class="ident">U</span>) <span class="op">-&gt;</span> <span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="ident">f</span>(<span class="self">self</span>.<span class="ident">x</span>, <span class="ident">other</span>.<span class="ident">x</span>), <span class="ident">f</span>(<span class="self">self</span>.<span class="ident">y</span>, <span class="ident">other</span>.<span class="ident">y</span>))
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>/// Returns a new `XY` by calling `unwrap_or` on each axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap_or</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>, <span class='op'>|</span><span class='ident'>s</span>, <span class='ident'>o</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>unwrap_or</span>(<span class='ident'>o</span>))
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns a new `XY` with the axis `o` set to `value`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o</span>: <span class="ident">Orientation</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
+        <span class="kw-2">*</span><span class="ident">o</span>.<span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">new</span>) <span class="op">=</span> <span class="ident">value</span>;
+        <span class="ident">new</span>
+    }
+
+    <span class="doccomment">/// Returns a new `XY` with the axis `o` set to the value from `other`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_axis_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o</span>: <span class="ident">Orientation</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
+        <span class="ident">new</span>.<span class="ident">set_axis_from</span>(<span class="ident">o</span>, <span class="ident">other</span>);
+        <span class="ident">new</span>
+    }
+
+    <span class="doccomment">/// Sets the axis `o` on `self` to the value from `other`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_axis_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">o</span>: <span class="ident">Orientation</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
+        <span class="kw-2">*</span><span class="ident">o</span>.<span class="ident">get_ref</span>(<span class="self">self</span>) <span class="op">=</span> <span class="ident">o</span>.<span class="ident">get</span>(<span class="ident">other</span>);
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Returns `true` if any of `x` or `y` is `true`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>any</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>y</span>
-    }
-
-    <span class='doccomment'>/// Returns `true` if both `x` and `y` are `true`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>both</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>y</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
+    <span class="doccomment">/// Returns a new `XY` by calling `unwrap_or` on each axis.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap_or</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">zip_map</span>(<span class="ident">other</span>, <span class="op">|</span><span class="ident">s</span>, <span class="ident">o</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">unwrap_or</span>(<span class="ident">o</span>))
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a `XY` with both `x` and `y` set to `value`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>both_from</span>(<span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>value</span>, <span class='ident'>value</span>)
+<span class="kw">impl</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns `true` if any of `x` or `y` is `true`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">x</span> <span class="op">||</span> <span class="self">self</span>.<span class="ident">y</span>
+    }
+
+    <span class="doccomment">/// Returns `true` if both `x` and `y` are `true`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">both</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">x</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">y</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>T</span>, <span class='ident'>T</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>x</span>, <span class='ident'>y</span>): (<span class='ident'>T</span>, <span class='ident'>T</span>)) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>x</span>, <span class='ident'>y</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Copy</span><span class="op">&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a `XY` with both `x` and `y` set to `value`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">both_from</span>(<span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="ident">value</span>, <span class="ident">value</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>(<span class="ident">T</span>, <span class="ident">T</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>((<span class="ident">x</span>, <span class="ident">y</span>): (<span class="ident">T</span>, <span class="ident">T</span>)) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>)
     }
 }
 </pre>
@@ -277,18 +289,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -321,7 +337,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

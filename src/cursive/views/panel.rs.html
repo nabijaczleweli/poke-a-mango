@@ -9,14 +9,18 @@
 
     <title>panel.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -73,36 +85,36 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">Printer</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">View</span>, <span class="ident">ViewWrapper</span>};
 
-<span class='doccomment'>/// Draws a border around a wrapped view.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Panel</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {
-    <span class='ident'>view</span>: <span class='ident'>V</span>,
+<span class="doccomment">/// Draws a border around a wrapped view.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Panel</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span><span class="op">&gt;</span> {
+    <span class="ident">view</span>: <span class="ident">V</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>Panel</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new panel around the given view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>view</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Panel</span> { <span class='ident'>view</span>: <span class='ident'>view</span> }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">Panel</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new panel around the given view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">view</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Panel</span> { <span class="ident">view</span>: <span class="ident">view</span> }
     }
 }
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>Panel</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>view</span>: <span class='ident'>V</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">ViewWrapper</span> <span class="kw">for</span> <span class="ident">Panel</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="macro">wrap_impl</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">view</span>: <span class="ident">V</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='comment'>// TODO: make borders conditional?</span>
-        <span class='self'>self</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>req</span> <span class='op'>-</span> (<span class='number'>2</span>, <span class='number'>2</span>)) <span class='op'>+</span> (<span class='number'>2</span>, <span class='number'>2</span>)
+    <span class="kw">fn</span> <span class="ident">wrap_get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">req</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="comment">// TODO: make borders conditional?</span>
+        <span class="self">self</span>.<span class="ident">view</span>.<span class="ident">get_min_size</span>(<span class="ident">req</span> <span class="op">-</span> (<span class="number">2</span>, <span class="number">2</span>)) <span class="op">+</span> (<span class="number">2</span>, <span class="number">2</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>wrap_draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='ident'>printer</span>.<span class='ident'>print_box</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>, <span class='bool-val'>true</span>);
-        <span class='self'>self</span>.<span class='ident'>view</span>
-            .<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>.<span class='ident'>sub_printer</span>((<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>printer</span>.<span class='ident'>size</span> <span class='op'>-</span> (<span class='number'>2</span>, <span class='number'>2</span>), <span class='bool-val'>true</span>));
+    <span class="kw">fn</span> <span class="ident">wrap_draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="ident">printer</span>.<span class="ident">print_box</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="ident">printer</span>.<span class="ident">size</span>, <span class="bool-val">true</span>);
+        <span class="self">self</span>.<span class="ident">view</span>
+            .<span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="ident">printer</span>.<span class="ident">sub_printer</span>((<span class="number">1</span>, <span class="number">1</span>), <span class="ident">printer</span>.<span class="ident">size</span> <span class="op">-</span> (<span class="number">2</span>, <span class="number">2</span>), <span class="bool-val">true</span>));
     }
 }
 </pre>
@@ -119,18 +131,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -163,7 +179,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

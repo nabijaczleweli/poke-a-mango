@@ -9,14 +9,18 @@
 
     <title>cursive::view::ViewWrapper - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'ViewWrapper', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait ViewWrapper</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.V">V</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.get_view">get_view</a><a href="#tymethod.get_view_mut">get_view_mut</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.wrap_draw">wrap_draw</a><a href="#method.wrap_get_min_size">wrap_get_min_size</a><a href="#method.wrap_on_event">wrap_on_event</a><a href="#method.wrap_layout">wrap_layout</a><a href="#method.wrap_take_focus">wrap_take_focus</a><a href="#method.wrap_find_any">wrap_find_any</a><a href="#method.wrap_needs_relayout">wrap_needs_relayout</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'ViewWrapper', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,60 +54,66 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class='trait' href=''>ViewWrapper</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class="trait" href=''>ViewWrapper</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#18-62' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ViewWrapper {
-    type <a href='#associatedtype.V' class='type'>V</a>: <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>;
-    fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a>;
-    fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a>;
+    type <a href='#associatedtype.V' class="type">V</a>: <a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>;
+    fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a>;
 
-    fn <a href='#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>) { ... }
-    fn <a href='#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
-    fn <a href='#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, ch: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a> { ... }
-    fn <a href='#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) { ... }
-    fn <a href='#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
-    fn <a href='#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt; { ... }
-    fn <a href='#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
+    fn <a href='#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class="struct" href="../../cursive/struct.Printer.html" title="struct cursive::Printer">Printer</a>) { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>) -&gt; <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, ch: <a class="enum" href="../../cursive/event/enum.Event.html" title="enum cursive::event::Event">Event</a>) -&gt; <a class="enum" href="../../cursive/event/enum.EventResult.html" title="enum cursive::event::EventResult">EventResult</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>) { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class="enum" href="../../cursive/direction/enum.Direction.html" title="enum cursive::direction::Direction">Direction</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class="enum" href="../../cursive/view/enum.Selector.html" title="enum cursive::view::Selector">Selector</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> { ... }
 }</pre><div class='docblock'><p>Generic wrapper around a view.</p>
-
 <p>Default implementation forwards all calls to the child view.
 Overrides some methods as desired.</p>
-
 <p>You can use the <a href="../macro.wrap_impl.html"><code>wrap_impl!</code></a> macro to define <code>get_view</code> and
 <code>get_view_mut</code> for you.</p>
 </div>
-            <h2 id='associated-types'>Associated Types</h2>
+            <h2 id='associated-types' class='small-section-header'>
+              Associated Types<a href='#associated-types' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='associatedtype.V' class='method stab '><span id='V.t' class='invisible'><code>type <a href='#associatedtype.V' class='type'>V</a>: <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a></code></span></h3><div class='docblock'><p>Type that this view wraps.</p>
+        <h3 id='associatedtype.V' class='method'><span id='V.t' class='invisible'><code>type <a href='#associatedtype.V' class="type">V</a>: <a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a></code></span></h3><div class='docblock'><p>Type that this view wraps.</p>
 </div></div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.get_view' class='method stab '><span id='get_view.v' class='invisible'><code>fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h3><div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
-</div><h3 id='tymethod.get_view_mut' class='method stab '><span id='get_view_mut.v' class='invisible'><code>fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h3><div class='docblock'><p>Get a mutable reference to the wrapped view.</p>
+        <h3 id='tymethod.get_view' class='method'><span id='get_view.v' class='invisible'><code>fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a></code></span></h3><div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
+</div><h3 id='tymethod.get_view_mut' class='method'><span id='get_view_mut.v' class='invisible'><code>fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a></code></span></h3><div class='docblock'><p>Get a mutable reference to the wrapped view.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='method.wrap_draw' class='method stab '><span id='wrap_draw.v' class='invisible'><code>fn <a href='#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></span></h3><div class='docblock'><p>Wraps the <code>draw</code> method.</p>
-</div><h3 id='method.wrap_get_min_size' class='method stab '><span id='wrap_get_min_size.v' class='invisible'><code>fn <a href='#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></span></h3><div class='docblock'><p>Wraps the <code>get_min_size</code> method.</p>
-</div><h3 id='method.wrap_on_event' class='method stab '><span id='wrap_on_event.v' class='invisible'><code>fn <a href='#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, ch: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></span></h3><div class='docblock'><p>Wraps the <code>on_event</code> method.</p>
-</div><h3 id='method.wrap_layout' class='method stab '><span id='wrap_layout.v' class='invisible'><code>fn <a href='#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></span></h3><div class='docblock'><p>Wraps the <code>layout</code> method.</p>
-</div><h3 id='method.wrap_take_focus' class='method stab '><span id='wrap_take_focus.v' class='invisible'><code>fn <a href='#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Wraps the <code>take_focus</code> method.</p>
-</div><h3 id='method.wrap_find_any' class='method stab '><span id='wrap_find_any.v' class='invisible'><code>fn <a href='#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></span></h3><div class='docblock'><p>Wraps the <code>find</code> method.</p>
-</div><h3 id='method.wrap_needs_relayout' class='method stab '><span id='wrap_needs_relayout.v' class='invisible'><code>fn <a href='#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Wraps the <code>needs_relayout</code> method.</p>
+        <h3 id='method.wrap_draw' class='method'><span id='wrap_draw.v' class='invisible'><code>fn <a href='#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class="struct" href="../../cursive/struct.Printer.html" title="struct cursive::Printer">Printer</a>)</code></span></h3><div class='docblock'><p>Wraps the <code>draw</code> method.</p>
+</div><h3 id='method.wrap_get_min_size' class='method'><span id='wrap_get_min_size.v' class='invisible'><code>fn <a href='#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>) -&gt; <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a></code></span></h3><div class='docblock'><p>Wraps the <code>get_min_size</code> method.</p>
+</div><h3 id='method.wrap_on_event' class='method'><span id='wrap_on_event.v' class='invisible'><code>fn <a href='#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, ch: <a class="enum" href="../../cursive/event/enum.Event.html" title="enum cursive::event::Event">Event</a>) -&gt; <a class="enum" href="../../cursive/event/enum.EventResult.html" title="enum cursive::event::EventResult">EventResult</a></code></span></h3><div class='docblock'><p>Wraps the <code>on_event</code> method.</p>
+</div><h3 id='method.wrap_layout' class='method'><span id='wrap_layout.v' class='invisible'><code>fn <a href='#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>)</code></span></h3><div class='docblock'><p>Wraps the <code>layout</code> method.</p>
+</div><h3 id='method.wrap_take_focus' class='method'><span id='wrap_take_focus.v' class='invisible'><code>fn <a href='#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class="enum" href="../../cursive/direction/enum.Direction.html" title="enum cursive::direction::Direction">Direction</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Wraps the <code>take_focus</code> method.</p>
+</div><h3 id='method.wrap_find_any' class='method'><span id='wrap_find_any.v' class='invisible'><code>fn <a href='#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class="enum" href="../../cursive/view/enum.Selector.html" title="enum cursive::view::Selector">Selector</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;</code></span></h3><div class='docblock'><p>Wraps the <code>find</code> method.</p>
+</div><h3 id='method.wrap_needs_relayout' class='method'><span id='wrap_needs_relayout.v' class='invisible'><code>fn <a href='#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Wraps the <code>needs_relayout</code> method.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.IdView.html' title='cursive::views::IdView'>IdView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.KeyEventView.html' title='cursive::views::KeyEventView'>KeyEventView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;V:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.Panel.html' title='cursive::views::Panel'>Panel</a>&lt;V&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.ShadowView.html' title='cursive::views::ShadowView'>ShadowView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.SizedView.html' title='cursive::views::SizedView'>SizedView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.TrackedView.html' title='cursive::views::TrackedView'>TrackedView</a>&lt;T&gt;</code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/box_view.rs.html#152-179' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/id_view.rs.html#21-30' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.IdView.html" title="struct cursive::views::IdView">IdView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#45-59' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.KeyEventView.html" title="struct cursive::views::KeyEventView">KeyEventView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/panel.rs.html#18-31' title='goto source code'>[src]</a></div><code>impl&lt;V:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.Panel.html" title="struct cursive::views::Panel">Panel</a>&lt;V&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = V;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/shadow_view.rs.html#47-93' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.ShadowView.html" title="struct cursive::views::ShadowView">ShadowView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/sized_view.rs.html#23-30' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.SizedView.html" title="struct cursive::views::SizedView">SizedView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/cursive/views/tracked_view.rs.html#38-45' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; ViewWrapper for <a class="struct" href="../../cursive/views/struct.TrackedView.html" title="struct cursive::views::TrackedView">TrackedView</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.V' class="type">V</a> = T;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/cursive/view/trait.ViewWrapper.js">
                  </script></section>
@@ -111,18 +129,22 @@ Overrides some methods as desired.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -155,7 +177,6 @@ Overrides some methods as desired.</p>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

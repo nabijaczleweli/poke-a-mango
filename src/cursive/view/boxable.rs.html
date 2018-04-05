@@ -9,14 +9,18 @@
 
     <title>boxable.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -118,83 +130,83 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>SizeConstraint</span>, <span class='ident'>View</span>};
-<span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>BoxView</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">SizeConstraint</span>, <span class="ident">View</span>};
+<span class="kw">use</span> <span class="ident">views</span>::<span class="ident">BoxView</span>;
 
-<span class='doccomment'>/// Makes a view wrappable in a [`BoxView`].</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`BoxView`]: ../views/struct.BoxView.html</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Boxable</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Sized</span> {
-    <span class='doccomment'>/// Wraps `self` in a `BoxView` with the given size constraints.</span>
-    <span class='kw'>fn</span> <span class='ident'>boxed</span>(<span class='self'>self</span>, <span class='ident'>width</span>: <span class='ident'>SizeConstraint</span>, <span class='ident'>height</span>: <span class='ident'>SizeConstraint</span>)
-             <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>new</span>(<span class='ident'>width</span>, <span class='ident'>height</span>, <span class='self'>self</span>)
+<span class="doccomment">/// Makes a view wrappable in a [`BoxView`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`BoxView`]: ../views/struct.BoxView.html</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Boxable</span>: <span class="ident">View</span> <span class="op">+</span> <span class="ident">Sized</span> {
+    <span class="doccomment">/// Wraps `self` in a `BoxView` with the given size constraints.</span>
+    <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="self">self</span>, <span class="ident">width</span>: <span class="ident">SizeConstraint</span>, <span class="ident">height</span>: <span class="ident">SizeConstraint</span>)
+             <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">new</span>(<span class="ident">width</span>, <span class="ident">height</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a fixed-size `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>fixed_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_fixed_size</span>(<span class='ident'>size</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a fixed-size `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">fixed_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_fixed_size</span>(<span class="ident">size</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a fixed-width `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>fixed_width</span>(<span class='self'>self</span>, <span class='ident'>width</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_fixed_width</span>(<span class='ident'>width</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a fixed-width `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">fixed_width</span>(<span class="self">self</span>, <span class="ident">width</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_fixed_width</span>(<span class="ident">width</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a fixed-width `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>fixed_height</span>(<span class='self'>self</span>, <span class='ident'>height</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_fixed_height</span>(<span class='ident'>height</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a fixed-width `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">fixed_height</span>(<span class="self">self</span>, <span class="ident">height</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_fixed_height</span>(<span class="ident">height</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a full-screen `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>full_screen</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_full_screen</span>(<span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a full-screen `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">full_screen</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_full_screen</span>(<span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a full-width `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>full_width</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_full_width</span>(<span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a full-width `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">full_width</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_full_width</span>(<span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a full-height `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>full_height</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_full_height</span>(<span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a full-height `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">full_height</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_full_height</span>(<span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a limited-size `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>max_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_max_size</span>(<span class='ident'>size</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a limited-size `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">max_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_max_size</span>(<span class="ident">size</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a limited-width `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>max_width</span>(<span class='self'>self</span>, <span class='ident'>max_width</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_max_width</span>(<span class='ident'>max_width</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a limited-width `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">max_width</span>(<span class="self">self</span>, <span class="ident">max_width</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_max_width</span>(<span class="ident">max_width</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a limited-height `BoxView`.</span>
-    <span class='kw'>fn</span> <span class='ident'>max_height</span>(<span class='self'>self</span>, <span class='ident'>max_height</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_max_height</span>(<span class='ident'>max_height</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a limited-height `BoxView`.</span>
+    <span class="kw">fn</span> <span class="ident">max_height</span>(<span class="self">self</span>, <span class="ident">max_height</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_max_height</span>(<span class="ident">max_height</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` into a `BoxView` at least sized `size`.</span>
-    <span class='kw'>fn</span> <span class='ident'>min_size</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_min_size</span>(<span class='ident'>size</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` into a `BoxView` at least sized `size`.</span>
+    <span class="kw">fn</span> <span class="ident">min_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_min_size</span>(<span class="ident">size</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` in a `BoxView` at least `min_width` wide.</span>
-    <span class='kw'>fn</span> <span class='ident'>min_width</span>(<span class='self'>self</span>, <span class='ident'>min_width</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_min_width</span>(<span class='ident'>min_width</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` in a `BoxView` at least `min_width` wide.</span>
+    <span class="kw">fn</span> <span class="ident">min_width</span>(<span class="self">self</span>, <span class="ident">min_width</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_min_width</span>(<span class="ident">min_width</span>, <span class="self">self</span>)
     }
 
-    <span class='doccomment'>/// Wraps `self` in a `BoxView` at least `min_height` tall.</span>
-    <span class='kw'>fn</span> <span class='ident'>min_height</span>(<span class='self'>self</span>, <span class='ident'>min_height</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>BoxView</span>::<span class='ident'>with_min_height</span>(<span class='ident'>min_height</span>, <span class='self'>self</span>)
+    <span class="doccomment">/// Wraps `self` in a `BoxView` at least `min_height` tall.</span>
+    <span class="kw">fn</span> <span class="ident">min_height</span>(<span class="self">self</span>, <span class="ident">min_height</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BoxView</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">BoxView</span>::<span class="ident">with_min_height</span>(<span class="ident">min_height</span>, <span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>Boxable</span> <span class='kw'>for</span> <span class='ident'>T</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">View</span><span class="op">&gt;</span> <span class="ident">Boxable</span> <span class="kw">for</span> <span class="ident">T</span> {}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -209,18 +221,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -253,7 +269,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

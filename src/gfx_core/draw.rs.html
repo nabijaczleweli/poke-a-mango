@@ -9,14 +9,18 @@
 
     <title>draw.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -165,128 +177,128 @@
 <span id="121">121</span>
 <span id="122">122</span>
 <span id="123">123</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright 2014 The Gfx-rs Developers.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class='comment'>// you may not use this file except in compliance with the License.</span>
-<span class='comment'>// You may obtain a copy of the License at</span>
-<span class='comment'>//</span>
-<span class='comment'>//     http://www.apache.org/licenses/LICENSE-2.0</span>
-<span class='comment'>//</span>
-<span class='comment'>// Unless required by applicable law or agreed to in writing, software</span>
-<span class='comment'>// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class='comment'>// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class='comment'>// See the License for the specific language governing permissions and</span>
-<span class='comment'>// limitations under the License.</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2014 The Gfx-rs Developers.</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">//</span>
+<span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//</span>
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
 
-<span class='doccomment'>//! Command Buffer device interface</span>
+<span class="doccomment">//! Command Buffer device interface</span>
 
-<span class='kw'>use</span> <span class='ident'>draw_state</span>::<span class='ident'>target</span>;
-<span class='kw'>use</span> {<span class='ident'>Resources</span>, <span class='ident'>IndexType</span>, <span class='ident'>InstanceCount</span>, <span class='ident'>VertexCount</span>};
-<span class='kw'>use</span> {<span class='ident'>pso</span>, <span class='ident'>shade</span>, <span class='ident'>tex</span>};
-<span class='kw'>use</span> <span class='ident'>state</span> <span class='kw'>as</span> <span class='ident'>s</span>;
+<span class="kw">use</span> <span class="ident">draw_state</span>::<span class="ident">target</span>;
+<span class="kw">use</span> {<span class="ident">Resources</span>, <span class="ident">IndexType</span>, <span class="ident">InstanceCount</span>, <span class="ident">VertexCount</span>};
+<span class="kw">use</span> {<span class="ident">pso</span>, <span class="ident">shade</span>, <span class="ident">tex</span>};
+<span class="kw">use</span> <span class="ident">state</span> <span class="kw">as</span> <span class="ident">s</span>;
 
-<span class='doccomment'>/// A universal clear color supporting integet formats</span>
-<span class='doccomment'>/// as well as the standard floating-point.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ClearColor</span> {
-    <span class='doccomment'>/// Standard floating-point vec4 color</span>
-    <span class='ident'>Float</span>([<span class='ident'>f32</span>; <span class='number'>4</span>]),
-    <span class='doccomment'>/// Integer vector to clear ivec4 targets.</span>
-    <span class='ident'>Int</span>([<span class='ident'>i32</span>; <span class='number'>4</span>]),
-    <span class='doccomment'>/// Unsigned int vector to clear uvec4 targets.</span>
-    <span class='ident'>Uint</span>([<span class='ident'>u32</span>; <span class='number'>4</span>]),
+<span class="doccomment">/// A universal clear color supporting integet formats</span>
+<span class="doccomment">/// as well as the standard floating-point.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ClearColor</span> {
+    <span class="doccomment">/// Standard floating-point vec4 color</span>
+    <span class="ident">Float</span>([<span class="ident">f32</span>; <span class="number">4</span>]),
+    <span class="doccomment">/// Integer vector to clear ivec4 targets.</span>
+    <span class="ident">Int</span>([<span class="ident">i32</span>; <span class="number">4</span>]),
+    <span class="doccomment">/// Unsigned int vector to clear uvec4 targets.</span>
+    <span class="ident">Uint</span>([<span class="ident">u32</span>; <span class="number">4</span>]),
 }
 
-<span class='doccomment'>/// Optional instance parameters</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>InstanceOption</span> <span class='op'>=</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>InstanceCount</span>, <span class='ident'>VertexCount</span>)<span class='op'>&gt;</span>;
+<span class="doccomment">/// Optional instance parameters</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">InstanceOption</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">InstanceCount</span>, <span class="ident">VertexCount</span>)<span class="op">&gt;</span>;
 
-<span class='doccomment'>/// An interface of the abstract command buffer. It collects commands in an</span>
-<span class='doccomment'>/// efficient API-specific manner, to be ready for execution on the device.</span>
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CommandBuffer</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Resources</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Clone as an empty buffer</span>
-    <span class='kw'>fn</span> <span class='ident'>clone_empty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='doccomment'>/// Reset the command buffer contents, retain the allocated storage</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
-    <span class='doccomment'>/// Bind a pipeline state object</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_pipeline_state</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>PipelineStateObject</span>);
-    <span class='doccomment'>/// Bind a complete set of vertex buffers</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_vertex_buffers</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pso</span>::<span class='ident'>VertexBufferSet</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>);
-    <span class='doccomment'>/// Bind a complete set of constant buffers</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_constant_buffers</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>pso</span>::<span class='ident'>ConstantBufferParam</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>]);
-    <span class='doccomment'>/// Bind a global constant</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_global_constant</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>shade</span>::<span class='ident'>Location</span>, <span class='ident'>shade</span>::<span class='ident'>UniformValue</span>);
-    <span class='doccomment'>/// Bind a complete set of shader resource views</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_resource_views</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>pso</span>::<span class='ident'>ResourceViewParam</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>]);
-    <span class='doccomment'>/// Bind a complete set of unordered access views</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_unordered_views</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>pso</span>::<span class='ident'>UnorderedViewParam</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>]);
-    <span class='doccomment'>/// Bind a complete set of samplers</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_samplers</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>pso</span>::<span class='ident'>SamplerParam</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>]);
-    <span class='doccomment'>/// Bind a complete set of pixel targets, including multiple</span>
-    <span class='doccomment'>/// colors views and an optional depth/stencil view.</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_pixel_targets</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pso</span>::<span class='ident'>PixelTargetSet</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>);
-    <span class='doccomment'>/// Bind an index buffer</span>
-    <span class='kw'>fn</span> <span class='ident'>bind_index</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>Buffer</span>, <span class='ident'>IndexType</span>);
-    <span class='doccomment'>/// Set scissor rectangle</span>
-    <span class='kw'>fn</span> <span class='ident'>set_scissor</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>target</span>::<span class='ident'>Rect</span>);
-    <span class='doccomment'>/// Set reference values for the blending and stencil front/back</span>
-    <span class='kw'>fn</span> <span class='ident'>set_ref_values</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>s</span>::<span class='ident'>RefValues</span>);
-    <span class='doccomment'>/// Update a vertex/index/uniform buffer</span>
-    <span class='kw'>fn</span> <span class='ident'>update_buffer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>Buffer</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>offset</span>: <span class='ident'>usize</span>);
-    <span class='doccomment'>/// Update a texture</span>
-    <span class='kw'>fn</span> <span class='ident'>update_texture</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>Texture</span>, <span class='ident'>tex</span>::<span class='ident'>Kind</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>tex</span>::<span class='ident'>CubeFace</span><span class='op'>&gt;</span>,
-                      <span class='ident'>data</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>tex</span>::<span class='ident'>RawImageInfo</span>);
-    <span class='kw'>fn</span> <span class='ident'>generate_mipmap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>ShaderResourceView</span>);
-    <span class='doccomment'>/// Clear color target</span>
-    <span class='kw'>fn</span> <span class='ident'>clear_color</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>RenderTargetView</span>, <span class='ident'>ClearColor</span>);
-    <span class='kw'>fn</span> <span class='ident'>clear_depth_stencil</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>R</span>::<span class='ident'>DepthStencilView</span>,
-                           <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>target</span>::<span class='ident'>Depth</span><span class='op'>&gt;</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>target</span>::<span class='ident'>Stencil</span><span class='op'>&gt;</span>);
-    <span class='doccomment'>/// Draw a primitive</span>
-    <span class='kw'>fn</span> <span class='ident'>call_draw</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>VertexCount</span>, <span class='ident'>VertexCount</span>, <span class='ident'>InstanceOption</span>);
-    <span class='doccomment'>/// Draw a primitive with index buffer</span>
-    <span class='kw'>fn</span> <span class='ident'>call_draw_indexed</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>VertexCount</span>, <span class='ident'>VertexCount</span>,
-                         <span class='ident'>VertexCount</span>, <span class='ident'>InstanceOption</span>);
+<span class="doccomment">/// An interface of the abstract command buffer. It collects commands in an</span>
+<span class="doccomment">/// efficient API-specific manner, to be ready for execution on the device.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CommandBuffer</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Resources</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Clone as an empty buffer</span>
+    <span class="kw">fn</span> <span class="ident">clone_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="doccomment">/// Reset the command buffer contents, retain the allocated storage</span>
+    <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);
+    <span class="doccomment">/// Bind a pipeline state object</span>
+    <span class="kw">fn</span> <span class="ident">bind_pipeline_state</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">PipelineStateObject</span>);
+    <span class="doccomment">/// Bind a complete set of vertex buffers</span>
+    <span class="kw">fn</span> <span class="ident">bind_vertex_buffers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pso</span>::<span class="ident">VertexBufferSet</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Bind a complete set of constant buffers</span>
+    <span class="kw">fn</span> <span class="ident">bind_constant_buffers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span>[<span class="ident">pso</span>::<span class="ident">ConstantBufferParam</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>]);
+    <span class="doccomment">/// Bind a global constant</span>
+    <span class="kw">fn</span> <span class="ident">bind_global_constant</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">shade</span>::<span class="ident">Location</span>, <span class="ident">shade</span>::<span class="ident">UniformValue</span>);
+    <span class="doccomment">/// Bind a complete set of shader resource views</span>
+    <span class="kw">fn</span> <span class="ident">bind_resource_views</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span>[<span class="ident">pso</span>::<span class="ident">ResourceViewParam</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>]);
+    <span class="doccomment">/// Bind a complete set of unordered access views</span>
+    <span class="kw">fn</span> <span class="ident">bind_unordered_views</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span>[<span class="ident">pso</span>::<span class="ident">UnorderedViewParam</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>]);
+    <span class="doccomment">/// Bind a complete set of samplers</span>
+    <span class="kw">fn</span> <span class="ident">bind_samplers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span>[<span class="ident">pso</span>::<span class="ident">SamplerParam</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>]);
+    <span class="doccomment">/// Bind a complete set of pixel targets, including multiple</span>
+    <span class="doccomment">/// colors views and an optional depth/stencil view.</span>
+    <span class="kw">fn</span> <span class="ident">bind_pixel_targets</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pso</span>::<span class="ident">PixelTargetSet</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Bind an index buffer</span>
+    <span class="kw">fn</span> <span class="ident">bind_index</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">Buffer</span>, <span class="ident">IndexType</span>);
+    <span class="doccomment">/// Set scissor rectangle</span>
+    <span class="kw">fn</span> <span class="ident">set_scissor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">target</span>::<span class="ident">Rect</span>);
+    <span class="doccomment">/// Set reference values for the blending and stencil front/back</span>
+    <span class="kw">fn</span> <span class="ident">set_ref_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">s</span>::<span class="ident">RefValues</span>);
+    <span class="doccomment">/// Update a vertex/index/uniform buffer</span>
+    <span class="kw">fn</span> <span class="ident">update_buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">Buffer</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">offset</span>: <span class="ident">usize</span>);
+    <span class="doccomment">/// Update a texture</span>
+    <span class="kw">fn</span> <span class="ident">update_texture</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">Texture</span>, <span class="ident">tex</span>::<span class="ident">Kind</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">tex</span>::<span class="ident">CubeFace</span><span class="op">&gt;</span>,
+                      <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">tex</span>::<span class="ident">RawImageInfo</span>);
+    <span class="kw">fn</span> <span class="ident">generate_mipmap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">ShaderResourceView</span>);
+    <span class="doccomment">/// Clear color target</span>
+    <span class="kw">fn</span> <span class="ident">clear_color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">RenderTargetView</span>, <span class="ident">ClearColor</span>);
+    <span class="kw">fn</span> <span class="ident">clear_depth_stencil</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">R</span>::<span class="ident">DepthStencilView</span>,
+                           <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">target</span>::<span class="ident">Depth</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">target</span>::<span class="ident">Stencil</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Draw a primitive</span>
+    <span class="kw">fn</span> <span class="ident">call_draw</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">VertexCount</span>, <span class="ident">VertexCount</span>, <span class="ident">InstanceOption</span>);
+    <span class="doccomment">/// Draw a primitive with index buffer</span>
+    <span class="kw">fn</span> <span class="ident">call_draw_indexed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">VertexCount</span>, <span class="ident">VertexCount</span>,
+                         <span class="ident">VertexCount</span>, <span class="ident">InstanceOption</span>);
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_clear</span> {
-    { $( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span>:<span class='ident'>ty</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub</span>:<span class='ident'>ident</span>[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>a</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>b</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>d</span>:<span class='ident'>expr</span>], )<span class='op'>*</span> } <span class='op'>=&gt;</span> {
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_clear</span> {
+    { $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>:<span class="ident">ident</span>[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">d</span>:<span class="ident">expr</span>], )<span class="op">*</span> } <span class="op">=&gt;</span> {
         $(
-            <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ClearColor</span> {
-                <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span>) <span class='op'>-&gt;</span> <span class='ident'>ClearColor</span> {
-                    <span class='ident'>ClearColor</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub</span>([<span class='ident'>v</span>[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>a</span>], <span class='ident'>v</span>[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>b</span>], <span class='ident'>v</span>[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>], <span class='ident'>v</span>[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>d</span>]])
+            <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ClearColor</span> {
+                <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-&gt;</span> <span class="ident">ClearColor</span> {
+                    <span class="ident">ClearColor</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>([<span class="ident">v</span>[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>], <span class="ident">v</span>[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>], <span class="ident">v</span>[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>], <span class="ident">v</span>[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">d</span>]])
                 }
             }
-        )<span class='op'>*</span>
+        )<span class="op">*</span>
     }
 }
 
-<span class='macro'>impl_clear</span><span class='macro'>!</span> {
-    [<span class='ident'>f32</span>; <span class='number'>4</span>] <span class='op'>=</span> <span class='ident'>Float</span>[<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>],
-    [<span class='ident'>f32</span>; <span class='number'>3</span>] <span class='op'>=</span> <span class='ident'>Float</span>[<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>0</span>],
-    [<span class='ident'>f32</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>Float</span>[<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>],
-    [<span class='ident'>i32</span>; <span class='number'>4</span>] <span class='op'>=</span> <span class='ident'>Int</span>  [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>],
-    [<span class='ident'>i32</span>; <span class='number'>3</span>] <span class='op'>=</span> <span class='ident'>Int</span>  [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>0</span>],
-    [<span class='ident'>i32</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>Int</span>  [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>],
-    [<span class='ident'>u32</span>; <span class='number'>4</span>] <span class='op'>=</span> <span class='ident'>Uint</span> [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>],
-    [<span class='ident'>u32</span>; <span class='number'>3</span>] <span class='op'>=</span> <span class='ident'>Uint</span> [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>0</span>],
-    [<span class='ident'>u32</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>Uint</span> [<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>],
+<span class="macro">impl_clear</span><span class="macro">!</span> {
+    [<span class="ident">f32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">Float</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],
+    [<span class="ident">f32</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Float</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>],
+    [<span class="ident">f32</span>; <span class="number">2</span>] <span class="op">=</span> <span class="ident">Float</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],
+    [<span class="ident">i32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">Int</span>  [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],
+    [<span class="ident">i32</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Int</span>  [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>],
+    [<span class="ident">i32</span>; <span class="number">2</span>] <span class="op">=</span> <span class="ident">Int</span>  [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],
+    [<span class="ident">u32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">Uint</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],
+    [<span class="ident">u32</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Uint</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>],
+    [<span class="ident">u32</span>; <span class="number">2</span>] <span class="op">=</span> <span class="ident">Uint</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ClearColor</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>ClearColor</span> {
-        <span class='ident'>ClearColor</span>::<span class='ident'>Float</span>([<span class='ident'>v</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>])
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ClearColor</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">ClearColor</span> {
+        <span class="ident">ClearColor</span>::<span class="ident">Float</span>([<span class="ident">v</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>])
     }
 }
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ClearColor</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>ClearColor</span> {
-        <span class='ident'>ClearColor</span>::<span class='ident'>Int</span>([<span class='ident'>v</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>])
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ClearColor</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">ClearColor</span> {
+        <span class="ident">ClearColor</span>::<span class="ident">Int</span>([<span class="ident">v</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
     }
 }
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ClearColor</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>ClearColor</span> {
-        <span class='ident'>ClearColor</span>::<span class='ident'>Uint</span>([<span class='ident'>v</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>])
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ClearColor</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">ClearColor</span> {
+        <span class="ident">ClearColor</span>::<span class="ident">Uint</span>([<span class="ident">v</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
     }
 }
 </pre>
@@ -303,18 +315,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -347,7 +363,6 @@
         window.rootPath = "../../";
         window.currentCrate = "gfx_core";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

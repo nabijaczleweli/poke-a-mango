@@ -9,14 +9,18 @@
 
     <title>size_cache.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -97,60 +109,60 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>XY</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">XY</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
 
-<span class='doccomment'>/// Cache around a one-dimensional layout result.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is not a View, but something to help you if you create your own Views.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SizeCache</span> {
-    <span class='doccomment'>/// Cached value</span>
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// `true` if the last size was constrained.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If unconstrained, any request larger than this value</span>
-    <span class='doccomment'>/// would return the same size.</span>
-    <span class='kw'>pub</span> <span class='ident'>constrained</span>: <span class='ident'>bool</span>,
+<span class="doccomment">/// Cache around a one-dimensional layout result.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is not a View, but something to help you if you create your own Views.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SizeCache</span> {
+    <span class="doccomment">/// Cached value</span>
+    <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// `true` if the last size was constrained.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If unconstrained, any request larger than this value</span>
+    <span class="doccomment">/// would return the same size.</span>
+    <span class="kw">pub</span> <span class="ident">constrained</span>: <span class="ident">bool</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>SizeCache</span> {
-    <span class='doccomment'>/// Creates a new sized cache</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>value</span>: <span class='ident'>usize</span>, <span class='ident'>constrained</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>SizeCache</span> {
-            <span class='ident'>value</span>: <span class='ident'>value</span>,
-            <span class='ident'>constrained</span>: <span class='ident'>constrained</span>,
+<span class="kw">impl</span> <span class="ident">SizeCache</span> {
+    <span class="doccomment">/// Creates a new sized cache</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="ident">usize</span>, <span class="ident">constrained</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">SizeCache</span> {
+            <span class="ident">value</span>: <span class="ident">value</span>,
+            <span class="ident">constrained</span>: <span class="ident">constrained</span>,
         }
     }
 
-    <span class='doccomment'>/// Returns `true` if `self` is still valid for the given `request`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>accept</span>(<span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='ident'>request</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>value</span> {
-            <span class='bool-val'>false</span>
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>request</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>value</span> {
-            <span class='bool-val'>true</span>
-        } <span class='kw'>else</span> {
-            <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>constrained</span>
+    <span class="doccomment">/// Returns `true` if `self` is still valid for the given `request`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept</span>(<span class="self">self</span>, <span class="ident">request</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="ident">request</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">value</span> {
+            <span class="bool-val">false</span>
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">request</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">value</span> {
+            <span class="bool-val">true</span>
+        } <span class="kw">else</span> {
+            <span class="op">!</span><span class="self">self</span>.<span class="ident">constrained</span>
         }
     }
 
-    <span class='doccomment'>/// Creates a new bi-dimensional cache.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It will stay valid for the same request, and compatible ones.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A compatible request is one where, for each axis, either:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * the request is equal to the cached size, or</span>
-    <span class='doccomment'>/// * the request is larger than the cached size and the cache is unconstrained</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Notes:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * `size` must fit inside `req`.</span>
-    <span class='doccomment'>/// * for each dimension, `constrained = (size == req)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='ident'>size</span>: <span class='ident'>Vec2</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>x</span>),
-                <span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>y</span>))
+    <span class="doccomment">/// Creates a new bi-dimensional cache.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It will stay valid for the same request, and compatible ones.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A compatible request is one where, for each axis, either:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * the request is equal to the cached size, or</span>
+    <span class="doccomment">/// * the request is larger than the cached size and the cache is unconstrained</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Notes:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `size` must fit inside `req`.</span>
+    <span class="doccomment">/// * for each dimension, `constrained = (size == req)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="ident">size</span>: <span class="ident">Vec2</span>, <span class="ident">req</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">XY</span>::<span class="ident">new</span>(<span class="ident">SizeCache</span>::<span class="ident">new</span>(<span class="ident">size</span>.<span class="ident">x</span>, <span class="ident">size</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="ident">req</span>.<span class="ident">x</span>),
+                <span class="ident">SizeCache</span>::<span class="ident">new</span>(<span class="ident">size</span>.<span class="ident">y</span>, <span class="ident">size</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="ident">req</span>.<span class="ident">y</span>))
     }
 }
 </pre>
@@ -167,18 +179,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -211,7 +227,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>cursive::direction - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'direction', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module direction</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'direction', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,23 +54,19 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class='mod' href=''>direction</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class="mod" href=''>direction</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/direction.rs.html#1-208' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Direction-related structures.</p>
-
 <p>This module defines two main concepts: [Orientation] and [Direction].</p>
-
-<h3 id='orientation' class='section-header'><a href='#orientation'>Orientation</a></h3>
+<h3 id="orientation" class="section-header"><a href="#orientation">Orientation</a></h3>
 <p><code>Orientation</code> is a simple enum that can take two values:
 <code>Horizontal</code> or <code>Vertical</code>.</p>
-
-<h3 id='direction' class='section-header'><a href='#direction'>Direction</a></h3>
+<h3 id="direction" class="section-header"><a href="#direction">Direction</a></h3>
 <p><code>Direction</code> is a bit more complex, and can be of two kinds:</p>
-
 <ul>
 <li>Absolute direction: left, up, right, or down</li>
 <li>Relative direction: front or back.
@@ -67,31 +75,35 @@ Its actual direction depends on the orientation.</li>
 </div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Absolute.html'
-                                  title='cursive::direction::Absolute'>Absolute</a></td>
+                           <td><a class="enum" href="enum.Absolute.html"
+                                  title='enum cursive::direction::Absolute'>Absolute</a></td>
                            <td class='docblock-short'>
                                 <p>Absolute direction (up, down, left, right).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Direction.html'
-                                  title='cursive::direction::Direction'>Direction</a></td>
+                           <td><a class="enum" href="enum.Direction.html"
+                                  title='enum cursive::direction::Direction'>Direction</a></td>
                            <td class='docblock-short'>
                                 <p>Represents a direction, either absolute or orientation-dependent.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Orientation.html'
-                                  title='cursive::direction::Orientation'>Orientation</a></td>
+                           <td><a class="enum" href="enum.Orientation.html"
+                                  title='enum cursive::direction::Orientation'>Orientation</a></td>
                            <td class='docblock-short'>
                                 <p>Describes a vertical or horizontal orientation for a view.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Relative.html'
-                                  title='cursive::direction::Relative'>Relative</a></td>
+                           <td><a class="enum" href="enum.Relative.html"
+                                  title='enum cursive::direction::Relative'>Relative</a></td>
                            <td class='docblock-short'>
                                 <p>Direction relative to an orientation.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -106,18 +118,22 @@ Its actual direction depends on the orientation.</li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -150,7 +166,6 @@ Its actual direction depends on the orientation.</li>
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>menubar.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -245,208 +257,208 @@
 <span id="201">201</span>
 <span id="202">202</span>
 <span id="203">203</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>Cursive</span>;
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>menu</span>::<span class='ident'>MenuTree</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">Cursive</span>;
+<span class="kw">use</span> <span class="ident">Printer</span>;
+<span class="kw">use</span> <span class="ident">direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">menu</span>::<span class="ident">MenuTree</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">theme</span>::<span class="ident">ColorStyle</span>;
 
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Position</span>, <span class='ident'>View</span>};
-<span class='kw'>use</span> <span class='ident'>views</span>::{<span class='ident'>KeyEventView</span>, <span class='ident'>MenuPopup</span>};
+<span class="kw">use</span> <span class="ident">unicode_width</span>::<span class="ident">UnicodeWidthStr</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">Position</span>, <span class="ident">View</span>};
+<span class="kw">use</span> <span class="ident">views</span>::{<span class="ident">KeyEventView</span>, <span class="ident">MenuPopup</span>};
 
-<span class='doccomment'>/// Current state of the menubar</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>enum</span> <span class='ident'>State</span> {
-    <span class='doccomment'>/// The menubar is inactive.</span>
-    <span class='ident'>Inactive</span>,
-    <span class='doccomment'>/// The menubar is actively selected.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It will receive input.</span>
-    <span class='ident'>Selected</span>,
-    <span class='doccomment'>/// The menubar is still visible, but a submenu is open.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It will not receive input.</span>
-    <span class='ident'>Submenu</span>,
+<span class="doccomment">/// Current state of the menubar</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">enum</span> <span class="ident">State</span> {
+    <span class="doccomment">/// The menubar is inactive.</span>
+    <span class="ident">Inactive</span>,
+    <span class="doccomment">/// The menubar is actively selected.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It will receive input.</span>
+    <span class="ident">Selected</span>,
+    <span class="doccomment">/// The menubar is still visible, but a submenu is open.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It will not receive input.</span>
+    <span class="ident">Submenu</span>,
 }
 
-<span class='doccomment'>/// Shows a single-line list of items, with pop-up menus when one is selected.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The [`Cursive`] root already includes a menubar</span>
-<span class='doccomment'>/// that you just need to configure.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`Cursive`]: ../struct.Cursive.html#method.menubar</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Menubar</span> {
-    <span class='doccomment'>/// Menu items in this menubar.</span>
-    <span class='kw'>pub</span> <span class='ident'>menus</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>String</span>, <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>MenuTree</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
-    <span class='doccomment'>/// TODO: move this out of this view.</span>
-    <span class='kw'>pub</span> <span class='ident'>autohide</span>: <span class='ident'>bool</span>,
-    <span class='ident'>focus</span>: <span class='ident'>usize</span>,
+<span class="doccomment">/// Shows a single-line list of items, with pop-up menus when one is selected.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The [`Cursive`] root already includes a menubar</span>
+<span class="doccomment">/// that you just need to configure.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Cursive`]: ../struct.Cursive.html#method.menubar</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Menubar</span> {
+    <span class="doccomment">/// Menu items in this menubar.</span>
+    <span class="kw">pub</span> <span class="ident">menus</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">MenuTree</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
+    <span class="doccomment">/// TODO: move this out of this view.</span>
+    <span class="kw">pub</span> <span class="ident">autohide</span>: <span class="ident">bool</span>,
+    <span class="ident">focus</span>: <span class="ident">usize</span>,
 
-    <span class='comment'>// TODO: make Menubar impl View and take out the State management</span>
-    <span class='ident'>state</span>: <span class='ident'>State</span>,
+    <span class="comment">// TODO: make Menubar impl View and take out the State management</span>
+    <span class="ident">state</span>: <span class="ident">State</span>,
 }
 
-<span class='macro'>new_default</span><span class='macro'>!</span>(<span class='ident'>Menubar</span>);
+<span class="macro">new_default</span><span class="macro">!</span>(<span class="ident">Menubar</span>);
 
-<span class='kw'>impl</span> <span class='ident'>Menubar</span> {
-    <span class='doccomment'>/// Creates a new, empty menubar.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Menubar</span> {
-            <span class='ident'>menus</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>autohide</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>state</span>: <span class='ident'>State</span>::<span class='ident'>Inactive</span>,
-            <span class='ident'>focus</span>: <span class='number'>0</span>,
+<span class="kw">impl</span> <span class="ident">Menubar</span> {
+    <span class="doccomment">/// Creates a new, empty menubar.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Menubar</span> {
+            <span class="ident">menus</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">autohide</span>: <span class="bool-val">true</span>,
+            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">Inactive</span>,
+            <span class="ident">focus</span>: <span class="number">0</span>,
         }
     }
 
-    <span class='doccomment'>/// Hides the menubar.</span>
-    <span class='kw'>fn</span> <span class='ident'>hide</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>Inactive</span>;
+    <span class="doccomment">/// Hides the menubar.</span>
+    <span class="kw">fn</span> <span class="ident">hide</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Inactive</span>;
     }
 
-    <span class='doccomment'>/// True if we should be receiving events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>receive_events</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>==</span> <span class='ident'>State</span>::<span class='ident'>Selected</span>
+    <span class="doccomment">/// True if we should be receiving events.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">receive_events</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">==</span> <span class="ident">State</span>::<span class="ident">Selected</span>
     }
 
-    <span class='doccomment'>/// Returns `true` if we should be drawn.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>visible</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>autohide</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>!=</span> <span class='ident'>State</span>::<span class='ident'>Inactive</span>
+    <span class="doccomment">/// Returns `true` if we should be drawn.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">visible</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="op">!</span><span class="self">self</span>.<span class="ident">autohide</span> <span class="op">||</span> <span class="self">self</span>.<span class="ident">state</span> <span class="op">!=</span> <span class="ident">State</span>::<span class="ident">Inactive</span>
     }
 
-    <span class='doccomment'>/// Adds a new item to the menubar.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The item will use the given title, and on selection, will open a</span>
-    <span class='doccomment'>/// popup-menu with the given menu tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>menu</span>: <span class='ident'>MenuTree</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>menus</span>.<span class='ident'>push</span>((<span class='ident'>title</span>.<span class='ident'>to_string</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>menu</span>)));
-        <span class='self'>self</span>
+    <span class="doccomment">/// Adds a new item to the menubar.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The item will use the given title, and on selection, will open a</span>
+    <span class="doccomment">/// popup-menu with the given menu tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">menu</span>: <span class="ident">MenuTree</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">push</span>((<span class="ident">title</span>.<span class="ident">to_string</span>(), <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">menu</span>)));
+        <span class="self">self</span>
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>show_child</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='ident'>offset</span>: (<span class='ident'>usize</span>, <span class='ident'>usize</span>), <span class='ident'>menu</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>MenuTree</span><span class='op'>&gt;</span>) {
-    <span class='comment'>// Adds a new layer located near the item title with the menu popup.</span>
-    <span class='comment'>// Also adds two key callbacks on this new view, to handle `left` and</span>
-    <span class='comment'>// `right` key presses.</span>
-    <span class='comment'>// (If the view itself listens for a `left` or `right` press, it will</span>
-    <span class='comment'>// consume it before our KeyEventView. This means sub-menus can properly</span>
-    <span class='comment'>// be entered.)</span>
-    <span class='ident'>s</span>.<span class='ident'>screen_mut</span>()
-        .<span class='ident'>add_layer_at</span>(<span class='ident'>Position</span>::<span class='ident'>absolute</span>(<span class='ident'>offset</span>),
-                      <span class='ident'>KeyEventView</span>::<span class='ident'>new</span>(<span class='ident'>MenuPopup</span>::<span class='ident'>new</span>(<span class='ident'>menu</span>)
-                              .<span class='ident'>on_dismiss</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>select_menubar</span>())
-                              .<span class='ident'>on_action</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                                  <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>Inactive</span>
+<span class="kw">fn</span> <span class="ident">show_child</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>, <span class="ident">offset</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">menu</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">MenuTree</span><span class="op">&gt;</span>) {
+    <span class="comment">// Adds a new layer located near the item title with the menu popup.</span>
+    <span class="comment">// Also adds two key callbacks on this new view, to handle `left` and</span>
+    <span class="comment">// `right` key presses.</span>
+    <span class="comment">// (If the view itself listens for a `left` or `right` press, it will</span>
+    <span class="comment">// consume it before our KeyEventView. This means sub-menus can properly</span>
+    <span class="comment">// be entered.)</span>
+    <span class="ident">s</span>.<span class="ident">screen_mut</span>()
+        .<span class="ident">add_layer_at</span>(<span class="ident">Position</span>::<span class="ident">absolute</span>(<span class="ident">offset</span>),
+                      <span class="ident">KeyEventView</span>::<span class="ident">new</span>(<span class="ident">MenuPopup</span>::<span class="ident">new</span>(<span class="ident">menu</span>)
+                              .<span class="ident">on_dismiss</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">select_menubar</span>())
+                              .<span class="ident">on_action</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                                  <span class="ident">s</span>.<span class="ident">menubar</span>().<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Inactive</span>
                               }))
-                          .<span class='ident'>register</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                <span class='ident'>s</span>.<span class='ident'>pop_layer</span>();
-                <span class='ident'>s</span>.<span class='ident'>select_menubar</span>();
-                <span class='comment'>// Act as if we sent &quot;Right&quot; then &quot;Down&quot;</span>
-                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>)).<span class='ident'>process</span>(<span class='ident'>s</span>);
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>menubar</span>()
-                    .<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>)) {
-                    <span class='ident'>cb</span>(<span class='ident'>s</span>);
+                          .<span class="ident">register</span>(<span class="ident">Key</span>::<span class="ident">Right</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                <span class="ident">s</span>.<span class="ident">pop_layer</span>();
+                <span class="ident">s</span>.<span class="ident">select_menubar</span>();
+                <span class="comment">// Act as if we sent &quot;Right&quot; then &quot;Down&quot;</span>
+                <span class="ident">s</span>.<span class="ident">menubar</span>().<span class="ident">on_event</span>(<span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Right</span>)).<span class="ident">process</span>(<span class="ident">s</span>);
+                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="prelude-val">Some</span>(<span class="ident">cb</span>)) <span class="op">=</span> <span class="ident">s</span>.<span class="ident">menubar</span>()
+                    .<span class="ident">on_event</span>(<span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Down</span>)) {
+                    <span class="ident">cb</span>(<span class="ident">s</span>);
                 }
             })
-                          .<span class='ident'>register</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                <span class='ident'>s</span>.<span class='ident'>pop_layer</span>();
-                <span class='ident'>s</span>.<span class='ident'>select_menubar</span>();
-                <span class='comment'>// Act as if we sent &quot;Left&quot; then &quot;Down&quot;</span>
-                <span class='ident'>s</span>.<span class='ident'>menubar</span>().<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>)).<span class='ident'>process</span>(<span class='ident'>s</span>);
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>menubar</span>()
-                    .<span class='ident'>on_event</span>(<span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>)) {
-                    <span class='ident'>cb</span>(<span class='ident'>s</span>);
+                          .<span class="ident">register</span>(<span class="ident">Key</span>::<span class="ident">Left</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                <span class="ident">s</span>.<span class="ident">pop_layer</span>();
+                <span class="ident">s</span>.<span class="ident">select_menubar</span>();
+                <span class="comment">// Act as if we sent &quot;Left&quot; then &quot;Down&quot;</span>
+                <span class="ident">s</span>.<span class="ident">menubar</span>().<span class="ident">on_event</span>(<span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Left</span>)).<span class="ident">process</span>(<span class="ident">s</span>);
+                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="prelude-val">Some</span>(<span class="ident">cb</span>)) <span class="op">=</span> <span class="ident">s</span>.<span class="ident">menubar</span>()
+                    .<span class="ident">on_event</span>(<span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Down</span>)) {
+                    <span class="ident">cb</span>(<span class="ident">s</span>);
                 }
             }));
 
 }
 
-<span class='kw'>impl</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>Menubar</span> {
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='comment'>// Draw the bar at the top</span>
-        <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-            <span class='ident'>printer</span>.<span class='ident'>print_hline</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='string'>&quot; &quot;</span>);
+<span class="kw">impl</span> <span class="ident">View</span> <span class="kw">for</span> <span class="ident">Menubar</span> {
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="comment">// Draw the bar at the top</span>
+        <span class="ident">printer</span>.<span class="ident">with_color</span>(<span class="ident">ColorStyle</span>::<span class="ident">Primary</span>, <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> {
+            <span class="ident">printer</span>.<span class="ident">print_hline</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span>, <span class="string">&quot; &quot;</span>);
         });
 
-        <span class='comment'>// TODO: draw the rest</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='number'>1</span>;
-        <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>title</span>, _)) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>menus</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='comment'>// We don&#39;t want to show HighlightInactive when we&#39;re not selected,</span>
-            <span class='comment'>// because it&#39;s ugly on the menubar.</span>
-            <span class='kw'>let</span> <span class='ident'>selected</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>!=</span> <span class='ident'>State</span>::<span class='ident'>Inactive</span>) <span class='op'>&amp;&amp;</span>
-                           (<span class='ident'>i</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>focus</span>);
-            <span class='ident'>printer</span>.<span class='ident'>with_selection</span>(<span class='ident'>selected</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-                <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='ident'>offset</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot; {} &quot;</span>, <span class='ident'>title</span>));
-                <span class='ident'>offset</span> <span class='op'>+=</span> <span class='ident'>title</span>.<span class='ident'>width</span>() <span class='op'>+</span> <span class='number'>2</span>;
+        <span class="comment">// TODO: draw the rest</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">title</span>, _)) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="comment">// We don&#39;t want to show HighlightInactive when we&#39;re not selected,</span>
+            <span class="comment">// because it&#39;s ugly on the menubar.</span>
+            <span class="kw">let</span> <span class="ident">selected</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">state</span> <span class="op">!=</span> <span class="ident">State</span>::<span class="ident">Inactive</span>) <span class="op">&amp;&amp;</span>
+                           (<span class="ident">i</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">focus</span>);
+            <span class="ident">printer</span>.<span class="ident">with_selection</span>(<span class="ident">selected</span>, <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> {
+                <span class="ident">printer</span>.<span class="ident">print</span>((<span class="ident">offset</span>, <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot; {} &quot;</span>, <span class="ident">title</span>));
+                <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">title</span>.<span class="ident">width</span>() <span class="op">+</span> <span class="number">2</span>;
             });
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Esc</span>) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>hide</span>();
-                <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>with_cb</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>clear</span>());
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="kw">match</span> <span class="ident">event</span> {
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Esc</span>) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">hide</span>();
+                <span class="kw">return</span> <span class="ident">EventResult</span>::<span class="ident">with_cb</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">clear</span>());
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>-=</span> <span class='number'>1</span>
-                } <span class='kw'>else</span> {
-                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menus</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Left</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">focus</span> <span class="op">&gt;</span> <span class="number">0</span> {
+                    <span class="self">self</span>.<span class="ident">focus</span> <span class="op">-=</span> <span class="number">1</span>
+                } <span class="kw">else</span> {
+                    <span class="self">self</span>.<span class="ident">focus</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>
                 }
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>menus</span>.<span class='ident'>len</span>() {
-                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>+=</span> <span class='number'>1</span>
-                } <span class='kw'>else</span> {
-                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='number'>0</span>
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Right</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">focus</span> <span class="op">+</span> <span class="number">1</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">menus</span>.<span class="ident">len</span>() {
+                    <span class="self">self</span>.<span class="ident">focus</span> <span class="op">+=</span> <span class="number">1</span>
+                } <span class="kw">else</span> {
+                    <span class="self">self</span>.<span class="ident">focus</span> <span class="op">=</span> <span class="number">0</span>
                 }
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>) <span class='op'>|</span>
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Enter</span>) <span class='op'>=&gt;</span> {
-                <span class='comment'>// First, we need a new Rc to send the callback,</span>
-                <span class='comment'>// since we don&#39;t know when it will be called.</span>
-                <span class='kw'>let</span> <span class='ident'>menu</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menus</span>[<span class='self'>self</span>.<span class='ident'>focus</span>].<span class='number'>1</span>.<span class='ident'>clone</span>();
-                <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>Submenu</span>;
-                <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>menus</span>[..<span class='self'>self</span>.<span class='ident'>focus</span>]
-                    .<span class='ident'>iter</span>()
-                    .<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>title</span>, _)<span class='op'>|</span> <span class='ident'>title</span>.<span class='ident'>width</span>() <span class='op'>+</span> <span class='number'>2</span>)
-                    .<span class='ident'>fold</span>(<span class='number'>0</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>),
-                              <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>autohide</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> });
-                <span class='comment'>// Since the closure will be called multiple times,</span>
-                <span class='comment'>// we also need a new Rc on every call.</span>
-                <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>with_cb</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                    <span class='ident'>show_child</span>(<span class='ident'>s</span>, <span class='ident'>offset</span>, <span class='ident'>menu</span>.<span class='ident'>clone</span>())
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Down</span>) <span class="op">|</span>
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Enter</span>) <span class="op">=&gt;</span> {
+                <span class="comment">// First, we need a new Rc to send the callback,</span>
+                <span class="comment">// since we don&#39;t know when it will be called.</span>
+                <span class="kw">let</span> <span class="ident">menu</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">menus</span>[<span class="self">self</span>.<span class="ident">focus</span>].<span class="number">1</span>.<span class="ident">clone</span>();
+                <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Submenu</span>;
+                <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">menus</span>[..<span class="self">self</span>.<span class="ident">focus</span>]
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">title</span>, _)<span class="op">|</span> <span class="ident">title</span>.<span class="ident">width</span>() <span class="op">+</span> <span class="number">2</span>)
+                    .<span class="ident">fold</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>),
+                              <span class="kw">if</span> <span class="self">self</span>.<span class="ident">autohide</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> });
+                <span class="comment">// Since the closure will be called multiple times,</span>
+                <span class="comment">// we also need a new Rc on every call.</span>
+                <span class="kw">return</span> <span class="ident">EventResult</span>::<span class="ident">with_cb</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                    <span class="ident">show_child</span>(<span class="ident">s</span>, <span class="ident">offset</span>, <span class="ident">menu</span>.<span class="ident">clone</span>())
                 });
             }
-            _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
+            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">EventResult</span>::<span class="ident">Ignored</span>,
         }
-        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+        <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="prelude-val">None</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>direction</span>::<span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>State</span>::<span class='ident'>Selected</span>;
-        <span class='bool-val'>true</span>
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">direction</span>::<span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Selected</span>;
+        <span class="bool-val">true</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='comment'>// TODO: scroll the options if the screen is too small?</span>
+    <span class="kw">fn</span> <span class="ident">get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="comment">// TODO: scroll the options if the screen is too small?</span>
 
-        <span class='comment'>// We add 2 to the length of every label for marin.</span>
-        <span class='comment'>// Also, we add 1 at the beginning.</span>
-        <span class='comment'>// (See the `draw()` method)</span>
-        <span class='kw'>let</span> <span class='ident'>width</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menus</span>
-            .<span class='ident'>iter</span>()
-            .<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>title</span>, _)<span class='op'>|</span> <span class='ident'>title</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>2</span>)
-            .<span class='ident'>fold</span>(<span class='number'>1</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>);
+        <span class="comment">// We add 2 to the length of every label for marin.</span>
+        <span class="comment">// Also, we add 1 at the beginning.</span>
+        <span class="comment">// (See the `draw()` method)</span>
+        <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">menus</span>
+            .<span class="ident">iter</span>()
+            .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">title</span>, _)<span class="op">|</span> <span class="ident">title</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">2</span>)
+            .<span class="ident">fold</span>(<span class="number">1</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>);
 
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>width</span>, <span class='number'>1</span>)
+        <span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="ident">width</span>, <span class="number">1</span>)
     }
 }
 </pre>
@@ -463,18 +475,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -507,7 +523,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

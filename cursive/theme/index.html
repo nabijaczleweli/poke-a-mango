@@ -9,14 +9,18 @@
 
     <title>cursive::theme - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'theme', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module theme</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'theme', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,20 +54,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class='mod' href=''>theme</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class="mod" href=''>theme</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/theme.rs.html#1-521' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Handle colors and themes in the UI.</p>
-
-<h1 id='color-palette' class='section-header'><a href='#color-palette'>Color palette</a></h1>
+<h1 id="color-palette" class="section-header"><a href="#color-palette">Color palette</a></h1>
 <p>To achieve a customizable, yet unified look, Cursive uses a configurable
 palette of colors to be used through the entire application.</p>
-
 <p>These colors are:</p>
-
 <ul>
 <li><strong><code>background</code></strong>: used to color the application background
 (around views).
@@ -79,98 +88,89 @@ Defaults to <strong>red</strong>.</li>
 <li><strong><code>highlight_inactive</code></strong>: used to highlight selected but inactive items.
 Defaults to <strong>blue</strong>.</li>
 </ul>
-
-<h1 id='color-styles' class='section-header'><a href='#color-styles'>Color Styles</a></h1>
+<h1 id="color-styles" class="section-header"><a href="#color-styles">Color Styles</a></h1>
 <p>Each cell of the terminal uses two colors: <em>foreground</em> and <em>background</em>.</p>
-
 <p>Color styles are defined to easily refer to a pair of colors from the
 palette.</p>
-
 <ul>
 <li><strong><code>Background</code></strong>: style used to print the application background.
-
 <ul>
 <li>Its <em>background</em> color is <code>background</code>.</li>
 <li>Its <em>foreground</em> color is unimportant as no characters are ever
 printed in the background.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>Shadow</code></strong>: style used to print shadows behind views.
-
 <ul>
 <li>Its <em>background</em> color is <code>shadow</code>.</li>
 <li>Here again, the <em>foreground</em> color is unimportant.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>Primary</code></strong>: style used to print primary text.
-
 <ul>
 <li>Its <em>background</em> color is <code>view</code>.</li>
 <li>Its <em>foreground</em> color is <code>primary</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>Secondary</code></strong>: style used to print secondary text.
-
 <ul>
 <li>Its <em>background</em> color is <code>view</code>.</li>
 <li>Its <em>foreground</em> color is <code>secondary</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>Tertiary</code></strong>: style used to print tertiary text.
-
 <ul>
 <li>Its <em>background</em> color is <code>view</code>.</li>
 <li>Its <em>foreground</em> color is <code>tertiary</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>TitlePrimary</code></strong>: style used to print titles.
-
 <ul>
 <li>Its <em>background</em> color is <code>view</code>.</li>
 <li>Its <em>foreground</em> color is <code>title_primary</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>TitleSecondary</code></strong>: style used to print secondary titles.
-
 <ul>
 <li>Its <em>background</em> color is <code>view</code>.</li>
 <li>Its <em>foreground</em> color is <code>title_secondary</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>Highlight</code></strong>: style used to print selected items.
-
 <ul>
 <li>Its <em>background</em> color is <code>highlight</code>.</li>
 <li>Its <em>foreground</em> color is <code>view</code>.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong><code>HighlightInactive</code></strong>: style used to print selected,
 but inactive items.
-
 <ul>
 <li>Its <em>background</em> color is <code>highlight_inactive</code>.</li>
 <li>Its <em>foreground</em> color is <code>view</code>.</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>Using one of these pairs when styling your application helps give it a
 coherent look.</p>
-
-<h1 id='effects' class='section-header'><a href='#effects'>Effects</a></h1>
+<h1 id="effects" class="section-header"><a href="#effects">Effects</a></h1>
 <p>On top of a color style, some effects can be applied on cells: <code>Reverse</code>,
 for instance, swaps the foreground and background colors of a cell.</p>
-
-<h1 id='themes' class='section-header'><a href='#themes'>Themes</a></h1>
+<h1 id="themes" class="section-header"><a href="#themes">Themes</a></h1>
 <p>A theme defines the color palette an application will use, as well as
 various options to style views.</p>
-
 <p>Themes are described in toml configuration files. All fields are optional.</p>
-
 <p>Here are the possible entries:</p>
-
 <pre><code class="language-toml"># Every field in a theme file is optional.
 
 # First come some various options
-shadow = false  # Don&#39;t draw shadows around stacked views
+shadow = false  # Don't draw shadows around stacked views
 borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outset&quot;
 
 # Here we define the color palette.
 [colors]
     background = &quot;black&quot;
     # If the value is an array, the first valid color will be used.
-    # If the terminal doesn&#39;t support custom color,
+    # If the terminal doesn't support custom color,
     # non-base colors will be skipped.
     shadow     = [&quot;#000000&quot;, &quot;black&quot;]
     view       = &quot;#d3d7cf&quot;
@@ -192,82 +192,93 @@ borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outs
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Palette.html'
-                                  title='cursive::theme::Palette'>Palette</a></td>
+                           <td><a class="struct" href="struct.Palette.html"
+                                  title='struct cursive::theme::Palette'>Palette</a></td>
                            <td class='docblock-short'>
                                 <p>Color configuration for the application.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Theme.html'
-                                  title='cursive::theme::Theme'>Theme</a></td>
+                           <td><a class="struct" href="struct.Theme.html"
+                                  title='struct cursive::theme::Theme'>Theme</a></td>
                            <td class='docblock-short'>
                                 <p>Represents the style a Cursive application will use.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.BaseColor.html'
-                                  title='cursive::theme::BaseColor'>BaseColor</a></td>
+                           <td><a class="enum" href="enum.BaseColor.html"
+                                  title='enum cursive::theme::BaseColor'>BaseColor</a></td>
                            <td class='docblock-short'>
                                 <p>One of the 8 base colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.BorderStyle.html'
-                                  title='cursive::theme::BorderStyle'>BorderStyle</a></td>
+                           <td><a class="enum" href="enum.BorderStyle.html"
+                                  title='enum cursive::theme::BorderStyle'>BorderStyle</a></td>
                            <td class='docblock-short'>
                                 <p>Specifies how some borders should be drawn.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Color.html'
-                                  title='cursive::theme::Color'>Color</a></td>
+                           <td><a class="enum" href="enum.Color.html"
+                                  title='enum cursive::theme::Color'>Color</a></td>
                            <td class='docblock-short'>
                                 <p>Represents a color used by the theme.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.ColorStyle.html'
-                                  title='cursive::theme::ColorStyle'>ColorStyle</a></td>
+                           <td><a class="enum" href="enum.ColorStyle.html"
+                                  title='enum cursive::theme::ColorStyle'>ColorStyle</a></td>
                            <td class='docblock-short'>
                                 <p>Possible color style for a cell.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Effect.html'
-                                  title='cursive::theme::Effect'>Effect</a></td>
+                           <td><a class="enum" href="enum.Effect.html"
+                                  title='enum cursive::theme::Effect'>Effect</a></td>
                            <td class='docblock-short'>
                                 <p>Text effect</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Error.html'
-                                  title='cursive::theme::Error'>Error</a></td>
+                           <td><a class="enum" href="enum.Error.html"
+                                  title='enum cursive::theme::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>Possible error returned when loading a theme.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.load_default.html'
-                                  title='cursive::theme::load_default'>load_default</a></td>
+                           <td><a class="fn" href="fn.load_default.html"
+                                  title='fn cursive::theme::load_default'>load_default</a></td>
                            <td class='docblock-short'>
                                 <p>Loads the default theme, and returns its representation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.load_theme.html'
-                                  title='cursive::theme::load_theme'>load_theme</a></td>
+                           <td><a class="fn" href="fn.load_theme.html"
+                                  title='fn cursive::theme::load_theme'>load_theme</a></td>
                            <td class='docblock-short'>
                                 <p>Loads a theme string and sets it as active.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.load_theme_file.html'
-                                  title='cursive::theme::load_theme_file'>load_theme_file</a></td>
+                           <td><a class="fn" href="fn.load_theme_file.html"
+                                  title='fn cursive::theme::load_theme_file'>load_theme_file</a></td>
                            <td class='docblock-short'>
                                 <p>Loads a theme from file and sets it as active.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -282,18 +293,22 @@ borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outs
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -326,7 +341,6 @@ borders = &quot;simple&quot;  # Alternatives are &quot;none&quot; and &quot;outs
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

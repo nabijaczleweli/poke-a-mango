@@ -9,14 +9,18 @@
 
     <title>window.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -93,57 +105,57 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>backend</span>::<span class='ident'>piston</span>::<span class='ident'>window</span>::{<span class='ident'>BuildFromWindowSettings</span>, <span class='ident'>WindowSettings</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>Error</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">backend</span>::<span class="ident">piston</span>::<span class="ident">window</span>::{<span class="ident">BuildFromWindowSettings</span>, <span class="ident">WindowSettings</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">Error</span>;
 
 
-<span class='doccomment'>/// Create a window based on the size of the target desktop.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Much like the raw equivalnt of creating the window, the return type is be dependent on the user-side&#39;s explicit</span>
-<span class='doccomment'>/// expression type.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Use `glutin::get_{primary,available}_monitor[s]()` to get the size of the respective desktops.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Create a window for an HD monitor:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # extern crate poke_a_mango;</span>
-<span class='doccomment'>/// # extern crate window;</span>
-<span class='doccomment'>/// # use poke_a_mango::ops::create_window;</span>
-<span class='doccomment'>/// # use window::NoWindow as PistonWindow;</span>
-<span class='doccomment'>/// # fn main() {</span>
-<span class='doccomment'>/// let window: PistonWindow = create_window((1280, 720)).unwrap();</span>
-<span class='doccomment'>/// # }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>create_window</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>BuildFromWindowSettings</span><span class='op'>&gt;</span>(<span class='ident'>desktop_size</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>W</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='ident'>WindowSettings</span>::<span class='ident'>new</span>(<span class='string'>&quot;poke-a-mango&quot;</span>, <span class='ident'>window_size</span>(<span class='ident'>desktop_size</span>))
-        .<span class='ident'>vsync</span>(<span class='bool-val'>true</span>)
-        .<span class='ident'>samples</span>(<span class='number'>8</span>)
-        .<span class='ident'>build</span>()
-        .<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> {
-            <span class='ident'>Error</span>::<span class='ident'>Ui</span> {
-                <span class='ident'>desc</span>: <span class='string'>&quot;create window&quot;</span>,
-                <span class='ident'>error</span>: <span class='ident'>e</span>,
+<span class="doccomment">/// Create a window based on the size of the target desktop.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Much like the raw equivalnt of creating the window, the return type is be dependent on the user-side&#39;s explicit</span>
+<span class="doccomment">/// expression type.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Use `glutin::get_{primary,available}_monitor[s]()` to get the size of the respective desktops.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Create a window for an HD monitor:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # extern crate poke_a_mango;</span>
+<span class="doccomment">/// # extern crate window;</span>
+<span class="doccomment">/// # use poke_a_mango::ops::create_window;</span>
+<span class="doccomment">/// # use window::NoWindow as PistonWindow;</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// let window: PistonWindow = create_window((1280, 720)).unwrap();</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_window</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">BuildFromWindowSettings</span><span class="op">&gt;</span>(<span class="ident">desktop_size</span>: (<span class="ident">u32</span>, <span class="ident">u32</span>)) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="ident">WindowSettings</span>::<span class="ident">new</span>(<span class="string">&quot;poke-a-mango&quot;</span>, <span class="ident">window_size</span>(<span class="ident">desktop_size</span>))
+        .<span class="ident">vsync</span>(<span class="bool-val">true</span>)
+        .<span class="ident">samples</span>(<span class="number">8</span>)
+        .<span class="ident">build</span>()
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+            <span class="ident">Error</span>::<span class="ident">Ui</span> {
+                <span class="ident">desc</span>: <span class="string">&quot;create window&quot;</span>,
+                <span class="ident">error</span>: <span class="ident">e</span>,
             }
         })
 }
 
-<span class='doccomment'>/// Get the window size from the size of the target desktop.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Window size for an HD monitor:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # use poke_a_mango::ops::window_size;</span>
-<span class='doccomment'>/// assert_eq!(window_size((1280, 720)), [240, 480]);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>window_size</span>(<span class='ident'>desktop_size</span>: (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> [<span class='ident'>u32</span>; <span class='number'>2</span>]  {
-    <span class='kw'>let</span> <span class='ident'>window_w</span> <span class='op'>=</span> <span class='ident'>desktop_size</span>.<span class='number'>1</span> <span class='op'>/</span> <span class='number'>3</span>;
-    [<span class='ident'>window_w</span>, <span class='ident'>window_w</span> <span class='op'>*</span> <span class='number'>2</span>]
+<span class="doccomment">/// Get the window size from the size of the target desktop.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Window size for an HD monitor:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use poke_a_mango::ops::window_size;</span>
+<span class="doccomment">/// assert_eq!(window_size((1280, 720)), [240, 480]);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">window_size</span>(<span class="ident">desktop_size</span>: (<span class="ident">u32</span>, <span class="ident">u32</span>)) <span class="op">-&gt;</span> [<span class="ident">u32</span>; <span class="number">2</span>]  {
+    <span class="kw">let</span> <span class="ident">window_w</span> <span class="op">=</span> <span class="ident">desktop_size</span>.<span class="number">1</span> <span class="op">/</span> <span class="number">3</span>;
+    [<span class="ident">window_w</span>, <span class="ident">window_w</span> <span class="op">*</span> <span class="number">2</span>]
 }
 </pre>
 </section>
@@ -159,18 +171,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -203,7 +219,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

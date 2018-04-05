@@ -9,14 +9,18 @@
 
     <title>pancurses - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'pancurses', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate pancurses</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'pancurses', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>pancurses</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>pancurses</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -51,501 +63,530 @@
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.MEVENT.html'
-                                  title='pancurses::MEVENT'>MEVENT</a></td>
+                           <td><a class="struct" href="struct.MEVENT.html"
+                                  title='struct pancurses::MEVENT'>MEVENT</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Window.html'
-                                  title='pancurses::Window'>Window</a></td>
+                           <td><a class="struct" href="struct.Window.html"
+                                  title='struct pancurses::Window'>Window</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Input.html'
-                                  title='pancurses::Input'>Input</a></td>
+                           <td><a class="enum" href="enum.Input.html"
+                                  title='enum pancurses::Input'>Input</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.ALL_MOUSE_EVENTS.html'
-                                  title='pancurses::ALL_MOUSE_EVENTS'>ALL_MOUSE_EVENTS</a></td>
+                           <td><a class="constant" href="constant.ALL_MOUSE_EVENTS.html"
+                                  title='constant pancurses::ALL_MOUSE_EVENTS'>ALL_MOUSE_EVENTS</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_ATTRIBUTES.html'
-                                  title='pancurses::A_ATTRIBUTES'>A_ATTRIBUTES</a></td>
+                           <td><a class="constant" href="constant.A_ATTRIBUTES.html"
+                                  title='constant pancurses::A_ATTRIBUTES'>A_ATTRIBUTES</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_BLINK.html'
-                                  title='pancurses::A_BLINK'>A_BLINK</a></td>
+                           <td><a class="constant" href="constant.A_BLINK.html"
+                                  title='constant pancurses::A_BLINK'>A_BLINK</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_BOLD.html'
-                                  title='pancurses::A_BOLD'>A_BOLD</a></td>
+                           <td><a class="constant" href="constant.A_BOLD.html"
+                                  title='constant pancurses::A_BOLD'>A_BOLD</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_CHARTEXT.html'
-                                  title='pancurses::A_CHARTEXT'>A_CHARTEXT</a></td>
+                           <td><a class="constant" href="constant.A_CHARTEXT.html"
+                                  title='constant pancurses::A_CHARTEXT'>A_CHARTEXT</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_COLOR.html'
-                                  title='pancurses::A_COLOR'>A_COLOR</a></td>
+                           <td><a class="constant" href="constant.A_COLOR.html"
+                                  title='constant pancurses::A_COLOR'>A_COLOR</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_DIM.html'
-                                  title='pancurses::A_DIM'>A_DIM</a></td>
+                           <td><a class="constant" href="constant.A_DIM.html"
+                                  title='constant pancurses::A_DIM'>A_DIM</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_ITALIC.html'
-                                  title='pancurses::A_ITALIC'>A_ITALIC</a></td>
+                           <td><a class="constant" href="constant.A_ITALIC.html"
+                                  title='constant pancurses::A_ITALIC'>A_ITALIC</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_LEFTLINE.html'
-                                  title='pancurses::A_LEFTLINE'>A_LEFTLINE</a></td>
+                           <td><a class="constant" href="constant.A_LEFTLINE.html"
+                                  title='constant pancurses::A_LEFTLINE'>A_LEFTLINE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_NORMAL.html'
-                                  title='pancurses::A_NORMAL'>A_NORMAL</a></td>
+                           <td><a class="constant" href="constant.A_NORMAL.html"
+                                  title='constant pancurses::A_NORMAL'>A_NORMAL</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_OVERLINE.html'
-                                  title='pancurses::A_OVERLINE'>A_OVERLINE</a></td>
+                           <td><a class="constant" href="constant.A_OVERLINE.html"
+                                  title='constant pancurses::A_OVERLINE'>A_OVERLINE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_REVERSE.html'
-                                  title='pancurses::A_REVERSE'>A_REVERSE</a></td>
+                           <td><a class="constant" href="constant.A_REVERSE.html"
+                                  title='constant pancurses::A_REVERSE'>A_REVERSE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_RIGHTLINE.html'
-                                  title='pancurses::A_RIGHTLINE'>A_RIGHTLINE</a></td>
+                           <td><a class="constant" href="constant.A_RIGHTLINE.html"
+                                  title='constant pancurses::A_RIGHTLINE'>A_RIGHTLINE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_STANDOUT.html'
-                                  title='pancurses::A_STANDOUT'>A_STANDOUT</a></td>
+                           <td><a class="constant" href="constant.A_STANDOUT.html"
+                                  title='constant pancurses::A_STANDOUT'>A_STANDOUT</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_STRIKEOUT.html'
-                                  title='pancurses::A_STRIKEOUT'>A_STRIKEOUT</a></td>
+                           <td><a class="constant" href="constant.A_STRIKEOUT.html"
+                                  title='constant pancurses::A_STRIKEOUT'>A_STRIKEOUT</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.A_UNDERLINE.html'
-                                  title='pancurses::A_UNDERLINE'>A_UNDERLINE</a></td>
+                           <td><a class="constant" href="constant.A_UNDERLINE.html"
+                                  title='constant pancurses::A_UNDERLINE'>A_UNDERLINE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_BLACK.html'
-                                  title='pancurses::COLOR_BLACK'>COLOR_BLACK</a></td>
+                           <td><a class="constant" href="constant.COLOR_BLACK.html"
+                                  title='constant pancurses::COLOR_BLACK'>COLOR_BLACK</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_BLUE.html'
-                                  title='pancurses::COLOR_BLUE'>COLOR_BLUE</a></td>
+                           <td><a class="constant" href="constant.COLOR_BLUE.html"
+                                  title='constant pancurses::COLOR_BLUE'>COLOR_BLUE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_CYAN.html'
-                                  title='pancurses::COLOR_CYAN'>COLOR_CYAN</a></td>
+                           <td><a class="constant" href="constant.COLOR_CYAN.html"
+                                  title='constant pancurses::COLOR_CYAN'>COLOR_CYAN</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_GREEN.html'
-                                  title='pancurses::COLOR_GREEN'>COLOR_GREEN</a></td>
+                           <td><a class="constant" href="constant.COLOR_GREEN.html"
+                                  title='constant pancurses::COLOR_GREEN'>COLOR_GREEN</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_MAGENTA.html'
-                                  title='pancurses::COLOR_MAGENTA'>COLOR_MAGENTA</a></td>
+                           <td><a class="constant" href="constant.COLOR_MAGENTA.html"
+                                  title='constant pancurses::COLOR_MAGENTA'>COLOR_MAGENTA</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_RED.html'
-                                  title='pancurses::COLOR_RED'>COLOR_RED</a></td>
+                           <td><a class="constant" href="constant.COLOR_RED.html"
+                                  title='constant pancurses::COLOR_RED'>COLOR_RED</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_WHITE.html'
-                                  title='pancurses::COLOR_WHITE'>COLOR_WHITE</a></td>
+                           <td><a class="constant" href="constant.COLOR_WHITE.html"
+                                  title='constant pancurses::COLOR_WHITE'>COLOR_WHITE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.COLOR_YELLOW.html'
-                                  title='pancurses::COLOR_YELLOW'>COLOR_YELLOW</a></td>
+                           <td><a class="constant" href="constant.COLOR_YELLOW.html"
+                                  title='constant pancurses::COLOR_YELLOW'>COLOR_YELLOW</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.ERR.html'
-                                  title='pancurses::ERR'>ERR</a></td>
+                           <td><a class="constant" href="constant.ERR.html"
+                                  title='constant pancurses::ERR'>ERR</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.KEY_EVENT.html'
-                                  title='pancurses::KEY_EVENT'>KEY_EVENT</a></td>
+                           <td><a class="constant" href="constant.KEY_EVENT.html"
+                                  title='constant pancurses::KEY_EVENT'>KEY_EVENT</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.KEY_F15.html'
-                                  title='pancurses::KEY_F15'>KEY_F15</a></td>
+                           <td><a class="constant" href="constant.KEY_F15.html"
+                                  title='constant pancurses::KEY_F15'>KEY_F15</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.KEY_OFFSET.html'
-                                  title='pancurses::KEY_OFFSET'>KEY_OFFSET</a></td>
+                           <td><a class="constant" href="constant.KEY_OFFSET.html"
+                                  title='constant pancurses::KEY_OFFSET'>KEY_OFFSET</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.KEY_RESIZE.html'
-                                  title='pancurses::KEY_RESIZE'>KEY_RESIZE</a></td>
+                           <td><a class="constant" href="constant.KEY_RESIZE.html"
+                                  title='constant pancurses::KEY_RESIZE'>KEY_RESIZE</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.OK.html'
-                                  title='pancurses::OK'>OK</a></td>
+                           <td><a class="constant" href="constant.OK.html"
+                                  title='constant pancurses::OK'>OK</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='constant' href='constant.SPECIAL_KEY_CODES.html'
-                                  title='pancurses::SPECIAL_KEY_CODES'>SPECIAL_KEY_CODES</a></td>
+                           <td><a class="constant" href="constant.SPECIAL_KEY_CODES.html"
+                                  title='constant pancurses::SPECIAL_KEY_CODES'>SPECIAL_KEY_CODES</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.ToChtype.html'
-                                  title='pancurses::ToChtype'>ToChtype</a></td>
+                           <td><a class="trait" href="trait.ToChtype.html"
+                                  title='trait pancurses::ToChtype'>ToChtype</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.COLOR_PAIR.html'
-                                  title='pancurses::COLOR_PAIR'>COLOR_PAIR</a></td>
+                           <td><a class="fn" href="fn.COLOR_PAIR.html"
+                                  title='fn pancurses::COLOR_PAIR'>COLOR_PAIR</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.baudrate.html'
-                                  title='pancurses::baudrate'>baudrate</a></td>
+                           <td><a class="fn" href="fn.baudrate.html"
+                                  title='fn pancurses::baudrate'>baudrate</a></td>
                            <td class='docblock-short'>
                                 <p>Return the output speed of the terminal. On Windows it simply returns INT_MAX</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.beep.html'
-                                  title='pancurses::beep'>beep</a></td>
+                           <td><a class="fn" href="fn.beep.html"
+                                  title='fn pancurses::beep'>beep</a></td>
                            <td class='docblock-short'>
                                 <p>Sounds the audible bell on the terminal, if possible; if not, it calls flash().</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.can_change_color.html'
-                                  title='pancurses::can_change_color'>can_change_color</a></td>
+                           <td><a class="fn" href="fn.can_change_color.html"
+                                  title='fn pancurses::can_change_color'>can_change_color</a></td>
                            <td class='docblock-short'>
                                 <p>Indicates if the terminal has the capability to change the definition of its colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.cbreak.html'
-                                  title='pancurses::cbreak'>cbreak</a></td>
+                           <td><a class="fn" href="fn.cbreak.html"
+                                  title='fn pancurses::cbreak'>cbreak</a></td>
                            <td class='docblock-short'>
                                 <p>Set cbreak mode.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.color_content.html'
-                                  title='pancurses::color_content'>color_content</a></td>
+                           <td><a class="fn" href="fn.color_content.html"
+                                  title='fn pancurses::color_content'>color_content</a></td>
                            <td class='docblock-short'>
                                 <p>This routine gives programmers a way to find the intensity of the red, green, and blue (RGB)
 components in a color. It takes the color number as an argument and returns three values
 that tell you the amounts of red, green, and blue components in the given color. The argument
 must be a legal color value, i.e., 0 through COLORS-1, inclusive. The values that are returned
 are in the range 0 (no component) through 1000 (maximum amount of component), inclusive.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.curs_set.html'
-                                  title='pancurses::curs_set'>curs_set</a></td>
+                           <td><a class="fn" href="fn.curs_set.html"
+                                  title='fn pancurses::curs_set'>curs_set</a></td>
                            <td class='docblock-short'>
                                 <p>Alters the appearance of the cursor.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.def_prog_mode.html'
-                                  title='pancurses::def_prog_mode'>def_prog_mode</a></td>
+                           <td><a class="fn" href="fn.def_prog_mode.html"
+                                  title='fn pancurses::def_prog_mode'>def_prog_mode</a></td>
                            <td class='docblock-short'>
                                 <p>Save the current terminal modes as the &quot;program&quot; (in curses) state for use by the
 reset_prog_mode() and reset_shell_mode() functions.  This is done automatically by initscr().</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.def_shell_mode.html'
-                                  title='pancurses::def_shell_mode'>def_shell_mode</a></td>
+                           <td><a class="fn" href="fn.def_shell_mode.html"
+                                  title='fn pancurses::def_shell_mode'>def_shell_mode</a></td>
                            <td class='docblock-short'>
                                 <p>Save the current terminal modes as the &quot;shell&quot; (not in curses) state for use by the
 reset_prog_mode() and reset_shell_mode() functions.  This is done automatically by initscr().</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.endwin.html'
-                                  title='pancurses::endwin'>endwin</a></td>
+                           <td><a class="fn" href="fn.endwin.html"
+                                  title='fn pancurses::endwin'>endwin</a></td>
                            <td class='docblock-short'>
                                 <p>Should be called before exiting or escaping from curses mode temporarily.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.flash.html'
-                                  title='pancurses::flash'>flash</a></td>
+                           <td><a class="fn" href="fn.flash.html"
+                                  title='fn pancurses::flash'>flash</a></td>
                            <td class='docblock-short'>
                                 <p>Flashes the screen, if possible; if not, it calls beep().</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.flushinp.html'
-                                  title='pancurses::flushinp'>flushinp</a></td>
+                           <td><a class="fn" href="fn.flushinp.html"
+                                  title='fn pancurses::flushinp'>flushinp</a></td>
                            <td class='docblock-short'>
                                 <p>Throws away any type-ahead that has been typed by the user and has not yet been read by the
 program.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.getmouse.html'
-                                  title='pancurses::getmouse'>getmouse</a></td>
+                           <td><a class="fn" href="fn.getmouse.html"
+                                  title='fn pancurses::getmouse'>getmouse</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.half_delay.html'
-                                  title='pancurses::half_delay'>half_delay</a></td>
+                           <td><a class="fn" href="fn.half_delay.html"
+                                  title='fn pancurses::half_delay'>half_delay</a></td>
                            <td class='docblock-short'>
                                 <p>Similar to cbreak(), but allows for a time limit to be specified, in tenths of a second.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.has_colors.html'
-                                  title='pancurses::has_colors'>has_colors</a></td>
+                           <td><a class="fn" href="fn.has_colors.html"
+                                  title='fn pancurses::has_colors'>has_colors</a></td>
                            <td class='docblock-short'>
                                 <p>Indicates if the terminal supports, and can maniplulate color.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.init_color.html'
-                                  title='pancurses::init_color'>init_color</a></td>
+                           <td><a class="fn" href="fn.init_color.html"
+                                  title='fn pancurses::init_color'>init_color</a></td>
                            <td class='docblock-short'>
                                 <p>Changes the definition of a color. It takes four arguments: the number of the color to be
 changed followed by three RGB values (for the amounts of red, green, and blue components).
 The first argument must be a legal color value; default colors are not allowed here.
 Each of the last three arguments must be a value in the range 0 through 1000. When init_color
 is used, all occurrences of that color on the screen immediately change to the new definition.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.init_pair.html'
-                                  title='pancurses::init_pair'>init_pair</a></td>
+                           <td><a class="fn" href="fn.init_pair.html"
+                                  title='fn pancurses::init_pair'>init_pair</a></td>
                            <td class='docblock-short'>
                                 <p>Changes the definition of a color-pair.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.initscr.html'
-                                  title='pancurses::initscr'>initscr</a></td>
+                           <td><a class="fn" href="fn.initscr.html"
+                                  title='fn pancurses::initscr'>initscr</a></td>
                            <td class='docblock-short'>
                                 <p>Initialize the curses system, this must be the first function that is called.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.mousemask.html'
-                                  title='pancurses::mousemask'>mousemask</a></td>
+                           <td><a class="fn" href="fn.mousemask.html"
+                                  title='fn pancurses::mousemask'>mousemask</a></td>
                            <td class='docblock-short'>
                                 <p>Nearly equivalent to mouse_set(), but instead of OK/ERR, it returns the value of the mask after
 setting it.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.napms.html'
-                                  title='pancurses::napms'>napms</a></td>
+                           <td><a class="fn" href="fn.napms.html"
+                                  title='fn pancurses::napms'>napms</a></td>
                            <td class='docblock-short'>
                                 <p>Suspends the program for the specified number of milliseconds.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.newwin.html'
-                                  title='pancurses::newwin'>newwin</a></td>
+                           <td><a class="fn" href="fn.newwin.html"
+                                  title='fn pancurses::newwin'>newwin</a></td>
                            <td class='docblock-short'>
                                 <p>Creates a new window with the given number of lines, nlines and columns, ncols.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.nl.html'
-                                  title='pancurses::nl'>nl</a></td>
+                           <td><a class="fn" href="fn.nl.html"
+                                  title='fn pancurses::nl'>nl</a></td>
                            <td class='docblock-short'>
                                 <p>Enables the translation of a carriage return into a newline on input.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.nocbreak.html'
-                                  title='pancurses::nocbreak'>nocbreak</a></td>
+                           <td><a class="fn" href="fn.nocbreak.html"
+                                  title='fn pancurses::nocbreak'>nocbreak</a></td>
                            <td class='docblock-short'>
                                 <p>Set nocbreak mode.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.noecho.html'
-                                  title='pancurses::noecho'>noecho</a></td>
+                           <td><a class="fn" href="fn.noecho.html"
+                                  title='fn pancurses::noecho'>noecho</a></td>
                            <td class='docblock-short'>
                                 <p>Disables echoing typed characters.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.reset_prog_mode.html'
-                                  title='pancurses::reset_prog_mode'>reset_prog_mode</a></td>
+                           <td><a class="fn" href="fn.reset_prog_mode.html"
+                                  title='fn pancurses::reset_prog_mode'>reset_prog_mode</a></td>
                            <td class='docblock-short'>
                                 <p>Restore the terminal to &quot;program&quot; (in curses) state. This is done
 automatically by endwin() and doupdate() after an endwin(), so this would normally not be
 called before.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.reset_shell_mode.html'
-                                  title='pancurses::reset_shell_mode'>reset_shell_mode</a></td>
+                           <td><a class="fn" href="fn.reset_shell_mode.html"
+                                  title='fn pancurses::reset_shell_mode'>reset_shell_mode</a></td>
                            <td class='docblock-short'>
                                 <p>Restore the terminal to &quot;shell&quot; (not in curses) state. This is done automatically by
 endwin() and doupdate() after an endwin(), so this would normally not be called before.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.resize_term.html'
-                                  title='pancurses::resize_term'>resize_term</a></td>
+                           <td><a class="fn" href="fn.resize_term.html"
+                                  title='fn pancurses::resize_term'>resize_term</a></td>
                            <td class='docblock-short'>
                                 <p>Attempts to resize the screen to the given size.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.set_blink.html'
-                                  title='pancurses::set_blink'>set_blink</a></td>
+                           <td><a class="fn" href="fn.set_blink.html"
+                                  title='fn pancurses::set_blink'>set_blink</a></td>
                            <td class='docblock-short'>
                                 <p>Toggles whether the A_BLINK attribute sets an actual blink mode (TRUE), or sets the background
 color to hig intensity (FALSE).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.set_title.html'
-                                  title='pancurses::set_title'>set_title</a></td>
+                           <td><a class="fn" href="fn.set_title.html"
+                                  title='fn pancurses::set_title'>set_title</a></td>
                            <td class='docblock-short'>
                                 <p>Sets the title of the window in which the curses program is running. This function may not do
 anything on some platforms. (Only supported on Windows)</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.start_color.html'
-                                  title='pancurses::start_color'>start_color</a></td>
+                           <td><a class="fn" href="fn.start_color.html"
+                                  title='fn pancurses::start_color'>start_color</a></td>
                            <td class='docblock-short'>
                                 <p>Initializes eight basic colors (black, red, green, yellow, blue, magenta, cyan,
 and white), and two global variables; COLORS and COLOR_PAIRS (respectively defining the
 maximum number of colors and color-pairs the terminal is capable of displaying).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.use_default_colors.html'
-                                  title='pancurses::use_default_colors'>use_default_colors</a></td>
+                           <td><a class="fn" href="fn.use_default_colors.html"
+                                  title='fn pancurses::use_default_colors'>use_default_colors</a></td>
                            <td class='docblock-short'>
                                 <p>Allows the use of -1 as a foreground or background color with init_pair().</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.chtype.html'
-                                  title='pancurses::chtype'>chtype</a></td>
+                           <td><a class="type" href="type.chtype.html"
+                                  title='type pancurses::chtype'>chtype</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.mmask_t.html'
-                                  title='pancurses::mmask_t'>mmask_t</a></td>
+                           <td><a class="type" href="type.mmask_t.html"
+                                  title='type pancurses::mmask_t'>mmask_t</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -562,18 +603,22 @@ maximum number of colors and color-pairs the terminal is capable of displaying).
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -606,7 +651,6 @@ maximum number of colors and color-pairs the terminal is capable of displaying).
         window.rootPath = "../";
         window.currentCrate = "pancurses";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

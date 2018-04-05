@@ -1,6 +1,4 @@
 (function() {var implementors = {};
-implementors["cursive"] = [];
-implementors["poke_a_mango"] = [];
 implementors["unicode_segmentation"] = [];
 
             if (window.register_implementors) {

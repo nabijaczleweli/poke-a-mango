@@ -9,14 +9,18 @@
 
     <title>widgets.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -394,357 +406,357 @@
 <span id="350">350</span>
 <span id="351">351</span>
 <span id="352">352</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>conrod</span>::{<span class='ident'>Positionable</span>, <span class='ident'>Borderable</span>, <span class='ident'>Colorable</span>, <span class='ident'>Labelable</span>, <span class='ident'>Sizeable</span>, <span class='ident'>Widget</span>, <span class='ident'>UiCell</span>, <span class='ident'>Align</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>text_box</span>::{<span class='ident'>TextBox</span>, <span class='ident'>Event</span> <span class='kw'>as</span> <span class='ident'>TextBoxEvent</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>Difficulty</span>, <span class='ident'>GameState</span>, <span class='ident'>set_button_style</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>button</span>::{<span class='ident'>Button</span>, <span class='ident'>Flat</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>color</span>::{<span class='ident'>DARK_CHARCOAL</span>, <span class='ident'>WHITE</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>util</span>::<span class='ident'>fruit_name</span>;
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::<span class='ident'>id</span>::{<span class='ident'>Generator</span>, <span class='ident'>Id</span>};
-<span class='kw'>use</span> <span class='ident'>conrod</span>::<span class='ident'>widget</span>::{<span class='ident'>Canvas</span>, <span class='ident'>Text</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='ident'>state</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">conrod</span>::{<span class="ident">Positionable</span>, <span class="ident">Borderable</span>, <span class="ident">Colorable</span>, <span class="ident">Labelable</span>, <span class="ident">Sizeable</span>, <span class="ident">Widget</span>, <span class="ident">UiCell</span>, <span class="ident">Align</span>};
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">widget</span>::<span class="ident">text_box</span>::{<span class="ident">TextBox</span>, <span class="ident">Event</span> <span class="kw">as</span> <span class="ident">TextBoxEvent</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::{<span class="ident">Difficulty</span>, <span class="ident">GameState</span>, <span class="ident">set_button_style</span>};
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">widget</span>::<span class="ident">button</span>::{<span class="ident">Button</span>, <span class="ident">Flat</span>};
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">color</span>::{<span class="ident">DARK_CHARCOAL</span>, <span class="ident">WHITE</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">util</span>::<span class="ident">fruit_name</span>;
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">widget</span>::<span class="ident">id</span>::{<span class="ident">Generator</span>, <span class="ident">Id</span>};
+<span class="kw">use</span> <span class="ident">conrod</span>::<span class="ident">widget</span>::{<span class="ident">Canvas</span>, <span class="ident">Text</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">state</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 
 
-<span class='doccomment'>/// Container for all widgets&#39; IDs, also manages setting them.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The general idea is to call `Widgets::new()` once and then `Widgets::update()` each update event.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// An external (usercode) variable is recommended to track the game&#39;s state.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # extern crate poke_a_mango;</span>
-<span class='doccomment'>/// # extern crate conrod;</span>
-<span class='doccomment'>/// # use poke_a_mango::ops::{GameState, Widgets};</span>
-<span class='doccomment'>/// # struct Event;</span>
-<span class='doccomment'>/// # impl Event {</span>
-<span class='doccomment'>/// #     pub fn update&lt;F: FnOnce(())&gt;(&amp;self, f: F) {</span>
-<span class='doccomment'>/// #         f(());</span>
-<span class='doccomment'>/// #     }</span>
-<span class='doccomment'>/// # }</span>
-<span class='doccomment'>/// # fn main() {</span>
-<span class='doccomment'>/// # let window_size = [1.0, 2.0];</span>
-<span class='doccomment'>/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
-<span class='doccomment'>/// let widgets = Widgets::new(ui.widget_id_generator());</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let mut game_state = GameState::MainMenu;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// // Then, in the event loop</span>
-<span class='doccomment'>/// # let event = Event;</span>
-<span class='doccomment'>/// event.update(|_| {</span>
-<span class='doccomment'>///     widgets.update(ui.set_widgets(), &amp;mut game_state);</span>
-<span class='doccomment'>/// });</span>
-<span class='doccomment'>/// # }</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Widgets</span> {
-    <span class='ident'>main_canvas</span>: <span class='ident'>Id</span>,
+<span class="doccomment">/// Container for all widgets&#39; IDs, also manages setting them.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The general idea is to call `Widgets::new()` once and then `Widgets::update()` each update event.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An external (usercode) variable is recommended to track the game&#39;s state.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # extern crate poke_a_mango;</span>
+<span class="doccomment">/// # extern crate conrod;</span>
+<span class="doccomment">/// # use poke_a_mango::ops::{GameState, Widgets};</span>
+<span class="doccomment">/// # struct Event;</span>
+<span class="doccomment">/// # impl Event {</span>
+<span class="doccomment">/// #     pub fn update&lt;F: FnOnce(())&gt;(&amp;self, f: F) {</span>
+<span class="doccomment">/// #         f(());</span>
+<span class="doccomment">/// #     }</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// # let window_size = [1.0, 2.0];</span>
+<span class="doccomment">/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
+<span class="doccomment">/// let widgets = Widgets::new(ui.widget_id_generator());</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let mut game_state = GameState::MainMenu;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Then, in the event loop</span>
+<span class="doccomment">/// # let event = Event;</span>
+<span class="doccomment">/// event.update(|_| {</span>
+<span class="doccomment">///     widgets.update(ui.set_widgets(), &amp;mut game_state);</span>
+<span class="doccomment">/// });</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Widgets</span> {
+    <span class="ident">main_canvas</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>start_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>leaderboard_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>exit_button_canvas</span>: <span class='ident'>Id</span>,
+    <span class="ident">start_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">leaderboard_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">exit_button_canvas</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>start_button</span>: <span class='ident'>Id</span>,
-    <span class='ident'>leaderboard_button</span>: <span class='ident'>Id</span>,
-    <span class='ident'>exit_button</span>: <span class='ident'>Id</span>,
+    <span class="ident">start_button</span>: <span class="ident">Id</span>,
+    <span class="ident">leaderboard_button</span>: <span class="ident">Id</span>,
+    <span class="ident">exit_button</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>easy_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>normal_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>hard_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>back_button_canvas</span>: <span class='ident'>Id</span>,
+    <span class="ident">easy_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">normal_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">hard_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">back_button_canvas</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>easy_button</span>: <span class='ident'>Id</span>,
-    <span class='ident'>normal_button</span>: <span class='ident'>Id</span>,
-    <span class='ident'>hard_button</span>: <span class='ident'>Id</span>,
-    <span class='ident'>back_button</span>: <span class='ident'>Id</span>,
+    <span class="ident">easy_button</span>: <span class="ident">Id</span>,
+    <span class="ident">normal_button</span>: <span class="ident">Id</span>,
+    <span class="ident">hard_button</span>: <span class="ident">Id</span>,
+    <span class="ident">back_button</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>top_label_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>username_score_canvases</span>: [<span class='ident'>Id</span>; <span class='number'>10</span>],
+    <span class="ident">top_label_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">username_score_canvases</span>: [<span class="ident">Id</span>; <span class="number">10</span>],
 
-    <span class='ident'>top_label</span>: <span class='ident'>Id</span>,
-    <span class='ident'>usernames</span>: [<span class='ident'>Id</span>; <span class='number'>10</span>],
-    <span class='ident'>scores</span>: [<span class='ident'>Id</span>; <span class='number'>10</span>],
+    <span class="ident">top_label</span>: <span class="ident">Id</span>,
+    <span class="ident">usernames</span>: [<span class="ident">Id</span>; <span class="number">10</span>],
+    <span class="ident">scores</span>: [<span class="ident">Id</span>; <span class="number">10</span>],
 
-    <span class='ident'>mango_button_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>mango_button</span>: <span class='ident'>Id</span>,
+    <span class="ident">mango_button_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">mango_button</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>score_label_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>name_input_canvas</span>: <span class='ident'>Id</span>,
-    <span class='ident'>done_button_canvas</span>: <span class='ident'>Id</span>,
+    <span class="ident">score_label_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">name_input_canvas</span>: <span class="ident">Id</span>,
+    <span class="ident">done_button_canvas</span>: <span class="ident">Id</span>,
 
-    <span class='ident'>score_label</span>: <span class='ident'>Id</span>,
-    <span class='ident'>name_input</span>: <span class='ident'>Id</span>,
-    <span class='ident'>done_button</span>: <span class='ident'>Id</span>,
+    <span class="ident">score_label</span>: <span class="ident">Id</span>,
+    <span class="ident">name_input</span>: <span class="ident">Id</span>,
+    <span class="ident">done_button</span>: <span class="ident">Id</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Widgets</span> {
-    <span class='doccomment'>/// Generate widget IDs in preparation for later setting them in `Ui`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate poke_a_mango;</span>
-    <span class='doccomment'>/// # extern crate conrod;</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::Widgets;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// # let window_size = [1.0, 2.0];</span>
-    <span class='doccomment'>/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
-    <span class='doccomment'>/// let widgets = Widgets::new(ui.widget_id_generator());</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>id_gen</span>: <span class='ident'>Generator</span>) <span class='op'>-&gt;</span> <span class='ident'>Widgets</span> {
-        <span class='ident'>Widgets</span> {
-            <span class='ident'>main_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>start_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>leaderboard_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>exit_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>start_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>leaderboard_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>exit_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>easy_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>normal_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>hard_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>back_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>easy_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>normal_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>hard_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>back_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>top_label_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>username_score_canvases</span>: [<span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                                      <span class='ident'>id_gen</span>.<span class='ident'>next</span>()],
-            <span class='ident'>top_label</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>usernames</span>: [<span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                        <span class='ident'>id_gen</span>.<span class='ident'>next</span>()],
-            <span class='ident'>scores</span>: [<span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-                     <span class='ident'>id_gen</span>.<span class='ident'>next</span>()],
-            <span class='ident'>mango_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>mango_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>score_label_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>name_input_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>done_button_canvas</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>score_label</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>name_input</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
-            <span class='ident'>done_button</span>: <span class='ident'>id_gen</span>.<span class='ident'>next</span>(),
+<span class="kw">impl</span> <span class="ident">Widgets</span> {
+    <span class="doccomment">/// Generate widget IDs in preparation for later setting them in `Ui`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate poke_a_mango;</span>
+    <span class="doccomment">/// # extern crate conrod;</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::Widgets;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// # let window_size = [1.0, 2.0];</span>
+    <span class="doccomment">/// let mut ui = conrod::UiBuilder::new(window_size).build();</span>
+    <span class="doccomment">/// let widgets = Widgets::new(ui.widget_id_generator());</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">id_gen</span>: <span class="ident">Generator</span>) <span class="op">-&gt;</span> <span class="ident">Widgets</span> {
+        <span class="ident">Widgets</span> {
+            <span class="ident">main_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">start_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">leaderboard_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">exit_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">start_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">leaderboard_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">exit_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">easy_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">normal_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">hard_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">back_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">easy_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">normal_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">hard_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">back_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">top_label_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">username_score_canvases</span>: [<span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                                      <span class="ident">id_gen</span>.<span class="ident">next</span>()],
+            <span class="ident">top_label</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">usernames</span>: [<span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                        <span class="ident">id_gen</span>.<span class="ident">next</span>()],
+            <span class="ident">scores</span>: [<span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+                     <span class="ident">id_gen</span>.<span class="ident">next</span>()],
+            <span class="ident">mango_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">mango_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">score_label_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">name_input_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">done_button_canvas</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">score_label</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">name_input</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
+            <span class="ident">done_button</span>: <span class="ident">id_gen</span>.<span class="ident">next</span>(),
         }
     }
 
-    <span class='doccomment'>/// Update the UI elements and set them.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Given the current game&#39;s state it will update it with the next one, if needed, for example,</span>
-    <span class='doccomment'>/// if `GameState::MainMenu` was passed in and the Start button was pressed it&#39;ll be updated to</span>
-    <span class='doccomment'>/// `GameState::ChooseDifficulty`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Should be called on the update window event.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate poke_a_mango;</span>
-    <span class='doccomment'>/// # extern crate conrod;</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::{GameState, Widgets};</span>
-    <span class='doccomment'>/// # struct Event;</span>
-    <span class='doccomment'>/// # impl Event {</span>
-    <span class='doccomment'>/// #     pub fn update&lt;F: FnOnce(())&gt;(&amp;self, f: F) {</span>
-    <span class='doccomment'>/// #         f(());</span>
-    <span class='doccomment'>/// #     }</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// # let mut ui = conrod::UiBuilder::new([1.0, 2.0]).build();</span>
-    <span class='doccomment'>/// # let widgets = Widgets::new(ui.widget_id_generator());</span>
-    <span class='doccomment'>/// # let event = Event;</span>
-    <span class='doccomment'>/// let mut game_state = GameState::MainMenu;</span>
-    <span class='doccomment'>/// event.update(|_| {</span>
-    <span class='doccomment'>///     widgets.update(ui.set_widgets(), &amp;mut game_state)</span>
-    <span class='doccomment'>/// });</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>: <span class='ident'>UiCell</span>, <span class='kw-2'>mut</span> <span class='ident'>cur_state</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameState</span>) {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>cur_state</span> {
-            <span class='ident'>GameState</span>::<span class='ident'>MainMenu</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
-                    .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span>[(<span class='self'>self</span>.<span class='ident'>start_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>leaderboard_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>exit_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))])
-                    .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+    <span class="doccomment">/// Update the UI elements and set them.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Given the current game&#39;s state it will update it with the next one, if needed, for example,</span>
+    <span class="doccomment">/// if `GameState::MainMenu` was passed in and the Start button was pressed it&#39;ll be updated to</span>
+    <span class="doccomment">/// `GameState::ChooseDifficulty`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Should be called on the update window event.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate poke_a_mango;</span>
+    <span class="doccomment">/// # extern crate conrod;</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::{GameState, Widgets};</span>
+    <span class="doccomment">/// # struct Event;</span>
+    <span class="doccomment">/// # impl Event {</span>
+    <span class="doccomment">/// #     pub fn update&lt;F: FnOnce(())&gt;(&amp;self, f: F) {</span>
+    <span class="doccomment">/// #         f(());</span>
+    <span class="doccomment">/// #     }</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// # let mut ui = conrod::UiBuilder::new([1.0, 2.0]).build();</span>
+    <span class="doccomment">/// # let widgets = Widgets::new(ui.widget_id_generator());</span>
+    <span class="doccomment">/// # let event = Event;</span>
+    <span class="doccomment">/// let mut game_state = GameState::MainMenu;</span>
+    <span class="doccomment">/// event.update(|_| {</span>
+    <span class="doccomment">///     widgets.update(ui.set_widgets(), &amp;mut game_state)</span>
+    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>: <span class="ident">UiCell</span>, <span class="kw-2">mut</span> <span class="ident">cur_state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">GameState</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">cur_state</span> {
+            <span class="ident">GameState</span>::<span class="ident">MainMenu</span> <span class="op">=&gt;</span> {
+                <span class="ident">Canvas</span>::<span class="ident">new</span>()
+                    .<span class="ident">flow_down</span>(<span class="kw-2">&amp;</span>[(<span class="self">self</span>.<span class="ident">start_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">leaderboard_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">exit_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>))])
+                    .<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>start_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Start&quot;</span>, <span class='self'>self</span>.<span class='ident'>start_button_canvas</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>leaderboard_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Leaderboard&quot;</span>, <span class='self'>self</span>.<span class='ident'>leaderboard_button_canvas</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>exit_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Exit&quot;</span>, <span class='self'>self</span>.<span class='ident'>exit_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>start_button</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>leaderboard_button</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>exit_button</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Start&quot;</span>, <span class="self">self</span>.<span class="ident">start_button_canvas</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">leaderboard_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Leaderboard&quot;</span>, <span class="self">self</span>.<span class="ident">leaderboard_button_canvas</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exit_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Exit&quot;</span>, <span class="self">self</span>.<span class="ident">exit_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">start_button</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">leaderboard_button</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">exit_button</span>);
 
-                <span class='kw'>if</span> <span class='ident'>start_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>start_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>press_start</span>(<span class='ident'>cur_state</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>leaderboard_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>leaderboard_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>press_display_highscores</span>(<span class='ident'>cur_state</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>exit_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>exit_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>press_exit</span>(<span class='ident'>cur_state</span>);
+                <span class="kw">if</span> <span class="ident">start_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">start_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">press_start</span>(<span class="ident">cur_state</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">leaderboard_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">leaderboard_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">press_display_highscores</span>(<span class="ident">cur_state</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">exit_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">exit_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">press_exit</span>(<span class="ident">cur_state</span>);
                 }
             }
-            <span class='ident'>GameState</span>::<span class='ident'>ChooseDifficulty</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
-                    .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span>[(<span class='self'>self</span>.<span class='ident'>easy_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>normal_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>hard_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>back_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))])
-                    .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+            <span class="ident">GameState</span>::<span class="ident">ChooseDifficulty</span> <span class="op">=&gt;</span> {
+                <span class="ident">Canvas</span>::<span class="ident">new</span>()
+                    .<span class="ident">flow_down</span>(<span class="kw-2">&amp;</span>[(<span class="self">self</span>.<span class="ident">easy_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">normal_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">hard_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">back_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>))])
+                    .<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>easy_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Easy&quot;</span>, <span class='self'>self</span>.<span class='ident'>easy_button_canvas</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>normal_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Normal&quot;</span>, <span class='self'>self</span>.<span class='ident'>normal_button_canvas</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>hard_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Hard&quot;</span>, <span class='self'>self</span>.<span class='ident'>hard_button_canvas</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>back_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Back&quot;</span>, <span class='self'>self</span>.<span class='ident'>back_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>easy_button</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>normal_button</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>hard_button</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>back_button</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">easy_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Easy&quot;</span>, <span class="self">self</span>.<span class="ident">easy_button_canvas</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">normal_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Normal&quot;</span>, <span class="self">self</span>.<span class="ident">normal_button_canvas</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hard_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Hard&quot;</span>, <span class="self">self</span>.<span class="ident">hard_button_canvas</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">back_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Back&quot;</span>, <span class="self">self</span>.<span class="ident">back_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">easy_button</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">normal_button</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">hard_button</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">back_button</span>);
 
-                <span class='kw'>if</span> <span class='ident'>easy_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>easy_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>select_difficulty</span>(<span class='ident'>cur_state</span>, <span class='ident'>Difficulty</span>::<span class='ident'>Easy</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>normal_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>normal_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>select_difficulty</span>(<span class='ident'>cur_state</span>, <span class='ident'>Difficulty</span>::<span class='ident'>Normal</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>hard_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>hard_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>select_difficulty</span>(<span class='ident'>cur_state</span>, <span class='ident'>Difficulty</span>::<span class='ident'>Hard</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>back_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>back_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>press_back</span>(<span class='ident'>cur_state</span>);
+                <span class="kw">if</span> <span class="ident">easy_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">easy_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">select_difficulty</span>(<span class="ident">cur_state</span>, <span class="ident">Difficulty</span>::<span class="ident">Easy</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">normal_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">normal_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">select_difficulty</span>(<span class="ident">cur_state</span>, <span class="ident">Difficulty</span>::<span class="ident">Normal</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">hard_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">hard_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">select_difficulty</span>(<span class="ident">cur_state</span>, <span class="ident">Difficulty</span>::<span class="ident">Hard</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">back_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">back_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">press_back</span>(<span class="ident">cur_state</span>);
                 }
             }
-            <span class='ident'>GameState</span>::<span class='ident'>Playing</span> { .. } <span class='op'>=&gt;</span> {
-                <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
-                    .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span>[(<span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)), (<span class='self'>self</span>.<span class='ident'>mango_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))])
-                    .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+            <span class="ident">GameState</span>::<span class="ident">Playing</span> { .. } <span class="op">=&gt;</span> {
+                <span class="ident">Canvas</span>::<span class="ident">new</span>()
+                    .<span class="ident">flow_down</span>(<span class="kw-2">&amp;</span>[(<span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)), (<span class="self">self</span>.<span class="ident">mango_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>))])
+                    .<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                <span class='kw'>let</span> <span class='ident'>last_fruit</span> <span class='op'>=</span> <span class='ident'>state</span>::<span class='ident'>tick_mango</span>(<span class='ident'>cur_state</span>);
+                <span class="kw">let</span> <span class="ident">last_fruit</span> <span class="op">=</span> <span class="ident">state</span>::<span class="ident">tick_mango</span>(<span class="ident">cur_state</span>);
 
-                <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='string'>&quot;Poke a mango!&quot;</span>, <span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>top_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mango_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='ident'>fruit_name</span>(<span class='kw-2'>&amp;</span><span class='ident'>last_fruit</span>), <span class='self'>self</span>.<span class='ident'>mango_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>mango_button</span>);
+                <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="string">&quot;Poke a mango!&quot;</span>, <span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Align</span>::<span class="ident">Middle</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">top_label</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mango_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="ident">fruit_name</span>(<span class="kw-2">&amp;</span><span class="ident">last_fruit</span>), <span class="self">self</span>.<span class="ident">mango_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">mango_button</span>);
 
-                <span class='kw'>let</span> <span class='ident'>mango_button_clicked</span> <span class='op'>=</span> <span class='ident'>mango_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>mango_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>();
-                <span class='ident'>state</span>::<span class='ident'>end_mango</span>(<span class='ident'>cur_state</span>, <span class='ident'>mango_button_clicked</span>, <span class='ident'>last_fruit</span>.<span class='ident'>is_none</span>());
+                <span class="kw">let</span> <span class="ident">mango_button_clicked</span> <span class="op">=</span> <span class="ident">mango_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">mango_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>();
+                <span class="ident">state</span>::<span class="ident">end_mango</span>(<span class="ident">cur_state</span>, <span class="ident">mango_button_clicked</span>, <span class="ident">last_fruit</span>.<span class="ident">is_none</span>());
             }
-            <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { <span class='ident'>score</span>, .. } <span class='op'>=&gt;</span> {
-                <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
-                    .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span>[(<span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>score_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>done_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)),
-                                 (<span class='self'>self</span>.<span class='ident'>back_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))])
-                    .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+            <span class="ident">GameState</span>::<span class="ident">GameOver</span> { <span class="ident">score</span>, .. } <span class="op">=&gt;</span> {
+                <span class="ident">Canvas</span>::<span class="ident">new</span>()
+                    .<span class="ident">flow_down</span>(<span class="kw-2">&amp;</span>[(<span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">score_label_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">name_input_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">done_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)),
+                                 (<span class="self">self</span>.<span class="ident">back_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>))])
+                    .<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='string'>&quot;Game over&quot;</span>, <span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>top_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
-                <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Score: {}&quot;</span>, <span class='ident'>score</span>), <span class='self'>self</span>.<span class='ident'>score_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>score_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="string">&quot;Game over&quot;</span>, <span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Align</span>::<span class="ident">Middle</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">top_label</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
+                <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Score: {}&quot;</span>, <span class="ident">score</span>), <span class="self">self</span>.<span class="ident">score_label_canvas</span>, <span class="ident">Align</span>::<span class="ident">Middle</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">score_label</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                <span class='kw'>let</span> (<span class='kw-2'>mut</span> <span class='ident'>pressed</span>, <span class='ident'>correct_name</span>) <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>GameState</span>::<span class='ident'>GameOver</span> { <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>name</span>, .. } <span class='op'>=</span> <span class='op'>*</span><span class='ident'>cur_state</span> {
-                    <span class='kw'>let</span> <span class='ident'>name_c</span> <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>clone</span>();
-                    <span class='kw'>let</span> <span class='ident'>name_input</span> <span class='op'>=</span> <span class='ident'>TextBox</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>name_c</span>)
-                        .<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)
-                        .<span class='ident'>text_color</span>(<span class='ident'>WHITE</span>)
-                        .<span class='ident'>border</span>(<span class='number'>0.0</span>)
-                        .<span class='ident'>padded_w_of</span>(<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='number'>20.0</span>)
-                        .<span class='ident'>mid_left_with_margin_on</span>(<span class='self'>self</span>.<span class='ident'>name_input_canvas</span>, <span class='number'>20.0</span>);
+                <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">pressed</span>, <span class="ident">correct_name</span>) <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GameState</span>::<span class="ident">GameOver</span> { <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">name</span>, .. } <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cur_state</span> {
+                    <span class="kw">let</span> <span class="ident">name_c</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">clone</span>();
+                    <span class="kw">let</span> <span class="ident">name_input</span> <span class="op">=</span> <span class="ident">TextBox</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">name_c</span>)
+                        .<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)
+                        .<span class="ident">text_color</span>(<span class="ident">WHITE</span>)
+                        .<span class="ident">border</span>(<span class="number">0.0</span>)
+                        .<span class="ident">padded_w_of</span>(<span class="self">self</span>.<span class="ident">name_input_canvas</span>, <span class="number">20.0</span>)
+                        .<span class="ident">mid_left_with_margin_on</span>(<span class="self">self</span>.<span class="ident">name_input_canvas</span>, <span class="number">20.0</span>);
 
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pressed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
-                    <span class='kw'>for</span> <span class='ident'>ev</span> <span class='kw'>in</span> <span class='ident'>name_input</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>name_input</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>) {
-                        <span class='kw'>match</span> <span class='ident'>ev</span> {
-                            <span class='ident'>TextBoxEvent</span>::<span class='ident'>Update</span>(<span class='ident'>iname</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>iname</span>,
-                            <span class='ident'>TextBoxEvent</span>::<span class='ident'>Enter</span> <span class='op'>=&gt;</span> <span class='ident'>pressed</span> <span class='op'>=</span> <span class='bool-val'>true</span>,
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pressed</span> <span class="op">=</span> <span class="bool-val">false</span>;
+                    <span class="kw">for</span> <span class="ident">ev</span> <span class="kw">in</span> <span class="ident">name_input</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">name_input</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>) {
+                        <span class="kw">match</span> <span class="ident">ev</span> {
+                            <span class="ident">TextBoxEvent</span>::<span class="ident">Update</span>(<span class="ident">iname</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">name</span> <span class="op">=</span> <span class="ident">iname</span>,
+                            <span class="ident">TextBoxEvent</span>::<span class="ident">Enter</span> <span class="op">=&gt;</span> <span class="ident">pressed</span> <span class="op">=</span> <span class="bool-val">true</span>,
                         }
                     }
-                    (<span class='ident'>pressed</span>, <span class='ident'>name</span> <span class='op'>!=</span> <span class='string'>&quot;&quot;</span> <span class='op'>&amp;&amp;</span> <span class='ident'>name</span> <span class='op'>!=</span> <span class='string'>&quot;Your name&quot;</span>)
-                } <span class='kw'>else</span> {
-                    (<span class='bool-val'>false</span>, <span class='bool-val'>false</span>)
+                    (<span class="ident">pressed</span>, <span class="ident">name</span> <span class="op">!=</span> <span class="string">&quot;&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">name</span> <span class="op">!=</span> <span class="string">&quot;Your name&quot;</span>)
+                } <span class="kw">else</span> {
+                    (<span class="bool-val">false</span>, <span class="bool-val">false</span>)
                 };
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>done_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Done&quot;</span>, <span class='self'>self</span>.<span class='ident'>done_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>done_button</span>);
-                <span class='ident'>pressed</span> <span class='op'>=</span> <span class='ident'>pressed</span> <span class='op'>||</span> <span class='ident'>done_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>done_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">done_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Done&quot;</span>, <span class="self">self</span>.<span class="ident">done_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">done_button</span>);
+                <span class="ident">pressed</span> <span class="op">=</span> <span class="ident">pressed</span> <span class="op">||</span> <span class="ident">done_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">done_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>();
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>back_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Back&quot;</span>, <span class='self'>self</span>.<span class='ident'>back_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>back_button</span>);
-                <span class='kw'>let</span> <span class='ident'>back_pressed</span> <span class='op'>=</span> <span class='ident'>back_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>back_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">back_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Back&quot;</span>, <span class="self">self</span>.<span class="ident">back_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">back_button</span>);
+                <span class="kw">let</span> <span class="ident">back_pressed</span> <span class="op">=</span> <span class="ident">back_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">back_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>();
 
-                <span class='kw'>if</span> <span class='ident'>pressed</span> <span class='op'>&amp;&amp;</span> <span class='ident'>correct_name</span> {
-                    <span class='ident'>state</span>::<span class='ident'>submit_name</span>(<span class='ident'>cur_state</span>);
-                } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>back_pressed</span> {
-                    <span class='ident'>state</span>::<span class='ident'>press_back</span>(<span class='ident'>cur_state</span>);
+                <span class="kw">if</span> <span class="ident">pressed</span> <span class="op">&amp;&amp;</span> <span class="ident">correct_name</span> {
+                    <span class="ident">state</span>::<span class="ident">submit_name</span>(<span class="ident">cur_state</span>);
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">back_pressed</span> {
+                    <span class="ident">state</span>::<span class="ident">press_back</span>(<span class="ident">cur_state</span>);
                 }
             }
-            <span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(_) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>GameState</span>::<span class='ident'>DisplayLeaderboard</span>(<span class='kw-2'>ref</span> <span class='ident'>ldrbrd</span>) <span class='op'>=</span> <span class='op'>*</span><span class='ident'>cur_state</span> {
-                    <span class='kw'>let</span> <span class='ident'>leader_n</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>ldrbrd</span>.<span class='ident'>len</span>(), <span class='number'>10</span>);
+            <span class="ident">GameState</span>::<span class="ident">DisplayLeaderboard</span>(_) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GameState</span>::<span class="ident">DisplayLeaderboard</span>(<span class="kw-2">ref</span> <span class="ident">ldrbrd</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">cur_state</span> {
+                    <span class="kw">let</span> <span class="ident">leader_n</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">ldrbrd</span>.<span class="ident">len</span>(), <span class="number">10</span>);
 
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>canvases</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>leader_n</span> <span class='op'>+</span> <span class='number'>2</span>);
-                    <span class='ident'>canvases</span>.<span class='ident'>push</span>((<span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)));
-                    <span class='ident'>canvases</span>.<span class='ident'>append</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> (<span class='number'>0</span>..<span class='ident'>leader_n</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> (<span class='self'>self</span>.<span class='ident'>username_score_canvases</span>[<span class='ident'>i</span>], <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>))).<span class='ident'>collect</span>());
-                    <span class='ident'>canvases</span>.<span class='ident'>push</span>((<span class='self'>self</span>.<span class='ident'>back_button_canvas</span>, <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>)));
-                    <span class='ident'>Canvas</span>::<span class='ident'>new</span>()
-                        .<span class='ident'>flow_down</span>(<span class='kw-2'>&amp;</span><span class='ident'>canvases</span>)
-                        .<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">canvases</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">leader_n</span> <span class="op">+</span> <span class="number">2</span>);
+                    <span class="ident">canvases</span>.<span class="ident">push</span>((<span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)));
+                    <span class="ident">canvases</span>.<span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="number">0</span>..<span class="ident">leader_n</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">username_score_canvases</span>[<span class="ident">i</span>], <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>))).<span class="ident">collect</span>());
+                    <span class="ident">canvases</span>.<span class="ident">push</span>((<span class="self">self</span>.<span class="ident">back_button_canvas</span>, <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>)));
+                    <span class="ident">Canvas</span>::<span class="ident">new</span>()
+                        .<span class="ident">flow_down</span>(<span class="kw-2">&amp;</span><span class="ident">canvases</span>)
+                        .<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                    <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='string'>&quot;Leaderboard&quot;</span>, <span class='self'>self</span>.<span class='ident'>top_label_canvas</span>, <span class='ident'>Align</span>::<span class='ident'>Middle</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>top_label</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                    <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="string">&quot;Leaderboard&quot;</span>, <span class="self">self</span>.<span class="ident">top_label_canvas</span>, <span class="ident">Align</span>::<span class="ident">Middle</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">top_label</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
 
-                    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>leader_n</span> {
-                        <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='kw-2'>&amp;</span><span class='ident'>ldrbrd</span>[<span class='ident'>i</span>].<span class='ident'>name</span>, <span class='self'>self</span>.<span class='ident'>username_score_canvases</span>[<span class='ident'>i</span>], <span class='ident'>Align</span>::<span class='ident'>Start</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>usernames</span>[<span class='ident'>i</span>], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
-                        <span class='ident'>Widgets</span>::<span class='ident'>paddded_text</span>(<span class='kw-2'>&amp;</span><span class='ident'>ldrbrd</span>[<span class='ident'>i</span>].<span class='ident'>score</span>.<span class='ident'>to_string</span>(), <span class='self'>self</span>.<span class='ident'>username_score_canvases</span>[<span class='ident'>i</span>], <span class='ident'>Align</span>::<span class='ident'>End</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>scores</span>[<span class='ident'>i</span>], <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+                    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">leader_n</span> {
+                        <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="kw-2">&amp;</span><span class="ident">ldrbrd</span>[<span class="ident">i</span>].<span class="ident">name</span>, <span class="self">self</span>.<span class="ident">username_score_canvases</span>[<span class="ident">i</span>], <span class="ident">Align</span>::<span class="ident">Start</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">usernames</span>[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
+                        <span class="ident">Widgets</span>::<span class="ident">paddded_text</span>(<span class="kw-2">&amp;</span><span class="ident">ldrbrd</span>[<span class="ident">i</span>].<span class="ident">score</span>.<span class="ident">to_string</span>(), <span class="self">self</span>.<span class="ident">username_score_canvases</span>[<span class="ident">i</span>], <span class="ident">Align</span>::<span class="ident">End</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">scores</span>[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
                     }
                 }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>back_button</span> <span class='op'>=</span> <span class='ident'>Widgets</span>::<span class='ident'>padded_butan</span>(<span class='string'>&quot;Back&quot;</span>, <span class='self'>self</span>.<span class='ident'>back_button_canvas</span>);
-                <span class='ident'>set_button_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>back_button</span>);
-                <span class='kw'>if</span> <span class='ident'>back_button</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>back_button</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>).<span class='ident'>was_clicked</span>() {
-                    <span class='ident'>state</span>::<span class='ident'>press_back</span>(<span class='ident'>cur_state</span>);
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">back_button</span> <span class="op">=</span> <span class="ident">Widgets</span>::<span class="ident">padded_butan</span>(<span class="string">&quot;Back&quot;</span>, <span class="self">self</span>.<span class="ident">back_button_canvas</span>);
+                <span class="ident">set_button_style</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">back_button</span>);
+                <span class="kw">if</span> <span class="ident">back_button</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">back_button</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>).<span class="ident">was_clicked</span>() {
+                    <span class="ident">state</span>::<span class="ident">press_back</span>(<span class="ident">cur_state</span>);
                 }
             }
-            <span class='ident'>GameState</span>::<span class='ident'>GameEnded</span> { .. } <span class='op'>|</span>
-            <span class='ident'>GameState</span>::<span class='ident'>LoadLeaderboard</span> <span class='op'>|</span>
-            <span class='ident'>GameState</span>::<span class='ident'>Exit</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>Canvas</span>::<span class='ident'>new</span>().<span class='ident'>color</span>(<span class='ident'>DARK_CHARCOAL</span>).<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>main_canvas</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ui_wdgts</span>);
+            <span class="ident">GameState</span>::<span class="ident">GameEnded</span> { .. } <span class="op">|</span>
+            <span class="ident">GameState</span>::<span class="ident">LoadLeaderboard</span> <span class="op">|</span>
+            <span class="ident">GameState</span>::<span class="ident">Exit</span> <span class="op">=&gt;</span> {
+                <span class="ident">Canvas</span>::<span class="ident">new</span>().<span class="ident">color</span>(<span class="ident">DARK_CHARCOAL</span>).<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">main_canvas</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ui_wdgts</span>);
             }
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>padded_butan</span>(<span class='ident'>label</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>canvas</span>: <span class='ident'>Id</span>) <span class='op'>-&gt;</span> <span class='ident'>Button</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>Flat</span><span class='op'>&gt;</span> {
-        <span class='ident'>Button</span>::<span class='ident'>new</span>()
-            .<span class='ident'>label</span>(<span class='ident'>label</span>)
-            .<span class='ident'>padded_wh_of</span>(<span class='ident'>canvas</span>, <span class='number'>20.0</span>)
-            .<span class='ident'>mid_top_with_margin_on</span>(<span class='ident'>canvas</span>, <span class='number'>20.0</span>)
+    <span class="kw">fn</span> <span class="ident">padded_butan</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">canvas</span>: <span class="ident">Id</span>) <span class="op">-&gt;</span> <span class="ident">Button</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">Flat</span><span class="op">&gt;</span> {
+        <span class="ident">Button</span>::<span class="ident">new</span>()
+            .<span class="ident">label</span>(<span class="ident">label</span>)
+            .<span class="ident">padded_wh_of</span>(<span class="ident">canvas</span>, <span class="number">20.0</span>)
+            .<span class="ident">mid_top_with_margin_on</span>(<span class="ident">canvas</span>, <span class="number">20.0</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>paddded_text</span>(<span class='ident'>label</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>canvas</span>: <span class='ident'>Id</span>, <span class='ident'>alignment</span>: <span class='ident'>Align</span>) <span class='op'>-&gt;</span> <span class='ident'>Text</span> {
-        <span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='ident'>label</span>)
-            .<span class='ident'>color</span>(<span class='ident'>WHITE</span>)
-            .<span class='ident'>padded_w_of</span>(<span class='ident'>canvas</span>, <span class='number'>5.0</span>)
-            .<span class='ident'>mid_left_with_margin_on</span>(<span class='ident'>canvas</span>, <span class='number'>5.0</span>)
-            .<span class='ident'>line_spacing</span>(<span class='number'>2.0</span>)
-            .<span class='ident'>align_text_to</span>(<span class='ident'>alignment</span>)
+    <span class="kw">fn</span> <span class="ident">paddded_text</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">canvas</span>: <span class="ident">Id</span>, <span class="ident">alignment</span>: <span class="ident">Align</span>) <span class="op">-&gt;</span> <span class="ident">Text</span> {
+        <span class="ident">Text</span>::<span class="ident">new</span>(<span class="ident">label</span>)
+            .<span class="ident">color</span>(<span class="ident">WHITE</span>)
+            .<span class="ident">padded_w_of</span>(<span class="ident">canvas</span>, <span class="number">5.0</span>)
+            .<span class="ident">mid_left_with_margin_on</span>(<span class="ident">canvas</span>, <span class="number">5.0</span>)
+            .<span class="ident">line_spacing</span>(<span class="number">2.0</span>)
+            .<span class="ident">align_text_to</span>(<span class="ident">alignment</span>)
     }
 }
 </pre>
@@ -761,18 +773,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -805,7 +821,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

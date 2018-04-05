@@ -9,14 +9,18 @@
 
     <title>ncurses::constants::LcCategory - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>ncurses</a>::<wbr><a href='index.html'>constants</a></p><script>window.sidebarCurrent = {name: 'LcCategory', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum LcCategory</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.all">all</a><a href="#variant.collate">collate</a><a href="#variant.ctype">ctype</a><a href="#variant.monetary">monetary</a><a href="#variant.numeric">numeric</a><a href="#variant.time">time</a><a href="#variant.messages">messages</a></div></div><p class='location'><a href='../index.html'>ncurses</a>::<wbr><a href='index.html'>constants</a></p><script>window.sidebarCurrent = {name: 'LcCategory', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>ncurses</a>::<wbr><a href='index.html'>constants</a>::<wbr><a class='enum' href=''>LcCategory</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>ncurses</a>::<wbr><a href='index.html'>constants</a>::<wbr><a class="enum" href=''>LcCategory</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -57,8 +69,9 @@
     numeric,
     time,
     messages,
-}</pre><h2 class='variants'>Variants</h2>
-<span id='variant.all' class='variant'><span id='all.v' class='invisible'><code>all</code></span></span><span id='variant.collate' class='variant'><span id='collate.v' class='invisible'><code>collate</code></span></span><span id='variant.ctype' class='variant'><span id='ctype.v' class='invisible'><code>ctype</code></span></span><span id='variant.monetary' class='variant'><span id='monetary.v' class='invisible'><code>monetary</code></span></span><span id='variant.numeric' class='variant'><span id='numeric.v' class='invisible'><code>numeric</code></span></span><span id='variant.time' class='variant'><span id='time.v' class='invisible'><code>time</code></span></span><span id='variant.messages' class='variant'><span id='messages.v' class='invisible'><code>messages</code></span></span></section>
+}</pre><h2 id='variants' class='variants small-section-header'>
+                   Variants<a href='#variants' class='anchor'></a></h2>
+<span id="variant.all" class="variant small-section-header"><a href="#variant.all" class="anchor field"></a><span id='all.v' class='invisible'><code>all</code></span></span><span id="variant.collate" class="variant small-section-header"><a href="#variant.collate" class="anchor field"></a><span id='collate.v' class='invisible'><code>collate</code></span></span><span id="variant.ctype" class="variant small-section-header"><a href="#variant.ctype" class="anchor field"></a><span id='ctype.v' class='invisible'><code>ctype</code></span></span><span id="variant.monetary" class="variant small-section-header"><a href="#variant.monetary" class="anchor field"></a><span id='monetary.v' class='invisible'><code>monetary</code></span></span><span id="variant.numeric" class="variant small-section-header"><a href="#variant.numeric" class="anchor field"></a><span id='numeric.v' class='invisible'><code>numeric</code></span></span><span id="variant.time" class="variant small-section-header"><a href="#variant.time" class="anchor field"></a><span id='time.v' class='invisible'><code>time</code></span></span><span id="variant.messages" class="variant small-section-header"><a href="#variant.messages" class="anchor field"></a><span id='messages.v' class='invisible'><code>messages</code></span></span></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -71,18 +84,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -115,7 +132,6 @@
         window.rootPath = "../../";
         window.currentCrate = "ncurses";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>cursive::view::Boxable - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'Boxable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Boxable</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.boxed">boxed</a><a href="#method.fixed_size">fixed_size</a><a href="#method.fixed_width">fixed_width</a><a href="#method.fixed_height">fixed_height</a><a href="#method.full_screen">full_screen</a><a href="#method.full_width">full_width</a><a href="#method.full_height">full_height</a><a href="#method.max_size">max_size</a><a href="#method.max_width">max_width</a><a href="#method.max_height">max_height</a><a href="#method.min_size">min_size</a><a href="#method.min_width">min_width</a><a href="#method.min_height">min_height</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'Boxable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,47 +54,51 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class='trait' href=''>Boxable</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class="trait" href=''>Boxable</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/view/boxable.rs.html#8-74' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Boxable: <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    fn <a href='#method.boxed' class='fnname'>boxed</a>(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.fixed_size' class='fnname'>fixed_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.fixed_width' class='fnname'>fixed_width</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.fixed_height' class='fnname'>fixed_height</a>(self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.full_screen' class='fnname'>full_screen</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.full_width' class='fnname'>full_width</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.full_height' class='fnname'>full_height</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.max_size' class='fnname'>max_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.max_width' class='fnname'>max_width</a>(self, max_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.max_height' class='fnname'>max_height</a>(self, max_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.min_size' class='fnname'>min_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.min_width' class='fnname'>min_width</a>(self, min_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
-    fn <a href='#method.min_height' class='fnname'>min_height</a>(self, min_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt; { ... }
+<pre class='rust trait'>pub trait Boxable: <a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    fn <a href='#method.boxed' class='fnname'>boxed</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: <a class="enum" href="../../cursive/view/enum.SizeConstraint.html" title="enum cursive::view::SizeConstraint">SizeConstraint</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height: <a class="enum" href="../../cursive/view/enum.SizeConstraint.html" title="enum cursive::view::SizeConstraint">SizeConstraint</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.fixed_size' class='fnname'>fixed_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.fixed_width' class='fnname'>fixed_width</a>(self, width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.fixed_height' class='fnname'>fixed_height</a>(self, height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.full_screen' class='fnname'>full_screen</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.full_width' class='fnname'>full_width</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.full_height' class='fnname'>full_height</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.max_size' class='fnname'>max_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.max_width' class='fnname'>max_width</a>(self, max_width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.max_height' class='fnname'>max_height</a>(self, max_height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.min_size' class='fnname'>min_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.min_width' class='fnname'>min_width</a>(self, min_width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.min_height' class='fnname'>min_height</a>(self, min_height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt; { ... }
 }</pre><div class='docblock'><p>Makes a view wrappable in a <a href="../views/struct.BoxView.html"><code>BoxView</code></a>.</p>
 </div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='method.boxed' class='method stab '><span id='boxed.v' class='invisible'><code>fn <a href='#method.boxed' class='fnname'>boxed</a>(self, width: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>, height: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> with the given size constraints.</p>
-</div><h3 id='method.fixed_size' class='method stab '><span id='fixed_size.v' class='invisible'><code>fn <a href='#method.fixed_size' class='fnname'>fixed_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-size <code>BoxView</code>.</p>
-</div><h3 id='method.fixed_width' class='method stab '><span id='fixed_width.v' class='invisible'><code>fn <a href='#method.fixed_width' class='fnname'>fixed_width</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-width <code>BoxView</code>.</p>
-</div><h3 id='method.fixed_height' class='method stab '><span id='fixed_height.v' class='invisible'><code>fn <a href='#method.fixed_height' class='fnname'>fixed_height</a>(self, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-width <code>BoxView</code>.</p>
-</div><h3 id='method.full_screen' class='method stab '><span id='full_screen.v' class='invisible'><code>fn <a href='#method.full_screen' class='fnname'>full_screen</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-screen <code>BoxView</code>.</p>
-</div><h3 id='method.full_width' class='method stab '><span id='full_width.v' class='invisible'><code>fn <a href='#method.full_width' class='fnname'>full_width</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-width <code>BoxView</code>.</p>
-</div><h3 id='method.full_height' class='method stab '><span id='full_height.v' class='invisible'><code>fn <a href='#method.full_height' class='fnname'>full_height</a>(self) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-height <code>BoxView</code>.</p>
-</div><h3 id='method.max_size' class='method stab '><span id='max_size.v' class='invisible'><code>fn <a href='#method.max_size' class='fnname'>max_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-size <code>BoxView</code>.</p>
-</div><h3 id='method.max_width' class='method stab '><span id='max_width.v' class='invisible'><code>fn <a href='#method.max_width' class='fnname'>max_width</a>(self, max_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-width <code>BoxView</code>.</p>
-</div><h3 id='method.max_height' class='method stab '><span id='max_height.v' class='invisible'><code>fn <a href='#method.max_height' class='fnname'>max_height</a>(self, max_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-height <code>BoxView</code>.</p>
-</div><h3 id='method.min_size' class='method stab '><span id='min_size.v' class='invisible'><code>fn <a href='#method.min_size' class='fnname'>min_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a <code>BoxView</code> at least sized <code>size</code>.</p>
-</div><h3 id='method.min_width' class='method stab '><span id='min_width.v' class='invisible'><code>fn <a href='#method.min_width' class='fnname'>min_width</a>(self, min_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> at least <code>min_width</code> wide.</p>
-</div><h3 id='method.min_height' class='method stab '><span id='min_height.v' class='invisible'><code>fn <a href='#method.min_height' class='fnname'>min_height</a>(self, min_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../cursive/views/struct.BoxView.html' title='cursive::views::BoxView'>BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> at least <code>min_height</code> tall.</p>
+        <h3 id='method.boxed' class='method'><span id='boxed.v' class='invisible'><code>fn <a href='#method.boxed' class='fnname'>boxed</a>(self, width: <a class="enum" href="../../cursive/view/enum.SizeConstraint.html" title="enum cursive::view::SizeConstraint">SizeConstraint</a>, height: <a class="enum" href="../../cursive/view/enum.SizeConstraint.html" title="enum cursive::view::SizeConstraint">SizeConstraint</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> with the given size constraints.</p>
+</div><h3 id='method.fixed_size' class='method'><span id='fixed_size.v' class='invisible'><code>fn <a href='#method.fixed_size' class='fnname'>fixed_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-size <code>BoxView</code>.</p>
+</div><h3 id='method.fixed_width' class='method'><span id='fixed_width.v' class='invisible'><code>fn <a href='#method.fixed_width' class='fnname'>fixed_width</a>(self, width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-width <code>BoxView</code>.</p>
+</div><h3 id='method.fixed_height' class='method'><span id='fixed_height.v' class='invisible'><code>fn <a href='#method.fixed_height' class='fnname'>fixed_height</a>(self, height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a fixed-width <code>BoxView</code>.</p>
+</div><h3 id='method.full_screen' class='method'><span id='full_screen.v' class='invisible'><code>fn <a href='#method.full_screen' class='fnname'>full_screen</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-screen <code>BoxView</code>.</p>
+</div><h3 id='method.full_width' class='method'><span id='full_width.v' class='invisible'><code>fn <a href='#method.full_width' class='fnname'>full_width</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-width <code>BoxView</code>.</p>
+</div><h3 id='method.full_height' class='method'><span id='full_height.v' class='invisible'><code>fn <a href='#method.full_height' class='fnname'>full_height</a>(self) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a full-height <code>BoxView</code>.</p>
+</div><h3 id='method.max_size' class='method'><span id='max_size.v' class='invisible'><code>fn <a href='#method.max_size' class='fnname'>max_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-size <code>BoxView</code>.</p>
+</div><h3 id='method.max_width' class='method'><span id='max_width.v' class='invisible'><code>fn <a href='#method.max_width' class='fnname'>max_width</a>(self, max_width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-width <code>BoxView</code>.</p>
+</div><h3 id='method.max_height' class='method'><span id='max_height.v' class='invisible'><code>fn <a href='#method.max_height' class='fnname'>max_height</a>(self, max_height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a limited-height <code>BoxView</code>.</p>
+</div><h3 id='method.min_size' class='method'><span id='min_size.v' class='invisible'><code>fn <a href='#method.min_size' class='fnname'>min_size</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(self, size: S) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> into a <code>BoxView</code> at least sized <code>size</code>.</p>
+</div><h3 id='method.min_width' class='method'><span id='min_width.v' class='invisible'><code>fn <a href='#method.min_width' class='fnname'>min_width</a>(self, min_width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> at least <code>min_width</code> wide.</p>
+</div><h3 id='method.min_height' class='method'><span id='min_height.v' class='invisible'><code>fn <a href='#method.min_height' class='fnname'>min_height</a>(self, min_height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../../cursive/views/struct.BoxView.html" title="struct cursive::views::BoxView">BoxView</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Wraps <code>self</code> in a <code>BoxView</code> at least <code>min_height</code> tall.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; Boxable for T</code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/cursive/view/boxable.rs.html#76' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; Boxable for T</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/cursive/view/trait.Boxable.js">
                  </script></section>
@@ -98,18 +114,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -142,7 +162,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

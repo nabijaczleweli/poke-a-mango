@@ -4,19 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.85.0/src/menu/constants.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.91.0/src/menu/constants.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>constants.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -72,37 +84,37 @@
 <span id="28">28</span>
 <span id="29">29</span>
 <span id="30">30</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>constants</span>::<span class='ident'>KEY_MAX</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">constants</span>::<span class="ident">KEY_MAX</span>;
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_ONEVALUE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x01</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_SHOWDESC</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x02</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_ROWMAJOR</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x04</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_IGNORECASE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x08</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_SHOWMATCH</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x10</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_NONCYCLIC</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x20</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>O_SELECTABLE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x01</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_ONEVALUE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x01</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_SHOWDESC</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x02</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_ROWMAJOR</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x04</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_IGNORECASE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x08</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_SHOWMATCH</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_NONCYCLIC</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x20</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">O_SELECTABLE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x01</span>;
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_LEFT_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_RIGHT_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_UP_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>3</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_DOWN_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_SCR_ULINE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>5</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_SCR_DLINE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>6</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_SCR_DPAGE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>7</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_SCR_UPAGE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>8</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_FIRST_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>9</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_LAST_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>10</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_NEXT_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>11</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_PREV_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>12</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_TOGGLE_ITEM</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>13</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_CLEAR_PATTERN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>14</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_BACK_PATTERN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>15</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_NEXT_MATCH</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>16</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REQ_PREV_MATCH</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>17</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_LEFT_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_RIGHT_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_UP_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_DOWN_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_SCR_ULINE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_SCR_DLINE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_SCR_DPAGE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_SCR_UPAGE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_FIRST_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">9</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_LAST_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_NEXT_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">11</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_PREV_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">12</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_TOGGLE_ITEM</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">13</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_CLEAR_PATTERN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">14</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_BACK_PATTERN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">15</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_NEXT_MATCH</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">16</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REQ_PREV_MATCH</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">17</span>;
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIN_MENU_COMMAND</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MAX_MENU_COMMAND</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>KEY_MAX</span> <span class='op'>+</span> <span class='number'>17</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN_MENU_COMMAND</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_MENU_COMMAND</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">KEY_MAX</span> <span class="op">+</span> <span class="number">17</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -117,18 +129,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -161,7 +177,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "ncurses";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

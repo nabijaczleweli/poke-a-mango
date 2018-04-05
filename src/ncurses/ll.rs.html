@@ -4,19 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.85.0/src/ll.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.91.0/src/ll.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ll.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -425,10 +437,15 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-<span class='comment'>/*
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+</pre><pre class="rust ">
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
+<span class="comment">/*
 Copyright © 2013 Free Software Foundation, Inc
 See licensing in LICENSE file
 
@@ -439,376 +456,381 @@ Low-level interface to foreign
 ncurses functions.
  */</span>
 
-<span class='kw'>use</span> <span class='ident'>libc</span>::{ <span class='ident'>c_char</span>, <span class='ident'>c_int</span>, <span class='ident'>c_short</span>, <span class='ident'>c_uint</span>, <span class='ident'>c_ulong</span>, <span class='ident'>c_void</span>, <span class='ident'>FILE</span> };
+<span class="kw">use</span> <span class="ident">libc</span>::{ <span class="ident">c_char</span>, <span class="ident">c_int</span>, <span class="ident">c_short</span>, <span class="ident">c_uint</span>, <span class="ident">c_ulong</span>, <span class="ident">c_void</span>, <span class="ident">FILE</span> };
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>c_bool</span> <span class='op'>=</span> ::<span class='ident'>libc</span>::<span class='ident'>c_uchar</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">c_bool</span> <span class="op">=</span> ::<span class="ident">libc</span>::<span class="ident">c_uchar</span>;
 
-<span class='comment'>/* Intrinsic types. */</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;wide_chtype&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>chtype</span> <span class='op'>=</span> <span class='ident'>u64</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;wide_chtype&quot;</span>))]</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>chtype</span> <span class='op'>=</span> <span class='ident'>u32</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>winttype</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
+<span class="comment">/* Intrinsic types. */</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;wide_chtype&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">chtype</span> <span class="op">=</span> <span class="ident">u64</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;wide_chtype&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">chtype</span> <span class="op">=</span> <span class="ident">u32</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">winttype</span> <span class="op">=</span> <span class="ident">c_uint</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>mmask_t</span> <span class='op'>=</span> <span class='ident'>chtype</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>attr_t</span> <span class='op'>=</span> <span class='ident'>chtype</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>NCURSES_ATTR_T</span> <span class='op'>=</span> <span class='ident'>attr_t</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">mmask_t</span> <span class="op">=</span> <span class="ident">chtype</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">attr_t</span> <span class="op">=</span> <span class="ident">chtype</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">NCURSES_ATTR_T</span> <span class="op">=</span> <span class="ident">attr_t</span>;
 
-<span class='comment'>/* Pointer types. */</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>attr_t_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>attr_t</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>short_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_short</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>void_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>char_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>chtype_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>chtype</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>WINDOW</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>i8</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SCREEN</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>i8</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>FILE_p</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>FILE</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>va_list</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>;
+<span class="comment">/* Pointer types. */</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">attr_t_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">attr_t</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">short_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_short</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">void_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">char_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">chtype_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">chtype</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">WINDOW</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">i8</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SCREEN</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">i8</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">FILE_p</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">FILE</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">va_list</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>;
 
-<span class='comment'>/* Custom Types. */</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MEVENT</span> { <span class='kw'>pub</span> <span class='ident'>id</span>: <span class='ident'>c_short</span>, <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>c_int</span>, <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>c_int</span>, <span class='kw'>pub</span> <span class='ident'>z</span>: <span class='ident'>c_int</span>, <span class='kw'>pub</span> <span class='ident'>bstate</span>: <span class='ident'>mmask_t</span>}
+<span class="comment">/* Custom Types. */</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MEVENT</span> { <span class="kw">pub</span> <span class="ident">id</span>: <span class="ident">c_short</span>, <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">c_int</span>, <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">c_int</span>, <span class="kw">pub</span> <span class="ident">z</span>: <span class="ident">c_int</span>, <span class="kw">pub</span> <span class="ident">bstate</span>: <span class="ident">mmask_t</span>}
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>define_sharedffi</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cfgopt</span>: <span class='ident'>meta</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>link</span>: <span class='ident'>meta</span>) <span class='op'>=&gt;</span> {
-        <span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cfgopt</span>]</span> <span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>link</span>]</span> <span class='kw'>extern</span> {
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>addch</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>addchnstr</span>(_:<span class='op'>*</span><span class='kw'>const</span> <span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>addchstr</span>(_:<span class='op'>*</span><span class='kw'>const</span> <span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>addnstr</span>(_:<span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>addstr</span>(_:<span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>assume_default_colors</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attroff</span>(_:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attron</span>(_:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attrset</span>(_:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attr_get</span>(_:<span class='ident'>attr_t_p</span>, _:<span class='ident'>short_p</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attr_off</span>(_:<span class='ident'>attr_t</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attr_on</span>(_:<span class='ident'>attr_t</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>attr_set</span>(_:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>baudrate</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>beep</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bkgd</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bkgdset</span>(_:<span class='ident'>chtype</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>border</span>(_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>box_</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>can_change_color</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cbreak</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>chgat</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clearok</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clrtobot</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clrtoeol</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>color_content</span>(_:<span class='ident'>c_short</span>,_:<span class='ident'>short_p</span>,_:<span class='ident'>short_p</span>,_:<span class='ident'>short_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>color_set</span>(_:<span class='ident'>c_short</span>,_:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>COLOR_PAIR</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copywin</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>curs_set</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>def_prog_mode</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>def_shell_mode</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delay_output</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delch</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delscreen</span>(_:<span class='ident'>SCREEN</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delwin</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deleteln</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>derwin</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>doupdate</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dupwin</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>echo</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>echochar</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>erase</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>endwin</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>erasechar</span>() <span class='op'>-&gt;</span> <span class='ident'>c_char</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>filter</span>();
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flash</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flushinp</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getbkgd</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getch</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getnstr</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getstr</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getwin</span>(_:<span class='ident'>FILE_p</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>halfdelay</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_colors</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_ic</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_il</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>hline</span>(_:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>idcok</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_bool</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>idlok</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>immedok</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_bool</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inch</span>() <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inchnstr</span>(_:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inchstr</span>(_:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>initscr</span>() <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>init_color</span>(_:<span class='ident'>c_short</span>,_:<span class='ident'>c_short</span>,_:<span class='ident'>c_short</span>,_:<span class='ident'>c_short</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>init_pair</span>(_:<span class='ident'>c_short</span>,_:<span class='ident'>c_short</span>,_:<span class='ident'>c_short</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>innstr</span>(_:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insch</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insdelln</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insertln</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insnstr</span>(_:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insstr</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>instr</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>intrflush</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>isendwin</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_linetouched</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_wintouched</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>keyname</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>keypad</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>killchar</span>() <span class='op'>-&gt;</span> <span class='ident'>c_char</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>leaveok</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>longname</span>() <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>meta</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='attribute'>#[<span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;move&quot;</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mv</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvaddch</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvaddchnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvaddchstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvaddnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvaddstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvchgat</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvcur</span>(_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvdelch</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvderwin</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvgetch</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvgetnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvgetstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvhline</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinch</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinchnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinchstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinsch</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinsnstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinsstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvinstr</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvprintw</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>//  fn mvscanw(_:c_int,_:c_int, _:char_p) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvvline</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwaddch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwaddchnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwaddchstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwaddnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwaddstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwchgat</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwdelch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwgetch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwgetnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwgetstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwhline</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwin</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinchnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinchstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinsch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinsnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinsstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwinstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwprintw</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">define_sharedffi</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cfgopt</span>: <span class="ident">meta</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">link</span>: <span class="ident">meta</span>) <span class="op">=&gt;</span> {
+        <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cfgopt</span>]</span> <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">link</span>]</span> <span class="kw">extern</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addch</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addchnstr</span>(_:<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addchstr</span>(_:<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addnstr</span>(_:<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addstr</span>(_:<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">assume_default_colors</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attroff</span>(_:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attron</span>(_:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attrset</span>(_:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attr_get</span>(_:<span class="ident">attr_t_p</span>, _:<span class="ident">short_p</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attr_off</span>(_:<span class="ident">attr_t</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attr_on</span>(_:<span class="ident">attr_t</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attr_set</span>(_:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">baudrate</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">beep</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bkgd</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bkgdset</span>(_:<span class="ident">chtype</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border</span>(_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">box_</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_change_color</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cbreak</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">chgat</span>(_:<span class="ident">c_int</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clearok</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clrtobot</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clrtoeol</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">color_content</span>(_:<span class="ident">c_short</span>,_:<span class="ident">short_p</span>,_:<span class="ident">short_p</span>,_:<span class="ident">short_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">color_set</span>(_:<span class="ident">c_short</span>,_:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">COLOR_PAIR</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copywin</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">curs_set</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_prog_mode</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_shell_mode</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delay_output</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delch</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delscreen</span>(_:<span class="ident">SCREEN</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delwin</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deleteln</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derwin</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">doupdate</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dupwin</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">echo</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">echochar</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">erase</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">endwin</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">erasechar</span>() <span class="op">-&gt;</span> <span class="ident">c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>();
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flash</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flushinp</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getbkgd</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getch</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getnstr</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getstr</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getwin</span>(_:<span class="ident">FILE_p</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">halfdelay</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_colors</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_ic</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_il</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hline</span>(_:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">idcok</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_bool</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">idlok</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">immedok</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_bool</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inch</span>() <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inchnstr</span>(_:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inchstr</span>(_:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initscr</span>() <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init_color</span>(_:<span class="ident">c_short</span>,_:<span class="ident">c_short</span>,_:<span class="ident">c_short</span>,_:<span class="ident">c_short</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init_pair</span>(_:<span class="ident">c_short</span>,_:<span class="ident">c_short</span>,_:<span class="ident">c_short</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">innstr</span>(_:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insch</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insdelln</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insertln</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insnstr</span>(_:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insstr</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">instr</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intrflush</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isendwin</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_linetouched</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_term_resized</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_wintouched</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keyname</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keypad</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">killchar</span>() <span class="op">-&gt;</span> <span class="ident">c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">leaveok</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longname</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">meta</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="attribute">#[<span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;move&quot;</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mv</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvaddch</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvaddchnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvaddchstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvaddnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvaddstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvchgat</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvcur</span>(_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvdelch</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvderwin</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvgetch</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvgetnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvgetstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvhline</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinch</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinchnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinchstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinsch</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinsnstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinsstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvinstr</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvprintw</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">//  fn mvscanw(_:c_int,_:c_int, _:char_p) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvvline</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwaddch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwaddchnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwaddchstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwaddnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwaddstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwchgat</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwdelch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwgetch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwgetnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwgetstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwhline</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwin</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinchnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinchstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinsch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinsnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinsstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwinstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwprintw</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-            <span class='comment'>//  fn mvwscanw(_:WINDOW, _:c_int, _:c_int, _:char_p) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwvline</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>napms</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>newpad</span>(_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>newterm</span>(_:<span class='ident'>char_p</span>,_:<span class='ident'>FILE_p</span>,_:<span class='ident'>FILE_p</span>) <span class='op'>-&gt;</span> <span class='ident'>SCREEN</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>newwin</span>(_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>nl</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>nocbreak</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>nodelay</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>noecho</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>nonl</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>noqiflush</span>();
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>noraw</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>notimeout</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>overlay</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>overwrite</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pair_content</span>(_:<span class='ident'>c_short</span>,_:<span class='ident'>short_p</span>,_:<span class='ident'>short_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>PAIR_NUMBER</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pechochar</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pnoutrefresh</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prefresh</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+            <span class="comment">//  fn mvwscanw(_:WINDOW, _:c_int, _:c_int, _:char_p) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwvline</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">napms</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">newpad</span>(_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">newterm</span>(_:<span class="ident">char_p</span>,_:<span class="ident">FILE_p</span>,_:<span class="ident">FILE_p</span>) <span class="op">-&gt;</span> <span class="ident">SCREEN</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">newwin</span>(_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nl</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nocbreak</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nodelay</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">noecho</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nonl</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">noqiflush</span>();
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">noraw</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notimeout</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overlay</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overwrite</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pair_content</span>(_:<span class="ident">c_short</span>,_:<span class="ident">short_p</span>,_:<span class="ident">short_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">PAIR_NUMBER</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pechochar</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pnoutrefresh</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prefresh</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>printw</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>putwin</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>FILE_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>qiflush</span>();
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>raw</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>redrawwin</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>refresh</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resetty</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reset_prog_mode</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reset_shell_mode</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>// fn ripoffline(_:c_int, extern  fn f(WINDOW, c_int) -&gt; c_int) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>savetty</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>// fn scanw(_:NCURSES_CONST char_p,...) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scr_dump</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scr_init</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scrl</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scroll</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scrollok</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scr_restore</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scr_set</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>setlocale</span>(_:<span class='ident'>c_int</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>char_p</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>setscrreg</span>(_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_term</span>(_:<span class='ident'>SCREEN</span>) <span class='op'>-&gt;</span> <span class='ident'>SCREEN</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attroff</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attr_off</span>(_:<span class='ident'>attr_t</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attron</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attr_on</span>(_:<span class='ident'>attr_t</span>,_:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attrset</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attr</span>() <span class='op'>-&gt;</span> <span class='ident'>attr_t</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_attr_set</span>(_:<span class='ident'>attr_t</span>,_:<span class='ident'>c_short</span>,_:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_clear</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_color</span>(_:<span class='ident'>c_short</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_init</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_label</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>char_p</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_noutrefresh</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_refresh</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_restore</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_set</span>(_:<span class='ident'>c_int</span>,_:<span class='ident'>char_p</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>slk_touch</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>standout</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>standend</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>start_color</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>subpad</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>subwin</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>syncok</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>termattrs</span>() <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>termname</span>() <span class='op'>-&gt;</span> <span class='ident'>char_p</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>timeout</span>(_:<span class='ident'>c_int</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>touchline</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>touchwin</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>typeahead</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ungetch</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>untouchwin</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>use_env</span>(_:<span class='ident'>c_bool</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>use_default_colors</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vidattr</span>(_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>//  fn vidputs(_:chtype, extern  fn f(c_int) -&gt; c_int) -&gt; c_int;</span>
-            <span class='comment'>//pub fn vidputs(_:chtype, f:*mut c_char) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vline</span>(_:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vwprintw</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>va_list</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vw_printw</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>,_:<span class='ident'>va_list</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>//  fn vwscanw(_:WINDOW, _:char_p, _:va_list) -&gt; c_int;</span>
-            <span class='comment'>//  fn vw_scanw(_:WINDOW, _:char_p, _:va_list) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waddch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waddchnstr</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>chtype_p</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waddchstr</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waddnstr</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>char_p</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waddstr</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattron</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattroff</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattrset</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>NCURSES_ATTR_T</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattr_get</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>attr_t_p</span>, _:<span class='ident'>short_p</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattr_on</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattr_off</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wattr_set</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wbkgd</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wbkgdset</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>chtype</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wborder</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wchgat</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>attr_t</span>, _:<span class='ident'>c_short</span>, _:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wclear</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wclrtobot</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wclrtoeol</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wcolor_set</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_short</span>,_:<span class='ident'>void_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wcursyncup</span>(_:<span class='ident'>WINDOW</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wdelch</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wdeleteln</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wechochar</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>werase</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wgetch</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wget_wch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>winttype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvwget_wch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>, _:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>winttype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mvget_wch</span>(_:<span class='ident'>c_int</span>, _: <span class='ident'>c_int</span>, _:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>winttype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_wch</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>winttype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unget_wch</span>(_:<span class='ident'>winttype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wgetnstr</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>char_p</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wgetstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>whline</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winch</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>chtype</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winchnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winchstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winsch</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>chtype</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winsdelln</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winsertln</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winsnstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winsstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>winstr</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wmove</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wnoutrefresh</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wprintw</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wredrawln</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wrefresh</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wresize</span>(_:<span class='ident'>WINDOW</span>, _:<span class='ident'>c_int</span>, _:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>//  fn wscanw(_:WINDOW, _:NCURSES_CONST char_p) -&gt; c_int;</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wscrl</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wsetscrreg</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wstandout</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wstandend</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wsyncdown</span>(_:<span class='ident'>WINDOW</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wsyncup</span>(_:<span class='ident'>WINDOW</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wtimeout</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>);
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wtouchln</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wvline</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>chtype</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">printw</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">putwin</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">FILE_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">qiflush</span>();
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">redrawwin</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">refresh</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resizeterm</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resize_term</span>(_:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resetty</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reset_prog_mode</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reset_shell_mode</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">// fn ripoffline(_:c_int, extern  fn f(WINDOW, c_int) -&gt; c_int) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">savetty</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">// fn scanw(_:NCURSES_CONST char_p,...) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scr_dump</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scr_init</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scrl</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scroll</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scrollok</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scr_restore</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scr_set</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setlocale</span>(_:<span class="ident">c_int</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">char_p</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setscrreg</span>(_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_term</span>(_:<span class="ident">SCREEN</span>) <span class="op">-&gt;</span> <span class="ident">SCREEN</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_escdelay</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_tabsize</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attroff</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attr_off</span>(_:<span class="ident">attr_t</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attron</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attr_on</span>(_:<span class="ident">attr_t</span>,_:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attrset</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attr</span>() <span class="op">-&gt;</span> <span class="ident">attr_t</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_attr_set</span>(_:<span class="ident">attr_t</span>,_:<span class="ident">c_short</span>,_:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_clear</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_color</span>(_:<span class="ident">c_short</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_init</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_label</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">char_p</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_noutrefresh</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_refresh</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_restore</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_set</span>(_:<span class="ident">c_int</span>,_:<span class="ident">char_p</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slk_touch</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">standout</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">standend</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start_color</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subpad</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subwin</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">syncok</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">termattrs</span>() <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">termname</span>() <span class="op">-&gt;</span> <span class="ident">char_p</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timeout</span>(_:<span class="ident">c_int</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">touchline</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">touchwin</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typeahead</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ungetch</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">untouchwin</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_env</span>(_:<span class="ident">c_bool</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_default_colors</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vidattr</span>(_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">//  fn vidputs(_:chtype, extern  fn f(c_int) -&gt; c_int) -&gt; c_int;</span>
+            <span class="comment">//pub fn vidputs(_:chtype, f:*mut c_char) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vline</span>(_:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vwprintw</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>, _:<span class="ident">va_list</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vw_printw</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>,_:<span class="ident">va_list</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">//  fn vwscanw(_:WINDOW, _:char_p, _:va_list) -&gt; c_int;</span>
+            <span class="comment">//  fn vw_scanw(_:WINDOW, _:char_p, _:va_list) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">waddch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">waddchnstr</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">chtype_p</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">waddchstr</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">waddnstr</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">char_p</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">waddstr</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattron</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattroff</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattrset</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">NCURSES_ATTR_T</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattr_get</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">attr_t_p</span>, _:<span class="ident">short_p</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattr_on</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattr_off</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wattr_set</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wbkgd</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wbkgdset</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">chtype</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wborder</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>,_:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wchgat</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">attr_t</span>, _:<span class="ident">c_short</span>, _:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wclear</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wclrtobot</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wclrtoeol</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wcolor_set</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_short</span>,_:<span class="ident">void_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wcursyncup</span>(_:<span class="ident">WINDOW</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wdelch</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wdeleteln</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wechochar</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">werase</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wgetch</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wget_wch</span>(_:<span class="ident">WINDOW</span>, _:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">winttype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvwget_wch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>, _:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">winttype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mvget_wch</span>(_:<span class="ident">c_int</span>, _: <span class="ident">c_int</span>, _:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">winttype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_wch</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">winttype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unget_wch</span>(_:<span class="ident">winttype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wgetnstr</span>(_:<span class="ident">WINDOW</span>,_:<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wgetstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">whline</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winch</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">chtype</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winchnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winchstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winsch</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">chtype</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winsdelln</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winsertln</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winsnstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winsstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">winstr</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wmove</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wnoutrefresh</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wprintw</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wredrawln</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wrefresh</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wresize</span>(_:<span class="ident">WINDOW</span>, _:<span class="ident">c_int</span>, _:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">//  fn wscanw(_:WINDOW, _:NCURSES_CONST char_p) -&gt; c_int;</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wscrl</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wsetscrreg</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wstandout</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wstandend</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wsyncdown</span>(_:<span class="ident">WINDOW</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wsyncup</span>(_:<span class="ident">WINDOW</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wtimeout</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>);
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wtouchln</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wvline</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">chtype</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-            <span class='comment'>/*
+            <span class="comment">/*
              * These are also declared in &lt;term.h&gt;:
              */</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tigetflag</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tigetnum</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tigetstr</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>putp</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tigetflag</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tigetnum</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tigetstr</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">putp</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tparm</span>(_:<span class='ident'>char_p</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tparm</span>(_:<span class="ident">char_p</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>;
 
-            <span class='comment'>/*
+            <span class="comment">/*
              * These functions are not in X/Open, but we use them in macro definitions:
              */</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getattrs</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getcurx</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getcury</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getbegx</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getbegy</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getmaxx</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getmaxy</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getparx</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getpary</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getattrs</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getcurx</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getcury</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getbegx</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getbegy</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getmaxx</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getmaxy</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getparx</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getpary</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-            <span class='comment'>/*
+            <span class="comment">/*
              * These extensions provide access to information stored in the WINDOW even
              * when NCURSES_OPAQUE is set:
              */</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wgetparent</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>WINDOW</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_cleared</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_idcok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_idlok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_immedok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_keypad</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_leaveok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_nodelay</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_notimeout</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_scrollok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_syncok</span>(_:<span class='ident'>WINDOW</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wgetscrreg</span>(_:<span class='ident'>WINDOW</span>, _:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>, _:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='comment'>/*
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wgetparent</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">WINDOW</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_cleared</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_idcok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_idlok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_immedok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_keypad</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_leaveok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_nodelay</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_notimeout</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_scrollok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_syncok</span>(_:<span class="ident">WINDOW</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wgetscrreg</span>(_:<span class="ident">WINDOW</span>, _:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>, _:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="comment">/*
              * Added mouse support
              */</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_mouse</span>() <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getmouse</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>MEVENT</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ungetmouse</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>MEVENT</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mousemask</span>(_:<span class='ident'>mmask_t</span>,_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>mmask_t</span>) <span class='op'>-&gt;</span> <span class='ident'>mmask_t</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wenclose</span>(_:<span class='ident'>WINDOW</span>,_:<span class='ident'>c_int</span>,_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouseinterval</span>(_:<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wmouse_trafo</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>WINDOW</span>,_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>,_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_trafo</span>(_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>,_:<span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>,_:<span class='ident'>c_bool</span>) <span class='op'>-&gt;</span> <span class='ident'>c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_mouse</span>() <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getmouse</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">MEVENT</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ungetmouse</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">MEVENT</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mousemask</span>(_:<span class="ident">mmask_t</span>,_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mmask_t</span>) <span class="op">-&gt;</span> <span class="ident">mmask_t</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wenclose</span>(_:<span class="ident">WINDOW</span>,_:<span class="ident">c_int</span>,_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouseinterval</span>(_:<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wmouse_trafo</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">WINDOW</span>,_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>,_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_trafo</span>(_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>,_:<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>,_:<span class="ident">c_bool</span>) <span class="op">-&gt;</span> <span class="ident">c_bool</span>;
         }
     });
 
-<span class='comment'>//end macro rules</span>
+<span class="comment">//end macro rules</span>
 
-<span class='comment'>// Don&#39;t link ncursesw on macos</span>
-<span class='macro'>define_sharedffi</span><span class='macro'>!</span>(<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;wide&quot;</span>, <span class='ident'>not</span>(<span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;macos&quot;</span>))), <span class='ident'>link</span>(<span class='ident'>name</span><span class='op'>=</span><span class='string'>&quot;ncursesw&quot;</span>));
-<span class='macro'>define_sharedffi</span><span class='macro'>!</span>(<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>not</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;wide&quot;</span>), <span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;macos&quot;</span>)), <span class='ident'>link</span>(<span class='ident'>name</span><span class='op'>=</span><span class='string'>&quot;ncurses&quot;</span>));
+<span class="comment">// Don&#39;t link ncursesw on macos</span>
+<span class="macro">define_sharedffi</span><span class="macro">!</span>(<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;wide&quot;</span>, <span class="ident">not</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;macos&quot;</span>))), <span class="ident">link</span>(<span class="ident">name</span><span class="op">=</span><span class="string">&quot;ncursesw&quot;</span>));
+<span class="macro">define_sharedffi</span><span class="macro">!</span>(<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;wide&quot;</span>), <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;macos&quot;</span>)), <span class="ident">link</span>(<span class="ident">name</span><span class="op">=</span><span class="string">&quot;ncurses&quot;</span>));
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -823,18 +845,22 @@ ncurses functions.
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -867,7 +893,6 @@ ncurses functions.
         window.rootPath = "../../";
         window.currentCrate = "ncurses";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

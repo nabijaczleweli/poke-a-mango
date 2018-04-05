@@ -9,14 +9,18 @@
 
     <title>conrod::widget::list_select - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a></p><script>window.sidebarCurrent = {name: 'list_select', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module list_select</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a></p><script>window.sidebarCurrent = {name: 'list_select', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a>::<wbr><a class='mod' href=''>list_select</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a>::<wbr><a class="mod" href=''>list_select</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,70 +64,79 @@
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Events.html'
-                                  title='conrod::widget::list_select::Events'>Events</a></td>
+                           <td><a class="struct" href="struct.Events.html"
+                                  title='struct conrod::widget::list_select::Events'>Events</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator-like type for yielding <code>ListSelect</code> <code>Event</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.ListSelect.html'
-                                  title='conrod::widget::list_select::ListSelect'>ListSelect</a></td>
+                           <td><a class="struct" href="struct.ListSelect.html"
+                                  title='struct conrod::widget::list_select::ListSelect'>ListSelect</a></td>
                            <td class='docblock-short'>
                                 <p>A wrapper around the <code>List</code> widget that handles single and multiple selection logic.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Multiple.html'
-                                  title='conrod::widget::list_select::Multiple'>Multiple</a></td>
+                           <td><a class="struct" href="struct.Multiple.html"
+                                  title='struct conrod::widget::list_select::Multiple'>Multiple</a></td>
                            <td class='docblock-short'>
                                 <p>A selection <code>Mode</code> for the <code>ListSelect</code> that allows selecting more than one item at a time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Single.html'
-                                  title='conrod::widget::list_select::Single'>Single</a></td>
+                           <td><a class="struct" href="struct.Single.html"
+                                  title='struct conrod::widget::list_select::Single'>Single</a></td>
                            <td class='docblock-short'>
                                 <p>A single item selection <code>Mode</code> for the <code>ListSelect</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.State.html'
-                                  title='conrod::widget::list_select::State'>State</a></td>
+                           <td><a class="struct" href="struct.State.html"
+                                  title='struct conrod::widget::list_select::State'>State</a></td>
                            <td class='docblock-short'>
                                 <p>Represents the state of the ListSelect.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Event.html'
-                                  title='conrod::widget::list_select::Event'>Event</a></td>
+                           <td><a class="enum" href="enum.Event.html"
+                                  title='enum conrod::widget::list_select::Event'>Event</a></td>
                            <td class='docblock-short'>
                                 <p>The kind of events that the <code>ListSelect</code> may <code>react</code> to.
 Provides tuple(s) of index in list and string representation of selection</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Selection.html'
-                                  title='conrod::widget::list_select::Selection'>Selection</a></td>
+                           <td><a class="enum" href="enum.Selection.html"
+                                  title='enum conrod::widget::list_select::Selection'>Selection</a></td>
                            <td class='docblock-short'>
                                 <p>Represents some change in item selection for a <code>ListSelect</code> in <code>Multiple</code> mode.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Mode.html'
-                                  title='conrod::widget::list_select::Mode'>Mode</a></td>
+                           <td><a class="trait" href="trait.Mode.html"
+                                  title='trait conrod::widget::list_select::Mode'>Mode</a></td>
                            <td class='docblock-short'>
                                 <p>Allows the <code>ListSelect</code> to be generic over <code>Single</code> and <code>Multiple</code> selection modes.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.PendingEvents.html'
-                                  title='conrod::widget::list_select::PendingEvents'>PendingEvents</a></td>
+                           <td><a class="type" href="type.PendingEvents.html"
+                                  title='type conrod::widget::list_select::PendingEvents'>PendingEvents</a></td>
                            <td class='docblock-short'>
                                 <p>Buffer use for storing events that have been produced but are yet to be yielded.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -130,18 +151,22 @@ Provides tuple(s) of index in list and string representation of selection</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -174,7 +199,6 @@ Provides tuple(s) of index in list and string representation of selection</p>
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

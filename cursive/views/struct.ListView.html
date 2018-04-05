@@ -9,14 +9,18 @@
 
     <title>cursive::views::ListView - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'ListView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ListView</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.add_child">add_child</a><a href="#method.clear">clear</a><a href="#method.child">child</a><a href="#method.add_delimiter">add_delimiter</a><a href="#method.delimiter">delimiter</a><a href="#method.set_on_select">set_on_select</a><a href="#method.on_select">on_select</a><a href="#method.focus">focus</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Default">Default</a><a href="#impl-View">View</a></div></div><p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'ListView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,57 +54,61 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class='struct' href=''>ListView</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class="struct" href=''>ListView</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/views/list_view.rs.html#36-42' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ListView { /* fields omitted */ }</pre><div class='docblock'><p>Displays a scrollable list of elements.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/views/struct.ListView.html' title='cursive::views::ListView'>ListView</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#46-158' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../cursive/views/struct.ListView.html" title="struct cursive::views::ListView">ListView</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#46-158' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#48-55' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new, empty <code>ListView</code>.</p>
-</div><h4 id='method.add_child' class='method'><span id='add_child.v' class='invisible'><code>fn <a href='#method.add_child' class='fnname'>add_child</a>&lt;V:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + 'static&gt;(&amp;mut self, label: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, view: V)</code></span></h4>
+</div><h4 id='method.add_child' class="method"><span id='add_child.v' class='invisible'><code>pub fn <a href='#method.add_child' class='fnname'>add_child</a>&lt;V:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a> + 'static&gt;(&amp;mut self, label: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, view: V)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#58-61' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds a view to the end of the list.</p>
-</div><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.clear' class="method"><span id='clear.v' class='invisible'><code>pub fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#64-67' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Removes all children from this view.</p>
-</div><h4 id='method.child' class='method'><span id='child.v' class='invisible'><code>fn <a href='#method.child' class='fnname'>child</a>&lt;V:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + 'static&gt;(self, label: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, view: V) -&gt; Self</code></span></h4>
+</div><h4 id='method.child' class="method"><span id='child.v' class='invisible'><code>pub fn <a href='#method.child' class='fnname'>child</a>&lt;V:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a> + 'static&gt;(self, label: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, view: V) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#72-74' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds a view to the end of the list.</p>
-
 <p>Chainable variant.</p>
-</div><h4 id='method.add_delimiter' class='method'><span id='add_delimiter.v' class='invisible'><code>fn <a href='#method.add_delimiter' class='fnname'>add_delimiter</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.add_delimiter' class="method"><span id='add_delimiter.v' class='invisible'><code>pub fn <a href='#method.add_delimiter' class='fnname'>add_delimiter</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#77-79' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds a delimiter to the end of the list.</p>
-</div><h4 id='method.delimiter' class='method'><span id='delimiter.v' class='invisible'><code>fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self) -&gt; Self</code></span></h4>
+</div><h4 id='method.delimiter' class="method"><span id='delimiter.v' class='invisible'><code>pub fn <a href='#method.delimiter' class='fnname'>delimiter</a>(self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#84-86' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds a delimiter to the end of the list.</p>
-
 <p>Chainable variant.</p>
-</div><h4 id='method.set_on_select' class='method'><span id='set_on_select.v' class='invisible'><code>fn <a href='#method.set_on_select' class='fnname'>set_on_select</a>&lt;F&gt;(&amp;mut self, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>, &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) + 'static</span></code></span></h4>
+</div><h4 id='method.set_on_select' class="method"><span id='set_on_select.v' class='invisible'><code>pub fn <a href='#method.set_on_select' class='fnname'>set_on_select</a>&lt;F&gt;(&amp;mut self, cb: F) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;mut <a class="struct" href="../../cursive/struct.Cursive.html" title="struct cursive::Cursive">Cursive</a>, &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) + 'static,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#89-93' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets a callback to be used when an item is selected.</p>
-</div><h4 id='method.on_select' class='method'><span id='on_select.v' class='invisible'><code>fn <a href='#method.on_select' class='fnname'>on_select</a>&lt;F&gt;(self, cb: F) -&gt; Self <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>, &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) + 'static</span></code></span></h4>
+</div><h4 id='method.on_select' class="method"><span id='on_select.v' class='invisible'><code>pub fn <a href='#method.on_select' class='fnname'>on_select</a>&lt;F&gt;(self, cb: F) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;mut <a class="struct" href="../../cursive/struct.Cursive.html" title="struct cursive::Cursive">Cursive</a>, &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) + 'static,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#98-102' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets a callback to be used when an item is selected.</p>
-
 <p>Chainable variant.</p>
-</div><h4 id='method.focus' class='method'><span id='focus.v' class='invisible'><code>fn <a href='#method.focus' class='fnname'>focus</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
+</div><h4 id='method.focus' class="method"><span id='focus.v' class='invisible'><code>pub fn <a href='#method.focus' class='fnname'>focus</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#107-109' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the index of the currently focused item.</p>
-
 <p>Panics if the list is empty.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../cursive/views/struct.ListView.html' title='cursive::views::ListView'>ListView</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/lib.rs.html#81-85' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span></h4>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Default' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="../../cursive/views/struct.ListView.html" title="struct cursive::views::ListView">ListView</a></code><a href='#impl-Default' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/lib.rs.html#81-85' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class="method"><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/lib.rs.html#82-84' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/views/struct.ListView.html' title='cursive::views::ListView'>ListView</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#175-308' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.draw' class='method'><span id='draw.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></span></h4>
+</div></div><h3 id='impl-View' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a> for <a class="struct" href="../../cursive/views/struct.ListView.html" title="struct cursive::views::ListView">ListView</a></code><a href='#impl-View' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#175-308' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.draw' class="method"><span id='draw.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class="struct" href="../../cursive/struct.Printer.html" title="struct cursive::Printer">Printer</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#176-197' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
-</div><h4 id='method.get_min_size' class='method'><span id='get_min_size.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></span></h4>
+</div><h4 id='method.get_min_size' class="method"><span id='get_min_size.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, req: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>) -&gt; <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#199-218' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the minimum size the view requires with the given restrictions. <a href="../../cursive/view/trait.View.html#method.get_min_size">Read more</a></p>
-</div><h4 id='method.layout' class='method'><span id='layout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.layout' class='fnname'>layout</a>(&amp;mut self, size: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></span></h4>
+</div><h4 id='method.layout' class="method"><span id='layout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.layout' class='fnname'>layout</a>(&amp;mut self, size: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#220-238' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Called once the size for this view has been decided, <a href="../../cursive/view/trait.View.html#method.layout">Read more</a></p>
-</div><h4 id='method.on_event' class='method'><span id='on_event.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, event: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></span></h4>
+</div><h4 id='method.on_event' class="method"><span id='on_event.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, event: <a class="enum" href="../../cursive/event/enum.Event.html" title="enum cursive::event::Event">Event</a>) -&gt; <a class="enum" href="../../cursive/event/enum.EventResult.html" title="enum cursive::event::EventResult">EventResult</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#240-283' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Called when a key was pressed. <a href="../../cursive/view/trait.View.html#method.on_event">Read more</a></p>
-</div><h4 id='method.take_focus' class='method'><span id='take_focus.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.take_focus' class="method"><span id='take_focus.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self, source: <a class="enum" href="../../cursive/direction/enum.Direction.html" title="enum cursive::direction::Direction">Direction</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#285-299' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This view is offered focus. Will it take it? <a href="../../cursive/view/trait.View.html#method.take_focus">Read more</a></p>
-</div><h4 id='method.find_any' class='method'><span id='find_any.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.find_any' class='fnname'>find_any</a>(&amp;mut self, selector: &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></span></h4>
+</div><h4 id='method.find_any' class="method"><span id='find_any.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.find_any' class='fnname'>find_any</a>(&amp;mut self, selector: &amp;<a class="enum" href="../../cursive/view/enum.Selector.html" title="enum cursive::view::Selector">Selector</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/list_view.rs.html#301-307' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Finds the view pointed to by the given path. <a href="../../cursive/view/trait.View.html#method.find_any">Read more</a></p>
-</div><h4 id='method.needs_relayout' class='method'><span id='needs_relayout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.needs_relayout' class="method"><span id='needs_relayout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.View.html#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/mod.rs.html#104-106' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if the view content changed since last layout phase. <a href="../../cursive/view/trait.View.html#method.needs_relayout">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -107,18 +123,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -151,7 +171,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

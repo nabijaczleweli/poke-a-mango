@@ -9,14 +9,18 @@
 
     <title>cursive::views::KeyEventView - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'KeyEventView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct KeyEventView</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.register">register</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ViewWrapper">ViewWrapper</a></div></div><p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a></p><script>window.sidebarCurrent = {name: 'KeyEventView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,46 +54,52 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class='struct' href=''>KeyEventView</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>views</a>::<wbr><a class="struct" href=''>KeyEventView</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#21-24' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct KeyEventView&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A simple wrapper view that catches some ignored event from its child.</p>
-
-<p>If the event doesn&#39;t have a corresponding callback, it will stay ignored.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='kw'>let</span> <span class='ident'>view</span> <span class='op'>=</span> <span class='ident'>KeyEventView</span>::<span class='ident'>new</span>(<span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='string'>&quot;This view has an event!&quot;</span>))
-                        .<span class='ident'>register</span>(<span class='string'>&#39;q&#39;</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>quit</span>())
-                        .<span class='ident'>register</span>(<span class='ident'>event</span>::<span class='ident'>Key</span>::<span class='ident'>Esc</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>quit</span>());</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='struct' href='../../cursive/views/struct.KeyEventView.html' title='cursive::views::KeyEventView'>KeyEventView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#26-43' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(view: T) -&gt; Self</code></span></h4>
+<pre class='rust struct'>pub struct KeyEventView&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A simple wrapper view that catches some ignored event from its child.</p>
+<p>If the event doesn't have a corresponding callback, it will stay ignored.</p>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">KeyEventView</span>::<span class="ident">new</span>(<span class="ident">TextView</span>::<span class="ident">new</span>(<span class="string">&quot;This view has an event!&quot;</span>))
+                        .<span class="ident">register</span>(<span class="string">&#39;q&#39;</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">quit</span>())
+                        .<span class="ident">register</span>(<span class="ident">event</span>::<span class="ident">Key</span>::<span class="ident">Esc</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">quit</span>());</pre>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; <a class="struct" href="../../cursive/views/struct.KeyEventView.html" title="struct cursive::views::KeyEventView">KeyEventView</a>&lt;T&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#26-43' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(view: T) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#28-33' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the given view in a new KeyEventView.</p>
-</div><h4 id='method.register' class='method'><span id='register.v' class='invisible'><code>fn <a href='#method.register' class='fnname'>register</a>&lt;F, E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>&gt;&gt;(self, event: E, cb: F) -&gt; Self <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></span></h4>
+</div><h4 id='method.register' class="method"><span id='register.v' class='invisible'><code>pub fn <a href='#method.register' class='fnname'>register</a>&lt;F, E:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="../../cursive/event/enum.Event.html" title="enum cursive::event::Event">Event</a>&gt;&gt;(self, event: E, cb: F) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;mut <a class="struct" href="../../cursive/struct.Cursive.html" title="struct cursive::Cursive">Cursive</a>) + 'static,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#36-42' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Registers a callback when the given key is ignored by the child.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/views/struct.KeyEventView.html' title='cursive::views::KeyEventView'>KeyEventView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#45-59' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.V' class='type'><span id='V.t' class='invisible'><code>type <a href='../../cursive/view/trait.ViewWrapper.html#associatedtype.V' class='type'>V</a> = T</code></span></h4>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-ViewWrapper' class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="../../cursive/view/trait.View.html" title="trait cursive::view::View">View</a>&gt; <a class="trait" href="../../cursive/view/trait.ViewWrapper.html" title="trait cursive::view::ViewWrapper">ViewWrapper</a> for <a class="struct" href="../../cursive/views/struct.KeyEventView.html" title="struct cursive::views::KeyEventView">KeyEventView</a>&lt;T&gt;</code><a href='#impl-ViewWrapper' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#45-59' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.V' class="type"><span id='V.t' class='invisible'><code>type <a href='../../cursive/view/trait.ViewWrapper.html#associatedtype.V' class="type">V</a> = T</code></span></h4>
 <div class='docblock'><p>Type that this view wraps.</p>
-</div><h4 id='method.get_view' class='method'><span id='get_view.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h4>
+</div><h4 id='method.get_view' class="method"><span id='get_view.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#120-122' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
-</div><h4 id='method.get_view_mut' class='method'><span id='get_view_mut.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>V</a></code></span></h4>
+</div><h4 id='method.get_view_mut' class="method"><span id='get_view_mut.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut Self::<a class="type" href="../../cursive/view/trait.ViewWrapper.html#associatedtype.V" title="type cursive::view::ViewWrapper::V">V</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#124-126' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get a mutable reference to the wrapped view.</p>
-</div><h4 id='method.wrap_on_event' class='method'><span id='wrap_on_event.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, event: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></span></h4>
+</div><h4 id='method.wrap_on_event' class="method"><span id='wrap_on_event.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_on_event' class='fnname'>wrap_on_event</a>(&amp;mut self, event: <a class="enum" href="../../cursive/event/enum.Event.html" title="enum cursive::event::Event">Event</a>) -&gt; <a class="enum" href="../../cursive/event/enum.EventResult.html" title="enum cursive::event::EventResult">EventResult</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/views/key_event_view.rs.html#48-58' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>on_event</code> method.</p>
-</div><h4 id='method.wrap_draw' class='method'><span id='wrap_draw.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></span></h4>
+</div><h4 id='method.wrap_draw' class="method"><span id='wrap_draw.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;self, printer: &amp;<a class="struct" href="../../cursive/struct.Printer.html" title="struct cursive::Printer">Printer</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#29-31' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>draw</code> method.</p>
-</div><h4 id='method.wrap_get_min_size' class='method'><span id='wrap_get_min_size.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></span></h4>
+</div><h4 id='method.wrap_get_min_size' class="method"><span id='wrap_get_min_size.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>) -&gt; <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#34-36' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>get_min_size</code> method.</p>
-</div><h4 id='method.wrap_layout' class='method'><span id='wrap_layout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></span></h4>
+</div><h4 id='method.wrap_layout' class="method"><span id='wrap_layout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#44-46' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>layout</code> method.</p>
-</div><h4 id='method.wrap_take_focus' class='method'><span id='wrap_take_focus.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class='enum' href='../../cursive/direction/enum.Direction.html' title='cursive::direction::Direction'>Direction</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.wrap_take_focus' class="method"><span id='wrap_take_focus.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_take_focus' class='fnname'>wrap_take_focus</a>(&amp;mut self, source: <a class="enum" href="../../cursive/direction/enum.Direction.html" title="enum cursive::direction::Direction">Direction</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#49-51' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>take_focus</code> method.</p>
-</div><h4 id='method.wrap_find_any' class='method'><span id='wrap_find_any.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></span></h4>
+</div><h4 id='method.wrap_find_any' class="method"><span id='wrap_find_any.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_find_any' class='fnname'>wrap_find_any</a>(&amp;mut self, selector: &amp;<a class="enum" href="../../cursive/view/enum.Selector.html" title="enum cursive::view::Selector">Selector</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#54-56' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>find</code> method.</p>
-</div><h4 id='method.wrap_needs_relayout' class='method'><span id='wrap_needs_relayout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.wrap_needs_relayout' class="method"><span id='wrap_needs_relayout.v' class='invisible'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_needs_relayout' class='fnname'>wrap_needs_relayout</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/view_wrapper.rs.html#59-61' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wraps the <code>needs_relayout</code> method.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -96,18 +114,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -140,7 +162,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

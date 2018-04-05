@@ -9,14 +9,18 @@
 
     <title>conrod::widget::envelope_editor - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a></p><script>window.sidebarCurrent = {name: 'envelope_editor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module envelope_editor</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a></p><script>window.sidebarCurrent = {name: 'envelope_editor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a>::<wbr><a class='mod' href=''>envelope_editor</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>widget</a>::<wbr><a class="mod" href=''>envelope_editor</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,41 +64,46 @@
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.EnvelopeEditor.html'
-                                  title='conrod::widget::envelope_editor::EnvelopeEditor'>EnvelopeEditor</a></td>
+                           <td><a class="struct" href="struct.EnvelopeEditor.html"
+                                  title='struct conrod::widget::envelope_editor::EnvelopeEditor'>EnvelopeEditor</a></td>
                            <td class='docblock-short'>
                                 <p>Used for editing a series of 2D Points on a cartesian (X, Y) plane within some given range.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.State.html'
-                                  title='conrod::widget::envelope_editor::State'>State</a></td>
+                           <td><a class="struct" href="struct.State.html"
+                                  title='struct conrod::widget::envelope_editor::State'>State</a></td>
                            <td class='docblock-short'>
                                 <p>Represents the state of the EnvelopeEditor widget.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Style.html'
-                                  title='conrod::widget::envelope_editor::Style'>Style</a></td>
+                           <td><a class="struct" href="struct.Style.html"
+                                  title='struct conrod::widget::envelope_editor::Style'>Style</a></td>
                            <td class='docblock-short'>
                                 <p>Styling for the EnvelopeEditor, necessary for constructing its renderable Element.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Event.html'
-                                  title='conrod::widget::envelope_editor::Event'>Event</a></td>
+                           <td><a class="enum" href="enum.Event.html"
+                                  title='enum conrod::widget::envelope_editor::Event'>Event</a></td>
                            <td class='docblock-short'>
                                 <p>The kinds of events that may be yielded by the <code>EnvelopeEditor</code>.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.EnvelopePoint.html'
-                                  title='conrod::widget::envelope_editor::EnvelopePoint'>EnvelopePoint</a></td>
+                           <td><a class="trait" href="trait.EnvelopePoint.html"
+                                  title='trait conrod::widget::envelope_editor::EnvelopePoint'>EnvelopePoint</a></td>
                            <td class='docblock-short'>
                                 <p><code>EnvPoint</code> must be implemented for any type that is used as a 2D point within the
 EnvelopeEditor.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -101,18 +118,22 @@ EnvelopeEditor.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -145,7 +166,6 @@ EnvelopeEditor.</p>
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

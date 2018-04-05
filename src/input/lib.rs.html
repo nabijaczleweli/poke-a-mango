@@ -9,14 +9,18 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -187,150 +199,150 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;input&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
+</pre><pre class="rust ">
+<span class="attribute">#![<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;input&quot;</span>]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_copy_implementations</span>)]</span>
 
-<span class='doccomment'>//! A flexible structure for user interactions</span>
-<span class='doccomment'>//! to be used in window frameworks and widgets libraries.</span>
+<span class="doccomment">//! A flexible structure for user interactions</span>
+<span class="doccomment">//! to be used in window frameworks and widgets libraries.</span>
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bitflags</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>viewport</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bitflags</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">viewport</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>mouse</span>::<span class='ident'>MouseButton</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>keyboard</span>::<span class='ident'>Key</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>controller</span>::{ <span class='ident'>ControllerAxisArgs</span>, <span class='ident'>ControllerButton</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mouse</span>::<span class="ident">MouseButton</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">keyboard</span>::<span class="ident">Key</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">controller</span>::{ <span class="ident">ControllerAxisArgs</span>, <span class="ident">ControllerButton</span> };
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>controller</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>keyboard</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">controller</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">keyboard</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mouse</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>after_render</span>::{ <span class='ident'>AfterRenderArgs</span>, <span class='ident'>AfterRenderEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>controller</span>::{ <span class='ident'>ControllerAxisEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cursor</span>::<span class='ident'>CursorEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event</span>::<span class='ident'>Event</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>focus</span>::<span class='ident'>FocusEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>generic_event</span>::<span class='ident'>GenericEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>idle</span>::{ <span class='ident'>IdleArgs</span>, <span class='ident'>IdleEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>mouse</span>::{ <span class='ident'>MouseCursorEvent</span>, <span class='ident'>MouseRelativeEvent</span>, <span class='ident'>MouseScrollEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>press</span>::<span class='ident'>PressEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>release</span>::<span class='ident'>ReleaseEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resize</span>::<span class='ident'>ResizeEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>render</span>::{ <span class='ident'>RenderArgs</span>, <span class='ident'>RenderEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>text</span>::<span class='ident'>TextEvent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>touch</span>::{ <span class='ident'>Touch</span>, <span class='ident'>TouchArgs</span>, <span class='ident'>TouchEvent</span> };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>update</span>::{ <span class='ident'>UpdateArgs</span>, <span class='ident'>UpdateEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">after_render</span>::{ <span class="ident">AfterRenderArgs</span>, <span class="ident">AfterRenderEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">controller</span>::{ <span class="ident">ControllerAxisEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cursor</span>::<span class="ident">CursorEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">event</span>::<span class="ident">Event</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">focus</span>::<span class="ident">FocusEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">generic_event</span>::<span class="ident">GenericEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">idle</span>::{ <span class="ident">IdleArgs</span>, <span class="ident">IdleEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mouse</span>::{ <span class="ident">MouseCursorEvent</span>, <span class="ident">MouseRelativeEvent</span>, <span class="ident">MouseScrollEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">press</span>::<span class="ident">PressEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">release</span>::<span class="ident">ReleaseEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resize</span>::<span class="ident">ResizeEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">render</span>::{ <span class="ident">RenderArgs</span>, <span class="ident">RenderEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">text</span>::<span class="ident">TextEvent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">touch</span>::{ <span class="ident">Touch</span>, <span class="ident">TouchArgs</span>, <span class="ident">TouchEvent</span> };
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">update</span>::{ <span class="ident">UpdateArgs</span>, <span class="ident">UpdateEvent</span> };
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>generic_event</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">generic_event</span>;
 
-<span class='kw'>mod</span> <span class='ident'>after_render</span>;
-<span class='kw'>mod</span> <span class='ident'>cursor</span>;
-<span class='kw'>mod</span> <span class='ident'>event</span>;
-<span class='kw'>mod</span> <span class='ident'>focus</span>;
-<span class='kw'>mod</span> <span class='ident'>idle</span>;
-<span class='kw'>mod</span> <span class='ident'>press</span>;
-<span class='kw'>mod</span> <span class='ident'>release</span>;
-<span class='kw'>mod</span> <span class='ident'>render</span>;
-<span class='kw'>mod</span> <span class='ident'>resize</span>;
-<span class='kw'>mod</span> <span class='ident'>text</span>;
-<span class='kw'>mod</span> <span class='ident'>touch</span>;
-<span class='kw'>mod</span> <span class='ident'>update</span>;
+<span class="kw">mod</span> <span class="ident">after_render</span>;
+<span class="kw">mod</span> <span class="ident">cursor</span>;
+<span class="kw">mod</span> <span class="ident">event</span>;
+<span class="kw">mod</span> <span class="ident">focus</span>;
+<span class="kw">mod</span> <span class="ident">idle</span>;
+<span class="kw">mod</span> <span class="ident">press</span>;
+<span class="kw">mod</span> <span class="ident">release</span>;
+<span class="kw">mod</span> <span class="ident">render</span>;
+<span class="kw">mod</span> <span class="ident">resize</span>;
+<span class="kw">mod</span> <span class="ident">text</span>;
+<span class="kw">mod</span> <span class="ident">touch</span>;
+<span class="kw">mod</span> <span class="ident">update</span>;
 
-<span class='doccomment'>/// Used to identify events arguments provided by traits.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EventId</span>(<span class='kw'>pub</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>);
+<span class="doccomment">/// Used to identify events arguments provided by traits.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EventId</span>(<span class="kw">pub</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>);
 
-<span class='kw'>const</span> <span class='ident'>AFTER_RENDER</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/after_render&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>CONTROLLER_AXIS</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/controller_axis&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>CURSOR</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/cursor&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>FOCUS</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/focus&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>IDLE</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/idle&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>MOUSE_SCROLL</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/mouse_scroll&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>MOUSE_RELATIVE</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/mouse_relative&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>MOUSE_CURSOR</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/mouse_cursor&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>PRESS</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/press&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>RELEASE</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/release&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>RENDER</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/render&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>RESIZE</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/resize&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>TEXT</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/text&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>TOUCH</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/touch&quot;</span>);
-<span class='kw'>const</span> <span class='ident'>UPDATE</span>: <span class='ident'>EventId</span> <span class='op'>=</span> <span class='ident'>EventId</span>(<span class='string'>&quot;piston/update&quot;</span>);
+<span class="kw">const</span> <span class="ident">AFTER_RENDER</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/after_render&quot;</span>);
+<span class="kw">const</span> <span class="ident">CONTROLLER_AXIS</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/controller_axis&quot;</span>);
+<span class="kw">const</span> <span class="ident">CURSOR</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/cursor&quot;</span>);
+<span class="kw">const</span> <span class="ident">FOCUS</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/focus&quot;</span>);
+<span class="kw">const</span> <span class="ident">IDLE</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/idle&quot;</span>);
+<span class="kw">const</span> <span class="ident">MOUSE_SCROLL</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/mouse_scroll&quot;</span>);
+<span class="kw">const</span> <span class="ident">MOUSE_RELATIVE</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/mouse_relative&quot;</span>);
+<span class="kw">const</span> <span class="ident">MOUSE_CURSOR</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/mouse_cursor&quot;</span>);
+<span class="kw">const</span> <span class="ident">PRESS</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/press&quot;</span>);
+<span class="kw">const</span> <span class="ident">RELEASE</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/release&quot;</span>);
+<span class="kw">const</span> <span class="ident">RENDER</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/render&quot;</span>);
+<span class="kw">const</span> <span class="ident">RESIZE</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/resize&quot;</span>);
+<span class="kw">const</span> <span class="ident">TEXT</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/text&quot;</span>);
+<span class="kw">const</span> <span class="ident">TOUCH</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/touch&quot;</span>);
+<span class="kw">const</span> <span class="ident">UPDATE</span>: <span class="ident">EventId</span> <span class="op">=</span> <span class="ident">EventId</span>(<span class="string">&quot;piston/update&quot;</span>);
 
-<span class='doccomment'>/// Models different kinds of buttons.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Button</span> {
-    <span class='doccomment'>/// A keyboard button.</span>
-    <span class='ident'>Keyboard</span>(<span class='ident'>Key</span>),
-    <span class='doccomment'>/// A mouse button.</span>
-    <span class='ident'>Mouse</span>(<span class='ident'>MouseButton</span>),
-    <span class='doccomment'>/// A controller button.</span>
-    <span class='ident'>Controller</span>(<span class='ident'>ControllerButton</span>),
+<span class="doccomment">/// Models different kinds of buttons.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">RustcDecodable</span>, <span class="ident">RustcEncodable</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Button</span> {
+    <span class="doccomment">/// A keyboard button.</span>
+    <span class="ident">Keyboard</span>(<span class="ident">Key</span>),
+    <span class="doccomment">/// A mouse button.</span>
+    <span class="ident">Mouse</span>(<span class="ident">MouseButton</span>),
+    <span class="doccomment">/// A controller button.</span>
+    <span class="ident">Controller</span>(<span class="ident">ControllerButton</span>),
 }
 
-<span class='doccomment'>/// Models different kinds of motion.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Motion</span> {
-    <span class='doccomment'>/// x and y in window coordinates.</span>
-    <span class='ident'>MouseCursor</span>(<span class='ident'>f64</span>, <span class='ident'>f64</span>),
-    <span class='doccomment'>/// x and y in relative coordinates.</span>
-    <span class='ident'>MouseRelative</span>(<span class='ident'>f64</span>, <span class='ident'>f64</span>),
-    <span class='doccomment'>/// x and y in scroll ticks.</span>
-    <span class='ident'>MouseScroll</span>(<span class='ident'>f64</span>, <span class='ident'>f64</span>),
-    <span class='doccomment'>/// controller axis move event.</span>
-    <span class='ident'>ControllerAxis</span>(<span class='ident'>ControllerAxisArgs</span>),
-    <span class='doccomment'>/// touch event.</span>
-    <span class='ident'>Touch</span>(<span class='ident'>TouchArgs</span>),
+<span class="doccomment">/// Models different kinds of motion.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">RustcDecodable</span>, <span class="ident">RustcEncodable</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Motion</span> {
+    <span class="doccomment">/// x and y in window coordinates.</span>
+    <span class="ident">MouseCursor</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// x and y in relative coordinates.</span>
+    <span class="ident">MouseRelative</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// x and y in scroll ticks.</span>
+    <span class="ident">MouseScroll</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// controller axis move event.</span>
+    <span class="ident">ControllerAxis</span>(<span class="ident">ControllerAxisArgs</span>),
+    <span class="doccomment">/// touch event.</span>
+    <span class="ident">Touch</span>(<span class="ident">TouchArgs</span>),
 }
 
-<span class='doccomment'>/// Models input events.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Input</span> {
-    <span class='doccomment'>/// Pressed a button.</span>
-    <span class='ident'>Press</span>(<span class='ident'>Button</span>),
-    <span class='doccomment'>/// Released a button.</span>
-    <span class='ident'>Release</span>(<span class='ident'>Button</span>),
-    <span class='doccomment'>/// Moved mouse cursor.</span>
-    <span class='ident'>Move</span>(<span class='ident'>Motion</span>),
-    <span class='doccomment'>/// Text (usually from keyboard).</span>
-    <span class='ident'>Text</span>(<span class='ident'>String</span>),
-    <span class='doccomment'>/// Window got resized.</span>
-    <span class='ident'>Resize</span>(<span class='ident'>u32</span>, <span class='ident'>u32</span>),
-    <span class='doccomment'>/// Window gained or lost focus.</span>
-    <span class='ident'>Focus</span>(<span class='ident'>bool</span>),
-    <span class='doccomment'>/// Window gained or lost cursor.</span>
-    <span class='ident'>Cursor</span>(<span class='ident'>bool</span>),
+<span class="doccomment">/// Models input events.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">RustcDecodable</span>, <span class="ident">RustcEncodable</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Input</span> {
+    <span class="doccomment">/// Pressed a button.</span>
+    <span class="ident">Press</span>(<span class="ident">Button</span>),
+    <span class="doccomment">/// Released a button.</span>
+    <span class="ident">Release</span>(<span class="ident">Button</span>),
+    <span class="doccomment">/// Moved mouse cursor.</span>
+    <span class="ident">Move</span>(<span class="ident">Motion</span>),
+    <span class="doccomment">/// Text (usually from keyboard).</span>
+    <span class="ident">Text</span>(<span class="ident">String</span>),
+    <span class="doccomment">/// Window got resized.</span>
+    <span class="ident">Resize</span>(<span class="ident">u32</span>, <span class="ident">u32</span>),
+    <span class="doccomment">/// Window gained or lost focus.</span>
+    <span class="ident">Focus</span>(<span class="ident">bool</span>),
+    <span class="doccomment">/// Window gained or lost cursor.</span>
+    <span class="ident">Cursor</span>(<span class="ident">bool</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Key</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Button</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>key</span>: <span class='ident'>Key</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Button</span>::<span class='ident'>Keyboard</span>(<span class='ident'>key</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Key</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Button</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Button</span>::<span class="ident">Keyboard</span>(<span class="ident">key</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>MouseButton</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Button</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>btn</span>: <span class='ident'>MouseButton</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Button</span>::<span class='ident'>Mouse</span>(<span class='ident'>btn</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MouseButton</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Button</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">btn</span>: <span class="ident">MouseButton</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Button</span>::<span class="ident">Mouse</span>(<span class="ident">btn</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ControllerButton</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Button</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>btn</span>: <span class='ident'>ControllerButton</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Button</span>::<span class='ident'>Controller</span>(<span class='ident'>btn</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ControllerButton</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Button</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">btn</span>: <span class="ident">ControllerButton</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Button</span>::<span class="ident">Controller</span>(<span class="ident">btn</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ControllerAxisArgs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Motion</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>args</span>: <span class='ident'>ControllerAxisArgs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Motion</span>::<span class='ident'>ControllerAxis</span>(<span class='ident'>args</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ControllerAxisArgs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Motion</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">args</span>: <span class="ident">ControllerAxisArgs</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Motion</span>::<span class="ident">ControllerAxis</span>(<span class="ident">args</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Motion</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Input</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>motion</span>: <span class='ident'>Motion</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Input</span>::<span class='ident'>Move</span>(<span class='ident'>motion</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Motion</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Input</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">motion</span>: <span class="ident">Motion</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">motion</span>)
     }
 }
 </pre>
@@ -347,18 +359,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -391,7 +407,6 @@
         window.rootPath = "../../";
         window.currentCrate = "input";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -86,51 +98,51 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! # PNG encoder and decoder</span>
-<span class='doccomment'>//! This crate contains a PNG decoder. It supports reading of single lines or whole frames.</span>
-<span class='doccomment'>//! ## The decoder</span>
-<span class='doccomment'>//! The most important types for decoding purposes are [`Decoder`](struct.Decoder.html) and</span>
-<span class='doccomment'>//! [`Reader`](struct.Reader.html). They both wrap a `std::io::Read`.</span>
-<span class='doccomment'>//! `Decoder` serves as a builder for `Reader`. Calling `Decoder::read_info` reads from the `Read` until the</span>
-<span class='doccomment'>//! image data is reached.</span>
-<span class='doccomment'>//! ### Using the decoder</span>
-<span class='doccomment'>//!     use std::fs::File;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     // The decoder is a build for reader and can be used to set various decoding options</span>
-<span class='doccomment'>//!     // via `Transformations`. The default output transformation is `TRANSFORM_EXPAND</span>
-<span class='doccomment'>//!     // | TRANSFORM_STRIP_ALPHA`.</span>
-<span class='doccomment'>//!     let decoder = png::Decoder::new(File::open(&quot;tests/pngsuite/basi0g01.png&quot;).unwrap());</span>
-<span class='doccomment'>//!     let (info, mut reader) = decoder.read_info().unwrap();</span>
-<span class='doccomment'>//!     // Allocate the output buffer.</span>
-<span class='doccomment'>//!     let mut buf = vec![0; info.buffer_size()];</span>
-<span class='doccomment'>//!     // Read the next frame. Currently this function should only called once.</span>
-<span class='doccomment'>//!     // The default options</span>
-<span class='doccomment'>//!     reader.next_frame(&amp;mut buf).unwrap();</span>
-<span class='doccomment'>//! ## Encoder</span>
-<span class='doccomment'>//! Not available yet</span>
-<span class='comment'>//#![cfg_attr(test, feature(test))]</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! # PNG encoder and decoder</span>
+<span class="doccomment">//! This crate contains a PNG decoder. It supports reading of single lines or whole frames.</span>
+<span class="doccomment">//! ## The decoder</span>
+<span class="doccomment">//! The most important types for decoding purposes are [`Decoder`](struct.Decoder.html) and</span>
+<span class="doccomment">//! [`Reader`](struct.Reader.html). They both wrap a `std::io::Read`.</span>
+<span class="doccomment">//! `Decoder` serves as a builder for `Reader`. Calling `Decoder::read_info` reads from the `Read` until the</span>
+<span class="doccomment">//! image data is reached.</span>
+<span class="doccomment">//! ### Using the decoder</span>
+<span class="doccomment">//!     use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // The decoder is a build for reader and can be used to set various decoding options</span>
+<span class="doccomment">//!     // via `Transformations`. The default output transformation is `TRANSFORM_EXPAND</span>
+<span class="doccomment">//!     // | TRANSFORM_STRIP_ALPHA`.</span>
+<span class="doccomment">//!     let decoder = png::Decoder::new(File::open(&quot;tests/pngsuite/basi0g01.png&quot;).unwrap());</span>
+<span class="doccomment">//!     let (info, mut reader) = decoder.read_info().unwrap();</span>
+<span class="doccomment">//!     // Allocate the output buffer.</span>
+<span class="doccomment">//!     let mut buf = vec![0; info.buffer_size()];</span>
+<span class="doccomment">//!     // Read the next frame. Currently this function should only called once.</span>
+<span class="doccomment">//!     // The default options</span>
+<span class="doccomment">//!     reader.next_frame(&amp;mut buf).unwrap();</span>
+<span class="doccomment">//! ## Encoder</span>
+<span class="doccomment">//! Not available yet</span>
+<span class="comment">//#![cfg_attr(test, feature(test))]</span>
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bitflags</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bitflags</span>;
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_iter</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_iter</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>chunk</span>;
-<span class='kw'>mod</span> <span class='ident'>crc</span>;
-<span class='kw'>mod</span> <span class='ident'>decoder</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;png-encoding&quot;</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>encoder</span>;
-<span class='kw'>mod</span> <span class='ident'>filter</span>;
-<span class='kw'>mod</span> <span class='ident'>traits</span>;
-<span class='kw'>mod</span> <span class='ident'>common</span>;
-<span class='kw'>mod</span> <span class='ident'>utils</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">chunk</span>;
+<span class="kw">mod</span> <span class="ident">crc</span>;
+<span class="kw">mod</span> <span class="ident">decoder</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;png-encoding&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">encoder</span>;
+<span class="kw">mod</span> <span class="ident">filter</span>;
+<span class="kw">mod</span> <span class="ident">traits</span>;
+<span class="kw">mod</span> <span class="ident">common</span>;
+<span class="kw">mod</span> <span class="ident">utils</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>common</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>decoder</span>::{<span class='ident'>Decoder</span>, <span class='ident'>Reader</span>, <span class='ident'>OutputInfo</span>, <span class='ident'>StreamingDecoder</span>, <span class='ident'>Decoded</span>, <span class='ident'>DecodingError</span>};
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;png-encoding&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>encoder</span>::{<span class='ident'>Encoder</span>, <span class='ident'>Writer</span>, <span class='ident'>EncodingError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">common</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">decoder</span>::{<span class="ident">Decoder</span>, <span class="ident">Reader</span>, <span class="ident">OutputInfo</span>, <span class="ident">StreamingDecoder</span>, <span class="ident">Decoded</span>, <span class="ident">DecodingError</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;png-encoding&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">encoder</span>::{<span class="ident">Encoder</span>, <span class="ident">Writer</span>, <span class="ident">EncodingError</span>};
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>traits</span>::{<span class='ident'>Parameter</span>, <span class='ident'>HasParameters</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">traits</span>::{<span class="ident">Parameter</span>, <span class="ident">HasParameters</span>};
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -145,18 +157,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -189,7 +205,6 @@
         window.rootPath = "../../";
         window.currentCrate = "png";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

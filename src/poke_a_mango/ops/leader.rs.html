@@ -9,14 +9,18 @@
 
     <title>leader.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -234,196 +246,196 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>DateTime</span>, <span class='ident'>FixedOffset</span>, <span class='ident'>ParseError</span>, <span class='ident'>Local</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::{<span class='ident'>read_toml_file</span>, <span class='ident'>write_toml_file</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>Error</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>FromIterator</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">DateTime</span>, <span class="ident">FixedOffset</span>, <span class="ident">ParseError</span>, <span class="ident">Local</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::{<span class="ident">read_toml_file</span>, <span class="ident">write_toml_file</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
 
-<span class='doccomment'>/// A leaderboard entry.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Reading a leaderboard, adding an entry to it, then writing it back.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
-<span class='doccomment'>/// # use poke_a_mango::ops::Leader;</span>
-<span class='doccomment'>/// # use std::env::temp_dir;</span>
-<span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-0&quot;);</span>
-<span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let tf = tf.join(&quot;leaderboard.toml&quot;);</span>
-<span class='doccomment'>/// File::create(&amp;tf).unwrap();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let mut leaders = Leader::read(&amp;tf).unwrap();</span>
-<span class='doccomment'>/// assert!(leaders.is_empty());</span>
-<span class='doccomment'>/// leaders.push(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105));</span>
-<span class='doccomment'>/// assert_eq!(Leader::write(leaders, &amp;tf), Ok(()));</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This could alternatively be done with `Leader::append()`.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Leader</span> {
-    <span class='doccomment'>/// Name the user entered when prompted.</span>
-    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='doccomment'>/// Time the score was achieved.</span>
-    <span class='kw'>pub</span> <span class='ident'>time</span>: <span class='ident'>DateTime</span><span class='op'>&lt;</span><span class='ident'>FixedOffset</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// User&#39;s score.</span>
-    <span class='kw'>pub</span> <span class='ident'>score</span>: <span class='ident'>u64</span>,
+<span class="doccomment">/// A leaderboard entry.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Reading a leaderboard, adding an entry to it, then writing it back.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::fs::{File, create_dir_all};</span>
+<span class="doccomment">/// # use poke_a_mango::ops::Leader;</span>
+<span class="doccomment">/// # use std::env::temp_dir;</span>
+<span class="doccomment">/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-0&quot;);</span>
+<span class="doccomment">/// create_dir_all(&amp;tf).unwrap();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let tf = tf.join(&quot;leaderboard.toml&quot;);</span>
+<span class="doccomment">/// File::create(&amp;tf).unwrap();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let mut leaders = Leader::read(&amp;tf).unwrap();</span>
+<span class="doccomment">/// assert!(leaders.is_empty());</span>
+<span class="doccomment">/// leaders.push(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105));</span>
+<span class="doccomment">/// assert_eq!(Leader::write(leaders, &amp;tf), Ok(()));</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This could alternatively be done with `Leader::append()`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Leader</span> {
+    <span class="doccomment">/// Name the user entered when prompted.</span>
+    <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// Time the score was achieved.</span>
+    <span class="kw">pub</span> <span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// User&#39;s score.</span>
+    <span class="kw">pub</span> <span class="ident">score</span>: <span class="ident">u64</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>LeaderForSerialisation</span> {
-    <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='ident'>time</span>: <span class='ident'>String</span>,
-    <span class='ident'>score</span>: <span class='ident'>u64</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">struct</span> <span class="ident">LeaderForSerialisation</span> {
+    <span class="ident">name</span>: <span class="ident">String</span>,
+    <span class="ident">time</span>: <span class="ident">String</span>,
+    <span class="ident">score</span>: <span class="ident">u64</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>Leaders</span> {
-    <span class='ident'>leader</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>LeaderForSerialisation</span><span class='op'>&gt;</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Leaders</span> {
+    <span class="ident">leader</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">LeaderForSerialisation</span><span class="op">&gt;</span>,
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>Leader</span> {
-    <span class='doccomment'>/// Create a new leaderboard entry with `time` set to now.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::Leader;</span>
-    <span class='doccomment'>/// let ldr = Leader::now(&quot;nabijaczleweli&quot;.to_string(), 36);</span>
-    <span class='doccomment'>/// assert_eq!(ldr.name, &quot;nabijaczleweli&quot;);</span>
-    <span class='doccomment'>/// assert_eq!(ldr.score, 36);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>now</span>(<span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>score</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>Leader</span> {
-        <span class='kw'>let</span> <span class='ident'>now</span> <span class='op'>=</span> <span class='ident'>Local</span>::<span class='ident'>now</span>();
-        <span class='ident'>Leader</span> {
-            <span class='ident'>name</span>: <span class='ident'>name</span>,
-            <span class='ident'>time</span>: <span class='ident'>now</span>.<span class='ident'>with_timezone</span>(<span class='ident'>now</span>.<span class='ident'>offset</span>()),
-            <span class='ident'>score</span>: <span class='ident'>score</span>,
+<span class="kw">impl</span> <span class="ident">Leader</span> {
+    <span class="doccomment">/// Create a new leaderboard entry with `time` set to now.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::Leader;</span>
+    <span class="doccomment">/// let ldr = Leader::now(&quot;nabijaczleweli&quot;.to_string(), 36);</span>
+    <span class="doccomment">/// assert_eq!(ldr.name, &quot;nabijaczleweli&quot;);</span>
+    <span class="doccomment">/// assert_eq!(ldr.score, 36);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">now</span>(<span class="ident">name</span>: <span class="ident">String</span>, <span class="ident">score</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">Leader</span> {
+        <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Local</span>::<span class="ident">now</span>();
+        <span class="ident">Leader</span> {
+            <span class="ident">name</span>: <span class="ident">name</span>,
+            <span class="ident">time</span>: <span class="ident">now</span>.<span class="ident">with_timezone</span>(<span class="ident">now</span>.<span class="ident">offset</span>()),
+            <span class="ident">score</span>: <span class="ident">score</span>,
         }
     }
 
-    <span class='doccomment'>/// Read leaderboard from the specified file.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the specified file doesn&#39;t exist an empty leaderboard is returned.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::Leader;</span>
-    <span class='doccomment'>/// # use std::env::temp_dir;</span>
-    <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-read-0&quot;);</span>
-    <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let tf = tf.join(&quot;leaderboard.toml&quot;);</span>
-    <span class='doccomment'>/// File::create(&amp;tf).unwrap();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// assert_eq!(Leader::read(&amp;tf), Ok(vec![]));</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Leader</span><span class='op'>&gt;</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>exists</span>() {
-            <span class='kw'>let</span> <span class='ident'>queued_leaders</span>: <span class='ident'>Leaders</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>read_toml_file</span>(<span class='ident'>p</span>, <span class='string'>&quot;leaderboard&quot;</span>));
-            <span class='prelude-val'>Ok</span>(<span class='prelude-ty'>Result</span>::<span class='ident'>from_iter</span>(<span class='ident'>queued_leaders</span>.<span class='ident'>leader</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>qts</span><span class='op'>|</span> <span class='ident'>qts</span>.<span class='ident'>into</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()).<span class='ident'>unwrap</span>())
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>Ok</span>(<span class='macro'>vec</span><span class='macro'>!</span>[])
+    <span class="doccomment">/// Read leaderboard from the specified file.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the specified file doesn&#39;t exist an empty leaderboard is returned.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::fs::{File, create_dir_all};</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::Leader;</span>
+    <span class="doccomment">/// # use std::env::temp_dir;</span>
+    <span class="doccomment">/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-read-0&quot;);</span>
+    <span class="doccomment">/// create_dir_all(&amp;tf).unwrap();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let tf = tf.join(&quot;leaderboard.toml&quot;);</span>
+    <span class="doccomment">/// File::create(&amp;tf).unwrap();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Leader::read(&amp;tf), Ok(vec![]));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Leader</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">exists</span>() {
+            <span class="kw">let</span> <span class="ident">queued_leaders</span>: <span class="ident">Leaders</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">read_toml_file</span>(<span class="ident">p</span>, <span class="string">&quot;leaderboard&quot;</span>));
+            <span class="prelude-val">Ok</span>(<span class="prelude-ty">Result</span>::<span class="ident">from_iter</span>(<span class="ident">queued_leaders</span>.<span class="ident">leader</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">qts</span><span class="op">|</span> <span class="ident">qts</span>.<span class="ident">into</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()).<span class="ident">unwrap</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="macro">vec</span><span class="macro">!</span>[])
         }
     }
 
-    <span class='doccomment'>/// Save leaderboard to the specified file.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate poke_a_mango;</span>
-    <span class='doccomment'>/// # extern crate chrono;</span>
-    <span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
-    <span class='doccomment'>/// # use self::chrono::{Duration, Local};</span>
-    <span class='doccomment'>/// # use self::poke_a_mango::ops::Leader;</span>
-    <span class='doccomment'>/// # use std::env::temp_dir;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-write-0&quot;);</span>
-    <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Leader::write(vec![Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105),</span>
-    <span class='doccomment'>///                    Leader::now(&quot;skorezore&quot;.to_string(), 51)],</span>
-    <span class='doccomment'>///               &amp;tf.join(&quot;leaderboard.toml&quot;))</span>
-    <span class='doccomment'>///     .unwrap();</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='ident'>queued_leaders</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Leader</span><span class='op'>&gt;</span>, <span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='ident'>write_toml_file</span>(<span class='kw-2'>&amp;</span><span class='ident'>Leaders</span> { <span class='ident'>leader</span>: <span class='ident'>queued_leaders</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='ident'>LeaderForSerialisation</span>::<span class='ident'>from</span>).<span class='ident'>collect</span>() },
-                        <span class='ident'>p</span>,
-                        <span class='string'>&quot;leaderboard&quot;</span>)
+    <span class="doccomment">/// Save leaderboard to the specified file.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate poke_a_mango;</span>
+    <span class="doccomment">/// # extern crate chrono;</span>
+    <span class="doccomment">/// # use std::fs::{File, create_dir_all};</span>
+    <span class="doccomment">/// # use self::chrono::{Duration, Local};</span>
+    <span class="doccomment">/// # use self::poke_a_mango::ops::Leader;</span>
+    <span class="doccomment">/// # use std::env::temp_dir;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-write-0&quot;);</span>
+    <span class="doccomment">/// create_dir_all(&amp;tf).unwrap();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Leader::write(vec![Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105),</span>
+    <span class="doccomment">///                    Leader::now(&quot;skorezore&quot;.to_string(), 51)],</span>
+    <span class="doccomment">///               &amp;tf.join(&quot;leaderboard.toml&quot;))</span>
+    <span class="doccomment">///     .unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="ident">queued_leaders</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Leader</span><span class="op">&gt;</span>, <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="ident">write_toml_file</span>(<span class="kw-2">&amp;</span><span class="ident">Leaders</span> { <span class="ident">leader</span>: <span class="ident">queued_leaders</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">LeaderForSerialisation</span>::<span class="ident">from</span>).<span class="ident">collect</span>() },
+                        <span class="ident">p</span>,
+                        <span class="string">&quot;leaderboard&quot;</span>)
     }
 
-    <span class='doccomment'>/// Append the specified leader to the leaderboard file at the specified path.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is equivalent to reading it, appending the leader, properly sorting and writing it back.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate poke_a_mango;</span>
-    <span class='doccomment'>/// # extern crate chrono;</span>
-    <span class='doccomment'>/// # use std::fs::{File, create_dir_all};</span>
-    <span class='doccomment'>/// # use self::chrono::{Duration, Local};</span>
-    <span class='doccomment'>/// # use self::poke_a_mango::ops::Leader;</span>
-    <span class='doccomment'>/// # use std::env::temp_dir;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-append-0&quot;);</span>
-    <span class='doccomment'>/// create_dir_all(&amp;tf).unwrap();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// assert_eq!(Leader::append(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105), &amp;tf.join(&quot;leaderboard.toml&quot;)), Ok(()));</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append</span>(<span class='ident'>ldr</span>: <span class='ident'>Leader</span>, <span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>leaderboard</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Leader</span>::<span class='ident'>read</span>(<span class='ident'>p</span>));
+    <span class="doccomment">/// Append the specified leader to the leaderboard file at the specified path.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is equivalent to reading it, appending the leader, properly sorting and writing it back.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate poke_a_mango;</span>
+    <span class="doccomment">/// # extern crate chrono;</span>
+    <span class="doccomment">/// # use std::fs::{File, create_dir_all};</span>
+    <span class="doccomment">/// # use self::chrono::{Duration, Local};</span>
+    <span class="doccomment">/// # use self::poke_a_mango::ops::Leader;</span>
+    <span class="doccomment">/// # use std::env::temp_dir;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// let tf = temp_dir().join(&quot;poke-a-mango-doctest&quot;).join(&quot;ops-Leader-append-0&quot;);</span>
+    <span class="doccomment">/// create_dir_all(&amp;tf).unwrap();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(Leader::append(Leader::now(&quot;nabijaczleweli&quot;.to_string(), 105), &amp;tf.join(&quot;leaderboard.toml&quot;)), Ok(()));</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append</span>(<span class="ident">ldr</span>: <span class="ident">Leader</span>, <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">leaderboard</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Leader</span>::<span class="ident">read</span>(<span class="ident">p</span>));
 
-        <span class='ident'>leaderboard</span>.<span class='ident'>push</span>(<span class='ident'>ldr</span>);
-        <span class='ident'>leaderboard</span>.<span class='ident'>sort</span>();
-        <span class='ident'>leaderboard</span>.<span class='ident'>reverse</span>();
+        <span class="ident">leaderboard</span>.<span class="ident">push</span>(<span class="ident">ldr</span>);
+        <span class="ident">leaderboard</span>.<span class="ident">sort</span>();
+        <span class="ident">leaderboard</span>.<span class="ident">reverse</span>();
 
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Leader</span>::<span class='ident'>write</span>(<span class='ident'>leaderboard</span>, <span class='ident'>p</span>));
-        <span class='prelude-val'>Ok</span>(())
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>Ord</span> <span class='kw'>for</span> <span class='ident'>Leader</span> {
-    <span class='kw'>fn</span> <span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>Ordering</span> {
-        <span class='self'>self</span>.<span class='ident'>score</span>.<span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>score</span>)
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Leader</span>::<span class="ident">write</span>(<span class="ident">leaderboard</span>, <span class="ident">p</span>));
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>PartialOrd</span> <span class='kw'>for</span> <span class='ident'>Leader</span> {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>score</span>.<span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>score</span>)
+<span class="kw">impl</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">Leader</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">Ordering</span> {
+        <span class="self">self</span>.<span class="ident">score</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">score</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">Leader</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">score</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">score</span>)
     }
 }
 
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Leader</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>LeaderForSerialisation</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>qt</span>: <span class='ident'>Leader</span>) <span class='op'>-&gt;</span> <span class='ident'>LeaderForSerialisation</span> {
-        <span class='ident'>LeaderForSerialisation</span> {
-            <span class='ident'>name</span>: <span class='ident'>qt</span>.<span class='ident'>name</span>,
-            <span class='ident'>time</span>: <span class='ident'>qt</span>.<span class='ident'>time</span>.<span class='ident'>to_rfc3339</span>(),
-            <span class='ident'>score</span>: <span class='ident'>qt</span>.<span class='ident'>score</span>,
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Leader</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LeaderForSerialisation</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">qt</span>: <span class="ident">Leader</span>) <span class="op">-&gt;</span> <span class="ident">LeaderForSerialisation</span> {
+        <span class="ident">LeaderForSerialisation</span> {
+            <span class="ident">name</span>: <span class="ident">qt</span>.<span class="ident">name</span>,
+            <span class="ident">time</span>: <span class="ident">qt</span>.<span class="ident">time</span>.<span class="ident">to_rfc3339</span>(),
+            <span class="ident">score</span>: <span class="ident">qt</span>.<span class="ident">score</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Leader</span>, <span class='ident'>ParseError</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>LeaderForSerialisation</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Leader</span>, <span class='ident'>ParseError</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>Leader</span> {
-            <span class='ident'>name</span>: <span class='self'>self</span>.<span class='ident'>name</span>,
-            <span class='ident'>time</span>: <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>DateTime</span>::<span class='ident'>parse_from_rfc3339</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>time</span>)),
-            <span class='ident'>score</span>: <span class='self'>self</span>.<span class='ident'>score</span>,
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Leader</span>, <span class="ident">ParseError</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">LeaderForSerialisation</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Leader</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Leader</span> {
+            <span class="ident">name</span>: <span class="self">self</span>.<span class="ident">name</span>,
+            <span class="ident">time</span>: <span class="macro">try</span><span class="macro">!</span>(<span class="ident">DateTime</span>::<span class="ident">parse_from_rfc3339</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>)),
+            <span class="ident">score</span>: <span class="self">self</span>.<span class="ident">score</span>,
         })
     }
 }
@@ -441,18 +453,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -485,7 +501,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

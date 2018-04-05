@@ -9,14 +9,18 @@
 
     <title>utf8.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -97,61 +109,61 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>char</span>::<span class='ident'>from_u32</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>::<span class="ident">from_u32</span>;
 
-<span class='doccomment'>/// Reads a potentially multi-bytes utf8 codepoint.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Reads the given first byte, and uses the given</span>
-<span class='doccomment'>/// function to get more if needed.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Returns an error if the stream is invalid utf-8.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_char</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>first</span>: <span class='ident'>u8</span>, <span class='ident'>next</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>char</span>, <span class='ident'>String</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>
+<span class="doccomment">/// Reads a potentially multi-bytes utf8 codepoint.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Reads the given first byte, and uses the given</span>
+<span class="doccomment">/// function to get more if needed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns an error if the stream is invalid utf-8.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_char</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">first</span>: <span class="ident">u8</span>, <span class="ident">next</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">char</span>, <span class="ident">String</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>
 {
-    <span class='kw'>if</span> <span class='ident'>first</span> <span class='op'>&lt;</span> <span class='number'>0x80</span> {
-        <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>first</span> <span class='kw'>as</span> <span class='ident'>char</span>);
+    <span class="kw">if</span> <span class="ident">first</span> <span class="op">&lt;</span> <span class="number">0x80</span> {
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">first</span> <span class="kw">as</span> <span class="ident">char</span>);
     }
 
-    <span class='comment'>// Number of leading 1s determines the number of bytes we&#39;ll have to read</span>
-    <span class='kw'>let</span> <span class='ident'>n_bytes</span> <span class='op'>=</span> <span class='kw'>match</span> (<span class='op'>!</span><span class='ident'>first</span>).<span class='ident'>leading_zeros</span>() {
-        <span class='ident'>n</span> @ <span class='number'>2</span>...<span class='number'>6</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
-        <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;First byte is continuation byte.&quot;</span>.<span class='ident'>to_string</span>()),
-        <span class='number'>7</span>...<span class='number'>8</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;WTF is this byte??&quot;</span>.<span class='ident'>to_string</span>()),
-        _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
+    <span class="comment">// Number of leading 1s determines the number of bytes we&#39;ll have to read</span>
+    <span class="kw">let</span> <span class="ident">n_bytes</span> <span class="op">=</span> <span class="kw">match</span> (<span class="op">!</span><span class="ident">first</span>).<span class="ident">leading_zeros</span>() {
+        <span class="ident">n</span> @ <span class="number">2</span>...<span class="number">6</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">usize</span>,
+        <span class="number">1</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="string">&quot;First byte is continuation byte.&quot;</span>.<span class="ident">to_string</span>()),
+        <span class="number">7</span>...<span class="number">8</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="string">&quot;WTF is this byte??&quot;</span>.<span class="ident">to_string</span>()),
+        _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
     };
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='number'>0u32</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="number">0u32</span>;
 
-    <span class='comment'>// First, get the data - only the few last bits</span>
-    <span class='ident'>res</span> <span class='op'>|=</span> (<span class='ident'>first</span> <span class='kw-2'>&amp;</span> <span class='ident'>make_mask</span>(<span class='number'>7</span> <span class='op'>-</span> <span class='ident'>n_bytes</span>)) <span class='kw'>as</span> <span class='ident'>u32</span>;
+    <span class="comment">// First, get the data - only the few last bits</span>
+    <span class="ident">res</span> <span class="op">|=</span> (<span class="ident">first</span> <span class="op">&amp;</span> <span class="ident">make_mask</span>(<span class="number">7</span> <span class="op">-</span> <span class="ident">n_bytes</span>)) <span class="kw">as</span> <span class="ident">u32</span>;
 
-    <span class='comment'>// We already have one byte, now read the others.</span>
-    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>1</span>..<span class='ident'>n_bytes</span> {
-        <span class='kw'>let</span> <span class='ident'>byte</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>next</span>().<span class='ident'>ok_or</span>(<span class='string'>&quot;Missing UTF-8 byte&quot;</span>.<span class='ident'>to_string</span>()));
-        <span class='kw'>if</span> <span class='ident'>byte</span> <span class='kw-2'>&amp;</span> <span class='number'>0xC0</span> <span class='op'>!=</span> <span class='number'>0x80</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Found non-continuation byte after leading: \
+    <span class="comment">// We already have one byte, now read the others.</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">1</span>..<span class="ident">n_bytes</span> {
+        <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">next</span>().<span class="ident">ok_or</span>(<span class="string">&quot;Missing UTF-8 byte&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0xC0</span> <span class="op">!=</span> <span class="number">0x80</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Found non-continuation byte after leading: \
                                 {}&quot;</span>,
-                               <span class='ident'>byte</span>));
+                               <span class="ident">byte</span>));
         }
-        <span class='comment'>// We have 6 fresh new bits to read, make room.</span>
-        <span class='ident'>res</span> <span class='op'>&lt;&lt;=</span> <span class='number'>6</span>;
-        <span class='comment'>// 0x3F is 00111111, so we keep the last 6 bits</span>
-        <span class='ident'>res</span> <span class='op'>|=</span> (<span class='ident'>byte</span> <span class='kw-2'>&amp;</span> <span class='number'>0x3F</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
+        <span class="comment">// We have 6 fresh new bits to read, make room.</span>
+        <span class="ident">res</span> <span class="op">&lt;&lt;=</span> <span class="number">6</span>;
+        <span class="comment">// 0x3F is 00111111, so we keep the last 6 bits</span>
+        <span class="ident">res</span> <span class="op">|=</span> (<span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u32</span>;
     }
 
-    <span class='comment'>// from_u32 could return an error if we gave it invalid utf-8.</span>
-    <span class='comment'>// But we&#39;re probably safe since we respected the rules when building it.</span>
-    <span class='prelude-val'>Ok</span>(<span class='ident'>from_u32</span>(<span class='ident'>res</span>).<span class='ident'>unwrap</span>())
+    <span class="comment">// from_u32 could return an error if we gave it invalid utf-8.</span>
+    <span class="comment">// But we&#39;re probably safe since we respected the rules when building it.</span>
+    <span class="prelude-val">Ok</span>(<span class="ident">from_u32</span>(<span class="ident">res</span>).<span class="ident">unwrap</span>())
 }
 
-<span class='comment'>// Returns a simple bitmask with n 1s to the right.</span>
-<span class='kw'>fn</span> <span class='ident'>make_mask</span>(<span class='ident'>n</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='number'>0u8</span>;
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>n</span> {
-        <span class='ident'>r</span> <span class='op'>|=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='ident'>i</span>;
+<span class="comment">// Returns a simple bitmask with n 1s to the right.</span>
+<span class="kw">fn</span> <span class="ident">make_mask</span>(<span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">u8</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="number">0u8</span>;
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">n</span> {
+        <span class="ident">r</span> <span class="op">|=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="ident">i</span>;
     }
-    <span class='ident'>r</span>
+    <span class="ident">r</span>
 }
 </pre>
 </section>
@@ -167,18 +179,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -211,7 +227,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

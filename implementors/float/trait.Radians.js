@@ -1,8 +1,5 @@
 (function() {var implementors = {};
-implementors["conrod"] = [];
 implementors["float"] = [];
-implementors["glutin_window"] = [];
-implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

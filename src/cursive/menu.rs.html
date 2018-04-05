@@ -9,14 +9,18 @@
 
     <title>menu.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -163,126 +175,126 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Build menu trees.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Menus are a way to arrange many actions in groups of more manageable size.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A menu can be seen as a `MenuTree`. It has a list of children:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * Leaf nodes are made of a label and a callback</span>
-<span class='doccomment'>//! * Sub-trees are made of a label, and another `MenuTree`.</span>
-<span class='doccomment'>//! * Delimiters are just there to separate groups of related children.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The [menubar] is the main way to show menus.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! [menubar]: ../struct.Cursive.html#method.menubar</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Build menu trees.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Menus are a way to arrange many actions in groups of more manageable size.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A menu can be seen as a `MenuTree`. It has a list of children:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * Leaf nodes are made of a label and a callback</span>
+<span class="doccomment">//! * Sub-trees are made of a label, and another `MenuTree`.</span>
+<span class="doccomment">//! * Delimiters are just there to separate groups of related children.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The [menubar] is the main way to show menus.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [menubar]: ../struct.Cursive.html#method.menubar</span>
 
-<span class='kw'>use</span> <span class='ident'>Cursive</span>;
-<span class='kw'>use</span> <span class='ident'>With</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::<span class='ident'>Callback</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+<span class="kw">use</span> <span class="ident">Cursive</span>;
+<span class="kw">use</span> <span class="ident">With</span>;
+<span class="kw">use</span> <span class="ident">event</span>::<span class="ident">Callback</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
-<span class='doccomment'>/// Root of a menu tree.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Default</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MenuTree</span> {
-    <span class='doccomment'>/// Menu items</span>
-    <span class='kw'>pub</span> <span class='ident'>children</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>MenuItem</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Root of a menu tree.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MenuTree</span> {
+    <span class="doccomment">/// Menu items</span>
+    <span class="kw">pub</span> <span class="ident">children</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MenuItem</span><span class="op">&gt;</span>,
 }
 
-<span class='doccomment'>/// Node in the menu tree.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>MenuItem</span> {
-    <span class='doccomment'>/// Actionnable button with a label.</span>
-    <span class='ident'>Leaf</span>(<span class='ident'>String</span>, <span class='ident'>Callback</span>),
-    <span class='doccomment'>/// Sub-menu with a label.</span>
-    <span class='ident'>Subtree</span>(<span class='ident'>String</span>, <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>MenuTree</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// Delimiter without a label.</span>
-    <span class='ident'>Delimiter</span>,
+<span class="doccomment">/// Node in the menu tree.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MenuItem</span> {
+    <span class="doccomment">/// Actionnable button with a label.</span>
+    <span class="ident">Leaf</span>(<span class="ident">String</span>, <span class="ident">Callback</span>),
+    <span class="doccomment">/// Sub-menu with a label.</span>
+    <span class="ident">Subtree</span>(<span class="ident">String</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">MenuTree</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Delimiter without a label.</span>
+    <span class="ident">Delimiter</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>MenuItem</span> {
-    <span class='doccomment'>/// Returns the label for this item.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns an empty string if `self` is a delimiter.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>label</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>MenuItem</span>::<span class='ident'>Delimiter</span> <span class='op'>=&gt;</span> <span class='string'>&quot;&quot;</span>,
-            <span class='ident'>MenuItem</span>::<span class='ident'>Leaf</span>(<span class='kw-2'>ref</span> <span class='ident'>label</span>, _) <span class='op'>|</span>
-            <span class='ident'>MenuItem</span>::<span class='ident'>Subtree</span>(<span class='kw-2'>ref</span> <span class='ident'>label</span>, _) <span class='op'>=&gt;</span> <span class='ident'>label</span>,
+<span class="kw">impl</span> <span class="ident">MenuItem</span> {
+    <span class="doccomment">/// Returns the label for this item.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns an empty string if `self` is a delimiter.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MenuItem</span>::<span class="ident">Delimiter</span> <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
+            <span class="ident">MenuItem</span>::<span class="ident">Leaf</span>(<span class="kw-2">ref</span> <span class="ident">label</span>, _) <span class="op">|</span>
+            <span class="ident">MenuItem</span>::<span class="ident">Subtree</span>(<span class="kw-2">ref</span> <span class="ident">label</span>, _) <span class="op">=&gt;</span> <span class="ident">label</span>,
         }
     }
 
-    <span class='doccomment'>/// Returns `true` if `self` is a delimiter.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_delimiter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>MenuItem</span>::<span class='ident'>Delimiter</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
+    <span class="doccomment">/// Returns `true` if `self` is a delimiter.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_delimiter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MenuItem</span>::<span class="ident">Delimiter</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
-    <span class='doccomment'>/// Returns `true` if `self` is a subtree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_subtree</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>MenuItem</span>::<span class='ident'>Subtree</span>(_, _) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
+    <span class="doccomment">/// Returns `true` if `self` is a subtree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_subtree</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MenuItem</span>::<span class="ident">Subtree</span>(_, _) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>MenuTree</span> {
-    <span class='doccomment'>/// Creates a new, empty tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>default</span>()
+<span class="kw">impl</span> <span class="ident">MenuTree</span> {
+    <span class="doccomment">/// Creates a new, empty tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">default</span>()
     }
 
-    <span class='doccomment'>/// Returns the number of children, including delimiters.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>len</span>()
+    <span class="doccomment">/// Returns the number of children, including delimiters.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">len</span>()
     }
 
-    <span class='doccomment'>/// Remove every children from this tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>clear</span>();
+    <span class="doccomment">/// Remove every children from this tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">clear</span>();
     }
 
-    <span class='doccomment'>/// Returns `true` if this tree has no children.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_empty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>is_empty</span>()
+    <span class="doccomment">/// Returns `true` if this tree has no children.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">is_empty</span>()
     }
 
-    <span class='doccomment'>/// Adds a delimiter to the end of this tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_delimiter</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>push</span>(<span class='ident'>MenuItem</span>::<span class='ident'>Delimiter</span>);
+    <span class="doccomment">/// Adds a delimiter to the end of this tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_delimiter</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">push</span>(<span class="ident">MenuItem</span>::<span class="ident">Delimiter</span>);
     }
 
-    <span class='doccomment'>/// Adds a delimiter to the end of this tree - chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delimiter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>menu</span><span class='op'>|</span> <span class='ident'>menu</span>.<span class='ident'>add_delimiter</span>())
+    <span class="doccomment">/// Adds a delimiter to the end of this tree - chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delimiter</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">menu</span><span class="op">|</span> <span class="ident">menu</span>.<span class="ident">add_delimiter</span>())
     }
 
-    <span class='doccomment'>/// Adds a actionnable leaf to the end of this tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_leaf</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>)<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                                                   <span class='ident'>cb</span>: <span class='ident'>F</span>) {
-        <span class='self'>self</span>.<span class='ident'>children</span>
-            .<span class='ident'>push</span>(<span class='ident'>MenuItem</span>::<span class='ident'>Leaf</span>(<span class='ident'>title</span>.<span class='ident'>to_string</span>(), <span class='ident'>Callback</span>::<span class='ident'>from_fn</span>(<span class='ident'>cb</span>)));
+    <span class="doccomment">/// Adds a actionnable leaf to the end of this tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_leaf</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>)<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                                                   <span class="ident">cb</span>: <span class="ident">F</span>) {
+        <span class="self">self</span>.<span class="ident">children</span>
+            .<span class="ident">push</span>(<span class="ident">MenuItem</span>::<span class="ident">Leaf</span>(<span class="ident">title</span>.<span class="ident">to_string</span>(), <span class="ident">Callback</span>::<span class="ident">from_fn</span>(<span class="ident">cb</span>)));
     }
 
-    <span class='doccomment'>/// Adds a actionnable leaf to the end of this tree - chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>leaf</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>)
+    <span class="doccomment">/// Adds a actionnable leaf to the end of this tree - chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">leaf</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">cb</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>)
     {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>menu</span><span class='op'>|</span> <span class='ident'>menu</span>.<span class='ident'>add_leaf</span>(<span class='ident'>title</span>, <span class='ident'>cb</span>))
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">menu</span><span class="op">|</span> <span class="ident">menu</span>.<span class="ident">add_leaf</span>(<span class="ident">title</span>, <span class="ident">cb</span>))
     }
 
-    <span class='doccomment'>/// Adds a submenu to the end of this tree.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_subtree</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>tree</span>: <span class='ident'>MenuTree</span>) {
-        <span class='self'>self</span>.<span class='ident'>children</span>
-            .<span class='ident'>push</span>(<span class='ident'>MenuItem</span>::<span class='ident'>Subtree</span>(<span class='ident'>title</span>.<span class='ident'>to_string</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>tree</span>)));
+    <span class="doccomment">/// Adds a submenu to the end of this tree.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_subtree</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">tree</span>: <span class="ident">MenuTree</span>) {
+        <span class="self">self</span>.<span class="ident">children</span>
+            .<span class="ident">push</span>(<span class="ident">MenuItem</span>::<span class="ident">Subtree</span>(<span class="ident">title</span>.<span class="ident">to_string</span>(), <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">tree</span>)));
     }
 
-    <span class='doccomment'>/// Adds a submenu to the end of this tree - chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>subtree</span>(<span class='self'>self</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>tree</span>: <span class='ident'>MenuTree</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>menu</span><span class='op'>|</span> <span class='ident'>menu</span>.<span class='ident'>add_subtree</span>(<span class='ident'>title</span>, <span class='ident'>tree</span>))
+    <span class="doccomment">/// Adds a submenu to the end of this tree - chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtree</span>(<span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">tree</span>: <span class="ident">MenuTree</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">menu</span><span class="op">|</span> <span class="ident">menu</span>.<span class="ident">add_subtree</span>(<span class="ident">title</span>, <span class="ident">tree</span>))
     }
 }
 </pre>
@@ -299,18 +311,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -343,7 +359,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

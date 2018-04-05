@@ -9,14 +9,18 @@
 
     <title>game_state.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -215,177 +227,177 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='kw'>super</span>::<span class='ident'>Leader</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">Leader</span>;
 
 
-<span class='doccomment'>/// Game&#39;s all possible states.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `Widgets::update()` takes care of proper state transformation.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>GameState</span> {
-    <span class='doccomment'>/// Display the main menu.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Main menu contains a Start button, a button to Display Highscores, an Exit button.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///   * `ChooseDifficulty`</span>
-    <span class='doccomment'>///   * `DisplayHighscores`</span>
-    <span class='doccomment'>///   * `Exit`</span>
-    <span class='ident'>MainMenu</span>,
-    <span class='doccomment'>/// Display the screen where the player chooses the difficulty.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The screen contains one button for each difficulty and the Back button.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///   * `Playing`</span>
-    <span class='doccomment'>///   * `MainMenu`</span>
-    <span class='ident'>ChooseDifficulty</span>,
-    <span class='doccomment'>/// The game is currently in progress.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This also contains the game&#39;s difficulty, the player&#39;s current score and whether the current fruit is a mango.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into `GameOver`.</span>
-    <span class='ident'>Playing</span> {
-        <span class='doccomment'>/// The game difficulty, as chosen in the `ChooseDifficulty` stage.</span>
-        <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>,
-        <span class='doccomment'>/// The user&#39;s current score.</span>
-        <span class='ident'>score</span>: <span class='ident'>u64</span>,
-        <span class='doccomment'>/// The current fruit index.</span>
-        <span class='doccomment'>///</span>
-        <span class='doccomment'>/// If `None` - it&#39;s a mango, else it&#39;s an index of fruit from `util::FRUITS`.</span>
-        <span class='ident'>fruit</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Game&#39;s all possible states.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `Widgets::update()` takes care of proper state transformation.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">GameState</span> {
+    <span class="doccomment">/// Display the main menu.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Main menu contains a Start button, a button to Display Highscores, an Exit button.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   * `ChooseDifficulty`</span>
+    <span class="doccomment">///   * `DisplayHighscores`</span>
+    <span class="doccomment">///   * `Exit`</span>
+    <span class="ident">MainMenu</span>,
+    <span class="doccomment">/// Display the screen where the player chooses the difficulty.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The screen contains one button for each difficulty and the Back button.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   * `Playing`</span>
+    <span class="doccomment">///   * `MainMenu`</span>
+    <span class="ident">ChooseDifficulty</span>,
+    <span class="doccomment">/// The game is currently in progress.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This also contains the game&#39;s difficulty, the player&#39;s current score and whether the current fruit is a mango.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into `GameOver`.</span>
+    <span class="ident">Playing</span> {
+        <span class="doccomment">/// The game difficulty, as chosen in the `ChooseDifficulty` stage.</span>
+        <span class="ident">difficulty</span>: <span class="ident">Difficulty</span>,
+        <span class="doccomment">/// The user&#39;s current score.</span>
+        <span class="ident">score</span>: <span class="ident">u64</span>,
+        <span class="doccomment">/// The current fruit index.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// If `None` - it&#39;s a mango, else it&#39;s an index of fruit from `util::FRUITS`.</span>
+        <span class="ident">fruit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     },
-    <span class='doccomment'>/// The game was lost after a valiant battle.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Contains the game&#39;s difficulty, the player&#39;s final score and the Back button.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// In this stage the player enters its name.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///   * `GameEnded`</span>
-    <span class='doccomment'>///   * `MainMenu`</span>
-    <span class='ident'>GameOver</span> {
-        <span class='doccomment'>/// The game difficulty, as same as in the `Playing` stage.</span>
-        <span class='ident'>difficulty</span>: <span class='ident'>Difficulty</span>,
-        <span class='doccomment'>/// The user&#39;s final score.</span>
-        <span class='ident'>score</span>: <span class='ident'>u64</span>,
-        <span class='doccomment'>/// The user&#39;s name, mostly partial.</span>
-        <span class='ident'>name</span>: <span class='ident'>String</span>,
+    <span class="doccomment">/// The game was lost after a valiant battle.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Contains the game&#39;s difficulty, the player&#39;s final score and the Back button.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// In this stage the player enters its name.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   * `GameEnded`</span>
+    <span class="doccomment">///   * `MainMenu`</span>
+    <span class="ident">GameOver</span> {
+        <span class="doccomment">/// The game difficulty, as same as in the `Playing` stage.</span>
+        <span class="ident">difficulty</span>: <span class="ident">Difficulty</span>,
+        <span class="doccomment">/// The user&#39;s final score.</span>
+        <span class="ident">score</span>: <span class="ident">u64</span>,
+        <span class="doccomment">/// The user&#39;s name, mostly partial.</span>
+        <span class="ident">name</span>: <span class="ident">String</span>,
     },
-    <span class='doccomment'>/// The game cycle has ended. Semi-meta-state</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Contains the game&#39;s difficulty and the players final score.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// In this stage the player enters its name.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Transforms into `MainMenu`.</span>
-    <span class='ident'>GameEnded</span> {
-        <span class='doccomment'>/// The user&#39;s name.</span>
-        <span class='ident'>name</span>: <span class='ident'>String</span>,
-        <span class='doccomment'>/// User&#39;s final score, weighted.</span>
-        <span class='ident'>score</span>: <span class='ident'>u64</span>,
+    <span class="doccomment">/// The game cycle has ended. Semi-meta-state</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Contains the game&#39;s difficulty and the players final score.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// In this stage the player enters its name.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Transforms into `MainMenu`.</span>
+    <span class="ident">GameEnded</span> {
+        <span class="doccomment">/// The user&#39;s name.</span>
+        <span class="ident">name</span>: <span class="ident">String</span>,
+        <span class="doccomment">/// User&#39;s final score, weighted.</span>
+        <span class="ident">score</span>: <span class="ident">u64</span>,
     },
-    <span class='doccomment'>/// Meta-state indicating that the leaderboard needs to be loaded.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Leaderboards are loaded via `Leader::load()`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Transforms into `DisplayLeaderboard`</span>
-    <span class='ident'>LoadLeaderboard</span>,
-    <span class='doccomment'>/// Display top 10 high scores.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This screen also contains the Back button.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into `MainMenu`</span>
-    <span class='ident'>DisplayLeaderboard</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Leader</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// Pseudo-state, signifying that the game window should be closed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Can transform into: nothing. This is the final state all others seek.</span>
-    <span class='ident'>Exit</span>,
+    <span class="doccomment">/// Meta-state indicating that the leaderboard needs to be loaded.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Needs to be handled in usercode, place the leaderboard into `DisplayLeaderboard` after loading it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Leaderboards are loaded via `Leader::load()`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Transforms into `DisplayLeaderboard`</span>
+    <span class="ident">LoadLeaderboard</span>,
+    <span class="doccomment">/// Display top 10 high scores.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This screen also contains the Back button.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into `MainMenu`</span>
+    <span class="ident">DisplayLeaderboard</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Leader</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Pseudo-state, signifying that the game window should be closed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Can transform into: nothing. This is the final state all others seek.</span>
+    <span class="ident">Exit</span>,
 }
 
-<span class='doccomment'>/// The game&#39;s difficulty, chosen in the `ChooseDifficulty` step.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Difficulty</span> {
-    <span class='doccomment'>/// Easy difficulty, points are halved when sorting.</span>
-    <span class='ident'>Easy</span>,
-    <span class='doccomment'>/// Normal difficulty, points are untouched when sorting.</span>
-    <span class='ident'>Normal</span>,
-    <span class='doccomment'>/// Hard difficulty, points are doubled when sorting.</span>
-    <span class='ident'>Hard</span>,
+<span class="doccomment">/// The game&#39;s difficulty, chosen in the `ChooseDifficulty` step.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Difficulty</span> {
+    <span class="doccomment">/// Easy difficulty, points are halved when sorting.</span>
+    <span class="ident">Easy</span>,
+    <span class="doccomment">/// Normal difficulty, points are untouched when sorting.</span>
+    <span class="ident">Normal</span>,
+    <span class="doccomment">/// Hard difficulty, points are doubled when sorting.</span>
+    <span class="ident">Hard</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>GameState</span> {
-    <span class='doccomment'>/// Check whether this state currently means that the game has ended.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::GameState;</span>
-    <span class='doccomment'>/// assert!(GameState::Exit.should_exit());</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>should_exit</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>*</span><span class='self'>self</span> <span class='op'>==</span> <span class='ident'>GameState</span>::<span class='ident'>Exit</span>
+<span class="kw">impl</span> <span class="ident">GameState</span> {
+    <span class="doccomment">/// Check whether this state currently means that the game has ended.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::GameState;</span>
+    <span class="doccomment">/// assert!(GameState::Exit.should_exit());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_exit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="ident">GameState</span>::<span class="ident">Exit</span>
     }
 
-    <span class='doccomment'>/// Check whether this state requires usercode to load the leaderboard.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::GameState;</span>
-    <span class='doccomment'>/// assert!(GameState::LoadLeaderboard.should_load_leaderboard());</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>should_load_leaderboard</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>*</span><span class='self'>self</span> <span class='op'>==</span> <span class='ident'>GameState</span>::<span class='ident'>LoadLeaderboard</span>
+    <span class="doccomment">/// Check whether this state requires usercode to load the leaderboard.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::GameState;</span>
+    <span class="doccomment">/// assert!(GameState::LoadLeaderboard.should_load_leaderboard());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_load_leaderboard</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="ident">GameState</span>::<span class="ident">LoadLeaderboard</span>
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Difficulty</span> {
-    <span class='doccomment'>/// The difficulty&#39;s numeric value, from `1` to `3`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>numeric</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Difficulty</span>::<span class='ident'>Easy</span> <span class='op'>=&gt;</span> <span class='number'>1</span>,
-            <span class='ident'>Difficulty</span>::<span class='ident'>Normal</span> <span class='op'>=&gt;</span> <span class='number'>2</span>,
-            <span class='ident'>Difficulty</span>::<span class='ident'>Hard</span> <span class='op'>=&gt;</span> <span class='number'>3</span>,
+<span class="kw">impl</span> <span class="ident">Difficulty</span> {
+    <span class="doccomment">/// The difficulty&#39;s numeric value, from `1` to `3`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">numeric</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Difficulty</span>::<span class="ident">Easy</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">Difficulty</span>::<span class="ident">Normal</span> <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">Difficulty</span>::<span class="ident">Hard</span> <span class="op">=&gt;</span> <span class="number">3</span>,
         }
     }
 
-    <span class='doccomment'>/// Get the difficulty from its numeric value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_numeric</span>(<span class='ident'>num</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>num</span> {
-            <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Easy</span>),
-            <span class='number'>2</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Normal</span>),
-            <span class='number'>3</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Difficulty</span>::<span class='ident'>Hard</span>),
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+    <span class="doccomment">/// Get the difficulty from its numeric value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_numeric</span>(<span class="ident">num</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">num</span> {
+            <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Difficulty</span>::<span class="ident">Easy</span>),
+            <span class="number">2</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Difficulty</span>::<span class="ident">Normal</span>),
+            <span class="number">3</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Difficulty</span>::<span class="ident">Hard</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
-    <span class='doccomment'>/// How to much to multiply the player&#39;s points for sorting.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Points on Easy are worth half, and on Hard - twice the normal amount.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use poke_a_mango::ops::Difficulty;</span>
-    <span class='doccomment'>/// // Normally you&#39;d get these by playing</span>
-    <span class='doccomment'>/// let points = 20;</span>
-    <span class='doccomment'>/// let difficulty = Difficulty::Hard;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let real_points = (points as f64) * difficulty.point_weight();</span>
-    <span class='doccomment'>/// assert_eq!(real_points, 40.0);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_weight</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Difficulty</span>::<span class='ident'>Easy</span> <span class='op'>=&gt;</span> <span class='number'>0.5</span>,
-            <span class='ident'>Difficulty</span>::<span class='ident'>Normal</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,
-            <span class='ident'>Difficulty</span>::<span class='ident'>Hard</span> <span class='op'>=&gt;</span> <span class='number'>2.0</span>,
+    <span class="doccomment">/// How to much to multiply the player&#39;s points for sorting.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Points on Easy are worth half, and on Hard - twice the normal amount.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use poke_a_mango::ops::Difficulty;</span>
+    <span class="doccomment">/// // Normally you&#39;d get these by playing</span>
+    <span class="doccomment">/// let points = 20;</span>
+    <span class="doccomment">/// let difficulty = Difficulty::Hard;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let real_points = (points as f64) * difficulty.point_weight();</span>
+    <span class="doccomment">/// assert_eq!(real_points, 40.0);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">point_weight</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Difficulty</span>::<span class="ident">Easy</span> <span class="op">=&gt;</span> <span class="number">0.5</span>,
+            <span class="ident">Difficulty</span>::<span class="ident">Normal</span> <span class="op">=&gt;</span> <span class="number">1.0</span>,
+            <span class="ident">Difficulty</span>::<span class="ident">Hard</span> <span class="op">=&gt;</span> <span class="number">2.0</span>,
         }
     }
 }
@@ -403,18 +415,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -447,7 +463,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

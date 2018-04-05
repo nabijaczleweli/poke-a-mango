@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["cursive"] = [];
 implementors["pancurses"] = [];
 
             if (window.register_implementors) {

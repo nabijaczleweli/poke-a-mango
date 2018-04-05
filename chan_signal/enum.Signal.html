@@ -9,14 +9,18 @@
 
     <title>chan_signal::Signal - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>chan_signal</a></p><script>window.sidebarCurrent = {name: 'Signal', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Signal</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.HUP">HUP</a><a href="#variant.INT">INT</a><a href="#variant.QUIT">QUIT</a><a href="#variant.ILL">ILL</a><a href="#variant.ABRT">ABRT</a><a href="#variant.FPE">FPE</a><a href="#variant.KILL">KILL</a><a href="#variant.SEGV">SEGV</a><a href="#variant.PIPE">PIPE</a><a href="#variant.ALRM">ALRM</a><a href="#variant.TERM">TERM</a><a href="#variant.USR1">USR1</a><a href="#variant.USR2">USR2</a><a href="#variant.CHLD">CHLD</a><a href="#variant.CONT">CONT</a><a href="#variant.STOP">STOP</a><a href="#variant.TSTP">TSTP</a><a href="#variant.TTIN">TTIN</a><a href="#variant.TTOU">TTOU</a><a href="#variant.BUS">BUS</a><a href="#variant.PROF">PROF</a><a href="#variant.SYS">SYS</a><a href="#variant.TRAP">TRAP</a><a href="#variant.URG">URG</a><a href="#variant.VTALRM">VTALRM</a><a href="#variant.XCPU">XCPU</a><a href="#variant.XFSZ">XFSZ</a><a href="#variant.IO">IO</a><a href="#variant.WINCH">WINCH</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Copy">Copy</a><a href="#impl-Debug">Debug</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a></div></div><p class='location'><a href='index.html'>chan_signal</a></p><script>window.sidebarCurrent = {name: 'Signal', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>chan_signal</a>::<wbr><a class='enum' href=''>Signal</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>chan_signal</a>::<wbr><a class="enum" href=''>Signal</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -80,24 +92,28 @@
     WINCH,
     // some variants omitted
 }</pre><div class='docblock'><p>The set of subscribable signals.</p>
-
 <p>After the first call to <code>notify_on</code> (or <code>notify</code>), precisely this set of
 signals are set to blocked status.</p>
-</div><h2 class='variants'>Variants</h2>
-<span id='variant.HUP' class='variant'><span id='HUP.v' class='invisible'><code>HUP</code></span></span><span id='variant.INT' class='variant'><span id='INT.v' class='invisible'><code>INT</code></span></span><span id='variant.QUIT' class='variant'><span id='QUIT.v' class='invisible'><code>QUIT</code></span></span><span id='variant.ILL' class='variant'><span id='ILL.v' class='invisible'><code>ILL</code></span></span><span id='variant.ABRT' class='variant'><span id='ABRT.v' class='invisible'><code>ABRT</code></span></span><span id='variant.FPE' class='variant'><span id='FPE.v' class='invisible'><code>FPE</code></span></span><span id='variant.KILL' class='variant'><span id='KILL.v' class='invisible'><code>KILL</code></span></span><span id='variant.SEGV' class='variant'><span id='SEGV.v' class='invisible'><code>SEGV</code></span></span><span id='variant.PIPE' class='variant'><span id='PIPE.v' class='invisible'><code>PIPE</code></span></span><span id='variant.ALRM' class='variant'><span id='ALRM.v' class='invisible'><code>ALRM</code></span></span><span id='variant.TERM' class='variant'><span id='TERM.v' class='invisible'><code>TERM</code></span></span><span id='variant.USR1' class='variant'><span id='USR1.v' class='invisible'><code>USR1</code></span></span><span id='variant.USR2' class='variant'><span id='USR2.v' class='invisible'><code>USR2</code></span></span><span id='variant.CHLD' class='variant'><span id='CHLD.v' class='invisible'><code>CHLD</code></span></span><span id='variant.CONT' class='variant'><span id='CONT.v' class='invisible'><code>CONT</code></span></span><span id='variant.STOP' class='variant'><span id='STOP.v' class='invisible'><code>STOP</code></span></span><span id='variant.TSTP' class='variant'><span id='TSTP.v' class='invisible'><code>TSTP</code></span></span><span id='variant.TTIN' class='variant'><span id='TTIN.v' class='invisible'><code>TTIN</code></span></span><span id='variant.TTOU' class='variant'><span id='TTOU.v' class='invisible'><code>TTOU</code></span></span><span id='variant.BUS' class='variant'><span id='BUS.v' class='invisible'><code>BUS</code></span></span><span id='variant.PROF' class='variant'><span id='PROF.v' class='invisible'><code>PROF</code></span></span><span id='variant.SYS' class='variant'><span id='SYS.v' class='invisible'><code>SYS</code></span></span><span id='variant.TRAP' class='variant'><span id='TRAP.v' class='invisible'><code>TRAP</code></span></span><span id='variant.URG' class='variant'><span id='URG.v' class='invisible'><code>URG</code></span></span><span id='variant.VTALRM' class='variant'><span id='VTALRM.v' class='invisible'><code>VTALRM</code></span></span><span id='variant.XCPU' class='variant'><span id='XCPU.v' class='invisible'><code>XCPU</code></span></span><span id='variant.XFSZ' class='variant'><span id='XFSZ.v' class='invisible'><code>XFSZ</code></span></span><span id='variant.IO' class='variant'><span id='IO.v' class='invisible'><code>IO</code></span></span><span id='variant.WINCH' class='variant'><span id='WINCH.v' class='invisible'><code>WINCH</code></span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span></h4>
+</div><h2 id='variants' class='variants small-section-header'>
+                   Variants<a href='#variants' class='anchor'></a></h2>
+<span id="variant.HUP" class="variant small-section-header"><a href="#variant.HUP" class="anchor field"></a><span id='HUP.v' class='invisible'><code>HUP</code></span></span><span id="variant.INT" class="variant small-section-header"><a href="#variant.INT" class="anchor field"></a><span id='INT.v' class='invisible'><code>INT</code></span></span><span id="variant.QUIT" class="variant small-section-header"><a href="#variant.QUIT" class="anchor field"></a><span id='QUIT.v' class='invisible'><code>QUIT</code></span></span><span id="variant.ILL" class="variant small-section-header"><a href="#variant.ILL" class="anchor field"></a><span id='ILL.v' class='invisible'><code>ILL</code></span></span><span id="variant.ABRT" class="variant small-section-header"><a href="#variant.ABRT" class="anchor field"></a><span id='ABRT.v' class='invisible'><code>ABRT</code></span></span><span id="variant.FPE" class="variant small-section-header"><a href="#variant.FPE" class="anchor field"></a><span id='FPE.v' class='invisible'><code>FPE</code></span></span><span id="variant.KILL" class="variant small-section-header"><a href="#variant.KILL" class="anchor field"></a><span id='KILL.v' class='invisible'><code>KILL</code></span></span><span id="variant.SEGV" class="variant small-section-header"><a href="#variant.SEGV" class="anchor field"></a><span id='SEGV.v' class='invisible'><code>SEGV</code></span></span><span id="variant.PIPE" class="variant small-section-header"><a href="#variant.PIPE" class="anchor field"></a><span id='PIPE.v' class='invisible'><code>PIPE</code></span></span><span id="variant.ALRM" class="variant small-section-header"><a href="#variant.ALRM" class="anchor field"></a><span id='ALRM.v' class='invisible'><code>ALRM</code></span></span><span id="variant.TERM" class="variant small-section-header"><a href="#variant.TERM" class="anchor field"></a><span id='TERM.v' class='invisible'><code>TERM</code></span></span><span id="variant.USR1" class="variant small-section-header"><a href="#variant.USR1" class="anchor field"></a><span id='USR1.v' class='invisible'><code>USR1</code></span></span><span id="variant.USR2" class="variant small-section-header"><a href="#variant.USR2" class="anchor field"></a><span id='USR2.v' class='invisible'><code>USR2</code></span></span><span id="variant.CHLD" class="variant small-section-header"><a href="#variant.CHLD" class="anchor field"></a><span id='CHLD.v' class='invisible'><code>CHLD</code></span></span><span id="variant.CONT" class="variant small-section-header"><a href="#variant.CONT" class="anchor field"></a><span id='CONT.v' class='invisible'><code>CONT</code></span></span><span id="variant.STOP" class="variant small-section-header"><a href="#variant.STOP" class="anchor field"></a><span id='STOP.v' class='invisible'><code>STOP</code></span></span><span id="variant.TSTP" class="variant small-section-header"><a href="#variant.TSTP" class="anchor field"></a><span id='TSTP.v' class='invisible'><code>TSTP</code></span></span><span id="variant.TTIN" class="variant small-section-header"><a href="#variant.TTIN" class="anchor field"></a><span id='TTIN.v' class='invisible'><code>TTIN</code></span></span><span id="variant.TTOU" class="variant small-section-header"><a href="#variant.TTOU" class="anchor field"></a><span id='TTOU.v' class='invisible'><code>TTOU</code></span></span><span id="variant.BUS" class="variant small-section-header"><a href="#variant.BUS" class="anchor field"></a><span id='BUS.v' class='invisible'><code>BUS</code></span></span><span id="variant.PROF" class="variant small-section-header"><a href="#variant.PROF" class="anchor field"></a><span id='PROF.v' class='invisible'><code>PROF</code></span></span><span id="variant.SYS" class="variant small-section-header"><a href="#variant.SYS" class="anchor field"></a><span id='SYS.v' class='invisible'><code>SYS</code></span></span><span id="variant.TRAP" class="variant small-section-header"><a href="#variant.TRAP" class="anchor field"></a><span id='TRAP.v' class='invisible'><code>TRAP</code></span></span><span id="variant.URG" class="variant small-section-header"><a href="#variant.URG" class="anchor field"></a><span id='URG.v' class='invisible'><code>URG</code></span></span><span id="variant.VTALRM" class="variant small-section-header"><a href="#variant.VTALRM" class="anchor field"></a><span id='VTALRM.v' class='invisible'><code>VTALRM</code></span></span><span id="variant.XCPU" class="variant small-section-header"><a href="#variant.XCPU" class="anchor field"></a><span id='XCPU.v' class='invisible'><code>XCPU</code></span></span><span id="variant.XFSZ" class="variant small-section-header"><a href="#variant.XFSZ" class="anchor field"></a><span id='XFSZ.v' class='invisible'><code>XFSZ</code></span></span><span id="variant.IO" class="variant small-section-header"><a href="#variant.IO" class="anchor field"></a><span id='IO.v' class='invisible'><code>IO</code></span></span><span id="variant.WINCH" class="variant small-section-header"><a href="#variant.WINCH" class="anchor field"></a><span id='WINCH.v' class='invisible'><code>WINCH</code></span></span>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../chan_signal/enum.Signal.html' title='chan_signal::Signal'>Signal</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div></div><h3 id='impl-Copy' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code><a href='#impl-Copy' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Eq' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code><a href='#impl-Eq' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 id='impl-PartialEq' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a></code><a href='#impl-PartialEq' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../chan_signal/enum.Signal.html" title="enum chan_signal::Signal">Signal</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chan_signal/lib.rs.html#241' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
-</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/cmp.rs.html#121' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -112,18 +128,22 @@ signals are set to blocked status.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -156,7 +176,6 @@ signals are set to blocked status.</p>
         window.rootPath = "../";
         window.currentCrate = "chan_signal";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

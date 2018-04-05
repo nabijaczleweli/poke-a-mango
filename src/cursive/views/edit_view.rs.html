@@ -9,14 +9,18 @@
 
     <title>edit_view.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -458,421 +470,421 @@
 <span id="414">414</span>
 <span id="415">415</span>
 <span id="416">416</span>
-</pre><pre class='rust '>
+</pre><pre class="rust ">
 
 
-<span class='kw'>use</span> {<span class='ident'>Cursive</span>, <span class='ident'>Printer</span>, <span class='ident'>With</span>};
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
+<span class="kw">use</span> {<span class="ident">Cursive</span>, <span class="ident">Printer</span>, <span class="ident">With</span>};
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::{<span class="ident">Callback</span>, <span class="ident">Event</span>, <span class="ident">EventResult</span>, <span class="ident">Key</span>};
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>};
-<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>simple_suffix_length</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">theme</span>::{<span class="ident">ColorStyle</span>, <span class="ident">Effect</span>};
+<span class="kw">use</span> <span class="ident">unicode_segmentation</span>::<span class="ident">UnicodeSegmentation</span>;
+<span class="kw">use</span> <span class="ident">unicode_width</span>::<span class="ident">UnicodeWidthStr</span>;
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">simple_suffix_length</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::<span class="ident">View</span>;
 
 
-<span class='doccomment'>/// Input box where the user can enter and edit text.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// From the [edit example].</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [edit example]: https://github.com/gyscos/Cursive/blob/master/examples/edit.rs</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```no_run</span>
-<span class='doccomment'>/// # extern crate cursive;</span>
-<span class='doccomment'>/// # use cursive::Cursive;</span>
-<span class='doccomment'>/// # use cursive::traits::*;</span>
-<span class='doccomment'>/// # use cursive::views::{Dialog, EditView, TextView};</span>
-<span class='doccomment'>/// # fn main() {</span>
-<span class='doccomment'>/// let mut siv = Cursive::new();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// // Create a dialog with an edit text and a button.</span>
-<span class='doccomment'>/// // The user can either hit the &lt;Ok&gt; button,</span>
-<span class='doccomment'>/// // or press Enter on the edit text.</span>
-<span class='doccomment'>/// siv.add_layer(Dialog::new()</span>
-<span class='doccomment'>///     .title(&quot;Enter your name&quot;)</span>
-<span class='doccomment'>///     .padding((1, 1, 1, 0))</span>
-<span class='doccomment'>///     .content(EditView::new()</span>
-<span class='doccomment'>///         .on_submit(show_popup)</span>
-<span class='doccomment'>///         .with_id(&quot;name&quot;)</span>
-<span class='doccomment'>///         .fixed_width(20))</span>
-<span class='doccomment'>///     .button(&quot;Ok&quot;, |s| {</span>
-<span class='doccomment'>///         let name = s.find_id::&lt;EditView&gt;(&quot;name&quot;)</span>
-<span class='doccomment'>///             .unwrap()</span>
-<span class='doccomment'>///             .get_content();</span>
-<span class='doccomment'>///         show_popup(s, &amp;name);</span>
-<span class='doccomment'>///     }));</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// fn show_popup(s: &amp;mut Cursive, name: &amp;str) {</span>
-<span class='doccomment'>///     if name.is_empty() {</span>
-<span class='doccomment'>///         s.add_layer(Dialog::info(&quot;Please enter a name!&quot;));</span>
-<span class='doccomment'>///     } else {</span>
-<span class='doccomment'>///         let content = format!(&quot;Hello {}!&quot;, name);</span>
-<span class='doccomment'>///         s.pop_layer();</span>
-<span class='doccomment'>///         s.add_layer(Dialog::around(TextView::new(content))</span>
-<span class='doccomment'>///             .button(&quot;Quit&quot;, |s| s.quit()));</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # }</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EditView</span> {
-    <span class='doccomment'>/// Current content.</span>
-    <span class='ident'>content</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// Cursor position in the content, in bytes.</span>
-    <span class='ident'>cursor</span>: <span class='ident'>usize</span>,
+<span class="doccomment">/// Input box where the user can enter and edit text.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// From the [edit example].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [edit example]: https://github.com/gyscos/Cursive/blob/master/examples/edit.rs</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```no_run</span>
+<span class="doccomment">/// # extern crate cursive;</span>
+<span class="doccomment">/// # use cursive::Cursive;</span>
+<span class="doccomment">/// # use cursive::traits::*;</span>
+<span class="doccomment">/// # use cursive::views::{Dialog, EditView, TextView};</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// let mut siv = Cursive::new();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Create a dialog with an edit text and a button.</span>
+<span class="doccomment">/// // The user can either hit the &lt;Ok&gt; button,</span>
+<span class="doccomment">/// // or press Enter on the edit text.</span>
+<span class="doccomment">/// siv.add_layer(Dialog::new()</span>
+<span class="doccomment">///     .title(&quot;Enter your name&quot;)</span>
+<span class="doccomment">///     .padding((1, 1, 1, 0))</span>
+<span class="doccomment">///     .content(EditView::new()</span>
+<span class="doccomment">///         .on_submit(show_popup)</span>
+<span class="doccomment">///         .with_id(&quot;name&quot;)</span>
+<span class="doccomment">///         .fixed_width(20))</span>
+<span class="doccomment">///     .button(&quot;Ok&quot;, |s| {</span>
+<span class="doccomment">///         let name = s.find_id::&lt;EditView&gt;(&quot;name&quot;)</span>
+<span class="doccomment">///             .unwrap()</span>
+<span class="doccomment">///             .get_content();</span>
+<span class="doccomment">///         show_popup(s, &amp;name);</span>
+<span class="doccomment">///     }));</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// fn show_popup(s: &amp;mut Cursive, name: &amp;str) {</span>
+<span class="doccomment">///     if name.is_empty() {</span>
+<span class="doccomment">///         s.add_layer(Dialog::info(&quot;Please enter a name!&quot;));</span>
+<span class="doccomment">///     } else {</span>
+<span class="doccomment">///         let content = format!(&quot;Hello {}!&quot;, name);</span>
+<span class="doccomment">///         s.pop_layer();</span>
+<span class="doccomment">///         s.add_layer(Dialog::around(TextView::new(content))</span>
+<span class="doccomment">///             .button(&quot;Quit&quot;, |s| s.quit()));</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EditView</span> {
+    <span class="doccomment">/// Current content.</span>
+    <span class="ident">content</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Cursor position in the content, in bytes.</span>
+    <span class="ident">cursor</span>: <span class="ident">usize</span>,
 
-    <span class='doccomment'>/// Number of bytes to skip at the beginning of the content.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// (When the content is too long for the display, we hide part of it)</span>
-    <span class='ident'>offset</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// Last display length, to know the possible offset range</span>
-    <span class='ident'>last_length</span>: <span class='ident'>usize</span>,
+    <span class="doccomment">/// Number of bytes to skip at the beginning of the content.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// (When the content is too long for the display, we hide part of it)</span>
+    <span class="ident">offset</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Last display length, to know the possible offset range</span>
+    <span class="ident">last_length</span>: <span class="ident">usize</span>,
 
-    <span class='doccomment'>/// Callback when the content is modified.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Will be called with the current content and the cursor position</span>
-    <span class='ident'>on_edit</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span>,
+    <span class="doccomment">/// Callback when the content is modified.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Will be called with the current content and the cursor position</span>
+    <span class="ident">on_edit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">usize</span>)<span class="op">&gt;&gt;</span>,
 
-    <span class='doccomment'>/// Callback when &lt;Enter&gt; is pressed.</span>
-    <span class='ident'>on_submit</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>)<span class='op'>&gt;&gt;</span>,
+    <span class="doccomment">/// Callback when &lt;Enter&gt; is pressed.</span>
+    <span class="ident">on_submit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>)<span class="op">&gt;&gt;</span>,
 
-    <span class='doccomment'>/// When `true`, only print `*` instead of the true content.</span>
-    <span class='ident'>secret</span>: <span class='ident'>bool</span>,
+    <span class="doccomment">/// When `true`, only print `*` instead of the true content.</span>
+    <span class="ident">secret</span>: <span class="ident">bool</span>,
 
-    <span class='ident'>enabled</span>: <span class='ident'>bool</span>,
+    <span class="ident">enabled</span>: <span class="ident">bool</span>,
 }
 
-<span class='macro'>new_default</span><span class='macro'>!</span>(<span class='ident'>EditView</span>);
+<span class="macro">new_default</span><span class="macro">!</span>(<span class="ident">EditView</span>);
 
-<span class='kw'>impl</span> <span class='ident'>EditView</span> {
-    <span class='doccomment'>/// Creates a new, empty edit view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>EditView</span> {
-            <span class='ident'>content</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>String</span>::<span class='ident'>new</span>()),
-            <span class='ident'>cursor</span>: <span class='number'>0</span>,
-            <span class='ident'>offset</span>: <span class='number'>0</span>,
-            <span class='ident'>last_length</span>: <span class='number'>0</span>, <span class='comment'>// scrollable: false,</span>
-            <span class='ident'>on_edit</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>on_submit</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>secret</span>: <span class='bool-val'>false</span>,
-            <span class='ident'>enabled</span>: <span class='bool-val'>true</span>,
+<span class="kw">impl</span> <span class="ident">EditView</span> {
+    <span class="doccomment">/// Creates a new, empty edit view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">EditView</span> {
+            <span class="ident">content</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">String</span>::<span class="ident">new</span>()),
+            <span class="ident">cursor</span>: <span class="number">0</span>,
+            <span class="ident">offset</span>: <span class="number">0</span>,
+            <span class="ident">last_length</span>: <span class="number">0</span>, <span class="comment">// scrollable: false,</span>
+            <span class="ident">on_edit</span>: <span class="prelude-val">None</span>,
+            <span class="ident">on_submit</span>: <span class="prelude-val">None</span>,
+            <span class="ident">secret</span>: <span class="bool-val">false</span>,
+            <span class="ident">enabled</span>: <span class="bool-val">true</span>,
         }
     }
 
-    <span class='doccomment'>/// If `secret` is `true`, the content won&#39;t be displayed in clear.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Only `*` will be shown.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_secret</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>secret</span>: <span class='ident'>bool</span>) {
-        <span class='self'>self</span>.<span class='ident'>secret</span> <span class='op'>=</span> <span class='ident'>secret</span>;
+    <span class="doccomment">/// If `secret` is `true`, the content won&#39;t be displayed in clear.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Only `*` will be shown.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_secret</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">secret</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">secret</span> <span class="op">=</span> <span class="ident">secret</span>;
     }
 
-    <span class='doccomment'>/// Hides the content of the view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Only `*` will be shown.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>secret</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>set_secret</span>(<span class='bool-val'>true</span>))
+    <span class="doccomment">/// Hides the content of the view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Only `*` will be shown.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">secret</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">set_secret</span>(<span class="bool-val">true</span>))
     }
 
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A disabled view cannot be selected.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+    <span class="doccomment">/// Disables this view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A disabled view cannot be selected.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
     }
 
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disabled</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='self'>Self</span>::<span class='ident'>disable</span>)
+    <span class="doccomment">/// Disables this view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disabled</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="self">Self</span>::<span class="ident">disable</span>)
     }
 
-    <span class='doccomment'>/// Re-enables this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+    <span class="doccomment">/// Re-enables this view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">true</span>;
     }
 
-    <span class='doccomment'>/// Sets a callback to be called whenever the content is modified.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// `callback` will be called with the view</span>
-    <span class='doccomment'>/// content and the current cursor position.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_edit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>usize</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    <span class="doccomment">/// Sets a callback to be called whenever the content is modified.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `callback` will be called with the view</span>
+    <span class="doccomment">/// content and the current cursor position.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_edit</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">usize</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
-        <span class='self'>self</span>.<span class='ident'>on_edit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>callback</span>));
-        <span class='self'>self</span>
+        <span class="self">self</span>.<span class="ident">on_edit</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">callback</span>));
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Sets a callback to be called when `&lt;Enter&gt;` is pressed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// `callback` will be given the content of the view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    <span class="doccomment">/// Sets a callback to be called when `&lt;Enter&gt;` is pressed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `callback` will be given the content of the view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_submit</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
-        <span class='self'>self</span>.<span class='ident'>on_submit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>callback</span>));
-        <span class='self'>self</span>
+        <span class="self">self</span>.<span class="ident">on_submit</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">callback</span>));
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Enable or disable this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_enabled</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>enabled</span>: <span class='ident'>bool</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='ident'>enabled</span>;
+    <span class="doccomment">/// Enable or disable this view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_enabled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">enabled</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="ident">enabled</span>;
     }
 
-    <span class='doccomment'>/// Returns `true` if this view is enabled.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_enabled</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
+    <span class="doccomment">/// Returns `true` if this view is enabled.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">enabled</span>
     }
 
-    <span class='doccomment'>/// Replace the entire content of the view with the given one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>S</span>) {
-        <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>len</span>();
+    <span class="doccomment">/// Replace the entire content of the view with the given one.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_content</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content</span>: <span class="ident">S</span>) {
+        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">content</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">content</span>.<span class="ident">len</span>();
 
-        <span class='self'>self</span>.<span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>content</span>);
-        <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='self'>self</span>.<span class='ident'>set_cursor</span>(<span class='ident'>len</span>);
+        <span class="self">self</span>.<span class="ident">content</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">content</span>);
+        <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="self">self</span>.<span class="ident">set_cursor</span>(<span class="ident">len</span>);
     }
 
-    <span class='doccomment'>/// Get the current text.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_content</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Get the current text.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the current content to the given value.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Convenient chainable method.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>content</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>set_content</span>(<span class='ident'>content</span>);
-        <span class='self'>self</span>
+    <span class="doccomment">/// Sets the current content to the given value.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Convenient chainable method.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">content</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_content</span>(<span class="ident">content</span>);
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Sets the cursor position.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_cursor</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor</span>: <span class='ident'>usize</span>) {
-        <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>cursor</span>;
+    <span class="doccomment">/// Sets the cursor position.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="ident">cursor</span>;
 
-        <span class='self'>self</span>.<span class='ident'>keep_cursor_in_view</span>();
+        <span class="self">self</span>.<span class="ident">keep_cursor_in_view</span>();
     }
 
-    <span class='doccomment'>/// Insert `ch` at the current cursor position.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ch</span>: <span class='ident'>char</span>) {
-        <span class='comment'>// `make_mut` applies copy-on-write</span>
-        <span class='comment'>// It means it&#39;ll just return a ref if no one else has a ref,</span>
-        <span class='comment'>// and it will clone it into `self.content` otherwise.</span>
-        <span class='ident'>Rc</span>::<span class='ident'>make_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>).<span class='ident'>insert</span>(<span class='self'>self</span>.<span class='ident'>cursor</span>, <span class='ident'>ch</span>);
-        <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+=</span> <span class='ident'>ch</span>.<span class='ident'>len_utf8</span>();
+    <span class="doccomment">/// Insert `ch` at the current cursor position.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ch</span>: <span class="ident">char</span>) {
+        <span class="comment">// `make_mut` applies copy-on-write</span>
+        <span class="comment">// It means it&#39;ll just return a ref if no one else has a ref,</span>
+        <span class="comment">// and it will clone it into `self.content` otherwise.</span>
+        <span class="ident">Rc</span>::<span class="ident">make_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">content</span>).<span class="ident">insert</span>(<span class="self">self</span>.<span class="ident">cursor</span>, <span class="ident">ch</span>);
+        <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">+=</span> <span class="ident">ch</span>.<span class="ident">len_utf8</span>();
     }
 
-    <span class='doccomment'>/// Remove the character at the current cursor position.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
-        <span class='kw'>let</span> <span class='ident'>end</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+</span> <span class='ident'>len</span>;
-        <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>Rc</span>::<span class='ident'>make_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>).<span class='ident'>drain</span>(<span class='ident'>start</span>..<span class='ident'>end</span>) {}
+    <span class="doccomment">/// Remove the character at the current cursor position.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span>;
+        <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">+</span> <span class="ident">len</span>;
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="ident">Rc</span>::<span class="ident">make_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">content</span>).<span class="ident">drain</span>(<span class="ident">start</span>..<span class="ident">end</span>) {}
     }
 
-    <span class='kw'>fn</span> <span class='ident'>keep_cursor_in_view</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='comment'>// keep cursor in [offset, offset+last_length] by changing offset</span>
-        <span class='comment'>// so keep offset in [last_length-cursor,cursor]</span>
-        <span class='comment'>// Also call this on resize,</span>
-        <span class='comment'>// but right now it is an event like any other</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>offset</span> {
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
-        } <span class='kw'>else</span> {
-            <span class='comment'>// So we&#39;re against the right wall.</span>
-            <span class='comment'>// Let&#39;s find how much space will be taken by the selection</span>
-            <span class='comment'>// (either a char, or _)</span>
-            <span class='kw'>let</span> <span class='ident'>c_len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
-                .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>g</span><span class='op'>|</span> <span class='ident'>g</span>.<span class='ident'>width</span>())
-                .<span class='ident'>next</span>()
-                .<span class='ident'>unwrap_or</span>(<span class='number'>1</span>);
-            <span class='kw'>if</span> <span class='ident'>c_len</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-                <span class='comment'>// Weird - no available space?</span>
-                <span class='kw'>return</span>;
+    <span class="kw">fn</span> <span class="ident">keep_cursor_in_view</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="comment">// keep cursor in [offset, offset+last_length] by changing offset</span>
+        <span class="comment">// so keep offset in [last_length-cursor,cursor]</span>
+        <span class="comment">// Also call this on resize,</span>
+        <span class="comment">// but right now it is an event like any other</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">offset</span> {
+            <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span>;
+        } <span class="kw">else</span> {
+            <span class="comment">// So we&#39;re against the right wall.</span>
+            <span class="comment">// Let&#39;s find how much space will be taken by the selection</span>
+            <span class="comment">// (either a char, or _)</span>
+            <span class="kw">let</span> <span class="ident">c_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">cursor</span>..]
+                .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">g</span><span class="op">|</span> <span class="ident">g</span>.<span class="ident">width</span>())
+                .<span class="ident">next</span>()
+                .<span class="ident">unwrap_or</span>(<span class="number">1</span>);
+            <span class="kw">if</span> <span class="ident">c_len</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">last_length</span> {
+                <span class="comment">// Weird - no available space?</span>
+                <span class="kw">return</span>;
             }
-            <span class='comment'>// Now, we have to fit self.content[..self.cursor]</span>
-            <span class='comment'>// into self.last_length - c_len.</span>
-            <span class='kw'>let</span> <span class='ident'>available</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='ident'>c_len</span>;
-            <span class='comment'>// Look at the content before the cursor (we will print its tail).</span>
-            <span class='comment'>// From the end, count the length until we reach `available`.</span>
-            <span class='comment'>// Then sum the byte lengths.</span>
-            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span>
-                <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..<span class='self'>self</span>.<span class='ident'>cursor</span>],
-                                     <span class='ident'>available</span>);
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-</span> <span class='ident'>suffix_length</span>;
-            <span class='comment'>// Make sure the cursor is in view</span>
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>offset</span>);
+            <span class="comment">// Now, we have to fit self.content[..self.cursor]</span>
+            <span class="comment">// into self.last_length - c_len.</span>
+            <span class="kw">let</span> <span class="ident">available</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">last_length</span> <span class="op">-</span> <span class="ident">c_len</span>;
+            <span class="comment">// Look at the content before the cursor (we will print its tail).</span>
+            <span class="comment">// From the end, count the length until we reach `available`.</span>
+            <span class="comment">// Then sum the byte lengths.</span>
+            <span class="kw">let</span> <span class="ident">suffix_length</span> <span class="op">=</span>
+                <span class="ident">simple_suffix_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">offset</span>..<span class="self">self</span>.<span class="ident">cursor</span>],
+                                     <span class="ident">available</span>);
+            <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">-</span> <span class="ident">suffix_length</span>;
+            <span class="comment">// Make sure the cursor is in view</span>
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">offset</span>);
 
         }
 
-        <span class='comment'>// If we have too much space</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..].<span class='ident'>width</span>() <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span> <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>,
-                                                     <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='number'>1</span>);
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>suffix_length</span>;
+        <span class="comment">// If we have too much space</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">offset</span>..].<span class="ident">width</span>() <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">last_length</span> {
+            <span class="kw">let</span> <span class="ident">suffix_length</span> <span class="op">=</span> <span class="ident">simple_suffix_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content</span>,
+                                                     <span class="self">self</span>.<span class="ident">last_length</span> <span class="op">-</span> <span class="number">1</span>);
+            <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">suffix_length</span>;
         }
     }
 }
 
-<span class='doccomment'>/// Returns a `&amp;str` with `length` characters `*`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Only works for small `length` (1 or 2).</span>
-<span class='doccomment'>/// Best used for single character replacement.</span>
-<span class='kw'>fn</span> <span class='ident'>make_small_stars</span>(<span class='ident'>length</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> {
-    <span class='kw-2'>&amp;</span><span class='string'>&quot;****&quot;</span>[..<span class='ident'>length</span>]
+<span class="doccomment">/// Returns a `&amp;str` with `length` characters `*`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Only works for small `length` (1 or 2).</span>
+<span class="doccomment">/// Best used for single character replacement.</span>
+<span class="kw">fn</span> <span class="ident">make_small_stars</span>(<span class="ident">length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw-2">&amp;</span><span class="string">&quot;****&quot;</span>[..<span class="ident">length</span>]
 }
 
-<span class='kw'>impl</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>EditView</span> {
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>last_length</span>,
-                <span class='string'>&quot;Was promised {}, received {}&quot;</span>,
-                <span class='self'>self</span>.<span class='ident'>last_length</span>,
-                <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>);
+<span class="kw">impl</span> <span class="ident">View</span> <span class="kw">for</span> <span class="ident">EditView</span> {
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">last_length</span>,
+                <span class="string">&quot;Was promised {}, received {}&quot;</span>,
+                <span class="self">self</span>.<span class="ident">last_length</span>,
+                <span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span>);
 
-        <span class='kw'>let</span> <span class='ident'>width</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>width</span>();
-        <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-            <span class='kw'>let</span> <span class='ident'>effect</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>enabled</span> {
-                <span class='ident'>Effect</span>::<span class='ident'>Reverse</span>
-            } <span class='kw'>else</span> {
-                <span class='ident'>Effect</span>::<span class='ident'>Simple</span>
+        <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">width</span>();
+        <span class="ident">printer</span>.<span class="ident">with_color</span>(<span class="ident">ColorStyle</span>::<span class="ident">Secondary</span>, <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">effect</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">enabled</span> {
+                <span class="ident">Effect</span>::<span class="ident">Reverse</span>
+            } <span class="kw">else</span> {
+                <span class="ident">Effect</span>::<span class="ident">Simple</span>
             };
-            <span class='ident'>printer</span>.<span class='ident'>with_effect</span>(<span class='ident'>effect</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-                <span class='kw'>if</span> <span class='ident'>width</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-                    <span class='comment'>// No problem, everything fits.</span>
-                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>secret</span> {
-                        <span class='ident'>printer</span>.<span class='ident'>print_hline</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>width</span>, <span class='string'>&quot;*&quot;</span>);
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>);
+            <span class="ident">printer</span>.<span class="ident">with_effect</span>(<span class="ident">effect</span>, <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> {
+                <span class="kw">if</span> <span class="ident">width</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">last_length</span> {
+                    <span class="comment">// No problem, everything fits.</span>
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">secret</span> {
+                        <span class="ident">printer</span>.<span class="ident">print_hline</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="ident">width</span>, <span class="string">&quot;*&quot;</span>);
+                    } <span class="kw">else</span> {
+                        <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content</span>);
                     }
-                    <span class='ident'>printer</span>.<span class='ident'>print_hline</span>((<span class='ident'>width</span>, <span class='number'>0</span>),
-                                        <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>width</span>,
-                                        <span class='string'>&quot;_&quot;</span>);
-                } <span class='kw'>else</span> {
-                    <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..];
-                    <span class='kw'>let</span> <span class='ident'>display_bytes</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                        .<span class='ident'>scan</span>(<span class='number'>0</span>, <span class='op'>|</span><span class='ident'>w</span>, <span class='ident'>g</span><span class='op'>|</span> {
-                            <span class='op'>*</span><span class='ident'>w</span> <span class='op'>+=</span> <span class='ident'>g</span>.<span class='ident'>width</span>();
-                            <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>w</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> { <span class='prelude-val'>None</span> } <span class='kw'>else</span> { <span class='prelude-val'>Some</span>(<span class='ident'>g</span>) }
+                    <span class="ident">printer</span>.<span class="ident">print_hline</span>((<span class="ident">width</span>, <span class="number">0</span>),
+                                        <span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span> <span class="op">-</span> <span class="ident">width</span>,
+                                        <span class="string">&quot;_&quot;</span>);
+                } <span class="kw">else</span> {
+                    <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">offset</span>..];
+                    <span class="kw">let</span> <span class="ident">display_bytes</span> <span class="op">=</span> <span class="ident">content</span>.<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                        .<span class="ident">scan</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">w</span>, <span class="ident">g</span><span class="op">|</span> {
+                            <span class="kw-2">*</span><span class="ident">w</span> <span class="op">+=</span> <span class="ident">g</span>.<span class="ident">width</span>();
+                            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">w</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">last_length</span> { <span class="prelude-val">None</span> } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="ident">g</span>) }
                         })
-                        .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>g</span><span class='op'>|</span> <span class='ident'>g</span>.<span class='ident'>len</span>())
-                        .<span class='ident'>fold</span>(<span class='number'>0</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>);
+                        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">g</span><span class="op">|</span> <span class="ident">g</span>.<span class="ident">len</span>())
+                        .<span class="ident">fold</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>);
 
-                    <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>content</span>[..<span class='ident'>display_bytes</span>];
-                    <span class='kw'>let</span> <span class='ident'>width</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>width</span>();
+                    <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">content</span>[..<span class="ident">display_bytes</span>];
+                    <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="ident">content</span>.<span class="ident">width</span>();
 
-                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>secret</span> {
-                        <span class='ident'>printer</span>.<span class='ident'>print_hline</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>width</span>, <span class='string'>&quot;*&quot;</span>);
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>content</span>);
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">secret</span> {
+                        <span class="ident">printer</span>.<span class="ident">print_hline</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="ident">width</span>, <span class="string">&quot;*&quot;</span>);
+                    } <span class="kw">else</span> {
+                        <span class="ident">printer</span>.<span class="ident">print</span>((<span class="number">0</span>, <span class="number">0</span>), <span class="ident">content</span>);
                     }
 
-                    <span class='kw'>if</span> <span class='ident'>width</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-                        <span class='ident'>printer</span>.<span class='ident'>print_hline</span>((<span class='ident'>width</span>, <span class='number'>0</span>),
-                                            <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='ident'>width</span>,
-                                            <span class='string'>&quot;_&quot;</span>);
+                    <span class="kw">if</span> <span class="ident">width</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">last_length</span> {
+                        <span class="ident">printer</span>.<span class="ident">print_hline</span>((<span class="ident">width</span>, <span class="number">0</span>),
+                                            <span class="self">self</span>.<span class="ident">last_length</span> <span class="op">-</span> <span class="ident">width</span>,
+                                            <span class="string">&quot;_&quot;</span>);
                     }
                 }
             });
 
-            <span class='comment'>// Now print cursor</span>
-            <span class='kw'>if</span> <span class='ident'>printer</span>.<span class='ident'>focused</span> {
-                <span class='kw'>let</span> <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() {
-                    <span class='string'>&quot;_&quot;</span>
-                } <span class='kw'>else</span> {
-                    <span class='comment'>// Get the char from the string... Is it so hard?</span>
-                    <span class='kw'>let</span> <span class='ident'>selected</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
-                        .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                        .<span class='ident'>next</span>()
-                        .<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Found no char at cursor {} in {}&quot;</span>,
-                                         <span class='self'>self</span>.<span class='ident'>cursor</span>,
-                                         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>));
-                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>secret</span> {
-                        <span class='ident'>make_small_stars</span>(<span class='ident'>selected</span>.<span class='ident'>width</span>())
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>selected</span>
+            <span class="comment">// Now print cursor</span>
+            <span class="kw">if</span> <span class="ident">printer</span>.<span class="ident">focused</span> {
+                <span class="kw">let</span> <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>() {
+                    <span class="string">&quot;_&quot;</span>
+                } <span class="kw">else</span> {
+                    <span class="comment">// Get the char from the string... Is it so hard?</span>
+                    <span class="kw">let</span> <span class="ident">selected</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">cursor</span>..]
+                        .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                        .<span class="ident">next</span>()
+                        .<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Found no char at cursor {} in {}&quot;</span>,
+                                         <span class="self">self</span>.<span class="ident">cursor</span>,
+                                         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content</span>));
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">secret</span> {
+                        <span class="ident">make_small_stars</span>(<span class="ident">selected</span>.<span class="ident">width</span>())
+                    } <span class="kw">else</span> {
+                        <span class="ident">selected</span>
                     }
                 };
-                <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..<span class='self'>self</span>.<span class='ident'>cursor</span>].<span class='ident'>width</span>();
-                <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='ident'>offset</span>, <span class='number'>0</span>), <span class='ident'>c</span>);
+                <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">offset</span>..<span class="self">self</span>.<span class="ident">cursor</span>].<span class="ident">width</span>();
+                <span class="ident">printer</span>.<span class="ident">print</span>((<span class="ident">offset</span>, <span class="number">0</span>), <span class="ident">c</span>);
             }
         });
     }
 
-    <span class='kw'>fn</span> <span class='ident'>layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) {
-        <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>x</span>;
+    <span class="kw">fn</span> <span class="ident">layout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Vec2</span>) {
+        <span class="self">self</span>.<span class="ident">last_length</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">x</span>;
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">enabled</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
 
-        <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='ident'>Event</span>::<span class='ident'>Char</span>(<span class='ident'>ch</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>insert</span>(<span class='ident'>ch</span>),
-            <span class='comment'>// TODO: handle ctrl-key?</span>
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Home</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='number'>0</span>,
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>End</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>(),
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>) <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[..<span class='self'>self</span>.<span class='ident'>cursor</span>]
-                    .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                    .<span class='ident'>last</span>()
-                    .<span class='ident'>unwrap</span>()
-                    .<span class='ident'>len</span>();
-                <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='ident'>len</span>;
+        <span class="kw">match</span> <span class="ident">event</span> {
+            <span class="ident">Event</span>::<span class="ident">Char</span>(<span class="ident">ch</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">insert</span>(<span class="ident">ch</span>),
+            <span class="comment">// TODO: handle ctrl-key?</span>
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Home</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="number">0</span>,
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">End</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>(),
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Left</span>) <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[..<span class="self">self</span>.<span class="ident">cursor</span>]
+                    .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                    .<span class="ident">last</span>()
+                    .<span class="ident">unwrap</span>()
+                    .<span class="ident">len</span>();
+                <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">-=</span> <span class="ident">len</span>;
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>) <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
-                    .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                    .<span class='ident'>next</span>()
-                    .<span class='ident'>unwrap</span>()
-                    .<span class='ident'>len</span>();
-                <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+=</span> <span class='ident'>len</span>;
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Right</span>) <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>() <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">cursor</span>..]
+                    .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                    .<span class="ident">next</span>()
+                    .<span class="ident">unwrap</span>()
+                    .<span class="ident">len</span>();
+                <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">+=</span> <span class="ident">len</span>;
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Backspace</span>) <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[..<span class='self'>self</span>.<span class='ident'>cursor</span>]
-                    .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                    .<span class='ident'>last</span>()
-                    .<span class='ident'>unwrap</span>()
-                    .<span class='ident'>len</span>();
-                <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='ident'>len</span>;
-                <span class='self'>self</span>.<span class='ident'>remove</span>(<span class='ident'>len</span>);
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Backspace</span>) <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[..<span class="self">self</span>.<span class="ident">cursor</span>]
+                    .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                    .<span class="ident">last</span>()
+                    .<span class="ident">unwrap</span>()
+                    .<span class="ident">len</span>();
+                <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">-=</span> <span class="ident">len</span>;
+                <span class="self">self</span>.<span class="ident">remove</span>(<span class="ident">len</span>);
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Del</span>) <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
-                    .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                    .<span class='ident'>next</span>()
-                    .<span class='ident'>unwrap</span>()
-                    .<span class='ident'>len</span>();
-                <span class='self'>self</span>.<span class='ident'>remove</span>(<span class='ident'>len</span>);
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Del</span>) <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">len</span>() <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>[<span class="self">self</span>.<span class="ident">cursor</span>..]
+                    .<span class="ident">graphemes</span>(<span class="bool-val">true</span>)
+                    .<span class="ident">next</span>()
+                    .<span class="ident">unwrap</span>()
+                    .<span class="ident">len</span>();
+                <span class="self">self</span>.<span class="ident">remove</span>(<span class="ident">len</span>);
             }
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Enter</span>) <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>on_submit</span>.<span class='ident'>is_some</span>() <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>on_submit</span>.<span class='ident'>clone</span>().<span class='ident'>unwrap</span>();
-                <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>clone</span>();
-                <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>with_cb</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                    <span class='ident'>cb</span>(<span class='ident'>s</span>, <span class='kw-2'>&amp;</span><span class='ident'>content</span>);
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Enter</span>) <span class="kw">if</span> <span class="self">self</span>.<span class="ident">on_submit</span>.<span class="ident">is_some</span>() <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">cb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">on_submit</span>.<span class="ident">clone</span>().<span class="ident">unwrap</span>();
+                <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">clone</span>();
+                <span class="kw">return</span> <span class="ident">EventResult</span>::<span class="ident">with_cb</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                    <span class="ident">cb</span>(<span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="ident">content</span>);
                 });
             }
-            _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
+            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">EventResult</span>::<span class="ident">Ignored</span>,
         }
 
-        <span class='self'>self</span>.<span class='ident'>keep_cursor_in_view</span>();
+        <span class="self">self</span>.<span class="ident">keep_cursor_in_view</span>();
 
-        <span class='kw'>let</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>on_edit</span>.<span class='ident'>clone</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>cb</span><span class='op'>|</span> {
+        <span class="kw">let</span> <span class="ident">cb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">on_edit</span>.<span class="ident">clone</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">cb</span><span class="op">|</span> {
 
-            <span class='comment'>// Get a new Rc on it</span>
-            <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>clone</span>();
-            <span class='kw'>let</span> <span class='ident'>cursor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
+            <span class="comment">// Get a new Rc on it</span>
+            <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">clone</span>();
+            <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span>;
 
-            <span class='ident'>Callback</span>::<span class='ident'>from_fn</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-                <span class='ident'>cb</span>(<span class='ident'>s</span>, <span class='kw-2'>&amp;</span><span class='ident'>content</span>, <span class='ident'>cursor</span>);
+            <span class="ident">Callback</span>::<span class="ident">from_fn</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                <span class="ident">cb</span>(<span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="ident">content</span>, <span class="ident">cursor</span>);
             })
         });
-        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='ident'>cb</span>)
+        <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="ident">cb</span>)
     }
 }
 </pre>
@@ -889,18 +901,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -933,7 +949,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

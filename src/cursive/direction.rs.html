@@ -9,14 +9,18 @@
 
     <title>direction.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -250,212 +262,212 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Direction-related structures.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! This module defines two main concepts: [Orientation] and [Direction].</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Orientation</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! `Orientation` is a simple enum that can take two values:</span>
-<span class='doccomment'>//! `Horizontal` or `Vertical`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Direction</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! `Direction` is a bit more complex, and can be of two kinds:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * Absolute direction: left, up, right, or down</span>
-<span class='doccomment'>//! * Relative direction: front or back.</span>
-<span class='doccomment'>//!   Its actual direction depends on the orientation.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Direction-related structures.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This module defines two main concepts: [Orientation] and [Direction].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Orientation</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `Orientation` is a simple enum that can take two values:</span>
+<span class="doccomment">//! `Horizontal` or `Vertical`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Direction</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `Direction` is a bit more complex, and can be of two kinds:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * Absolute direction: left, up, right, or down</span>
+<span class="doccomment">//! * Relative direction: front or back.</span>
+<span class="doccomment">//!   Its actual direction depends on the orientation.</span>
 
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>XY</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">XY</span>;
 
-<span class='doccomment'>/// Describes a vertical or horizontal orientation for a view.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>Debug</span>,<span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Orientation</span> {
-    <span class='doccomment'>/// Horizontal orientation</span>
-    <span class='ident'>Horizontal</span>,
-    <span class='doccomment'>/// Vertical orientation</span>
-    <span class='ident'>Vertical</span>,
+<span class="doccomment">/// Describes a vertical or horizontal orientation for a view.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">Debug</span>,<span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Orientation</span> {
+    <span class="doccomment">/// Horizontal orientation</span>
+    <span class="ident">Horizontal</span>,
+    <span class="doccomment">/// Vertical orientation</span>
+    <span class="ident">Vertical</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Orientation</span> {
-    <span class='doccomment'>/// Returns the component of `v` corresponding to this orientation.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// (`Horizontal` will return the x value,</span>
-    <span class='doccomment'>/// and `Vertical` will return the y value.)</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Clone</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
-        <span class='ident'>v</span>.<span class='ident'>get</span>(<span class='op'>*</span><span class='self'>self</span>).<span class='ident'>clone</span>()
+<span class="kw">impl</span> <span class="ident">Orientation</span> {
+    <span class="doccomment">/// Returns the component of `v` corresponding to this orientation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// (`Horizontal` will return the x value,</span>
+    <span class="doccomment">/// and `Vertical` will return the y value.)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+        <span class="ident">v</span>.<span class="ident">get</span>(<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Returns the other orientation.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span> <span class='op'>=&gt;</span> <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span>,
-            <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span> <span class='op'>=&gt;</span> <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span>,
+    <span class="doccomment">/// Returns the other orientation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Orientation</span>::<span class="ident">Horizontal</span> <span class="op">=&gt;</span> <span class="ident">Orientation</span>::<span class="ident">Vertical</span>,
+            <span class="ident">Orientation</span>::<span class="ident">Vertical</span> <span class="op">=&gt;</span> <span class="ident">Orientation</span>::<span class="ident">Horizontal</span>,
         }
     }
 
-    <span class='doccomment'>/// Returns a mutable reference to the component of the given vector</span>
-    <span class='doccomment'>/// corresponding to this orientation.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_ref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='ident'>T</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>v</span>.<span class='ident'>x</span>,
-            <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>v</span>.<span class='ident'>y</span>,
+    <span class="doccomment">/// Returns a mutable reference to the component of the given vector</span>
+    <span class="doccomment">/// corresponding to this orientation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">XY</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">T</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Orientation</span>::<span class="ident">Horizontal</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">v</span>.<span class="ident">x</span>,
+            <span class="ident">Orientation</span>::<span class="ident">Vertical</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">v</span>.<span class="ident">y</span>,
         }
     }
 
-    <span class='doccomment'>/// Takes an iterator on sizes, and stack them in the current orientation,</span>
-    <span class='doccomment'>/// returning the size of the required bounding box.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// For an horizontal view, returns (Sum(x), Max(y)).</span>
-    <span class='doccomment'>/// For a vertical view, returns (Max(x),Sum(y)).</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>stack</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>iter</span>.<span class='ident'>fold</span>(<span class='ident'>Vec2</span>::<span class='ident'>zero</span>(), <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>stack_horizontal</span>(<span class='ident'>b</span>))
+    <span class="doccomment">/// Takes an iterator on sizes, and stack them in the current orientation,</span>
+    <span class="doccomment">/// returning the size of the required bounding box.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For an horizontal view, returns (Sum(x), Max(y)).</span>
+    <span class="doccomment">/// For a vertical view, returns (Max(x),Sum(y)).</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stack</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Orientation</span>::<span class="ident">Horizontal</span> <span class="op">=&gt;</span> {
+                <span class="ident">iter</span>.<span class="ident">fold</span>(<span class="ident">Vec2</span>::<span class="ident">zero</span>(), <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">stack_horizontal</span>(<span class="ident">b</span>))
             }
-            <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>iter</span>.<span class='ident'>fold</span>(<span class='ident'>Vec2</span>::<span class='ident'>zero</span>(), <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>stack_vertical</span>(<span class='ident'>b</span>))
+            <span class="ident">Orientation</span>::<span class="ident">Vertical</span> <span class="op">=&gt;</span> {
+                <span class="ident">iter</span>.<span class="ident">fold</span>(<span class="ident">Vec2</span>::<span class="ident">zero</span>(), <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">stack_vertical</span>(<span class="ident">b</span>))
             }
         }
     }
 
-    <span class='doccomment'>/// Creates a new `Vec2` with `value` in `self`&#39;s axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>make_vec</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>main_axis</span>: <span class='ident'>usize</span>, <span class='ident'>second_axis</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>zero</span>();
-        <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>) <span class='op'>=</span> <span class='ident'>main_axis</span>;
-        <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>swap</span>().<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>) <span class='op'>=</span> <span class='ident'>second_axis</span>;
-        <span class='ident'>result</span>
+    <span class="doccomment">/// Creates a new `Vec2` with `value` in `self`&#39;s axis.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">make_vec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">main_axis</span>: <span class="ident">usize</span>, <span class="ident">second_axis</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Vec2</span>::<span class="ident">zero</span>();
+        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>) <span class="op">=</span> <span class="ident">main_axis</span>;
+        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">swap</span>().<span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>) <span class="op">=</span> <span class="ident">second_axis</span>;
+        <span class="ident">result</span>
     }
 }
 
-<span class='doccomment'>/// Represents a direction, either absolute or orientation-dependent.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// * Absolute directions are Up, Down, Left, and Right.</span>
-<span class='doccomment'>/// * Relative directions are Front and Back.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Direction</span> {
-    <span class='doccomment'>/// An absolute direction.</span>
-    <span class='ident'>Abs</span>(<span class='ident'>Absolute</span>),
-    <span class='doccomment'>/// A direction relative to the current orientation.</span>
-    <span class='ident'>Rel</span>(<span class='ident'>Relative</span>),
+<span class="doccomment">/// Represents a direction, either absolute or orientation-dependent.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * Absolute directions are Up, Down, Left, and Right.</span>
+<span class="doccomment">/// * Relative directions are Front and Back.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Direction</span> {
+    <span class="doccomment">/// An absolute direction.</span>
+    <span class="ident">Abs</span>(<span class="ident">Absolute</span>),
+    <span class="doccomment">/// A direction relative to the current orientation.</span>
+    <span class="ident">Rel</span>(<span class="ident">Relative</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>Direction</span> {
-    <span class='doccomment'>/// Returns the relative direction for the given orientation.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>relative</span>(<span class='self'>self</span>, <span class='ident'>orientation</span>: <span class='ident'>Orientation</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Relative</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>abs</span>) <span class='op'>=&gt;</span> <span class='ident'>abs</span>.<span class='ident'>relative</span>(<span class='ident'>orientation</span>),
-            <span class='ident'>Direction</span>::<span class='ident'>Rel</span>(<span class='ident'>rel</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>rel</span>),
+<span class="kw">impl</span> <span class="ident">Direction</span> {
+    <span class="doccomment">/// Returns the relative direction for the given orientation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relative</span>(<span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Relative</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">abs</span>) <span class="op">=&gt;</span> <span class="ident">abs</span>.<span class="ident">relative</span>(<span class="ident">orientation</span>),
+            <span class="ident">Direction</span>::<span class="ident">Rel</span>(<span class="ident">rel</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">rel</span>),
         }
     }
 
-    <span class='doccomment'>/// Returns the absolute direction in the given `orientation`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>absolute</span>(<span class='self'>self</span>, <span class='ident'>orientation</span>: <span class='ident'>Orientation</span>) <span class='op'>-&gt;</span> <span class='ident'>Absolute</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>abs</span>) <span class='op'>=&gt;</span> <span class='ident'>abs</span>,
-            <span class='ident'>Direction</span>::<span class='ident'>Rel</span>(<span class='ident'>rel</span>) <span class='op'>=&gt;</span> <span class='ident'>rel</span>.<span class='ident'>absolute</span>(<span class='ident'>orientation</span>),
+    <span class="doccomment">/// Returns the absolute direction in the given `orientation`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute</span>(<span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-&gt;</span> <span class="ident">Absolute</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">abs</span>) <span class="op">=&gt;</span> <span class="ident">abs</span>,
+            <span class="ident">Direction</span>::<span class="ident">Rel</span>(<span class="ident">rel</span>) <span class="op">=&gt;</span> <span class="ident">rel</span>.<span class="ident">absolute</span>(<span class="ident">orientation</span>),
         }
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Rel(Relative::Back)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>back</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Rel</span>(<span class='ident'>Relative</span>::<span class='ident'>Back</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Rel(Relative::Back)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">back</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Rel</span>(<span class="ident">Relative</span>::<span class="ident">Back</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Rel(Relative::Front)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>front</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Rel</span>(<span class='ident'>Relative</span>::<span class='ident'>Front</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Rel(Relative::Front)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">front</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Rel</span>(<span class="ident">Relative</span>::<span class="ident">Front</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Abs(Absolute::Left)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>left</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>Absolute</span>::<span class='ident'>Left</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Abs(Absolute::Left)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">Absolute</span>::<span class="ident">Left</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Abs(Absolute::Right)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>right</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>Absolute</span>::<span class='ident'>Right</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Abs(Absolute::Right)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">Absolute</span>::<span class="ident">Right</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Abs(Absolute::Up)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>up</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>Absolute</span>::<span class='ident'>Up</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Abs(Absolute::Up)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">up</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">Absolute</span>::<span class="ident">Up</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Abs(Absolute::Down)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>down</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>Absolute</span>::<span class='ident'>Down</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Abs(Absolute::Down)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">down</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">Absolute</span>::<span class="ident">Down</span>)
     }
 
-    <span class='doccomment'>/// Shortcut to create `Direction::Abs(Absolute::None)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>none</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Direction</span>::<span class='ident'>Abs</span>(<span class='ident'>Absolute</span>::<span class='prelude-val'>None</span>)
+    <span class="doccomment">/// Shortcut to create `Direction::Abs(Absolute::None)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">none</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Direction</span>::<span class="ident">Abs</span>(<span class="ident">Absolute</span>::<span class="prelude-val">None</span>)
     }
 }
 
-<span class='doccomment'>/// Direction relative to an orientation.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Relative</span> {
-    <span class='doccomment'>/// Front relative direction.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * Horizontally, this means `Left`</span>
-    <span class='doccomment'>/// * Vertically, this means `Up`</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// TODO: handle right-to-left?</span>
-    <span class='ident'>Front</span>,
+<span class="doccomment">/// Direction relative to an orientation.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Relative</span> {
+    <span class="doccomment">/// Front relative direction.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * Horizontally, this means `Left`</span>
+    <span class="doccomment">/// * Vertically, this means `Up`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// TODO: handle right-to-left?</span>
+    <span class="ident">Front</span>,
 
-    <span class='doccomment'>/// Back relative direction.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * Horizontally, this means `Right`</span>
-    <span class='doccomment'>/// * Vertically, this means `Down`.</span>
-    <span class='ident'>Back</span>,
+    <span class="doccomment">/// Back relative direction.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * Horizontally, this means `Right`</span>
+    <span class="doccomment">/// * Vertically, this means `Down`.</span>
+    <span class="ident">Back</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Relative</span> {
-    <span class='doccomment'>/// Returns the absolute direction in the given `orientation`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>absolute</span>(<span class='self'>self</span>, <span class='ident'>orientation</span>: <span class='ident'>Orientation</span>) <span class='op'>-&gt;</span> <span class='ident'>Absolute</span> {
-        <span class='kw'>match</span> (<span class='ident'>orientation</span>, <span class='self'>self</span>) {
-            (<span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span>, <span class='ident'>Relative</span>::<span class='ident'>Front</span>) <span class='op'>=&gt;</span> <span class='ident'>Absolute</span>::<span class='ident'>Left</span>,
-            (<span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span>, <span class='ident'>Relative</span>::<span class='ident'>Back</span>) <span class='op'>=&gt;</span> <span class='ident'>Absolute</span>::<span class='ident'>Right</span>,
-            (<span class='ident'>Orientation</span>::<span class='ident'>Vertical</span>, <span class='ident'>Relative</span>::<span class='ident'>Front</span>) <span class='op'>=&gt;</span> <span class='ident'>Absolute</span>::<span class='ident'>Up</span>,
-            (<span class='ident'>Orientation</span>::<span class='ident'>Vertical</span>, <span class='ident'>Relative</span>::<span class='ident'>Back</span>) <span class='op'>=&gt;</span> <span class='ident'>Absolute</span>::<span class='ident'>Down</span>,
+<span class="kw">impl</span> <span class="ident">Relative</span> {
+    <span class="doccomment">/// Returns the absolute direction in the given `orientation`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">absolute</span>(<span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-&gt;</span> <span class="ident">Absolute</span> {
+        <span class="kw">match</span> (<span class="ident">orientation</span>, <span class="self">self</span>) {
+            (<span class="ident">Orientation</span>::<span class="ident">Horizontal</span>, <span class="ident">Relative</span>::<span class="ident">Front</span>) <span class="op">=&gt;</span> <span class="ident">Absolute</span>::<span class="ident">Left</span>,
+            (<span class="ident">Orientation</span>::<span class="ident">Horizontal</span>, <span class="ident">Relative</span>::<span class="ident">Back</span>) <span class="op">=&gt;</span> <span class="ident">Absolute</span>::<span class="ident">Right</span>,
+            (<span class="ident">Orientation</span>::<span class="ident">Vertical</span>, <span class="ident">Relative</span>::<span class="ident">Front</span>) <span class="op">=&gt;</span> <span class="ident">Absolute</span>::<span class="ident">Up</span>,
+            (<span class="ident">Orientation</span>::<span class="ident">Vertical</span>, <span class="ident">Relative</span>::<span class="ident">Back</span>) <span class="op">=&gt;</span> <span class="ident">Absolute</span>::<span class="ident">Down</span>,
         }
     }
 }
 
-<span class='doccomment'>/// Absolute direction (up, down, left, right).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Absolute</span> {
-    <span class='doccomment'>/// Left</span>
-    <span class='ident'>Left</span>,
-    <span class='doccomment'>/// Up</span>
-    <span class='ident'>Up</span>,
-    <span class='doccomment'>/// Right</span>
-    <span class='ident'>Right</span>,
-    <span class='doccomment'>/// Down</span>
-    <span class='ident'>Down</span>,
+<span class="doccomment">/// Absolute direction (up, down, left, right).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Absolute</span> {
+    <span class="doccomment">/// Left</span>
+    <span class="ident">Left</span>,
+    <span class="doccomment">/// Up</span>
+    <span class="ident">Up</span>,
+    <span class="doccomment">/// Right</span>
+    <span class="ident">Right</span>,
+    <span class="doccomment">/// Down</span>
+    <span class="ident">Down</span>,
 
-    <span class='doccomment'>/// No real direction.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Used when the &quot;direction&quot; is accross layers for instance.</span>
-    <span class='prelude-val'>None</span>,
+    <span class="doccomment">/// No real direction.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Used when the &quot;direction&quot; is accross layers for instance.</span>
+    <span class="prelude-val">None</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Absolute</span> {
-    <span class='doccomment'>/// Returns the relative direction for the given orientation.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns `None` when the direction does not apply to the given</span>
-    <span class='doccomment'>/// orientation (ex: `Left` and `Vertical`).</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>relative</span>(<span class='self'>self</span>, <span class='ident'>orientation</span>: <span class='ident'>Orientation</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Relative</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> (<span class='ident'>orientation</span>, <span class='self'>self</span>) {
-            (<span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span>, <span class='ident'>Absolute</span>::<span class='ident'>Left</span>) <span class='op'>|</span>
-            (<span class='ident'>Orientation</span>::<span class='ident'>Vertical</span>, <span class='ident'>Absolute</span>::<span class='ident'>Up</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Relative</span>::<span class='ident'>Front</span>),
-            (<span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span>, <span class='ident'>Absolute</span>::<span class='ident'>Right</span>) <span class='op'>|</span>
-            (<span class='ident'>Orientation</span>::<span class='ident'>Vertical</span>, <span class='ident'>Absolute</span>::<span class='ident'>Down</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>Relative</span>::<span class='ident'>Back</span>),
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+<span class="kw">impl</span> <span class="ident">Absolute</span> {
+    <span class="doccomment">/// Returns the relative direction for the given orientation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns `None` when the direction does not apply to the given</span>
+    <span class="doccomment">/// orientation (ex: `Left` and `Vertical`).</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relative</span>(<span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Relative</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> (<span class="ident">orientation</span>, <span class="self">self</span>) {
+            (<span class="ident">Orientation</span>::<span class="ident">Horizontal</span>, <span class="ident">Absolute</span>::<span class="ident">Left</span>) <span class="op">|</span>
+            (<span class="ident">Orientation</span>::<span class="ident">Vertical</span>, <span class="ident">Absolute</span>::<span class="ident">Up</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Relative</span>::<span class="ident">Front</span>),
+            (<span class="ident">Orientation</span>::<span class="ident">Horizontal</span>, <span class="ident">Absolute</span>::<span class="ident">Right</span>) <span class="op">|</span>
+            (<span class="ident">Orientation</span>::<span class="ident">Vertical</span>, <span class="ident">Absolute</span>::<span class="ident">Down</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Relative</span>::<span class="ident">Back</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -473,18 +485,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -517,7 +533,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>conrod::Borderable - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>conrod</a></p><script>window.sidebarCurrent = {name: 'Borderable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Borderable</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.border">border</a><a href="#tymethod.border_color">border_color</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.border_rgba">border_rgba</a><a href="#method.border_rgb">border_rgb</a><a href="#method.border_hsla">border_hsla</a><a href="#method.border_hsl">border_hsl</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>conrod</a></p><script>window.sidebarCurrent = {name: 'Borderable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,49 +54,55 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>conrod</a>::<wbr><a class='trait' href=''>Borderable</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>conrod</a>::<wbr><a class="trait" href=''>Borderable</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/conrod/border.rs.html#15-43' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Borderable: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    fn <a href='#tymethod.border' class='fnname'>border</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>) -&gt; Self;
-    fn <a href='#tymethod.border_color' class='fnname'>border_color</a>(self, color: <a class='enum' href='../conrod/color/enum.Color.html' title='conrod::color::Color'>Color</a>) -&gt; Self;
+<pre class='rust trait'>pub trait Borderable: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    fn <a href='#tymethod.border' class='fnname'>border</a>(self, width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; Self;
+<div class='item-spacer'></div>    fn <a href='#tymethod.border_color' class='fnname'>border_color</a>(self, color: <a class="enum" href="../conrod/color/enum.Color.html" title="enum conrod::color::Color">Color</a>) -&gt; Self;
 
-    fn <a href='#method.border_rgba' class='fnname'>border_rgba</a>(self, r: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, g: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self { ... }
-    fn <a href='#method.border_rgb' class='fnname'>border_rgb</a>(self, r: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, g: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self { ... }
-    fn <a href='#method.border_hsla' class='fnname'>border_hsla</a>(self, h: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, s: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, l: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self { ... }
-    fn <a href='#method.border_hsl' class='fnname'>border_hsl</a>(self, h: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, s: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, l: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self { ... }
+    fn <a href='#method.border_rgba' class='fnname'>border_rgba</a>(self, r: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, g: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, b: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, a: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self { ... }
+<div class='item-spacer'></div>    fn <a href='#method.border_rgb' class='fnname'>border_rgb</a>(self, r: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, g: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, b: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self { ... }
+<div class='item-spacer'></div>    fn <a href='#method.border_hsla' class='fnname'>border_hsla</a>(self, h: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, l: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, a: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self { ... }
+<div class='item-spacer'></div>    fn <a href='#method.border_hsl' class='fnname'>border_hsl</a>(self, h: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, l: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>Widgets that may display a border.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.border' class='method stab '><span id='border.v' class='invisible'><code>fn <a href='#tymethod.border' class='fnname'>border</a>(self, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the width of the widget&#39;s border.</p>
-</div><h3 id='tymethod.border_color' class='method stab '><span id='border_color.v' class='invisible'><code>fn <a href='#tymethod.border_color' class='fnname'>border_color</a>(self, color: <a class='enum' href='../conrod/color/enum.Color.html' title='conrod::color::Color'>Color</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget&#39;s border.</p>
+        <h3 id='tymethod.border' class='method'><span id='border.v' class='invisible'><code>fn <a href='#tymethod.border' class='fnname'>border</a>(self, width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the width of the widget's border.</p>
+</div><h3 id='tymethod.border_color' class='method'><span id='border_color.v' class='invisible'><code>fn <a href='#tymethod.border_color' class='fnname'>border_color</a>(self, color: <a class="enum" href="../conrod/color/enum.Color.html" title="enum conrod::color::Color">Color</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget's border.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='method.border_rgba' class='method stab '><span id='border_rgba.v' class='invisible'><code>fn <a href='#method.border_rgba' class='fnname'>border_rgba</a>(self, r: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, g: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget&#39;s border with rgba values.</p>
-</div><h3 id='method.border_rgb' class='method stab '><span id='border_rgb.v' class='invisible'><code>fn <a href='#method.border_rgb' class='fnname'>border_rgb</a>(self, r: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, g: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget&#39;s border with rgb values.</p>
-</div><h3 id='method.border_hsla' class='method stab '><span id='border_hsla.v' class='invisible'><code>fn <a href='#method.border_hsla' class='fnname'>border_hsla</a>(self, h: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, s: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, l: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget&#39;s border with hsla values.</p>
-</div><h3 id='method.border_hsl' class='method stab '><span id='border_hsl.v' class='invisible'><code>fn <a href='#method.border_hsl' class='fnname'>border_hsl</a>(self, h: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, s: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, l: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget&#39;s border with hsl values.</p>
+        <h3 id='method.border_rgba' class='method'><span id='border_rgba.v' class='invisible'><code>fn <a href='#method.border_rgba' class='fnname'>border_rgba</a>(self, r: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, g: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, b: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, a: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget's border with rgba values.</p>
+</div><h3 id='method.border_rgb' class='method'><span id='border_rgb.v' class='invisible'><code>fn <a href='#method.border_rgb' class='fnname'>border_rgb</a>(self, r: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, g: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, b: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget's border with rgb values.</p>
+</div><h3 id='method.border_hsla' class='method'><span id='border_hsla.v' class='invisible'><code>fn <a href='#method.border_hsla' class='fnname'>border_hsla</a>(self, h: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, l: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, a: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget's border with hsla values.</p>
+</div><h3 id='method.border_hsl' class='method'><span id='border_hsl.v' class='invisible'><code>fn <a href='#method.border_hsl' class='fnname'>border_hsl</a>(self, h: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, l: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Set the color of the widget's border with hsl values.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl Borderable for <a class='struct' href='../conrod/widget/bordered_rectangle/struct.BorderedRectangle.html' title='conrod::widget::bordered_rectangle::BorderedRectangle'>BorderedRectangle</a></code></li>
-<li><code>impl&lt;'a, S&gt; Borderable for <a class='struct' href='../conrod/widget/button/struct.Button.html' title='conrod::widget::button::Button'>Button</a>&lt;'a, S&gt;</code></li>
-<li><code>impl&lt;'a&gt; Borderable for <a class='struct' href='../conrod/widget/canvas/struct.Canvas.html' title='conrod::widget::canvas::Canvas'>Canvas</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a, T&gt; Borderable for <a class='struct' href='../conrod/widget/drop_down_list/struct.DropDownList.html' title='conrod::widget::drop_down_list::DropDownList'>DropDownList</a>&lt;'a, T&gt;</code></li>
-<li><code>impl&lt;'a, E&gt; Borderable for <a class='struct' href='../conrod/widget/envelope_editor/struct.EnvelopeEditor.html' title='conrod::widget::envelope_editor::EnvelopeEditor'>EnvelopeEditor</a>&lt;'a, E&gt; <span class='where'>where E: <a class='trait' href='../conrod/widget/envelope_editor/trait.EnvelopePoint.html' title='conrod::widget::envelope_editor::EnvelopePoint'>EnvelopePoint</a></span></code></li>
-<li><code>impl&lt;'a, T&gt; Borderable for <a class='struct' href='../conrod/widget/number_dialer/struct.NumberDialer.html' title='conrod::widget::number_dialer::NumberDialer'>NumberDialer</a>&lt;'a, T&gt;</code></li>
-<li><code>impl&lt;'a, T&gt; Borderable for <a class='struct' href='../conrod/widget/range_slider/struct.RangeSlider.html' title='conrod::widget::range_slider::RangeSlider'>RangeSlider</a>&lt;'a, T&gt;</code></li>
-<li><code>impl&lt;'a, T&gt; Borderable for <a class='struct' href='../conrod/widget/slider/struct.Slider.html' title='conrod::widget::slider::Slider'>Slider</a>&lt;'a, T&gt;</code></li>
-<li><code>impl&lt;'a&gt; Borderable for <a class='struct' href='../conrod/widget/tabs/struct.Tabs.html' title='conrod::widget::tabs::Tabs'>Tabs</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a&gt; Borderable for <a class='struct' href='../conrod/widget/text_box/struct.TextBox.html' title='conrod::widget::text_box::TextBox'>TextBox</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a&gt; Borderable for <a class='struct' href='../conrod/widget/title_bar/struct.TitleBar.html' title='conrod::widget::title_bar::TitleBar'>TitleBar</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a&gt; Borderable for <a class='struct' href='../conrod/widget/toggle/struct.Toggle.html' title='conrod::widget::toggle::Toggle'>Toggle</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a, X, Y&gt; Borderable for <a class='struct' href='../conrod/widget/xy_pad/struct.XYPad.html' title='conrod::widget::xy_pad::XYPad'>XYPad</a>&lt;'a, X, Y&gt;</code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/bordered_rectangle.rs.html#128-133' title='goto source code'>[src]</a></div><code>impl Borderable for <a class="struct" href="../conrod/widget/bordered_rectangle/struct.BorderedRectangle.html" title="struct conrod::widget::bordered_rectangle::BorderedRectangle">BorderedRectangle</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/button.rs.html#312-317' title='goto source code'>[src]</a></div><code>impl&lt;'a, S&gt; Borderable for <a class="struct" href="../conrod/widget/button/struct.Button.html" title="struct conrod::widget::button::Button">Button</a>&lt;'a, S&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/canvas.rs.html#436-441' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Borderable for <a class="struct" href="../conrod/widget/canvas/struct.Canvas.html" title="struct conrod::widget::canvas::Canvas">Canvas</a>&lt;'a&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/drop_down_list.rs.html#342-347' title='goto source code'>[src]</a></div><code>impl&lt;'a, T&gt; Borderable for <a class="struct" href="../conrod/widget/drop_down_list/struct.DropDownList.html" title="struct conrod::widget::drop_down_list::DropDownList">DropDownList</a>&lt;'a, T&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/envelope_editor.rs.html#610-617' title='goto source code'>[src]</a></div><code>impl&lt;'a, E&gt; Borderable for <a class="struct" href="../conrod/widget/envelope_editor/struct.EnvelopeEditor.html" title="struct conrod::widget::envelope_editor::EnvelopeEditor">EnvelopeEditor</a>&lt;'a, E&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../conrod/widget/envelope_editor/trait.EnvelopePoint.html" title="trait conrod::widget::envelope_editor::EnvelopePoint">EnvelopePoint</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/number_dialer.rs.html#406-411' title='goto source code'>[src]</a></div><code>impl&lt;'a, T&gt; Borderable for <a class="struct" href="../conrod/widget/number_dialer/struct.NumberDialer.html" title="struct conrod::widget::number_dialer::NumberDialer">NumberDialer</a>&lt;'a, T&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/range_slider.rs.html#342-347' title='goto source code'>[src]</a></div><code>impl&lt;'a, T&gt; Borderable for <a class="struct" href="../conrod/widget/range_slider/struct.RangeSlider.html" title="struct conrod::widget::range_slider::RangeSlider">RangeSlider</a>&lt;'a, T&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/slider.rs.html#248-253' title='goto source code'>[src]</a></div><code>impl&lt;'a, T&gt; Borderable for <a class="struct" href="../conrod/widget/slider/struct.Slider.html" title="struct conrod::widget::slider::Slider">Slider</a>&lt;'a, T&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/tabs.rs.html#389-402' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Borderable for <a class="struct" href="../conrod/widget/tabs/struct.Tabs.html" title="struct conrod::widget::tabs::Tabs">Tabs</a>&lt;'a&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/text_box.rs.html#208-213' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Borderable for <a class="struct" href="../conrod/widget/text_box/struct.TextBox.html" title="struct conrod::widget::text_box::TextBox">TextBox</a>&lt;'a&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/title_bar.rs.html#196-201' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Borderable for <a class="struct" href="../conrod/widget/title_bar/struct.TitleBar.html" title="struct conrod::widget::title_bar::TitleBar">TitleBar</a>&lt;'a&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/toggle.rs.html#194-199' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Borderable for <a class="struct" href="../conrod/widget/toggle/struct.Toggle.html" title="struct conrod::widget::toggle::Toggle">Toggle</a>&lt;'a&gt;</code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/conrod/widget/xy_pad.rs.html#260-265' title='goto source code'>[src]</a></div><code>impl&lt;'a, X, Y&gt; Borderable for <a class="struct" href="../conrod/widget/xy_pad/struct.XYPad.html" title="struct conrod::widget::xy_pad::XYPad">XYPad</a>&lt;'a, X, Y&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/conrod/trait.Borderable.js">
                  </script></section>
@@ -100,18 +118,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -144,7 +166,6 @@
         window.rootPath = "../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

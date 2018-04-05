@@ -1,33 +1,5 @@
 (function() {var implementors = {};
-implementors["arrayvec"] = [];
-implementors["chan_signal"] = [];
-implementors["chrono"] = [];
-implementors["conrod"] = [];
-implementors["cursive"] = [];
-implementors["daggy"] = [];
-implementors["dlib"] = [];
-implementors["enum_primitive"] = [];
-implementors["gfx"] = [];
-implementors["gfx_core"] = [];
-implementors["gfx_gl"] = [];
-implementors["gl"] = [];
-implementors["glutin"] = [];
-implementors["glutin_window"] = [];
-implementors["graphics"] = [];
-implementors["image"] = [];
-implementors["lazy_static"] = [];
-implementors["libc"] = [];
-implementors["libloading"] = [];
-implementors["num"] = [];
-implementors["pancurses"] = [];
-implementors["poke_a_mango"] = [];
-implementors["regex_syntax"] = [];
-implementors["shared_library"] = [];
-implementors["tempfile"] = [];
-implementors["wayland_kbd"] = [];
-implementors["wayland_sys"] = [];
-implementors["wayland_window"] = [];
-implementors["winit"] = [];
+implementors["num_complex"] = ["impl&lt;T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/fmt/trait.LowerExp.html\" title=\"trait core::fmt::LowerExp\">LowerExp</a> for <a class=\"struct\" href=\"num_complex/struct.Complex.html\" title=\"struct num_complex::Complex\">Complex</a>&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/fmt/trait.LowerExp.html\" title=\"trait core::fmt::LowerExp\">LowerExp</a> + <a class=\"trait\" href=\"num_traits/trait.Num.html\" title=\"trait num_traits::Num\">Num</a> + <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html\" title=\"trait core::cmp::PartialOrd\">PartialOrd</a> + <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a>,&nbsp;</span>",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

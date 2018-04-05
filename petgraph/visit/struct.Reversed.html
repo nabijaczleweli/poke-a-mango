@@ -9,14 +9,18 @@
 
     <title>petgraph::visit::Reversed - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>petgraph</a>::<wbr><a href='index.html'>visit</a></p><script>window.sidebarCurrent = {name: 'Reversed', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Reversed</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-NeighborIter%3C%27a%3E">NeighborIter&lt;&#39;a&gt;</a><a href="#impl-NeighborsDirected%3C%27a%3E">NeighborsDirected&lt;&#39;a&gt;</a><a href="#impl-Externals%3C%27a%3E">Externals&lt;&#39;a&gt;</a><a href="#impl-Revisitable">Revisitable</a><a href="#impl-Graphlike">Graphlike</a><a href="#impl-Visitable">Visitable</a></div></div><p class='location'><a href='../index.html'>petgraph</a>::<wbr><a href='index.html'>visit</a></p><script>window.sidebarCurrent = {name: 'Reversed', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,32 +54,36 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>petgraph</a>::<wbr><a href='index.html'>visit</a>::<wbr><a class='struct' href=''>Reversed</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>petgraph</a>::<wbr><a href='index.html'>visit</a>::<wbr><a class="struct" href=''>Reversed</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/petgraph/visit.rs.html#79' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Reversed&lt;G&gt;(pub G);</pre><div class='docblock'><p>Wrapper type for walking the graph as if all edges are reversed.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b, N, E:&nbsp;'a, Ty, Ix&gt; <a class='trait' href='../../petgraph/visit/trait.NeighborIter.html' title='petgraph::visit::NeighborIter'>NeighborIter</a>&lt;'a&gt; for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'b <a class='struct' href='../../petgraph/graph/struct.Graph.html' title='petgraph::graph::Graph'>Graph</a>&lt;N, E, Ty, Ix&gt;&gt; <span class='where'>where Ty: <a class='trait' href='../../petgraph/trait.EdgeType.html' title='petgraph::EdgeType'>EdgeType</a>, Ix: <a class='trait' href='../../petgraph/graph/trait.IndexType.html' title='petgraph::graph::IndexType'>IndexType</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#93-102' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Iter' class='type'><span id='Iter.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.NeighborIter.html#associatedtype.Iter' class='type'>Iter</a> = <a class='struct' href='../../petgraph/graph/struct.Neighbors.html' title='petgraph::graph::Neighbors'>Neighbors</a>&lt;'a, E, Ix&gt;</code></span></h4>
-<h4 id='method.neighbors' class='method'><span id='neighbors.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.NeighborIter.html#tymethod.neighbors' class='fnname'>neighbors</a>(&amp;'a self, n: <a class='struct' href='../../petgraph/graph/struct.NodeIndex.html' title='petgraph::graph::NodeIndex'>NodeIndex</a>&lt;Ix&gt;) -&gt; <a class='struct' href='../../petgraph/graph/struct.Neighbors.html' title='petgraph::graph::Neighbors'>Neighbors</a>&lt;'a, E, Ix&gt;</code></span></h4>
-<div class='docblock'><p>Return an iterator that visits all neighbors of the node <strong>n</strong>.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b, G&gt; <a class='trait' href='../../petgraph/visit/trait.NeighborsDirected.html' title='petgraph::visit::NeighborsDirected'>NeighborsDirected</a>&lt;'a&gt; for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'b G&gt; <span class='where'>where G: <a class='trait' href='../../petgraph/visit/trait.NeighborsDirected.html' title='petgraph::visit::NeighborsDirected'>NeighborsDirected</a>&lt;'a&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#139-148' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.NeighborsDirected' class='type'><span id='NeighborsDirected.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.NeighborsDirected.html#associatedtype.NeighborsDirected' class='type'>NeighborsDirected</a> = G::<a class='trait' href='../../petgraph/visit/trait.NeighborsDirected.html' title='petgraph::visit::NeighborsDirected'>NeighborsDirected</a></code></span></h4>
-<h4 id='method.neighbors_directed' class='method'><span id='neighbors_directed.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.NeighborsDirected.html#tymethod.neighbors_directed' class='fnname'>neighbors_directed</a>(&amp;'a self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n: G::<a class='trait' href='../../petgraph/visit/trait.Graphlike.html' title='petgraph::visit::Graphlike'>NodeId</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d: <a class='enum' href='../../petgraph/enum.EdgeDirection.html' title='petgraph::EdgeDirection'>EdgeDirection</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; Self::<a class='trait' href='../../petgraph/visit/trait.NeighborsDirected.html' title='petgraph::visit::NeighborsDirected'>NeighborsDirected</a></code></span></h4>
-<div class='docblock'><p>Return an iterator that visits all neighbors of the node <strong>n</strong>.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b, G&gt; <a class='trait' href='../../petgraph/visit/trait.Externals.html' title='petgraph::visit::Externals'>Externals</a>&lt;'a&gt; for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'b G&gt; <span class='where'>where G: <a class='trait' href='../../petgraph/visit/trait.Externals.html' title='petgraph::visit::Externals'>Externals</a>&lt;'a&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#169-176' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Externals' class='type'><span id='Externals.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Externals.html#associatedtype.Externals' class='type'>Externals</a> = G::<a class='trait' href='../../petgraph/visit/trait.Externals.html' title='petgraph::visit::Externals'>Externals</a></code></span></h4>
-<h4 id='method.externals' class='method'><span id='externals.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Externals.html#tymethod.externals' class='fnname'>externals</a>(&amp;'a self, d: <a class='enum' href='../../petgraph/enum.EdgeDirection.html' title='petgraph::EdgeDirection'>EdgeDirection</a>) -&gt; Self::<a class='trait' href='../../petgraph/visit/trait.Externals.html' title='petgraph::visit::Externals'>Externals</a></code></span></h4>
+</div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-NeighborIter%3C%27a%3E' class='impl'><span class='in-band'><code>impl&lt;'a, 'b, N, E:&nbsp;'a, Ty, Ix&gt; <a class="trait" href="../../petgraph/visit/trait.NeighborIter.html" title="trait petgraph::visit::NeighborIter">NeighborIter</a>&lt;'a&gt; for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;&amp;'b <a class="struct" href="../../petgraph/graph/struct.Graph.html" title="struct petgraph::graph::Graph">Graph</a>&lt;N, E, Ty, Ix&gt;&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Ty: <a class="trait" href="../../petgraph/trait.EdgeType.html" title="trait petgraph::EdgeType">EdgeType</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Ix: <a class="trait" href="../../petgraph/graph/trait.IndexType.html" title="trait petgraph::graph::IndexType">IndexType</a>,&nbsp;</span></code><a href='#impl-NeighborIter%3C%27a%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#93-102' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Iter' class="type"><span id='Iter.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.NeighborIter.html#associatedtype.Iter' class="type">Iter</a> = <a class="struct" href="../../petgraph/graph/struct.Neighbors.html" title="struct petgraph::graph::Neighbors">Neighbors</a>&lt;'a, E, Ix&gt;</code></span></h4>
+<h4 id='method.neighbors' class="method"><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="../../petgraph/graph/struct.Neighbors.html" title="struct petgraph::graph::Neighbors">Neighbors</a>&lt;'a, E, Ix&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="../../petgraph/graph/struct.Neighbors.html" title="struct petgraph::graph::Neighbors">Neighbors</a>&lt;'a, E, Ix&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'a, E, Ix&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a> for <a class="struct" href="../../petgraph/graph/struct.Neighbors.html" title="struct petgraph::graph::Neighbors">Neighbors</a>&lt;'a, E, Ix&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Ix: <a class="trait" href="../../petgraph/graph/trait.IndexType.html" title="trait petgraph::graph::IndexType">IndexType</a>,&nbsp;</span></span><span class="where fmt-newline">    type <a href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item' class="type">Item</a> = <a class="struct" href="../../petgraph/graph/struct.NodeIndex.html" title="struct petgraph::graph::NodeIndex">NodeIndex</a>&lt;Ix&gt;;</span></code></div></div><span id='neighbors.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.NeighborIter.html#tymethod.neighbors' class='fnname'>neighbors</a>(&amp;'a self, n: <a class="struct" href="../../petgraph/graph/struct.NodeIndex.html" title="struct petgraph::graph::NodeIndex">NodeIndex</a>&lt;Ix&gt;) -&gt; <a class="struct" href="../../petgraph/graph/struct.Neighbors.html" title="struct petgraph::graph::Neighbors">Neighbors</a>&lt;'a, E, Ix&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#98-101' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return an iterator that visits all neighbors of the node n.</p>
+</div></div><h3 id='impl-NeighborsDirected%3C%27a%3E' class='impl'><span class='in-band'><code>impl&lt;'a, 'b, G&gt; <a class="trait" href="../../petgraph/visit/trait.NeighborsDirected.html" title="trait petgraph::visit::NeighborsDirected">NeighborsDirected</a>&lt;'a&gt; for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'b </a>G&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;G: <a class="trait" href="../../petgraph/visit/trait.NeighborsDirected.html" title="trait petgraph::visit::NeighborsDirected">NeighborsDirected</a>&lt;'a&gt;,&nbsp;</span></code><a href='#impl-NeighborsDirected%3C%27a%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#139-148' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.NeighborsDirected' class="type"><span id='NeighborsDirected.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.NeighborsDirected.html#associatedtype.NeighborsDirected' class="type">NeighborsDirected</a> = &lt;G as <a class="trait" href="../../petgraph/visit/trait.NeighborsDirected.html" title="trait petgraph::visit::NeighborsDirected">NeighborsDirected</a>&lt;'a&gt;&gt;::<a class="type" href="../../petgraph/visit/trait.NeighborsDirected.html#associatedtype.NeighborsDirected" title="type petgraph::visit::NeighborsDirected::NeighborsDirected">NeighborsDirected</a></code></span></h4>
+<h4 id='method.neighbors_directed' class="method"><span id='neighbors_directed.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.NeighborsDirected.html#tymethod.neighbors_directed' class='fnname'>neighbors_directed</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;'a self, <br>&nbsp;&nbsp;&nbsp;&nbsp;n: G::<a class="type" href="../../petgraph/visit/trait.Graphlike.html#associatedtype.NodeId" title="type petgraph::visit::Graphlike::NodeId">NodeId</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;d: <a class="enum" href="../../petgraph/enum.EdgeDirection.html" title="enum petgraph::EdgeDirection">EdgeDirection</a><br>) -&gt; Self::<a class="type" href="../../petgraph/visit/trait.NeighborsDirected.html#associatedtype.NeighborsDirected" title="type petgraph::visit::NeighborsDirected::NeighborsDirected">NeighborsDirected</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#143-147' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return an iterator that visits all neighbors of the node n.</p>
+</div></div><h3 id='impl-Externals%3C%27a%3E' class='impl'><span class='in-band'><code>impl&lt;'a, 'b, G&gt; <a class="trait" href="../../petgraph/visit/trait.Externals.html" title="trait petgraph::visit::Externals">Externals</a>&lt;'a&gt; for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'b </a>G&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;G: <a class="trait" href="../../petgraph/visit/trait.Externals.html" title="trait petgraph::visit::Externals">Externals</a>&lt;'a&gt;,&nbsp;</span></code><a href='#impl-Externals%3C%27a%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#169-176' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Externals' class="type"><span id='Externals.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Externals.html#associatedtype.Externals' class="type">Externals</a> = &lt;G as <a class="trait" href="../../petgraph/visit/trait.Externals.html" title="trait petgraph::visit::Externals">Externals</a>&lt;'a&gt;&gt;::<a class="type" href="../../petgraph/visit/trait.Externals.html#associatedtype.Externals" title="type petgraph::visit::Externals::Externals">Externals</a></code></span></h4>
+<h4 id='method.externals' class="method"><span id='externals.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Externals.html#tymethod.externals' class='fnname'>externals</a>(&amp;'a self, d: <a class="enum" href="../../petgraph/enum.EdgeDirection.html" title="enum petgraph::EdgeDirection">EdgeDirection</a>) -&gt; Self::<a class="type" href="../../petgraph/visit/trait.Externals.html#associatedtype.Externals" title="type petgraph::visit::Externals::Externals">Externals</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#173-175' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return an iterator of all nodes with no edges in the given direction</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, G&gt; <a class='trait' href='../../petgraph/visit/trait.Revisitable.html' title='petgraph::visit::Revisitable'>Revisitable</a> for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'a G&gt; <span class='where'>where G: <a class='trait' href='../../petgraph/visit/trait.Revisitable.html' title='petgraph::visit::Revisitable'>Revisitable</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#282-288' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.reset_map' class='method'><span id='reset_map.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Revisitable.html#tymethod.reset_map' class='fnname'>reset_map</a>(&amp;self, map: &amp;mut Self::<a class='trait' href='../../petgraph/visit/trait.Visitable.html' title='petgraph::visit::Visitable'>Map</a>)</code></span></h4>
-</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, G:&nbsp;<a class='trait' href='../../petgraph/visit/trait.Graphlike.html' title='petgraph::visit::Graphlike'>Graphlike</a>&gt; <a class='trait' href='../../petgraph/visit/trait.Graphlike.html' title='petgraph::visit::Graphlike'>Graphlike</a> for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'a G&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#315-318' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.NodeId' class='type'><span id='NodeId.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Graphlike.html#associatedtype.NodeId' class='type'>NodeId</a> = G::<a class='trait' href='../../petgraph/visit/trait.Graphlike.html' title='petgraph::visit::Graphlike'>NodeId</a></code></span></h4>
-</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, G:&nbsp;<a class='trait' href='../../petgraph/visit/trait.Visitable.html' title='petgraph::visit::Visitable'>Visitable</a>&gt; <a class='trait' href='../../petgraph/visit/trait.Visitable.html' title='petgraph::visit::Visitable'>Visitable</a> for <a class='struct' href='../../petgraph/visit/struct.Reversed.html' title='petgraph::visit::Reversed'>Reversed</a>&lt;&amp;'a G&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#328-334' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Map' class='type'><span id='Map.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Visitable.html#associatedtype.Map' class='type'>Map</a> = G::<a class='trait' href='../../petgraph/visit/trait.Visitable.html' title='petgraph::visit::Visitable'>Map</a></code></span></h4>
-<h4 id='method.visit_map' class='method'><span id='visit_map.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Visitable.html#tymethod.visit_map' class='fnname'>visit_map</a>(&amp;self) -&gt; G::<a class='trait' href='../../petgraph/visit/trait.Visitable.html' title='petgraph::visit::Visitable'>Map</a></code></span></h4>
+</div></div><h3 id='impl-Revisitable' class='impl'><span class='in-band'><code>impl&lt;'a, G&gt; <a class="trait" href="../../petgraph/visit/trait.Revisitable.html" title="trait petgraph::visit::Revisitable">Revisitable</a> for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>G&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;G: <a class="trait" href="../../petgraph/visit/trait.Revisitable.html" title="trait petgraph::visit::Revisitable">Revisitable</a>,&nbsp;</span></code><a href='#impl-Revisitable' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#282-288' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.reset_map' class="method"><span id='reset_map.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Revisitable.html#tymethod.reset_map' class='fnname'>reset_map</a>(&amp;self, map: &amp;mut Self::<a class="type" href="../../petgraph/visit/trait.Visitable.html#associatedtype.Map" title="type petgraph::visit::Visitable::Map">Map</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#285-287' title='goto source code'>[src]</a></span></h4>
+</div><h3 id='impl-Graphlike' class='impl'><span class='in-band'><code>impl&lt;'a, G:&nbsp;<a class="trait" href="../../petgraph/visit/trait.Graphlike.html" title="trait petgraph::visit::Graphlike">Graphlike</a>&gt; <a class="trait" href="../../petgraph/visit/trait.Graphlike.html" title="trait petgraph::visit::Graphlike">Graphlike</a> for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>G&gt;</code><a href='#impl-Graphlike' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#315-318' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.NodeId' class="type"><span id='NodeId.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Graphlike.html#associatedtype.NodeId' class="type">NodeId</a> = G::<a class="type" href="../../petgraph/visit/trait.Graphlike.html#associatedtype.NodeId" title="type petgraph::visit::Graphlike::NodeId">NodeId</a></code></span></h4>
+</div><h3 id='impl-Visitable' class='impl'><span class='in-band'><code>impl&lt;'a, G:&nbsp;<a class="trait" href="../../petgraph/visit/trait.Visitable.html" title="trait petgraph::visit::Visitable">Visitable</a>&gt; <a class="trait" href="../../petgraph/visit/trait.Visitable.html" title="trait petgraph::visit::Visitable">Visitable</a> for <a class="struct" href="../../petgraph/visit/struct.Reversed.html" title="struct petgraph::visit::Reversed">Reversed</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>G&gt;</code><a href='#impl-Visitable' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#328-334' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Map' class="type"><span id='Map.t' class='invisible'><code>type <a href='../../petgraph/visit/trait.Visitable.html#associatedtype.Map' class="type">Map</a> = G::<a class="type" href="../../petgraph/visit/trait.Visitable.html#associatedtype.Map" title="type petgraph::visit::Visitable::Map">Map</a></code></span></h4>
+<h4 id='method.visit_map' class="method"><span id='visit_map.v' class='invisible'><code>fn <a href='../../petgraph/visit/trait.Visitable.html#tymethod.visit_map' class='fnname'>visit_map</a>(&amp;self) -&gt; G::<a class="type" href="../../petgraph/visit/trait.Visitable.html#associatedtype.Map" title="type petgraph::visit::Visitable::Map">Map</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/petgraph/visit.rs.html#331-333' title='goto source code'>[src]</a></span></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -81,18 +97,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -125,7 +145,6 @@
         window.rootPath = "../../";
         window.currentCrate = "petgraph";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

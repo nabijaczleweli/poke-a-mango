@@ -9,14 +9,18 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -226,191 +238,191 @@
 <span id="182">182</span>
 <span id="183">183</span>
 <span id="184">184</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! What all the kool kidz are playing these days</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Features</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Easily navigable menus!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ![Start menu screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_start_menu.png)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Extensive leaderboard system!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ![Leaderboard screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_leaderboard.png)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A wide variety of difficulty modes!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ![Difficulty selection</span>
-<span class='doccomment'>//! screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Exciting gameplay that will have you glued to the screen for hours on end!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ![Gameplay screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_gameplay.png)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Library doc</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! This library is used by `poke-a-mango` itself for all its function and is therefore contains all necessary functions.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Data flow</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! #### With `conrod`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```plaintext</span>
-<span class='doccomment'>//! Options::parse()</span>
-<span class='doccomment'>//! |&gt; create_window()</span>
-<span class='doccomment'>//! |&gt; Widgets::new()</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Then, each update event:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```plaintext</span>
-<span class='doccomment'>//! |&gt; Widgets::update()</span>
-<span class='doccomment'>//! |&gt; [check for states requiring usercode handling and act accordingly]</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! #### With a different UI</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```plaintext</span>
-<span class='doccomment'>//! Options::parse()</span>
-<span class='doccomment'>//! |&gt; state::*()</span>
-<span class='doccomment'>//! |&gt; [check for states requiring usercode handling and act accordingly]</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Prose explanation</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! First, get an `Options` instance, be it via a struct-literal or `Options::parse()`;</span>
-<span class='doccomment'>//! or don&#39;t and just create the individual arguments manually.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Then, use `create_window()` and a new `conrod::Ui`, follow up with creating a new `Widgets` instance.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! After that, among normally displaying and processing events with `conrod::Ui` call `Widgets::update()` each update event.</span>
-<span class='doccomment'>//! That sometimes produces `GameState`s that need action from you and you need to handle them manually.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Example</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! This is a semi-complete example, as it lacks event handling, rendering and UI setup which have been omitted for brevity.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```no_run</span>
-<span class='doccomment'>//! # extern crate conrod;</span>
-<span class='doccomment'>//! # extern crate window;</span>
-<span class='doccomment'>//! # extern crate poke_a_mango;</span>
-<span class='doccomment'>//! # use window::Window;</span>
-<span class='doccomment'>//! # use conrod::backend::piston::event::UpdateEvent;</span>
-<span class='doccomment'>//! # use conrod::backend::piston::window::{WindowEvents, EventWindow, Window as PistonWindow};</span>
-<span class='doccomment'>//! # use poke_a_mango::*;</span>
-<span class='doccomment'>//! # fn main() {</span>
-<span class='doccomment'>//! #   not_main();</span>
-<span class='doccomment'>//! # }</span>
-<span class='doccomment'>//! # fn not_main() -&gt; Result&lt;(), Error&gt; {</span>
-<span class='doccomment'>//! let opts = Options::parse();</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! let mut window: PistonWindow = try!(ops::create_window(opts.desktop_size));</span>
-<span class='doccomment'>//! let window_s = ops::window_size(opts.desktop_size);</span>
-<span class='doccomment'>//! let mut ui = conrod::UiBuilder::new([window_s[0] as f64, window_s[1] as f64]).build();</span>
-<span class='doccomment'>//! // Set up the UI like normal</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! let mut game_state = ops::GameState::MainMenu;</span>
-<span class='doccomment'>//! let widgets = ops::Widgets::new(ui.widget_id_generator());</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! let mut events = WindowEvents::new();</span>
-<span class='doccomment'>//! while let Some(event) = window.next(&amp;mut events) {</span>
-<span class='doccomment'>//!     event.update(|_| {</span>
-<span class='doccomment'>//!         widgets.update(ui.set_widgets(), &amp;mut game_state);</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!         if game_state.should_exit() {</span>
-<span class='doccomment'>//!             window.set_should_close(true);</span>
-<span class='doccomment'>//!         } else if game_state.should_load_leaderboard() {</span>
-<span class='doccomment'>//!             game_state =</span>
-<span class='doccomment'>//!                 ops::GameState::DisplayLeaderboard(ops::Leader::read(</span>
-<span class='doccomment'>//!                     &amp;opts.config_dir.1.join(&quot;leaderboard.toml&quot;)).unwrap());</span>
-<span class='doccomment'>//!         } else if let ops::GameState::GameEnded { .. } = game_state {</span>
-<span class='doccomment'>//!             if let ops::GameState::GameEnded { ref name, score } = game_state {</span>
-<span class='doccomment'>//!                 ops::Leader::append(ops::Leader::now(name.clone(), score),</span>
-<span class='doccomment'>//!                                     &amp;opts.config_dir.1.join(&quot;leaderboard.toml&quot;)).unwrap();</span>
-<span class='doccomment'>//!             }</span>
-<span class='doccomment'>//!             game_state = ops::GameState::MainMenu;</span>
-<span class='doccomment'>//!         }</span>
-<span class='doccomment'>//!     });</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     // Handle events and draw like you&#39;d normally do</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//! # Ok(())</span>
-<span class='doccomment'>//! # }</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Executable manpage</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Played with your friends or alone, this game provides great entertainment to</span>
-<span class='doccomment'>//! everyone all over the globe, requiring great eye-hand coordination and keeping</span>
-<span class='doccomment'>//! the atmosphere tense.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Exit values and possible errors:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! 1 - Failed to parse a file</span>
-<span class='doccomment'>//! 2 - An I/O error occured</span>
-<span class='doccomment'>//! 3 - UI failed to cooperate</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## OPTIONS</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! -c --config-dir &amp;lt;config_dir&amp;gt;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! Directory with the configuration.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The configuration directory contains all of poke-a-mango&#39;s data.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Default: $HOME/.poke-a-mango</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! -d --desktop-size &amp;lt;size&amp;gt;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! The target desktop&#39;s resolution.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! By default this is autodetected to match the primary monitor&#39;s resolution,</span>
-<span class='doccomment'>//! but can be overriden to scale the game window better.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Format: NxM</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## EXAMPLES</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! `poke-a-mango` `-d` *1280x720*</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! Run the game as on an HD monitor.</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! `poke-a-mango` `-c` *pkmngo*</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```text</span>
-<span class='doccomment'>//! Save the game data in &quot;pkmngo&quot; directory instead of the default one.</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! What all the kool kidz are playing these days</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Features</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Easily navigable menus!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ![Start menu screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_start_menu.png)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Extensive leaderboard system!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ![Leaderboard screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_leaderboard.png)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A wide variety of difficulty modes!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ![Difficulty selection</span>
+<span class="doccomment">//! screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Exciting gameplay that will have you glued to the screen for hours on end!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ![Gameplay screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_gameplay.png)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Library doc</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This library is used by `poke-a-mango` itself for all its function and is therefore contains all necessary functions.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Data flow</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### With `conrod`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```plaintext</span>
+<span class="doccomment">//! Options::parse()</span>
+<span class="doccomment">//! |&gt; create_window()</span>
+<span class="doccomment">//! |&gt; Widgets::new()</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Then, each update event:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```plaintext</span>
+<span class="doccomment">//! |&gt; Widgets::update()</span>
+<span class="doccomment">//! |&gt; [check for states requiring usercode handling and act accordingly]</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### With a different UI</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```plaintext</span>
+<span class="doccomment">//! Options::parse()</span>
+<span class="doccomment">//! |&gt; state::*()</span>
+<span class="doccomment">//! |&gt; [check for states requiring usercode handling and act accordingly]</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Prose explanation</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! First, get an `Options` instance, be it via a struct-literal or `Options::parse()`;</span>
+<span class="doccomment">//! or don&#39;t and just create the individual arguments manually.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Then, use `create_window()` and a new `conrod::Ui`, follow up with creating a new `Widgets` instance.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! After that, among normally displaying and processing events with `conrod::Ui` call `Widgets::update()` each update event.</span>
+<span class="doccomment">//! That sometimes produces `GameState`s that need action from you and you need to handle them manually.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Example</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This is a semi-complete example, as it lacks event handling, rendering and UI setup which have been omitted for brevity.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! # extern crate conrod;</span>
+<span class="doccomment">//! # extern crate window;</span>
+<span class="doccomment">//! # extern crate poke_a_mango;</span>
+<span class="doccomment">//! # use window::Window;</span>
+<span class="doccomment">//! # use conrod::backend::piston::event::UpdateEvent;</span>
+<span class="doccomment">//! # use conrod::backend::piston::window::{WindowEvents, EventWindow, Window as PistonWindow};</span>
+<span class="doccomment">//! # use poke_a_mango::*;</span>
+<span class="doccomment">//! # fn main() {</span>
+<span class="doccomment">//! #   not_main();</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! # fn not_main() -&gt; Result&lt;(), Error&gt; {</span>
+<span class="doccomment">//! let opts = Options::parse();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut window: PistonWindow = try!(ops::create_window(opts.desktop_size));</span>
+<span class="doccomment">//! let window_s = ops::window_size(opts.desktop_size);</span>
+<span class="doccomment">//! let mut ui = conrod::UiBuilder::new([window_s[0] as f64, window_s[1] as f64]).build();</span>
+<span class="doccomment">//! // Set up the UI like normal</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut game_state = ops::GameState::MainMenu;</span>
+<span class="doccomment">//! let widgets = ops::Widgets::new(ui.widget_id_generator());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut events = WindowEvents::new();</span>
+<span class="doccomment">//! while let Some(event) = window.next(&amp;mut events) {</span>
+<span class="doccomment">//!     event.update(|_| {</span>
+<span class="doccomment">//!         widgets.update(ui.set_widgets(), &amp;mut game_state);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!         if game_state.should_exit() {</span>
+<span class="doccomment">//!             window.set_should_close(true);</span>
+<span class="doccomment">//!         } else if game_state.should_load_leaderboard() {</span>
+<span class="doccomment">//!             game_state =</span>
+<span class="doccomment">//!                 ops::GameState::DisplayLeaderboard(ops::Leader::read(</span>
+<span class="doccomment">//!                     &amp;opts.config_dir.1.join(&quot;leaderboard.toml&quot;)).unwrap());</span>
+<span class="doccomment">//!         } else if let ops::GameState::GameEnded { .. } = game_state {</span>
+<span class="doccomment">//!             if let ops::GameState::GameEnded { ref name, score } = game_state {</span>
+<span class="doccomment">//!                 ops::Leader::append(ops::Leader::now(name.clone(), score),</span>
+<span class="doccomment">//!                                     &amp;opts.config_dir.1.join(&quot;leaderboard.toml&quot;)).unwrap();</span>
+<span class="doccomment">//!             }</span>
+<span class="doccomment">//!             game_state = ops::GameState::MainMenu;</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!     });</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // Handle events and draw like you&#39;d normally do</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! # Ok(())</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Executable manpage</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Played with your friends or alone, this game provides great entertainment to</span>
+<span class="doccomment">//! everyone all over the globe, requiring great eye-hand coordination and keeping</span>
+<span class="doccomment">//! the atmosphere tense.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Exit values and possible errors:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! 1 - Failed to parse a file</span>
+<span class="doccomment">//! 2 - An I/O error occured</span>
+<span class="doccomment">//! 3 - UI failed to cooperate</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## OPTIONS</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! -c --config-dir &amp;lt;config_dir&amp;gt;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! Directory with the configuration.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The configuration directory contains all of poke-a-mango&#39;s data.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Default: $HOME/.poke-a-mango</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! -d --desktop-size &amp;lt;size&amp;gt;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! The target desktop&#39;s resolution.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! By default this is autodetected to match the primary monitor&#39;s resolution,</span>
+<span class="doccomment">//! but can be overriden to scale the game window better.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Format: NxM</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## EXAMPLES</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `poke-a-mango` `-d` *1280x720*</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! Run the game as on an HD monitor.</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `poke-a-mango` `-c` *pkmngo*</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! Save the game data in &quot;pkmngo&quot; directory instead of the default one.</span>
+<span class="doccomment">//! ```</span>
 
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>conrod</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>glutin</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>regex</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>clap</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>toml</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">chrono</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">conrod</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">glutin</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">regex</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">clap</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">toml</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
 
-<span class='kw'>mod</span> <span class='ident'>error</span>;
-<span class='kw'>mod</span> <span class='ident'>options</span>;
+<span class="kw">mod</span> <span class="ident">error</span>;
+<span class="kw">mod</span> <span class="ident">options</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ops</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ops</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>error</span>::<span class='ident'>Error</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>options</span>::<span class='ident'>Options</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">options</span>::<span class="ident">Options</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -425,18 +437,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -469,7 +485,6 @@
         window.rootPath = "../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

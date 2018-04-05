@@ -9,14 +9,18 @@
 
     <title>printer.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -313,276 +325,276 @@
 <span id="269">269</span>
 <span id="270">270</span>
 <span id="271">271</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Makes drawing on ncurses windows easier.</span>
 
 
-<span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='self'>self</span>, <span class='ident'>Backend</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+<span class="kw">use</span> <span class="ident">backend</span>::{<span class="self">self</span>, <span class="ident">Backend</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">Cell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
-<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>BorderStyle</span>, <span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
-<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
+<span class="kw">use</span> <span class="ident">theme</span>::{<span class="ident">BorderStyle</span>, <span class="ident">ColorStyle</span>, <span class="ident">Effect</span>, <span class="ident">Theme</span>};
+<span class="kw">use</span> <span class="ident">unicode_segmentation</span>::<span class="ident">UnicodeSegmentation</span>;
 
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>prefix_length</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">prefix_length</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
 
-<span class='doccomment'>/// Convenient interface to draw on a subset of the screen.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Printer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Offset into the window this printer should start drawing at.</span>
-    <span class='kw'>pub</span> <span class='ident'>offset</span>: <span class='ident'>Vec2</span>,
-    <span class='doccomment'>/// Size of the area we are allowed to draw on.</span>
-    <span class='kw'>pub</span> <span class='ident'>size</span>: <span class='ident'>Vec2</span>,
-    <span class='doccomment'>/// Whether the view to draw is currently focused or not.</span>
-    <span class='kw'>pub</span> <span class='ident'>focused</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// Currently used theme</span>
-    <span class='kw'>pub</span> <span class='ident'>theme</span>: <span class='ident'>Theme</span>,
+<span class="doccomment">/// Convenient interface to draw on a subset of the screen.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Printer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Offset into the window this printer should start drawing at.</span>
+    <span class="kw">pub</span> <span class="ident">offset</span>: <span class="ident">Vec2</span>,
+    <span class="doccomment">/// Size of the area we are allowed to draw on.</span>
+    <span class="kw">pub</span> <span class="ident">size</span>: <span class="ident">Vec2</span>,
+    <span class="doccomment">/// Whether the view to draw is currently focused or not.</span>
+    <span class="kw">pub</span> <span class="ident">focused</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Currently used theme</span>
+    <span class="kw">pub</span> <span class="ident">theme</span>: <span class="ident">Theme</span>,
 
-    <span class='doccomment'>/// `true` if nothing has been drawn yet.</span>
-    <span class='ident'>new</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>Cell</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;&gt;</span>,
-    <span class='doccomment'>/// Backend used to actually draw things</span>
-    <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>,
+    <span class="doccomment">/// `true` if nothing has been drawn yet.</span>
+    <span class="ident">new</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;&gt;</span>,
+    <span class="doccomment">/// Backend used to actually draw things</span>
+    <span class="ident">backend</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">backend</span>::<span class="ident">Concrete</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Printer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new printer on the given window.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// But nobody needs to know that.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>size</span>: <span class='ident'>T</span>, <span class='ident'>theme</span>: <span class='ident'>Theme</span>, <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Printer</span> {
-            <span class='ident'>offset</span>: <span class='ident'>Vec2</span>::<span class='ident'>zero</span>(),
-            <span class='ident'>size</span>: <span class='ident'>size</span>.<span class='ident'>into</span>(),
-            <span class='ident'>focused</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>theme</span>: <span class='ident'>theme</span>,
-            <span class='ident'>new</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>Cell</span>::<span class='ident'>new</span>(<span class='bool-val'>true</span>)),
-            <span class='ident'>backend</span>: <span class='ident'>backend</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Printer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new printer on the given window.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// But nobody needs to know that.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="ident">size</span>: <span class="ident">T</span>, <span class="ident">theme</span>: <span class="ident">Theme</span>, <span class="ident">backend</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">backend</span>::<span class="ident">Concrete</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Printer</span> {
+            <span class="ident">offset</span>: <span class="ident">Vec2</span>::<span class="ident">zero</span>(),
+            <span class="ident">size</span>: <span class="ident">size</span>.<span class="ident">into</span>(),
+            <span class="ident">focused</span>: <span class="bool-val">true</span>,
+            <span class="ident">theme</span>: <span class="ident">theme</span>,
+            <span class="ident">new</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="bool-val">true</span>)),
+            <span class="ident">backend</span>: <span class="ident">backend</span>,
         }
     }
 
-    <span class='doccomment'>/// Clear the screen.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It will discard anything drawn before.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Users rarely need to call this directly.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
+    <span class="doccomment">/// Clear the screen.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It will discard anything drawn before.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Users rarely need to call this directly.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">clear</span>();
     }
 
-    <span class='doccomment'>/// Returns `true` if nothing has been printed yet.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_new</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>get</span>()
+    <span class="doccomment">/// Returns `true` if nothing has been printed yet.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">get</span>()
     }
 
-    <span class='comment'>// TODO: use &amp;mut self? We don&#39;t *need* it, but it may make sense.</span>
-    <span class='comment'>// We don&#39;t want people to start calling prints in parallel?</span>
-    <span class='doccomment'>/// Prints some text at the given position relative to the window.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pos</span>: <span class='ident'>S</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>set</span>(<span class='bool-val'>false</span>);
+    <span class="comment">// TODO: use &amp;mut self? We don&#39;t *need* it, but it may make sense.</span>
+    <span class="comment">// We don&#39;t want people to start calling prints in parallel?</span>
+    <span class="doccomment">/// Prints some text at the given position relative to the window.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">S</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">set</span>(<span class="bool-val">false</span>);
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>pos</span>.<span class='ident'>into</span>();
-        <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
-            <span class='kw'>return</span>;
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">into</span>();
+        <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">y</span> <span class="op">||</span> <span class="ident">p</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">x</span> {
+            <span class="kw">return</span>;
         }
-        <span class='comment'>// Do we have enough room for the entire line?</span>
-        <span class='kw'>let</span> <span class='ident'>room</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>p</span>.<span class='ident'>x</span>;
-        <span class='comment'>// We want the number of CHARACTERS, not bytes.</span>
-        <span class='comment'>// (Actually we want the &quot;width&quot; of the string, see unicode-width)</span>
-        <span class='kw'>let</span> <span class='ident'>prefix_len</span> <span class='op'>=</span> <span class='ident'>prefix_length</span>(<span class='ident'>text</span>.<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>), <span class='ident'>room</span>, <span class='string'>&quot;&quot;</span>);
-        <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>text</span>[..<span class='ident'>prefix_len</span>];
+        <span class="comment">// Do we have enough room for the entire line?</span>
+        <span class="kw">let</span> <span class="ident">room</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">x</span> <span class="op">-</span> <span class="ident">p</span>.<span class="ident">x</span>;
+        <span class="comment">// We want the number of CHARACTERS, not bytes.</span>
+        <span class="comment">// (Actually we want the &quot;width&quot; of the string, see unicode-width)</span>
+        <span class="kw">let</span> <span class="ident">prefix_len</span> <span class="op">=</span> <span class="ident">prefix_length</span>(<span class="ident">text</span>.<span class="ident">graphemes</span>(<span class="bool-val">true</span>), <span class="ident">room</span>, <span class="string">&quot;&quot;</span>);
+        <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">text</span>[..<span class="ident">prefix_len</span>];
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>p</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>offset</span>;
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, <span class='ident'>p</span>.<span class='ident'>y</span>), <span class='ident'>text</span>);
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">p</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">offset</span>;
+        <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">print_at</span>((<span class="ident">p</span>.<span class="ident">x</span>, <span class="ident">p</span>.<span class="ident">y</span>), <span class="ident">text</span>);
     }
 
-    <span class='doccomment'>/// Prints a vertical line using the given character.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_vline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>set</span>(<span class='bool-val'>false</span>);
+    <span class="doccomment">/// Prints a vertical line using the given character.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_vline</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start</span>: <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">set</span>(<span class="bool-val">false</span>);
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
-        <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
-            <span class='kw'>return</span>;
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">into</span>();
+        <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">y</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">y</span> <span class="op">||</span> <span class="ident">p</span>.<span class="ident">x</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">x</span> {
+            <span class="kw">return</span>;
         }
-        <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='ident'>len</span>, <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>p</span>.<span class='ident'>y</span>);
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">y</span> <span class="op">-</span> <span class="ident">p</span>.<span class="ident">y</span>);
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>p</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>offset</span>;
-        <span class='kw'>for</span> <span class='ident'>y</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>len</span> {
-            <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, (<span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>y</span>)), <span class='ident'>c</span>);
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">p</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">offset</span>;
+        <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
+            <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">print_at</span>((<span class="ident">p</span>.<span class="ident">x</span>, (<span class="ident">p</span>.<span class="ident">y</span> <span class="op">+</span> <span class="ident">y</span>)), <span class="ident">c</span>);
         }
     }
 
-    <span class='doccomment'>/// Prints a horizontal line using the given character.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>set</span>(<span class='bool-val'>false</span>);
+    <span class="doccomment">/// Prints a horizontal line using the given character.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_hline</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start</span>: <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">set</span>(<span class="bool-val">false</span>);
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
-        <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
-            <span class='kw'>return</span>;
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">into</span>();
+        <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">y</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">y</span> <span class="op">||</span> <span class="ident">p</span>.<span class="ident">x</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">x</span> {
+            <span class="kw">return</span>;
         }
-        <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='ident'>len</span>, <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>p</span>.<span class='ident'>x</span>);
-        <span class='kw'>let</span> <span class='ident'>text</span>: <span class='ident'>String</span> <span class='op'>=</span> ::<span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>c</span>).<span class='ident'>take</span>(<span class='ident'>len</span>).<span class='ident'>collect</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">size</span>.<span class="ident">x</span> <span class="op">-</span> <span class="ident">p</span>.<span class="ident">x</span>);
+        <span class="kw">let</span> <span class="ident">text</span>: <span class="ident">String</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">c</span>).<span class="ident">take</span>(<span class="ident">len</span>).<span class="ident">collect</span>();
 
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>p</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>offset</span>;
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, <span class='ident'>p</span>.<span class='ident'>y</span>), <span class='kw-2'>&amp;</span><span class='ident'>text</span>);
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">p</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">offset</span>;
+        <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">print_at</span>((<span class="ident">p</span>.<span class="ident">x</span>, <span class="ident">p</span>.<span class="ident">y</span>), <span class="kw-2">&amp;</span><span class="ident">text</span>);
     }
 
-    <span class='doccomment'>/// Call the given closure with a colored printer,</span>
-    <span class='doccomment'>/// that will apply the given color on prints.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// # use cursive::Printer;</span>
-    <span class='doccomment'>/// # use cursive::theme;</span>
-    <span class='doccomment'>/// # use cursive::backend::{self, Backend};</span>
-    <span class='doccomment'>/// # let b = backend::Concrete::init();</span>
-    <span class='doccomment'>/// # let printer = Printer::new((6,4), theme::load_default(), &amp;b);</span>
-    <span class='doccomment'>/// printer.with_color(theme::ColorStyle::Highlight, |printer| {</span>
-    <span class='doccomment'>///     printer.print((0,0), &quot;This text is highlighted!&quot;);</span>
-    <span class='doccomment'>/// });</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_color</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>ColorStyle</span>, <span class='ident'>f</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)
+    <span class="doccomment">/// Call the given closure with a colored printer,</span>
+    <span class="doccomment">/// that will apply the given color on prints.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// # use cursive::Printer;</span>
+    <span class="doccomment">/// # use cursive::theme;</span>
+    <span class="doccomment">/// # use cursive::backend::{self, Backend};</span>
+    <span class="doccomment">/// # let b = backend::Concrete::init();</span>
+    <span class="doccomment">/// # let printer = Printer::new((6,4), theme::load_default(), &amp;b);</span>
+    <span class="doccomment">/// printer.with_color(theme::ColorStyle::Highlight, |printer| {</span>
+    <span class="doccomment">///     printer.print((0,0), &quot;This text is highlighted!&quot;);</span>
+    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_color</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">c</span>: <span class="ident">ColorStyle</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>)
     {
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>with_color</span>(<span class='ident'>c</span>, <span class='op'>||</span> <span class='ident'>f</span>(<span class='self'>self</span>));
+        <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">with_color</span>(<span class="ident">c</span>, <span class="op">||</span> <span class="ident">f</span>(<span class="self">self</span>));
     }
 
-    <span class='doccomment'>/// Same as `with_color`, but apply a ncurses style instead,</span>
-    <span class='doccomment'>/// like `ncurses::A_BOLD()` or `ncurses::A_REVERSE()`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Will probably use a cursive enum some day.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_effect</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>effect</span>: <span class='ident'>Effect</span>, <span class='ident'>f</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)
+    <span class="doccomment">/// Same as `with_color`, but apply a ncurses style instead,</span>
+    <span class="doccomment">/// like `ncurses::A_BOLD()` or `ncurses::A_REVERSE()`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Will probably use a cursive enum some day.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_effect</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">effect</span>: <span class="ident">Effect</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>)
     {
-        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>with_effect</span>(<span class='ident'>effect</span>, <span class='op'>||</span> <span class='ident'>f</span>(<span class='self'>self</span>));
+        <span class="self">self</span>.<span class="ident">backend</span>.<span class="ident">with_effect</span>(<span class="ident">effect</span>, <span class="op">||</span> <span class="ident">f</span>(<span class="self">self</span>));
     }
 
-    <span class='doccomment'>/// Prints a rectangular box.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If `invert` is `true`, and the theme uses `Outset` borders, then the</span>
-    <span class='doccomment'>/// box will use an &quot;inset&quot; style instead.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// # use cursive::Printer;</span>
-    <span class='doccomment'>/// # use cursive::theme;</span>
-    <span class='doccomment'>/// # use cursive::backend::{self, Backend};</span>
-    <span class='doccomment'>/// # let b = backend::Concrete::init();</span>
-    <span class='doccomment'>/// # let printer = Printer::new((6,4), theme::load_default(), &amp;b);</span>
-    <span class='doccomment'>/// printer.print_box((0,0), (6,4), false);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_box</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>size</span>: <span class='ident'>S</span>,
-                                                   <span class='ident'>invert</span>: <span class='ident'>bool</span>) {
-        <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>set</span>(<span class='bool-val'>false</span>);
+    <span class="doccomment">/// Prints a rectangular box.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If `invert` is `true`, and the theme uses `Outset` borders, then the</span>
+    <span class="doccomment">/// box will use an &quot;inset&quot; style instead.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// # use cursive::Printer;</span>
+    <span class="doccomment">/// # use cursive::theme;</span>
+    <span class="doccomment">/// # use cursive::backend::{self, Backend};</span>
+    <span class="doccomment">/// # let b = backend::Concrete::init();</span>
+    <span class="doccomment">/// # let printer = Printer::new((6,4), theme::load_default(), &amp;b);</span>
+    <span class="doccomment">/// printer.print_box((0,0), (6,4), false);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_box</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start</span>: <span class="ident">T</span>, <span class="ident">size</span>: <span class="ident">S</span>,
+                                                   <span class="ident">invert</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">set</span>(<span class="bool-val">false</span>);
 
-        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
-        <span class='kw'>if</span> <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>2</span> <span class='op'>||</span> <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='number'>2</span> {
-            <span class='kw'>return</span>;
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">into</span>();
+        <span class="kw">if</span> <span class="ident">size</span>.<span class="ident">x</span> <span class="op">&lt;</span> <span class="number">2</span> <span class="op">||</span> <span class="ident">size</span>.<span class="ident">y</span> <span class="op">&lt;</span> <span class="number">2</span> {
+            <span class="kw">return</span>;
         }
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span> <span class='op'>-</span> (<span class='number'>1</span>, <span class='number'>1</span>);
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span> <span class="op">-</span> (<span class="number">1</span>, <span class="number">1</span>);
 
-        <span class='self'>self</span>.<span class='ident'>with_high_border</span>(<span class='ident'>invert</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span>, <span class='string'>&quot;┌&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='string'>&quot;└&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
+        <span class="self">self</span>.<span class="ident">with_high_border</span>(<span class="ident">invert</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+            <span class="ident">s</span>.<span class="ident">print</span>(<span class="ident">start</span>, <span class="string">&quot;┌&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print</span>(<span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span>.<span class="ident">keep_y</span>(), <span class="string">&quot;└&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print_hline</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="number">1</span>, <span class="number">0</span>), <span class="ident">size</span>.<span class="ident">x</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;─&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print_vline</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="number">0</span>, <span class="number">1</span>), <span class="ident">size</span>.<span class="ident">y</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;│&quot;</span>);
         });
 
-        <span class='self'>self</span>.<span class='ident'>with_low_border</span>(<span class='ident'>invert</span>, <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
-            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='string'>&quot;┐&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>, <span class='string'>&quot;┘&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
-            <span class='ident'>s</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
+        <span class="self">self</span>.<span class="ident">with_low_border</span>(<span class="ident">invert</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+            <span class="ident">s</span>.<span class="ident">print</span>(<span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span>.<span class="ident">keep_x</span>(), <span class="string">&quot;┐&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print</span>(<span class="ident">start</span> <span class="op">+</span> <span class="ident">size</span>, <span class="string">&quot;┘&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print_hline</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="number">1</span>, <span class="number">0</span>) <span class="op">+</span> <span class="ident">size</span>.<span class="ident">keep_y</span>(), <span class="ident">size</span>.<span class="ident">x</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;─&quot;</span>);
+            <span class="ident">s</span>.<span class="ident">print_vline</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="number">0</span>, <span class="number">1</span>) <span class="op">+</span> <span class="ident">size</span>.<span class="ident">keep_x</span>(), <span class="ident">size</span>.<span class="ident">y</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;│&quot;</span>);
         });
     }
 
-    <span class='doccomment'>/// Runs the given function using a color depending on the theme.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * If the theme&#39;s borders is `None`, return without calling `f`.</span>
-    <span class='doccomment'>/// * If the theme&#39;s borders is &quot;outset&quot; and `invert` is `false`,</span>
-    <span class='doccomment'>///   use `ColorStyle::Tertiary`.</span>
-    <span class='doccomment'>/// * Otherwise, use `ColorStyle::Primary`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_high_border</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>invert</span>: <span class='ident'>bool</span>, <span class='ident'>f</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)
+    <span class="doccomment">/// Runs the given function using a color depending on the theme.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * If the theme&#39;s borders is `None`, return without calling `f`.</span>
+    <span class="doccomment">/// * If the theme&#39;s borders is &quot;outset&quot; and `invert` is `false`,</span>
+    <span class="doccomment">///   use `ColorStyle::Tertiary`.</span>
+    <span class="doccomment">/// * Otherwise, use `ColorStyle::Primary`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_high_border</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">invert</span>: <span class="ident">bool</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>)
     {
-        <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>borders</span> {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span>,
-            <span class='prelude-val'>Some</span>(<span class='ident'>BorderStyle</span>::<span class='ident'>Outset</span>) <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>invert</span> <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
+        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">theme</span>.<span class="ident">borders</span> {
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">BorderStyle</span>::<span class="ident">Outset</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">invert</span> <span class="op">=&gt;</span> <span class="ident">ColorStyle</span>::<span class="ident">Tertiary</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">ColorStyle</span>::<span class="ident">Primary</span>,
         };
 
-        <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='ident'>color</span>, <span class='ident'>f</span>);
+        <span class="self">self</span>.<span class="ident">with_color</span>(<span class="ident">color</span>, <span class="ident">f</span>);
     }
 
-    <span class='doccomment'>/// Runs the given function using a color depending on the theme.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * If the theme&#39;s borders is `None`, return without calling `f`.</span>
-    <span class='doccomment'>/// * If the theme&#39;s borders is &quot;outset&quot; and `invert` is `true`,</span>
-    <span class='doccomment'>///   use `ColorStyle::Tertiary`.</span>
-    <span class='doccomment'>/// * Otherwise, use `ColorStyle::Primary`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_low_border</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>invert</span>: <span class='ident'>bool</span>, <span class='ident'>f</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)
+    <span class="doccomment">/// Runs the given function using a color depending on the theme.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * If the theme&#39;s borders is `None`, return without calling `f`.</span>
+    <span class="doccomment">/// * If the theme&#39;s borders is &quot;outset&quot; and `invert` is `true`,</span>
+    <span class="doccomment">///   use `ColorStyle::Tertiary`.</span>
+    <span class="doccomment">/// * Otherwise, use `ColorStyle::Primary`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_low_border</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">invert</span>: <span class="ident">bool</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>)
     {
-        <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>borders</span> {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span>,
-            <span class='prelude-val'>Some</span>(<span class='ident'>BorderStyle</span>::<span class='ident'>Outset</span>) <span class='kw'>if</span> <span class='ident'>invert</span> <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
+        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">theme</span>.<span class="ident">borders</span> {
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">BorderStyle</span>::<span class="ident">Outset</span>) <span class="kw">if</span> <span class="ident">invert</span> <span class="op">=&gt;</span> <span class="ident">ColorStyle</span>::<span class="ident">Secondary</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">ColorStyle</span>::<span class="ident">Primary</span>,
         };
 
-        <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='ident'>color</span>, <span class='ident'>f</span>);
+        <span class="self">self</span>.<span class="ident">with_color</span>(<span class="ident">color</span>, <span class="ident">f</span>);
     }
 
-    <span class='doccomment'>/// Apply a selection style and call the given function.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * If `selection` is `false`, simply uses `ColorStyle::Primary`.</span>
-    <span class='doccomment'>/// * If `selection` is `true`:</span>
-    <span class='doccomment'>///     * If the printer currently has the focus,</span>
-    <span class='doccomment'>///       uses `ColorStyle::Highlight`.</span>
-    <span class='doccomment'>///     * Otherwise, uses `ColorStyle::HighlightInactive`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_selection</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>selection</span>: <span class='ident'>bool</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) {
-        <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='kw'>if</span> <span class='ident'>selection</span> {
-                            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>focused</span> {
-                                <span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>
-                            } <span class='kw'>else</span> {
-                                <span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span>
+    <span class="doccomment">/// Apply a selection style and call the given function.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * If `selection` is `false`, simply uses `ColorStyle::Primary`.</span>
+    <span class="doccomment">/// * If `selection` is `true`:</span>
+    <span class="doccomment">///     * If the printer currently has the focus,</span>
+    <span class="doccomment">///       uses `ColorStyle::Highlight`.</span>
+    <span class="doccomment">///     * Otherwise, uses `ColorStyle::HighlightInactive`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_selection</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>)<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">selection</span>: <span class="ident">bool</span>, <span class="ident">f</span>: <span class="ident">F</span>) {
+        <span class="self">self</span>.<span class="ident">with_color</span>(<span class="kw">if</span> <span class="ident">selection</span> {
+                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">focused</span> {
+                                <span class="ident">ColorStyle</span>::<span class="ident">Highlight</span>
+                            } <span class="kw">else</span> {
+                                <span class="ident">ColorStyle</span>::<span class="ident">HighlightInactive</span>
                             }
-                        } <span class='kw'>else</span> {
-                            <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>
+                        } <span class="kw">else</span> {
+                            <span class="ident">ColorStyle</span>::<span class="ident">Primary</span>
                         },
-                        <span class='ident'>f</span>);
+                        <span class="ident">f</span>);
     }
 
-    <span class='doccomment'>/// Prints a horizontal delimiter with side border `├` and `┤`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hdelim</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span>, <span class='string'>&quot;├&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>len</span> <span class='op'>-</span> <span class='number'>2</span>, <span class='string'>&quot;─&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='ident'>len</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='number'>0</span>), <span class='string'>&quot;┤&quot;</span>);
+    <span class="doccomment">/// Prints a horizontal delimiter with side border `├` and `┤`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_hdelim</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start</span>: <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.<span class="ident">print</span>(<span class="ident">start</span>, <span class="string">&quot;├&quot;</span>);
+        <span class="self">self</span>.<span class="ident">print_hline</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="number">1</span>, <span class="number">0</span>), <span class="ident">len</span> <span class="op">-</span> <span class="number">2</span>, <span class="string">&quot;─&quot;</span>);
+        <span class="self">self</span>.<span class="ident">print</span>(<span class="ident">start</span> <span class="op">+</span> (<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>, <span class="number">0</span>), <span class="string">&quot;┤&quot;</span>);
     }
 
-    <span class='doccomment'>/// Returns a printer on a subset of this one&#39;s area.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sub_printer</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>offset</span>: <span class='ident'>S</span>,
-                                                     <span class='ident'>size</span>: <span class='ident'>T</span>, <span class='ident'>focused</span>: <span class='ident'>bool</span>)
-                                                     <span class='op'>-&gt;</span> <span class='ident'>Printer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>offset</span>.<span class='ident'>into</span>().<span class='ident'>or_min</span>(<span class='self'>self</span>.<span class='ident'>size</span>);
-        <span class='ident'>Printer</span> {
-            <span class='ident'>offset</span>: <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>offset</span>,
-            <span class='comment'>// We can&#39;t be larger than what remains</span>
-            <span class='ident'>size</span>: <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>offset</span>, <span class='ident'>size</span>),
-            <span class='ident'>focused</span>: <span class='self'>self</span>.<span class='ident'>focused</span> <span class='op'>&amp;&amp;</span> <span class='ident'>focused</span>,
-            <span class='ident'>theme</span>: <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>backend</span>: <span class='self'>self</span>.<span class='ident'>backend</span>,
-            <span class='ident'>new</span>: <span class='self'>self</span>.<span class='ident'>new</span>.<span class='ident'>clone</span>(),
+    <span class="doccomment">/// Returns a printer on a subset of this one&#39;s area.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sub_printer</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;</span>, <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">offset</span>: <span class="ident">S</span>,
+                                                     <span class="ident">size</span>: <span class="ident">T</span>, <span class="ident">focused</span>: <span class="ident">bool</span>)
+                                                     <span class="op">-&gt;</span> <span class="ident">Printer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">offset</span>.<span class="ident">into</span>().<span class="ident">or_min</span>(<span class="self">self</span>.<span class="ident">size</span>);
+        <span class="ident">Printer</span> {
+            <span class="ident">offset</span>: <span class="self">self</span>.<span class="ident">offset</span> <span class="op">+</span> <span class="ident">offset</span>,
+            <span class="comment">// We can&#39;t be larger than what remains</span>
+            <span class="ident">size</span>: <span class="ident">Vec2</span>::<span class="ident">min</span>(<span class="self">self</span>.<span class="ident">size</span> <span class="op">-</span> <span class="ident">offset</span>, <span class="ident">size</span>),
+            <span class="ident">focused</span>: <span class="self">self</span>.<span class="ident">focused</span> <span class="op">&amp;&amp;</span> <span class="ident">focused</span>,
+            <span class="ident">theme</span>: <span class="self">self</span>.<span class="ident">theme</span>.<span class="ident">clone</span>(),
+            <span class="ident">backend</span>: <span class="self">self</span>.<span class="ident">backend</span>,
+            <span class="ident">new</span>: <span class="self">self</span>.<span class="ident">new</span>.<span class="ident">clone</span>(),
         }
     }
 
-    <span class='doccomment'>/// Returns a sub-printer with the given offset.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>offset</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>offset</span>: <span class='ident'>S</span>, <span class='ident'>focused</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>Printer</span> {
-        <span class='self'>self</span>.<span class='ident'>sub_printer</span>(<span class='ident'>offset</span>, <span class='self'>self</span>.<span class='ident'>size</span>, <span class='ident'>focused</span>)
+    <span class="doccomment">/// Returns a sub-printer with the given offset.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">offset</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec2</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">offset</span>: <span class="ident">S</span>, <span class="ident">focused</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Printer</span> {
+        <span class="self">self</span>.<span class="ident">sub_printer</span>(<span class="ident">offset</span>, <span class="self">self</span>.<span class="ident">size</span>, <span class="ident">focused</span>)
     }
 }
 </pre>
@@ -599,18 +611,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -643,7 +659,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

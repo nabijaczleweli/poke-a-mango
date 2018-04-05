@@ -9,14 +9,18 @@
 
     <title>view_wrapper.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -170,132 +182,132 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">Printer</span>;
 
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>View</span>};
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::{<span class="ident">Event</span>, <span class="ident">EventResult</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::{<span class="ident">Selector</span>, <span class="ident">View</span>};
 
-<span class='doccomment'>/// Generic wrapper around a view.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Default implementation forwards all calls to the child view.</span>
-<span class='doccomment'>/// Overrides some methods as desired.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// You can use the [`wrap_impl!`] macro to define `get_view` and</span>
-<span class='doccomment'>/// `get_view_mut` for you.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`wrap_impl!`]: ../macro.wrap_impl.html</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ViewWrapper</span> {
-    <span class='doccomment'>/// Type that this view wraps.</span>
-    <span class='kw'>type</span> <span class='ident'>V</span>: <span class='ident'>View</span>;
+<span class="doccomment">/// Generic wrapper around a view.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Default implementation forwards all calls to the child view.</span>
+<span class="doccomment">/// Overrides some methods as desired.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// You can use the [`wrap_impl!`] macro to define `get_view` and</span>
+<span class="doccomment">/// `get_view_mut` for you.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`wrap_impl!`]: ../macro.wrap_impl.html</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ViewWrapper</span> {
+    <span class="doccomment">/// Type that this view wraps.</span>
+    <span class="kw">type</span> <span class="ident">V</span>: <span class="ident">View</span>;
 
-    <span class='doccomment'>/// Get an immutable reference to the wrapped view.</span>
-    <span class='kw'>fn</span> <span class='ident'>get_view</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>V</span>;
+    <span class="doccomment">/// Get an immutable reference to the wrapped view.</span>
+    <span class="kw">fn</span> <span class="ident">get_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">V</span>;
 
-    <span class='doccomment'>/// Get a mutable reference to the wrapped view.</span>
-    <span class='kw'>fn</span> <span class='ident'>get_view_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>::<span class='ident'>V</span>;
+    <span class="doccomment">/// Get a mutable reference to the wrapped view.</span>
+    <span class="kw">fn</span> <span class="ident">get_view_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">V</span>;
 
-    <span class='doccomment'>/// Wraps the `draw` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='self'>self</span>.<span class='ident'>get_view</span>().<span class='ident'>draw</span>(<span class='ident'>printer</span>);
+    <span class="doccomment">/// Wraps the `draw` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="self">self</span>.<span class="ident">get_view</span>().<span class="ident">draw</span>(<span class="ident">printer</span>);
     }
 
-    <span class='doccomment'>/// Wraps the `get_min_size` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>get_min_size</span>(<span class='ident'>req</span>)
+    <span class="doccomment">/// Wraps the `get_min_size` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">req</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="self">self</span>.<span class="ident">get_view_mut</span>().<span class="ident">get_min_size</span>(<span class="ident">req</span>)
     }
 
-    <span class='doccomment'>/// Wraps the `on_event` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ch</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>ch</span>)
+    <span class="doccomment">/// Wraps the `on_event` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ch</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="self">self</span>.<span class="ident">get_view_mut</span>().<span class="ident">on_event</span>(<span class="ident">ch</span>)
     }
 
-    <span class='doccomment'>/// Wraps the `layout` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) {
-        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>layout</span>(<span class='ident'>size</span>);
+    <span class="doccomment">/// Wraps the `layout` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_layout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Vec2</span>) {
+        <span class="self">self</span>.<span class="ident">get_view_mut</span>().<span class="ident">layout</span>(<span class="ident">size</span>);
     }
 
-    <span class='doccomment'>/// Wraps the `take_focus` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>source</span>: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>take_focus</span>(<span class='ident'>source</span>)
+    <span class="doccomment">/// Wraps the `take_focus` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">get_view_mut</span>().<span class="ident">take_focus</span>(<span class="ident">source</span>)
     }
 
-    <span class='doccomment'>/// Wraps the `find` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_find_any</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selector</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>find_any</span>(<span class='ident'>selector</span>)
+    <span class="doccomment">/// Wraps the `find` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_find_any</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">selector</span>: <span class="kw-2">&amp;</span><span class="ident">Selector</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Any</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">get_view_mut</span>().<span class="ident">find_any</span>(<span class="ident">selector</span>)
     }
 
-    <span class='doccomment'>/// Wraps the `needs_relayout` method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_needs_relayout</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view</span>().<span class='ident'>needs_relayout</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ViewWrapper</span><span class='op'>&gt;</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
-        <span class='self'>self</span>.<span class='ident'>wrap_draw</span>(<span class='ident'>printer</span>);
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='self'>self</span>.<span class='ident'>wrap_get_min_size</span>(<span class='ident'>req</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ch</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='self'>self</span>.<span class='ident'>wrap_on_event</span>(<span class='ident'>ch</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) {
-        <span class='self'>self</span>.<span class='ident'>wrap_layout</span>(<span class='ident'>size</span>);
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>source</span>: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>wrap_take_focus</span>(<span class='ident'>source</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>find_any</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selector</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>wrap_find_any</span>(<span class='ident'>selector</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>needs_relayout</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>wrap_needs_relayout</span>()
+    <span class="doccomment">/// Wraps the `needs_relayout` method.</span>
+    <span class="kw">fn</span> <span class="ident">wrap_needs_relayout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">get_view</span>().<span class="ident">needs_relayout</span>()
     }
 }
 
-<span class='doccomment'>/// Convenient macro to implement the [`ViewWrapper`] trait.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It defines the `get_view` and `get_view_mut` implementations,</span>
-<span class='doccomment'>/// as well as the `type V` declaration.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// [`ViewWrapper`]: view/trait.ViewWrapper.html</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```no_run</span>
-<span class='doccomment'>/// # #[macro_use] extern crate cursive;</span>
-<span class='doccomment'>/// # use cursive::view::{View,ViewWrapper};</span>
-<span class='doccomment'>/// struct FooView&lt;T: View&gt; {</span>
-<span class='doccomment'>///     view: T,</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl &lt;T: View&gt; ViewWrapper for FooView&lt;T&gt; {</span>
-<span class='doccomment'>///     wrap_impl!(self.view: T);</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// # fn main() { }</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>wrap_impl</span> {
-    (<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>v</span>:<span class='ident'>ident</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>:<span class='ident'>ty</span>) <span class='op'>=&gt;</span> {
-        <span class='kw'>type</span> <span class='ident'>V</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ViewWrapper</span><span class="op">&gt;</span> <span class="ident">View</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
+        <span class="self">self</span>.<span class="ident">wrap_draw</span>(<span class="ident">printer</span>);
+    }
 
-        <span class='kw'>fn</span> <span class='ident'>get_view</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>V</span> {
-            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>v</span>
+    <span class="kw">fn</span> <span class="ident">get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">req</span>: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="self">self</span>.<span class="ident">wrap_get_min_size</span>(<span class="ident">req</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ch</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="self">self</span>.<span class="ident">wrap_on_event</span>(<span class="ident">ch</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">layout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Vec2</span>) {
+        <span class="self">self</span>.<span class="ident">wrap_layout</span>(<span class="ident">size</span>);
+    }
+
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">wrap_take_focus</span>(<span class="ident">source</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">find_any</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">selector</span>: <span class="kw-2">&amp;</span><span class="ident">Selector</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Any</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">wrap_find_any</span>(<span class="ident">selector</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">needs_relayout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">wrap_needs_relayout</span>()
+    }
+}
+
+<span class="doccomment">/// Convenient macro to implement the [`ViewWrapper`] trait.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It defines the `get_view` and `get_view_mut` implementations,</span>
+<span class="doccomment">/// as well as the `type V` declaration.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`ViewWrapper`]: view/trait.ViewWrapper.html</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```no_run</span>
+<span class="doccomment">/// # #[macro_use] extern crate cursive;</span>
+<span class="doccomment">/// # use cursive::view::{View,ViewWrapper};</span>
+<span class="doccomment">/// struct FooView&lt;T: View&gt; {</span>
+<span class="doccomment">///     view: T,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl &lt;T: View&gt; ViewWrapper for FooView&lt;T&gt; {</span>
+<span class="doccomment">///     wrap_impl!(self.view: T);</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// # fn main() { }</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">wrap_impl</span> {
+    (<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ty</span>) <span class="op">=&gt;</span> {
+        <span class="kw">type</span> <span class="ident">V</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+
+        <span class="kw">fn</span> <span class="ident">get_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">V</span> {
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>
         }
 
-        <span class='kw'>fn</span> <span class='ident'>get_view_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>::<span class='ident'>V</span> {
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>v</span>
+        <span class="kw">fn</span> <span class="ident">get_view_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">V</span> {
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>
         }
     };
 }
@@ -313,18 +325,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -357,7 +373,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

@@ -1,11 +1,4 @@
 (function() {var implementors = {};
-implementors["chrono"] = [];
-implementors["conrod"] = [];
-implementors["cursive"] = [];
-implementors["glutin_window"] = [];
-implementors["image"] = [];
-implementors["num"] = [];
-implementors["poke_a_mango"] = [];
 implementors["rustc_serialize"] = [];
 
             if (window.register_implementors) {

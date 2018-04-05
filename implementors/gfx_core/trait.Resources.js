@@ -1,8 +1,6 @@
 (function() {var implementors = {};
-implementors["conrod"] = ["impl <a class='trait' href='gfx_core/trait.Resources.html' title='gfx_core::Resources'>Resources</a> for <a class='enum' href='gfx_device_gl/enum.Resources.html' title='gfx_device_gl::Resources'>Resources</a>",];
 implementors["gfx_core"] = [];
-implementors["gfx_device_gl"] = ["impl <a class='trait' href='gfx_core/trait.Resources.html' title='gfx_core::Resources'>Resources</a> for <a class='enum' href='gfx_device_gl/enum.Resources.html' title='gfx_device_gl::Resources'>Resources</a>",];
-implementors["poke_a_mango"] = ["impl <a class='trait' href='gfx_core/trait.Resources.html' title='gfx_core::Resources'>Resources</a> for <a class='enum' href='gfx_device_gl/enum.Resources.html' title='gfx_device_gl::Resources'>Resources</a>",];
+implementors["gfx_device_gl"] = ["impl <a class=\"trait\" href=\"gfx_core/trait.Resources.html\" title=\"trait gfx_core::Resources\">Resources</a> for <a class=\"enum\" href=\"gfx_device_gl/enum.Resources.html\" title=\"enum gfx_device_gl::Resources\">Resources</a>",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -1,9 +1,5 @@
 (function() {var implementors = {};
-implementors["arrayvec"] = [];
-implementors["conrod"] = [];
-implementors["cursive"] = [];
 implementors["odds"] = [];
-implementors["poke_a_mango"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

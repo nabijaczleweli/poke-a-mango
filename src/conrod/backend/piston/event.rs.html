@@ -9,14 +9,18 @@
 
     <title>event.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -103,67 +115,67 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! A backend for converting piston events to conrod&#39;s `Input` type.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! A backend for converting piston events to conrod&#39;s `Input` type.</span>
 
-<span class='kw'>use</span> {<span class='ident'>Point</span>, <span class='ident'>Scalar</span>};
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Input</span>, <span class='ident'>Motion</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>piston_input</span>::{<span class='ident'>GenericEvent</span>, <span class='ident'>UpdateEvent</span>};
+<span class="kw">use</span> {<span class="ident">Point</span>, <span class="ident">Scalar</span>};
+<span class="kw">use</span> <span class="ident">event</span>::{<span class="ident">Input</span>, <span class="ident">Motion</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">piston_input</span>::{<span class="ident">GenericEvent</span>, <span class="ident">UpdateEvent</span>};
 
-<span class='doccomment'>/// Converts any `GenericEvent` to an `Input` event for conrod.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The given `width` and `height` must be `Scalar` (DPI agnostic) values.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>convert</span><span class='op'>&lt;</span><span class='ident'>E</span><span class='op'>&gt;</span>(<span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>win_w</span>: <span class='ident'>Scalar</span>, <span class='ident'>win_h</span>: <span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Input</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>E</span>: <span class='ident'>GenericEvent</span>,
+<span class="doccomment">/// Converts any `GenericEvent` to an `Input` event for conrod.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The given `width` and `height` must be `Scalar` (DPI agnostic) values.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">event</span>: <span class="ident">E</span>, <span class="ident">win_w</span>: <span class="ident">Scalar</span>, <span class="ident">win_h</span>: <span class="ident">Scalar</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Input</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">GenericEvent</span>,
 {
-    <span class='comment'>// Translate the coordinates from top-left-origin-with-y-down to centre-origin-with-y-up.</span>
-    <span class='kw'>let</span> <span class='ident'>translate_coords</span> <span class='op'>=</span> <span class='op'>|</span><span class='ident'>xy</span>: <span class='ident'>Point</span><span class='op'>|</span> (<span class='ident'>xy</span>[<span class='number'>0</span>] <span class='op'>-</span> <span class='ident'>win_w</span> <span class='op'>/</span> <span class='number'>2.0</span>, <span class='op'>-</span>(<span class='ident'>xy</span>[<span class='number'>1</span>] <span class='op'>-</span> <span class='ident'>win_h</span> <span class='op'>/</span> <span class='number'>2.0</span>));
+    <span class="comment">// Translate the coordinates from top-left-origin-with-y-down to centre-origin-with-y-up.</span>
+    <span class="kw">let</span> <span class="ident">translate_coords</span> <span class="op">=</span> <span class="op">|</span><span class="ident">xy</span>: <span class="ident">Point</span><span class="op">|</span> (<span class="ident">xy</span>[<span class="number">0</span>] <span class="op">-</span> <span class="ident">win_w</span> <span class="op">/</span> <span class="number">2.0</span>, <span class="op">-</span>(<span class="ident">xy</span>[<span class="number">1</span>] <span class="op">-</span> <span class="ident">win_h</span> <span class="op">/</span> <span class="number">2.0</span>));
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>xy</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>mouse_cursor_args</span>() {
-        <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>) <span class='op'>=</span> <span class='ident'>translate_coords</span>(<span class='ident'>xy</span>);
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Move</span>(<span class='ident'>Motion</span>::<span class='ident'>MouseCursor</span>(<span class='ident'>x</span>, <span class='ident'>y</span>)));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">xy</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">mouse_cursor_args</span>() {
+        <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> <span class="ident">translate_coords</span>(<span class="ident">xy</span>);
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseCursor</span>(<span class="ident">x</span>, <span class="ident">y</span>)));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>rel_xy</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>mouse_relative_args</span>() {
-        <span class='kw'>let</span> (<span class='ident'>rel_x</span>, <span class='ident'>rel_y</span>) <span class='op'>=</span> <span class='ident'>translate_coords</span>(<span class='ident'>rel_xy</span>);
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Move</span>(<span class='ident'>Motion</span>::<span class='ident'>MouseRelative</span>(<span class='ident'>rel_x</span>, <span class='ident'>rel_y</span>)));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rel_xy</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">mouse_relative_args</span>() {
+        <span class="kw">let</span> (<span class="ident">rel_x</span>, <span class="ident">rel_y</span>) <span class="op">=</span> <span class="ident">translate_coords</span>(<span class="ident">rel_xy</span>);
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseRelative</span>(<span class="ident">rel_x</span>, <span class="ident">rel_y</span>)));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>xy</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>mouse_scroll_args</span>() {
-        <span class='comment'>// Invert the scrolling of the *y* axis as *y* is up in conrod.</span>
-        <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>) <span class='op'>=</span> (<span class='ident'>xy</span>[<span class='number'>0</span>], <span class='op'>-</span><span class='ident'>xy</span>[<span class='number'>1</span>]);
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Move</span>(<span class='ident'>Motion</span>::<span class='ident'>MouseScroll</span>(<span class='ident'>x</span>, <span class='ident'>y</span>)));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">xy</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">mouse_scroll_args</span>() {
+        <span class="comment">// Invert the scrolling of the *y* axis as *y* is up in conrod.</span>
+        <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> (<span class="ident">xy</span>[<span class="number">0</span>], <span class="op">-</span><span class="ident">xy</span>[<span class="number">1</span>]);
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseScroll</span>(<span class="ident">x</span>, <span class="ident">y</span>)));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>args</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>controller_axis_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Move</span>(<span class='ident'>Motion</span>::<span class='ident'>ControllerAxis</span>(<span class='ident'>args</span>)));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">args</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">controller_axis_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">ControllerAxis</span>(<span class="ident">args</span>)));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>button</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>press_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Press</span>(<span class='ident'>button</span>));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">button</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">press_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Press</span>(<span class="ident">button</span>));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>button</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>release_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Release</span>(<span class='ident'>button</span>));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">button</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">release_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Release</span>(<span class="ident">button</span>));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>text</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>text_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Text</span>(<span class='ident'>text</span>));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">text</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">text_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Text</span>(<span class="ident">text</span>));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>dim</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>resize_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Resize</span>(<span class='ident'>dim</span>[<span class='number'>0</span>], <span class='ident'>dim</span>[<span class='number'>1</span>]));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dim</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">resize_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Resize</span>(<span class="ident">dim</span>[<span class="number">0</span>], <span class="ident">dim</span>[<span class="number">1</span>]));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>b</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>focus_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Focus</span>(<span class='ident'>b</span>));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">b</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">focus_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Focus</span>(<span class="ident">b</span>));
     }
 
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>b</span>) <span class='op'>=</span> <span class='ident'>event</span>.<span class='ident'>cursor_args</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>Input</span>::<span class='ident'>Cursor</span>(<span class='ident'>b</span>));
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">b</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">cursor_args</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Input</span>::<span class="ident">Cursor</span>(<span class="ident">b</span>));
     }
 
-    <span class='prelude-val'>None</span>
+    <span class="prelude-val">None</span>
 }
 </pre>
 </section>
@@ -179,18 +191,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -223,7 +239,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

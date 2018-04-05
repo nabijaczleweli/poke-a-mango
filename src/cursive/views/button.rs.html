@@ -9,14 +9,18 @@
 
     <title>button.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -153,116 +165,116 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-</pre><pre class='rust '>
+</pre><pre class="rust ">
 
 
-<span class='kw'>use</span> {<span class='ident'>Cursive</span>, <span class='ident'>Printer</span>, <span class='ident'>With</span>};
-<span class='kw'>use</span> <span class='ident'>align</span>::<span class='ident'>HAlign</span>;
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
+<span class="kw">use</span> {<span class="ident">Cursive</span>, <span class="ident">Printer</span>, <span class="ident">With</span>};
+<span class="kw">use</span> <span class="ident">align</span>::<span class="ident">HAlign</span>;
+<span class="kw">use</span> <span class="ident">direction</span>::<span class="ident">Direction</span>;
+<span class="kw">use</span> <span class="ident">event</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">theme</span>::<span class="ident">ColorStyle</span>;
+<span class="kw">use</span> <span class="ident">unicode_width</span>::<span class="ident">UnicodeWidthStr</span>;
+<span class="kw">use</span> <span class="ident">vec</span>::<span class="ident">Vec2</span>;
+<span class="kw">use</span> <span class="ident">view</span>::<span class="ident">View</span>;
 
-<span class='doccomment'>/// Simple text label with a callback when &lt;Enter&gt; is pressed.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A button shows its content in a single line and has a fixed size.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # use cursive::views::Button;</span>
-<span class='doccomment'>/// let quit_button = Button::new(&quot;Quit&quot;, |s| s.quit());</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Button</span> {
-    <span class='ident'>label</span>: <span class='ident'>String</span>,
-    <span class='ident'>callback</span>: <span class='ident'>Callback</span>,
-    <span class='ident'>enabled</span>: <span class='ident'>bool</span>,
+<span class="doccomment">/// Simple text label with a callback when &lt;Enter&gt; is pressed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A button shows its content in a single line and has a fixed size.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use cursive::views::Button;</span>
+<span class="doccomment">/// let quit_button = Button::new(&quot;Quit&quot;, |s| s.quit());</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Button</span> {
+    <span class="ident">label</span>: <span class="ident">String</span>,
+    <span class="ident">callback</span>: <span class="ident">Callback</span>,
+    <span class="ident">enabled</span>: <span class="ident">bool</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Button</span> {
-    <span class='doccomment'>/// Creates a new button with the given content and callback.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='ident'>label</span>: <span class='ident'>S</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+<span class="kw">impl</span> <span class="ident">Button</span> {
+    <span class="doccomment">/// Creates a new button with the given content and callback.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="ident">label</span>: <span class="ident">S</span>, <span class="ident">cb</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursive</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
-        <span class='ident'>Button</span> {
-            <span class='ident'>label</span>: <span class='ident'>label</span>.<span class='ident'>into</span>(),
-            <span class='ident'>callback</span>: <span class='ident'>Callback</span>::<span class='ident'>from_fn</span>(<span class='ident'>cb</span>),
-            <span class='ident'>enabled</span>: <span class='bool-val'>true</span>,
+        <span class="ident">Button</span> {
+            <span class="ident">label</span>: <span class="ident">label</span>.<span class="ident">into</span>(),
+            <span class="ident">callback</span>: <span class="ident">Callback</span>::<span class="ident">from_fn</span>(<span class="ident">cb</span>),
+            <span class="ident">enabled</span>: <span class="bool-val">true</span>,
         }
     }
 
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A disabled view cannot be selected.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+    <span class="doccomment">/// Disables this view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A disabled view cannot be selected.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
     }
 
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disabled</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='self'>Self</span>::<span class='ident'>disable</span>)
+    <span class="doccomment">/// Disables this view.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Chainable variant.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disabled</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with</span>(<span class="self">Self</span>::<span class="ident">disable</span>)
     }
 
-    <span class='doccomment'>/// Re-enables this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+    <span class="doccomment">/// Re-enables this view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">true</span>;
     }
 
-    <span class='doccomment'>/// Enable or disable this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_enabled</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>enabled</span>: <span class='ident'>bool</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='ident'>enabled</span>;
+    <span class="doccomment">/// Enable or disable this view.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_enabled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">enabled</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="ident">enabled</span>;
     }
 
-    <span class='doccomment'>/// Returns `true` if this view is enabled.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_enabled</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
+    <span class="doccomment">/// Returns `true` if this view is enabled.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">enabled</span>
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>Button</span> {
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>) {
+<span class="kw">impl</span> <span class="ident">View</span> <span class="kw">for</span> <span class="ident">Button</span> {
+    <span class="kw">fn</span> <span class="ident">draw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">printer</span>: <span class="kw-2">&amp;</span><span class="ident">Printer</span>) {
 
-        <span class='kw'>if</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span>;
+        <span class="kw">if</span> <span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span>;
         }
 
-        <span class='kw'>let</span> <span class='ident'>style</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>enabled</span> {
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>printer</span>.<span class='ident'>focused</span> {
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>
-        } <span class='kw'>else</span> {
-            <span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>
+        <span class="kw">let</span> <span class="ident">style</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">enabled</span> {
+            <span class="ident">ColorStyle</span>::<span class="ident">Secondary</span>
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">printer</span>.<span class="ident">focused</span> {
+            <span class="ident">ColorStyle</span>::<span class="ident">Primary</span>
+        } <span class="kw">else</span> {
+            <span class="ident">ColorStyle</span>::<span class="ident">Highlight</span>
         };
 
-        <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span>
-            <span class='ident'>HAlign</span>::<span class='ident'>Center</span>.<span class='ident'>get_offset</span>(<span class='self'>self</span>.<span class='ident'>label</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>2</span>, <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>);
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span>
+            <span class="ident">HAlign</span>::<span class="ident">Center</span>.<span class="ident">get_offset</span>(<span class="self">self</span>.<span class="ident">label</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">2</span>, <span class="ident">printer</span>.<span class="ident">size</span>.<span class="ident">x</span>);
 
-        <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>style</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-            <span class='ident'>printer</span>.<span class='ident'>print</span>((<span class='ident'>offset</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;&lt;{}&gt;&quot;</span>, <span class='self'>self</span>.<span class='ident'>label</span>));
+        <span class="ident">printer</span>.<span class="ident">with_color</span>(<span class="ident">style</span>, <span class="op">|</span><span class="ident">printer</span><span class="op">|</span> {
+            <span class="ident">printer</span>.<span class="ident">print</span>((<span class="ident">offset</span>, <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&lt;{}&gt;&quot;</span>, <span class="self">self</span>.<span class="ident">label</span>));
         });
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='comment'>// Meh. Fixed size we are.</span>
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>2</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>label</span>.<span class='ident'>width</span>(), <span class='number'>1</span>)
+    <span class="kw">fn</span> <span class="ident">get_min_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Vec2</span>) <span class="op">-&gt;</span> <span class="ident">Vec2</span> {
+        <span class="comment">// Meh. Fixed size we are.</span>
+        <span class="ident">Vec2</span>::<span class="ident">new</span>(<span class="number">2</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">label</span>.<span class="ident">width</span>(), <span class="number">1</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
-        <span class='kw'>match</span> <span class='ident'>event</span> {
-            <span class='comment'>// 10 is the ascii code for &#39;\n&#39;, that is the return key</span>
-            <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>Key</span>::<span class='ident'>Enter</span>) <span class='op'>=&gt;</span> {
-                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>callback</span>.<span class='ident'>clone</span>()))
+    <span class="kw">fn</span> <span class="ident">on_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Event</span>) <span class="op">-&gt;</span> <span class="ident">EventResult</span> {
+        <span class="kw">match</span> <span class="ident">event</span> {
+            <span class="comment">// 10 is the ascii code for &#39;\n&#39;, that is the return key</span>
+            <span class="ident">Event</span>::<span class="ident">Key</span>(<span class="ident">Key</span>::<span class="ident">Enter</span>) <span class="op">=&gt;</span> {
+                <span class="ident">EventResult</span>::<span class="ident">Consumed</span>(<span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">callback</span>.<span class="ident">clone</span>()))
             }
-            _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">EventResult</span>::<span class="ident">Ignored</span>,
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
+    <span class="kw">fn</span> <span class="ident">take_focus</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="ident">Direction</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">enabled</span>
     }
 }
 </pre>
@@ -279,18 +291,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -323,7 +339,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

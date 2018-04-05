@@ -9,14 +9,18 @@
 
     <title>cursive::view::Position - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc type">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'Position', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Type Definition Position</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.center">center</a><a href="#method.absolute">absolute</a><a href="#method.parent">parent</a><a href="#method.compute_offset">compute_offset</a></div></div><p class='location'><a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a></p><script>window.sidebarCurrent = {name: 'Position', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,14 +54,31 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'>Type Definition <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class='type' href=''>Position</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Type Definition <a href='../index.html'>cursive</a>::<wbr><a href='index.html'>view</a>::<wbr><a class="type" href=''>Position</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/cursive/view/position.rs.html#6' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type Position = <a class='struct' href='../../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;<a class='enum' href='../../cursive/view/enum.Offset.html' title='cursive::view::Offset'>Offset</a>&gt;;</pre><div class='docblock'><p>Location of the view on screen</p>
-</div></section>
+<pre class='rust typedef'>type Position = <a class="struct" href="../../cursive/struct.XY.html" title="struct cursive::XY">XY</a>&lt;<a class="enum" href="../../cursive/view/enum.Offset.html" title="enum cursive::view::Offset">Offset</a>&gt;;</pre><div class='docblock'><p>Location of the view on screen</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="type" href="../../cursive/view/type.Position.html" title="type cursive::view::Position">Position</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/position.rs.html#8-45' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.center' class="method"><span id='center.v' class='invisible'><code>pub fn <a href='#method.center' class='fnname'>center</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/position.rs.html#10-12' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns a position centered on both axis.</p>
+</div><h4 id='method.absolute' class="method"><span id='absolute.v' class='invisible'><code>pub fn <a href='#method.absolute' class='fnname'>absolute</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;&gt;(offset: T) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/position.rs.html#15-18' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns a position absolute on both axis.</p>
+</div><h4 id='method.parent' class="method"><span id='parent.v' class='invisible'><code>pub fn <a href='#method.parent' class='fnname'>parent</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="../../cursive/struct.XY.html" title="struct cursive::XY">XY</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a>&gt;&gt;&gt;(offset: T) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/position.rs.html#21-24' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns a position relative to the parent on both axis.</p>
+</div><h4 id='method.compute_offset' class="method"><span id='compute_offset.v' class='invisible'><code>pub fn <a href='#method.compute_offset' class='fnname'>compute_offset</a>&lt;S, A, P&gt;(&amp;self, size: S, available: A, parent: P) -&gt; <a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;A: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;P: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="type" href="../../cursive/vec/type.Vec2.html" title="type cursive::vec::Vec2">Vec2</a>&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/cursive/view/position.rs.html#32-44' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Computes the offset required to draw a view.</p>
+<p>When drawing a view with <code>size</code> in a container with <code>available</code>,
+and a parent with the absolute coordinates <code>parent</code>, drawing the
+child with its top-left corner at the returned coordinates will
+position him appropriately.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -62,18 +91,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -106,7 +139,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cursive";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

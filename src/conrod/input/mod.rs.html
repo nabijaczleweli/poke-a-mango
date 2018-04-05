@@ -9,14 +9,18 @@
 
     <title>mod.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -81,45 +93,45 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! This module contains all the logic for handling input events and providing them to widgets.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! All user input is provided to the `Ui` in the form of `input::Input` events, which are received</span>
-<span class='doccomment'>//! via the `Ui::handle_event` method. These raw input events tend to be fairly low level. The `Ui`</span>
-<span class='doccomment'>//! stores each of these `Input` events in it&#39;s `GlobalInput`, which keeps track of the state of</span>
-<span class='doccomment'>//! input for the entire `Ui`. `GlobalInput` will also aggregate the low level events into higher</span>
-<span class='doccomment'>//! level ones. For instance, two events indicating that a mouse button was pressed then released</span>
-<span class='doccomment'>//! would cause a new `UiEvent::MouseClick` to be generated. This saves individual widgets from</span>
-<span class='doccomment'>//! having to interpret these themselves, thus freeing them from also having to store input state.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Whenever there&#39;s an update, all of the events that have occured since the last update will be</span>
-<span class='doccomment'>//! available for widgets to process. `WidgetInput` is used to provide input events to a specific</span>
-<span class='doccomment'>//! widget. It filters events that do not apply to the widget. All events provided by `WidgetIput`</span>
-<span class='doccomment'>//! will have all coordinates in the widget&#39;s own local coordinate system, where `(0, 0)` is the</span>
-<span class='doccomment'>//! middle of the widget&#39;s bounding `Rect`. `GlobalInput`, on the other hand, will never filter out</span>
-<span class='doccomment'>//! any events, and will always provide them with coordinates relative to the window.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! This module contains all the logic for handling input events and providing them to widgets.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! All user input is provided to the `Ui` in the form of `input::Input` events, which are received</span>
+<span class="doccomment">//! via the `Ui::handle_event` method. These raw input events tend to be fairly low level. The `Ui`</span>
+<span class="doccomment">//! stores each of these `Input` events in it&#39;s `GlobalInput`, which keeps track of the state of</span>
+<span class="doccomment">//! input for the entire `Ui`. `GlobalInput` will also aggregate the low level events into higher</span>
+<span class="doccomment">//! level ones. For instance, two events indicating that a mouse button was pressed then released</span>
+<span class="doccomment">//! would cause a new `UiEvent::MouseClick` to be generated. This saves individual widgets from</span>
+<span class="doccomment">//! having to interpret these themselves, thus freeing them from also having to store input state.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Whenever there&#39;s an update, all of the events that have occured since the last update will be</span>
+<span class="doccomment">//! available for widgets to process. `WidgetInput` is used to provide input events to a specific</span>
+<span class="doccomment">//! widget. It filters events that do not apply to the widget. All events provided by `WidgetIput`</span>
+<span class="doccomment">//! will have all coordinates in the widget&#39;s own local coordinate system, where `(0, 0)` is the</span>
+<span class="doccomment">//! middle of the widget&#39;s bounding `Rect`. `GlobalInput`, on the other hand, will never filter out</span>
+<span class="doccomment">//! any events, and will always provide them with coordinates relative to the window.</span>
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>state</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>widget</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>global</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">state</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">widget</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">global</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>state</span>::<span class='ident'>State</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>global</span>::<span class='ident'>Global</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>widget</span>::<span class='ident'>Widget</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">state</span>::<span class="ident">State</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">global</span>::<span class="ident">Global</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">widget</span>::<span class="ident">Widget</span>;
 
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>piston_input</span>::<span class='ident'>keyboard</span>::<span class='ident'>ModifierKey</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>piston_input</span>::{
-    <span class='ident'>Button</span>,
-    <span class='ident'>ControllerButton</span>,
-    <span class='ident'>ControllerAxisArgs</span>,
-    <span class='ident'>keyboard</span>,
-    <span class='ident'>Key</span>,
-    <span class='ident'>MouseButton</span>,
-    <span class='ident'>RenderArgs</span>,
-    <span class='ident'>Touch</span>,
-    <span class='ident'>TouchArgs</span>,
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">piston_input</span>::<span class="ident">keyboard</span>::<span class="ident">ModifierKey</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">piston_input</span>::{
+    <span class="ident">Button</span>,
+    <span class="ident">ControllerButton</span>,
+    <span class="ident">ControllerAxisArgs</span>,
+    <span class="ident">keyboard</span>,
+    <span class="ident">Key</span>,
+    <span class="ident">MouseButton</span>,
+    <span class="ident">RenderArgs</span>,
+    <span class="ident">Touch</span>,
+    <span class="ident">TouchArgs</span>,
 };
 </pre>
 </section>
@@ -135,18 +147,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -179,7 +195,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

@@ -9,14 +9,18 @@
 
     <title>conrod::text::font - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a></p><script>window.sidebarCurrent = {name: 'font', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module font</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a></p><script>window.sidebarCurrent = {name: 'font', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,8 +54,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a>::<wbr><a class='mod' href=''>font</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>conrod</a>::<wbr><a href='../index.html'>text</a>::<wbr><a class="mod" href=''>font</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,55 +64,62 @@
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Id.html'
-                                  title='conrod::text::font::Id'>Id</a></td>
+                           <td><a class="struct" href="struct.Id.html"
+                                  title='struct conrod::text::font::Id'>Id</a></td>
                            <td class='docblock-short'>
                                 <p>A type-safe wrapper around the <code>FontId</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Ids.html'
-                                  title='conrod::text::font::Ids'>Ids</a></td>
+                           <td><a class="struct" href="struct.Ids.html"
+                                  title='struct conrod::text::font::Ids'>Ids</a></td>
                            <td class='docblock-short'>
                                 <p>Yields the <code>Id</code> for each <code>Font</code> within the <code>Map</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Map.html'
-                                  title='conrod::text::font::Map'>Map</a></td>
+                           <td><a class="struct" href="struct.Map.html"
+                                  title='struct conrod::text::font::Map'>Map</a></td>
                            <td class='docblock-short'>
                                 <p>A collection of mappings from <code>font::Id</code>s to <code>rusttype::Font</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.NewIds.html'
-                                  title='conrod::text::font::NewIds'>NewIds</a></td>
+                           <td><a class="struct" href="struct.NewIds.html"
+                                  title='struct conrod::text::font::NewIds'>NewIds</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator yielding an <code>Id</code> for each new <code>rusttype::Font</code> inserted into the <code>Map</code> via the
 <code>insert_collection</code> method.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Error.html'
-                                  title='conrod::text::font::Error'>Error</a></td>
+                           <td><a class="enum" href="enum.Error.html"
+                                  title='enum conrod::text::font::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>Returned when loading new fonts from file or bytes.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.collection_from_file.html'
-                                  title='conrod::text::font::collection_from_file'>collection_from_file</a></td>
+                           <td><a class="fn" href="fn.collection_from_file.html"
+                                  title='fn conrod::text::font::collection_from_file'>collection_from_file</a></td>
                            <td class='docblock-short'>
                                 <p>Load a <code>super::FontCollection</code> from a file at a given path.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.from_file.html'
-                                  title='conrod::text::font::from_file'>from_file</a></td>
+                           <td><a class="fn" href="fn.from_file.html"
+                                  title='fn conrod::text::font::from_file'>from_file</a></td>
                            <td class='docblock-short'>
                                 <p>Load a single <code>Font</code> from a file at the given path.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -115,18 +134,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -159,7 +182,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "conrod";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

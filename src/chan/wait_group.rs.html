@@ -4,19 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.19/src/wait_group.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chan-0.1.21/src/wait_group.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>wait_group.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -126,89 +138,89 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>Condvar</span>, <span class='ident'>Mutex</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">Condvar</span>, <span class="ident">Mutex</span>};
 
-<span class='doccomment'>/// `WaitGroup` provides synchronization on the completion of threads.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For each thread involved in the synchronization, `add(1)` should be</span>
-<span class='doccomment'>/// called. Just before a thread terminates, it should call `done`.</span>
-<span class='doccomment'>/// To synchronize, call `wait`, which will block until the number of `done`</span>
-<span class='doccomment'>/// calls corresponds to the number of `add(1)` calls.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// use std::thread;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let wg = chan::WaitGroup::new();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// for _ in 0..4 {</span>
-<span class='doccomment'>///     wg.add(1);</span>
-<span class='doccomment'>///     let wg = wg.clone();</span>
-<span class='doccomment'>///     thread::spawn(move || {</span>
-<span class='doccomment'>///         // do some work.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///         // And now call done.</span>
-<span class='doccomment'>///         wg.done();</span>
-<span class='doccomment'>///     });</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// // Blocks until `wg.done()` is called for each thread we spawned.</span>
-<span class='doccomment'>/// wg.wait()</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>WaitGroup</span>(<span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>WaitGroupInner</span><span class='op'>&gt;</span>);
+<span class="doccomment">/// `WaitGroup` provides synchronization on the completion of threads.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For each thread involved in the synchronization, `add(1)` should be</span>
+<span class="doccomment">/// called. Just before a thread terminates, it should call `done`.</span>
+<span class="doccomment">/// To synchronize, call `wait`, which will block until the number of `done`</span>
+<span class="doccomment">/// calls corresponds to the number of `add(1)` calls.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use std::thread;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let wg = chan::WaitGroup::new();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// for _ in 0..4 {</span>
+<span class="doccomment">///     wg.add(1);</span>
+<span class="doccomment">///     let wg = wg.clone();</span>
+<span class="doccomment">///     thread::spawn(move || {</span>
+<span class="doccomment">///         // do some work.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///         // And now call done.</span>
+<span class="doccomment">///         wg.done();</span>
+<span class="doccomment">///     });</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// // Blocks until `wg.done()` is called for each thread we spawned.</span>
+<span class="doccomment">/// wg.wait()</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WaitGroup</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">WaitGroupInner</span><span class="op">&gt;</span>);
 
-<span class='kw'>struct</span> <span class='ident'>WaitGroupInner</span> {
-    <span class='ident'>cond</span>: <span class='ident'>Condvar</span>,
-    <span class='ident'>count</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>,
+<span class="kw">struct</span> <span class="ident">WaitGroupInner</span> {
+    <span class="ident">cond</span>: <span class="ident">Condvar</span>,
+    <span class="ident">count</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>WaitGroup</span> {
-    <span class='doccomment'>/// Create a new wait group.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>WaitGroup</span> {
-        <span class='ident'>WaitGroup</span>(<span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>WaitGroupInner</span> {
-            <span class='ident'>cond</span>: <span class='ident'>Condvar</span>::<span class='ident'>new</span>(),
-            <span class='ident'>count</span>: <span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
+<span class="kw">impl</span> <span class="ident">WaitGroup</span> {
+    <span class="doccomment">/// Create a new wait group.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">WaitGroup</span> {
+        <span class="ident">WaitGroup</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">WaitGroupInner</span> {
+            <span class="ident">cond</span>: <span class="ident">Condvar</span>::<span class="ident">new</span>(),
+            <span class="ident">count</span>: <span class="ident">Mutex</span>::<span class="ident">new</span>(<span class="number">0</span>),
         }))
     }
 
-    <span class='doccomment'>/// Add a new thread to the waitgroup.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Failure</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the internal count drops below `0` as a result of calling `add`,</span>
-    <span class='doccomment'>/// then this function panics.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>delta</span>: <span class='ident'>i32</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>count</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='op'>*</span><span class='ident'>count</span> <span class='op'>+=</span> <span class='ident'>delta</span>;
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>*</span><span class='ident'>count</span> <span class='op'>&gt;=</span> <span class='number'>0</span>);
-        <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>cond</span>.<span class='ident'>notify_all</span>();
+    <span class="doccomment">/// Add a new thread to the waitgroup.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Failure</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the internal count drops below `0` as a result of calling `add`,</span>
+    <span class="doccomment">/// then this function panics.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">delta</span>: <span class="ident">i32</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">count</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw-2">*</span><span class="ident">count</span> <span class="op">+=</span> <span class="ident">delta</span>;
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">count</span> <span class="op">&gt;=</span> <span class="number">0</span>);
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">cond</span>.<span class="ident">notify_all</span>();
     }
 
-    <span class='doccomment'>/// Mark a thread as having finished.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// (This is equivalent to calling `add(-1)`.)</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>done</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>add</span>(<span class='op'>-</span><span class='number'>1</span>);
+    <span class="doccomment">/// Mark a thread as having finished.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// (This is equivalent to calling `add(-1)`.)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">done</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">add</span>(<span class="op">-</span><span class="number">1</span>);
     }
 
-    <span class='doccomment'>/// Wait until all threads have completed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This unblocks when the internal count is `0`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wait</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>count</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>while</span> <span class='op'>*</span><span class='ident'>count</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-            <span class='ident'>count</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>cond</span>.<span class='ident'>wait</span>(<span class='ident'>count</span>).<span class='ident'>unwrap</span>();
+    <span class="doccomment">/// Wait until all threads have completed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This unblocks when the internal count is `0`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">count</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">count</span> <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">cond</span>.<span class="ident">wait</span>(<span class="ident">count</span>).<span class="ident">unwrap</span>();
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>WaitGroup</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>let</span> <span class='ident'>count</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>count</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;WaitGroup {{ count: {:?} }}&quot;</span>, <span class='op'>*</span><span class='ident'>count</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">WaitGroup</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">count</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;WaitGroup {{ count: {:?} }}&quot;</span>, <span class="kw-2">*</span><span class="ident">count</span>)
     }
 }
 </pre>
@@ -225,18 +237,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -269,7 +285,6 @@
         window.rootPath = "../../";
         window.currentCrate = "chan";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

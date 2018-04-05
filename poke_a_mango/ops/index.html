@@ -9,14 +9,18 @@
 
     <title>poke_a_mango::ops - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../index.html'>poke_a_mango</a></p><script>window.sidebarCurrent = {name: 'ops', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module ops</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>poke_a_mango</a></p><script>window.sidebarCurrent = {name: 'ops', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,76 +54,83 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>poke_a_mango</a>::<wbr><a class='mod' href=''>ops</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>poke_a_mango</a>::<wbr><a class="mod" href=''>ops</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/poke_a_mango/ops/mod.rs.html#1-76' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Main functions doing actual work.</p>
-
-<p>Use <code>create_window()</code> to set up a window of correct size, then set up a <code>conrod::Ui</code> on it like you&#39;d do normally.
+<p>Use <code>create_window()</code> to set up a window of correct size, then set up a <code>conrod::Ui</code> on it like you'd do normally.
 Then create an instance of <code>Widgets</code> and call <code>update()</code> on it each update event, then check for states that need manual
 handling from usercode and act accordingly.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='state/index.html'
-                                  title='poke_a_mango::ops::state'>state</a></td>
+                           <td><a class="mod" href="state/index.html"
+                                  title='mod poke_a_mango::ops::state'>state</a></td>
                            <td class='docblock-short'>
                                 <p>Manual <code>GameState</code> manipulation, to be used when implementing a UI.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Leader.html'
-                                  title='poke_a_mango::ops::Leader'>Leader</a></td>
+                           <td><a class="struct" href="struct.Leader.html"
+                                  title='struct poke_a_mango::ops::Leader'>Leader</a></td>
                            <td class='docblock-short'>
                                 <p>A leaderboard entry.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Widgets.html'
-                                  title='poke_a_mango::ops::Widgets'>Widgets</a></td>
+                           <td><a class="struct" href="struct.Widgets.html"
+                                  title='struct poke_a_mango::ops::Widgets'>Widgets</a></td>
                            <td class='docblock-short'>
-                                <p>Container for all widgets&#39; IDs, also manages setting them.</p>
+                                <p>Container for all widgets' IDs, also manages setting them.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Difficulty.html'
-                                  title='poke_a_mango::ops::Difficulty'>Difficulty</a></td>
+                           <td><a class="enum" href="enum.Difficulty.html"
+                                  title='enum poke_a_mango::ops::Difficulty'>Difficulty</a></td>
                            <td class='docblock-short'>
-                                <p>The game&#39;s difficulty, chosen in the <code>ChooseDifficulty</code> step.</p>
+                                <p>The game's difficulty, chosen in the <code>ChooseDifficulty</code> step.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.GameState.html'
-                                  title='poke_a_mango::ops::GameState'>GameState</a></td>
+                           <td><a class="enum" href="enum.GameState.html"
+                                  title='enum poke_a_mango::ops::GameState'>GameState</a></td>
                            <td class='docblock-short'>
-                                <p>Game&#39;s all possible states.</p>
+                                <p>Game's all possible states.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.create_window.html'
-                                  title='poke_a_mango::ops::create_window'>create_window</a></td>
+                           <td><a class="fn" href="fn.create_window.html"
+                                  title='fn poke_a_mango::ops::create_window'>create_window</a></td>
                            <td class='docblock-short'>
                                 <p>Create a window based on the size of the target desktop.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.set_button_style.html'
-                                  title='poke_a_mango::ops::set_button_style'>set_button_style</a></td>
+                           <td><a class="fn" href="fn.set_button_style.html"
+                                  title='fn poke_a_mango::ops::set_button_style'>set_button_style</a></td>
                            <td class='docblock-short'>
                                 <p>Set the button style to a one that looks :+1: on the canvas.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='fn' href='fn.window_size.html'
-                                  title='poke_a_mango::ops::window_size'>window_size</a></td>
+                           <td><a class="fn" href="fn.window_size.html"
+                                  title='fn poke_a_mango::ops::window_size'>window_size</a></td>
                            <td class='docblock-short'>
                                 <p>Get the window size from the size of the target desktop.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -126,18 +145,22 @@ handling from usercode and act accordingly.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -170,7 +193,6 @@ handling from usercode and act accordingly.</p>
         window.rootPath = "../../";
         window.currentCrate = "poke_a_mango";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

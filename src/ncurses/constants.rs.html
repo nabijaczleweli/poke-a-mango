@@ -4,19 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.85.0/src/constants.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ncurses-5.91.0/src/constants.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>constants.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -27,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -42,7 +54,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -331,8 +343,8 @@
 <span id="287">287</span>
 <span id="288">288</span>
 <span id="289">289</span>
-</pre><pre class='rust '>
-<span class='comment'>/*
+</pre><pre class="rust ">
+<span class="comment">/*
     Copyright © 2013 Free Software Foundation, Inc
     See licensing in LICENSE file
 
@@ -344,282 +356,282 @@
       the safe wrappers.
 */</span>
 
-<span class='kw'>use</span> <span class='ident'>libc</span>::{ <span class='ident'>c_char</span>, <span class='ident'>c_int</span> };
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>ll</span>::<span class='op'>*</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::{ <span class="ident">c_char</span>, <span class="ident">c_int</span> };
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">ll</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>mod</span> <span class='ident'>wrapped</span> {
-    <span class='kw'>use</span> <span class='ident'>libc</span>::{ <span class='ident'>c_char</span>, <span class='ident'>c_int</span> };
-    <span class='kw'>use</span> <span class='ident'>ll</span>::<span class='ident'>chtype</span>;
-    <span class='kw'>use</span> <span class='ident'>ll</span>::<span class='ident'>WINDOW</span>;
+<span class="kw">mod</span> <span class="ident">wrapped</span> {
+    <span class="kw">use</span> <span class="ident">libc</span>::{ <span class="ident">c_char</span>, <span class="ident">c_int</span> };
+    <span class="kw">use</span> <span class="ident">ll</span>::<span class="ident">chtype</span>;
+    <span class="kw">use</span> <span class="ident">ll</span>::<span class="ident">WINDOW</span>;
 
-    <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span>
     {
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>curscr</span>: <span class='ident'>WINDOW</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>newscr</span>: <span class='ident'>WINDOW</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>stdscr</span>: <span class='ident'>WINDOW</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>ttytype</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>COLORS</span>: <span class='ident'>c_int</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>COLOR_PAIRS</span>: <span class='ident'>c_int</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>COLS</span>: <span class='ident'>c_int</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>ESCDELAY</span>: <span class='ident'>c_int</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>LINES</span>: <span class='ident'>c_int</span>;
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='ident'>TABSIZE</span>: <span class='ident'>c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">curscr</span>: <span class="ident">WINDOW</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">newscr</span>: <span class="ident">WINDOW</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">stdscr</span>: <span class="ident">WINDOW</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ttytype</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">COLORS</span>: <span class="ident">c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">COLOR_PAIRS</span>: <span class="ident">c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">COLS</span>: <span class="ident">c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ESCDELAY</span>: <span class="ident">c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">LINES</span>: <span class="ident">c_int</span>;
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">TABSIZE</span>: <span class="ident">c_int</span>;
 
-        <span class='comment'>/* Line graphics */</span>
-        <span class='kw'>pub</span> <span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='ident'>acs_map</span>: [<span class='ident'>chtype</span>; <span class='number'>0</span>];
+        <span class="comment">/* Line graphics */</span>
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">mut</span> <span class="ident">acs_map</span>: [<span class="ident">chtype</span>; <span class="number">0</span>];
     }
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>wrap_extern</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>:<span class='ident'>ty</span>) <span class='op'>=&gt;</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>() <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>unsafe</span> { <span class='ident'>wrapped</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> }
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">wrap_extern</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ty</span>) <span class="op">=&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>() <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">unsafe</span> { <span class="ident">wrapped</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> }
         }
     }
 }
 
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>curscr</span>: <span class='ident'>WINDOW</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>newscr</span>: <span class='ident'>WINDOW</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>stdscr</span>: <span class='ident'>WINDOW</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>ttytype</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>COLORS</span>: <span class='ident'>c_int</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>COLOR_PAIRS</span>: <span class='ident'>c_int</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>COLS</span>: <span class='ident'>c_int</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>ESCDELAY</span>: <span class='ident'>c_int</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>LINES</span>: <span class='ident'>c_int</span>);
-<span class='macro'>wrap_extern</span><span class='macro'>!</span>(<span class='ident'>TABSIZE</span>: <span class='ident'>c_int</span>);
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>acs_map</span>() <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>chtype</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='kw-2'>&amp;</span><span class='ident'>wrapped</span>::<span class='ident'>acs_map</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>chtype</span>
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">curscr</span>: <span class="ident">WINDOW</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">newscr</span>: <span class="ident">WINDOW</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">stdscr</span>: <span class="ident">WINDOW</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">ttytype</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">COLORS</span>: <span class="ident">c_int</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">COLOR_PAIRS</span>: <span class="ident">c_int</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">COLS</span>: <span class="ident">c_int</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">ESCDELAY</span>: <span class="ident">c_int</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">LINES</span>: <span class="ident">c_int</span>);
+<span class="macro">wrap_extern</span><span class="macro">!</span>(<span class="ident">TABSIZE</span>: <span class="ident">c_int</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acs_map</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">chtype</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw-2">&amp;</span><span class="ident">wrapped</span>::<span class="ident">acs_map</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">chtype</span>
     }
 }
 
 
-<span class='comment'>/* Success/Failure. */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ERR</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>OK</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>TRUE</span>: <span class='ident'>c_bool</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>FALSE</span>: <span class='ident'>c_bool</span> <span class='op'>=</span> <span class='number'>0</span>;
+<span class="comment">/* Success/Failure. */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ERR</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OK</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TRUE</span>: <span class="ident">c_bool</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FALSE</span>: <span class="ident">c_bool</span> <span class="op">=</span> <span class="number">0</span>;
 
-<span class='comment'>/* Attributes. */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_ATTR_SHIFT</span>: <span class='ident'>u32</span> <span class='op'>=</span> <span class='number'>8u32</span>;
+<span class="comment">/* Attributes. */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_ATTR_SHIFT</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">8u32</span>;
 
-<span class='comment'>/* Colors */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_BLACK</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_RED</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_GREEN</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_YELLOW</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>3</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_BLUE</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_MAGENTA</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>5</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_CYAN</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>6</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>COLOR_WHITE</span>: <span class='ident'>i16</span> <span class='op'>=</span> <span class='number'>7</span>;
+<span class="comment">/* Colors */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_BLACK</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_RED</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_GREEN</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_YELLOW</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_BLUE</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_MAGENTA</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_CYAN</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">COLOR_WHITE</span>: <span class="ident">i16</span> <span class="op">=</span> <span class="number">7</span>;
 
-<span class='comment'>/* Values for the _flags member */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_SUBWIN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x01</span>;	<span class='comment'>/* is this a sub-window? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_ENDLINE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x02</span>;	<span class='comment'>/* is the window flush right? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_FULLWIN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x04</span>;	<span class='comment'>/* is the window full-screen? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_SCROLLWIN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x08</span>;	<span class='comment'>/* bottom edge is at screen bottom? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_ISPAD</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x10</span>;	<span class='comment'>/* is this window a pad? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_HASMOVED</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x20</span>;	<span class='comment'>/* has cursor moved since last refresh? */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_WRAPPED</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x40</span>;	<span class='comment'>/* cursor was just wrappped */</span>
+<span class="comment">/* Values for the _flags member */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_SUBWIN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x01</span>;	<span class="comment">/* is this a sub-window? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_ENDLINE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x02</span>;	<span class="comment">/* is the window flush right? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_FULLWIN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x04</span>;	<span class="comment">/* is the window full-screen? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_SCROLLWIN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x08</span>;	<span class="comment">/* bottom edge is at screen bottom? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_ISPAD</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x10</span>;	<span class="comment">/* is this window a pad? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_HASMOVED</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x20</span>;	<span class="comment">/* has cursor moved since last refresh? */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_WRAPPED</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x40</span>;	<span class="comment">/* cursor was just wrappped */</span>
 
-<span class='comment'>/*
+<span class="comment">/*
  * This value is used in the firstchar and lastchar fields to mark
  * unchanged lines
  */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_NOCHANGE</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_NOCHANGE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
 
-<span class='comment'>/*
+<span class="comment">/*
  * This value is used in the oldindex field to mark lines created by insertions
  * and scrolls.
  */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>_NEWINDEX</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_NEWINDEX</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
 
-<span class='comment'>/* Keys */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CODE_YES</span>: <span class='ident'>i32</span> <span class='op'>=</span>	<span class='number'>0x100</span>;		<span class='comment'>/* A wchar_t contains a key code */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MIN</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x101</span>;		<span class='comment'>/* Minimum curses key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_BREAK</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x101</span>;		<span class='comment'>/* Break key(unreliable) */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SRESET</span>: <span class='ident'>i32</span> <span class='op'>=</span>	<span class='number'>0x158</span>;		<span class='comment'>/* Soft(partial) reset(unreliable) */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_RESET</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0x159</span>;		<span class='comment'>/* Reset or hard reset(unreliable) */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_DOWN</span>: <span class='ident'>i32</span> <span class='op'>=</span>	<span class='number'>0x102</span>;		<span class='comment'>/* down-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_UP</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x103</span>;		<span class='comment'>/* up-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_LEFT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x104</span>;		<span class='comment'>/* left-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_RIGHT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x105</span>;		<span class='comment'>/* right-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_HOME</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x106</span>;		<span class='comment'>/* home key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_BACKSPACE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x107</span>;		<span class='comment'>/* backspace key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F0</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x108</span>;		<span class='comment'>/* Function keys. Space for 64 */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F1</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x109</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F2</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10a</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F3</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10b</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F4</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10c</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F5</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10d</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F6</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10e</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F7</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x10f</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F8</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x110</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F9</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x111</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F10</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x112</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F11</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x113</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F12</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x114</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F13</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x115</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F14</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x116</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_F15</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x117</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_DL</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x148</span>;		<span class='comment'>/* delete-line key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_IL</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x149</span>;		<span class='comment'>/* insert-line key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_DC</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x14a</span>;		<span class='comment'>/* delete-character key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_IC</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x14b</span>;		<span class='comment'>/* insert-character key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_EIC</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x14c</span>;		<span class='comment'>/* sent by rmir or smir in insert mode */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CLEAR</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x14d</span>;		<span class='comment'>/* clear-screen or erase key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_EOS</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x14e</span>;		<span class='comment'>/* clear-to-end-of-screen key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_EOL</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x14f</span>;		<span class='comment'>/* clear-to-end-of-line key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SF</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x150</span>;		<span class='comment'>/* scroll-forward key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SR</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x151</span>;		<span class='comment'>/* scroll-backward key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_NPAGE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x152</span>;		<span class='comment'>/* next-page key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_PPAGE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x153</span>;		<span class='comment'>/* previous-page key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_STAB</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x154</span>;		<span class='comment'>/* set-tab key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CTAB</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x155</span>;		<span class='comment'>/* clear-tab key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CATAB</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x156</span>;		<span class='comment'>/* clear-all-tabs key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_ENTER</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x157</span>;		<span class='comment'>/* enter/send key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_PRINT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x15a</span>;		<span class='comment'>/* print key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_LL</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x15b</span>;		<span class='comment'>/* lower-left key(home down) */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_A1</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x15c</span>;		<span class='comment'>/* upper left of keypad */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_A3</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x15d</span>;		<span class='comment'>/* upper right of keypad */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_B2</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x15e</span>;		<span class='comment'>/* center of keypad */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_C1</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x15f</span>;		<span class='comment'>/* lower left of keypad */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_C3</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x160</span>;		<span class='comment'>/* lower right of keypad */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_BTAB</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x161</span>;		<span class='comment'>/* back-tab key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_BEG</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x162</span>;		<span class='comment'>/* begin key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CANCEL</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x163</span>;		<span class='comment'>/* cancel key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CLOSE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x164</span>;		<span class='comment'>/* close key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_COMMAND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x165</span>;		<span class='comment'>/* command key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_COPY</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x166</span>;		<span class='comment'>/* copy key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_CREATE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x167</span>;		<span class='comment'>/* create key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_END</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x168</span>;		<span class='comment'>/* end key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_EXIT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x169</span>;		<span class='comment'>/* exit key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_FIND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16a</span>;		<span class='comment'>/* find key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_HELP</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16b</span>;		<span class='comment'>/* help key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MARK</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16c</span>;		<span class='comment'>/* mark key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MESSAGE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16d</span>;		<span class='comment'>/* message key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MOVE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16e</span>;		<span class='comment'>/* move key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_NEXT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x16f</span>;		<span class='comment'>/* next key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_OPEN</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x170</span>;		<span class='comment'>/* open key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_OPTIONS</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x171</span>;		<span class='comment'>/* options key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_PREVIOUS</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x172</span>;		<span class='comment'>/* previous key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_REDO</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x173</span>;		<span class='comment'>/* redo key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_REFERENCE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x174</span>;		<span class='comment'>/* reference key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_REFRESH</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x175</span>;		<span class='comment'>/* refresh key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_REPLACE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x176</span>;		<span class='comment'>/* replace key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_RESTART</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x177</span>;		<span class='comment'>/* restart key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_RESUME</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x178</span>;		<span class='comment'>/* resume key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SAVE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x179</span>;		<span class='comment'>/* save key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SBEG</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17a</span>;		<span class='comment'>/* shifted begin key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SCANCEL</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17b</span>;		<span class='comment'>/* shifted cancel key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SCOMMAND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17c</span>;		<span class='comment'>/* shifted command key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SCOPY</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17d</span>;		<span class='comment'>/* shifted copy key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SCREATE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17e</span>;		<span class='comment'>/* shifted create key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SDC</span>	: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x17f</span>;		<span class='comment'>/* shifted delete-character key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SDL</span>	: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x180</span>;		<span class='comment'>/* shifted delete-line key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SELECT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x181</span>;		<span class='comment'>/* select key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SEND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x182</span>;		<span class='comment'>/* shifted end key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SEOL</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x183</span>;		<span class='comment'>/* shifted clear-to-end-of-line key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SEXIT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x184</span>;		<span class='comment'>/* shifted exit key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SFIND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x185</span>;		<span class='comment'>/* shifted find key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SHELP</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x186</span>;		<span class='comment'>/* shifted help key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SHOME</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x187</span>;		<span class='comment'>/* shifted home key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SIC</span>	: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x188</span>;		<span class='comment'>/* shifted insert-character key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SLEFT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x189</span>;		<span class='comment'>/* shifted left-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SMESSAGE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18a</span>;		<span class='comment'>/* shifted message key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SMOVE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18b</span>;		<span class='comment'>/* shifted move key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SNEXT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18c</span>;		<span class='comment'>/* shifted next key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SOPTIONS</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18d</span>;		<span class='comment'>/* shifted options key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SPREVIOUS</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18e</span>;		<span class='comment'>/* shifted previous key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SPRINT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x18f</span>;		<span class='comment'>/* shifted print key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SREDO</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x190</span>;		<span class='comment'>/* shifted redo key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SREPLACE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x191</span>;		<span class='comment'>/* shifted replace key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SRIGHT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x192</span>;		<span class='comment'>/* shifted right-arrow key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SRSUME</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x193</span>;		<span class='comment'>/* shifted resume key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SSAVE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x194</span>;		<span class='comment'>/* shifted save key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SSUSPEND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x195</span>;		<span class='comment'>/* shifted suspend key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SUNDO</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x196</span>;		<span class='comment'>/* shifted undo key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_SUSPEND</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x197</span>;		<span class='comment'>/* suspend key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_UNDO</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x198</span>;		<span class='comment'>/* undo key */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MOUSE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x199</span>;		<span class='comment'>/* Mouse event has occurred */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_RESIZE</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x19a</span>;		<span class='comment'>/* Terminal resize event */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_EVENT</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x19b</span>;		<span class='comment'>/* We were interrupted by an event */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>KEY_MAX</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x1ff</span>;		<span class='comment'>/* Maximum key value is 0633 */</span>
+<span class="comment">/* Keys */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CODE_YES</span>: <span class="ident">i32</span> <span class="op">=</span>	<span class="number">0x100</span>;		<span class="comment">/* A wchar_t contains a key code */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MIN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x101</span>;		<span class="comment">/* Minimum curses key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_BREAK</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x101</span>;		<span class="comment">/* Break key(unreliable) */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SRESET</span>: <span class="ident">i32</span> <span class="op">=</span>	<span class="number">0x158</span>;		<span class="comment">/* Soft(partial) reset(unreliable) */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_RESET</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">0x159</span>;		<span class="comment">/* Reset or hard reset(unreliable) */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_DOWN</span>: <span class="ident">i32</span> <span class="op">=</span>	<span class="number">0x102</span>;		<span class="comment">/* down-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_UP</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x103</span>;		<span class="comment">/* up-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_LEFT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x104</span>;		<span class="comment">/* left-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_RIGHT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x105</span>;		<span class="comment">/* right-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_HOME</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x106</span>;		<span class="comment">/* home key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_BACKSPACE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x107</span>;		<span class="comment">/* backspace key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F0</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x108</span>;		<span class="comment">/* Function keys. Space for 64 */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F1</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x109</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F2</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10a</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F3</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10b</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F4</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10c</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F5</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10d</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F6</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10e</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F7</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x10f</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F8</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x110</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F9</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x111</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F10</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x112</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F11</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x113</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F12</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x114</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F13</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x115</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F14</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x116</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_F15</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x117</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_DL</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x148</span>;		<span class="comment">/* delete-line key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_IL</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x149</span>;		<span class="comment">/* insert-line key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_DC</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x14a</span>;		<span class="comment">/* delete-character key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_IC</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x14b</span>;		<span class="comment">/* insert-character key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_EIC</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x14c</span>;		<span class="comment">/* sent by rmir or smir in insert mode */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CLEAR</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x14d</span>;		<span class="comment">/* clear-screen or erase key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_EOS</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x14e</span>;		<span class="comment">/* clear-to-end-of-screen key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_EOL</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x14f</span>;		<span class="comment">/* clear-to-end-of-line key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SF</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x150</span>;		<span class="comment">/* scroll-forward key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SR</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x151</span>;		<span class="comment">/* scroll-backward key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_NPAGE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x152</span>;		<span class="comment">/* next-page key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_PPAGE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x153</span>;		<span class="comment">/* previous-page key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_STAB</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x154</span>;		<span class="comment">/* set-tab key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CTAB</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x155</span>;		<span class="comment">/* clear-tab key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CATAB</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x156</span>;		<span class="comment">/* clear-all-tabs key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_ENTER</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x157</span>;		<span class="comment">/* enter/send key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_PRINT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x15a</span>;		<span class="comment">/* print key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_LL</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x15b</span>;		<span class="comment">/* lower-left key(home down) */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_A1</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x15c</span>;		<span class="comment">/* upper left of keypad */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_A3</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x15d</span>;		<span class="comment">/* upper right of keypad */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_B2</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x15e</span>;		<span class="comment">/* center of keypad */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_C1</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x15f</span>;		<span class="comment">/* lower left of keypad */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_C3</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x160</span>;		<span class="comment">/* lower right of keypad */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_BTAB</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x161</span>;		<span class="comment">/* back-tab key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_BEG</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x162</span>;		<span class="comment">/* begin key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CANCEL</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x163</span>;		<span class="comment">/* cancel key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CLOSE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x164</span>;		<span class="comment">/* close key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_COMMAND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x165</span>;		<span class="comment">/* command key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_COPY</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x166</span>;		<span class="comment">/* copy key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_CREATE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x167</span>;		<span class="comment">/* create key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_END</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x168</span>;		<span class="comment">/* end key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_EXIT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x169</span>;		<span class="comment">/* exit key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_FIND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16a</span>;		<span class="comment">/* find key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_HELP</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16b</span>;		<span class="comment">/* help key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MARK</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16c</span>;		<span class="comment">/* mark key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MESSAGE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16d</span>;		<span class="comment">/* message key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MOVE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16e</span>;		<span class="comment">/* move key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_NEXT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x16f</span>;		<span class="comment">/* next key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_OPEN</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x170</span>;		<span class="comment">/* open key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_OPTIONS</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x171</span>;		<span class="comment">/* options key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_PREVIOUS</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x172</span>;		<span class="comment">/* previous key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_REDO</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x173</span>;		<span class="comment">/* redo key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_REFERENCE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x174</span>;		<span class="comment">/* reference key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_REFRESH</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x175</span>;		<span class="comment">/* refresh key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_REPLACE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x176</span>;		<span class="comment">/* replace key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_RESTART</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x177</span>;		<span class="comment">/* restart key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_RESUME</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x178</span>;		<span class="comment">/* resume key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SAVE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x179</span>;		<span class="comment">/* save key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SBEG</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17a</span>;		<span class="comment">/* shifted begin key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SCANCEL</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17b</span>;		<span class="comment">/* shifted cancel key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SCOMMAND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17c</span>;		<span class="comment">/* shifted command key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SCOPY</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17d</span>;		<span class="comment">/* shifted copy key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SCREATE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17e</span>;		<span class="comment">/* shifted create key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SDC</span>	: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x17f</span>;		<span class="comment">/* shifted delete-character key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SDL</span>	: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x180</span>;		<span class="comment">/* shifted delete-line key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SELECT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x181</span>;		<span class="comment">/* select key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SEND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x182</span>;		<span class="comment">/* shifted end key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SEOL</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x183</span>;		<span class="comment">/* shifted clear-to-end-of-line key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SEXIT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x184</span>;		<span class="comment">/* shifted exit key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SFIND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x185</span>;		<span class="comment">/* shifted find key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SHELP</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x186</span>;		<span class="comment">/* shifted help key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SHOME</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x187</span>;		<span class="comment">/* shifted home key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SIC</span>	: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x188</span>;		<span class="comment">/* shifted insert-character key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SLEFT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x189</span>;		<span class="comment">/* shifted left-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SMESSAGE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18a</span>;		<span class="comment">/* shifted message key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SMOVE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18b</span>;		<span class="comment">/* shifted move key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SNEXT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18c</span>;		<span class="comment">/* shifted next key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SOPTIONS</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18d</span>;		<span class="comment">/* shifted options key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SPREVIOUS</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18e</span>;		<span class="comment">/* shifted previous key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SPRINT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x18f</span>;		<span class="comment">/* shifted print key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SREDO</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x190</span>;		<span class="comment">/* shifted redo key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SREPLACE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x191</span>;		<span class="comment">/* shifted replace key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SRIGHT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x192</span>;		<span class="comment">/* shifted right-arrow key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SRSUME</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x193</span>;		<span class="comment">/* shifted resume key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SSAVE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x194</span>;		<span class="comment">/* shifted save key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SSUSPEND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x195</span>;		<span class="comment">/* shifted suspend key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SUNDO</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x196</span>;		<span class="comment">/* shifted undo key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_SUSPEND</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x197</span>;		<span class="comment">/* suspend key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_UNDO</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x198</span>;		<span class="comment">/* undo key */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MOUSE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x199</span>;		<span class="comment">/* Mouse event has occurred */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_RESIZE</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x19a</span>;		<span class="comment">/* Terminal resize event */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_EVENT</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x19b</span>;		<span class="comment">/* We were interrupted by an event */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY_MAX</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x1ff</span>;		<span class="comment">/* Maximum key value is 0633 */</span>
 
-<span class='comment'>/* Mouse Support */</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>ncurses_mouse_mask</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>b</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>m</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>m</span> <span class='op'>&lt;&lt;</span> ((<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>b</span> <span class='op'>-</span> <span class='number'>1</span>) <span class='op'>*</span> <span class='number'>5</span>)); );
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_BUTTON_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='number'>0x001</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_BUTTON_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_BUTTON_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x008</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x010</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>NCURSES_RESERVED_EVENT</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='number'>0x020</span>;
+<span class="comment">/* Mouse Support */</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ncurses_mouse_mask</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">m</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">m</span> <span class="op">&lt;&lt;</span> ((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span> <span class="op">-</span> <span class="number">1</span>) <span class="op">*</span> <span class="number">5</span>)); );
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_BUTTON_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="number">0x001</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_BUTTON_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_BUTTON_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x008</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NCURSES_RESERVED_EVENT</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="number">0x020</span>;
 
-<span class='comment'>/* event masks */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON1_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>NCURSES_BUTTON_RELEASED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON1_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>NCURSES_BUTTON_PRESSED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON1_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>NCURSES_BUTTON_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON1_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>NCURSES_DOUBLE_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON1_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>NCURSES_TRIPLE_CLICKED</span>);
+<span class="comment">/* event masks */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON1_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">NCURSES_BUTTON_RELEASED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON1_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">NCURSES_BUTTON_PRESSED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON1_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">NCURSES_BUTTON_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON1_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">NCURSES_DOUBLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON1_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">NCURSES_TRIPLE_CLICKED</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON2_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>       <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>NCURSES_BUTTON_RELEASED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON2_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>NCURSES_BUTTON_PRESSED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON2_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>NCURSES_BUTTON_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON2_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>NCURSES_DOUBLE_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON2_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>NCURSES_TRIPLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON2_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>       <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">NCURSES_BUTTON_RELEASED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON2_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">NCURSES_BUTTON_PRESSED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON2_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">NCURSES_BUTTON_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON2_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">NCURSES_DOUBLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON2_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">NCURSES_TRIPLE_CLICKED</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON3_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>       <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>NCURSES_BUTTON_RELEASED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON3_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>NCURSES_BUTTON_PRESSED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON3_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>NCURSES_BUTTON_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON3_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>NCURSES_DOUBLE_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON3_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>NCURSES_TRIPLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON3_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>       <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">NCURSES_BUTTON_RELEASED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON3_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">NCURSES_BUTTON_PRESSED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON3_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">NCURSES_BUTTON_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON3_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">NCURSES_DOUBLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON3_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">NCURSES_TRIPLE_CLICKED</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON4_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>       <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>4</span>, <span class='ident'>NCURSES_BUTTON_RELEASED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON4_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>4</span>, <span class='ident'>NCURSES_BUTTON_PRESSED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON4_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>4</span>, <span class='ident'>NCURSES_BUTTON_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON4_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>4</span>, <span class='ident'>NCURSES_DOUBLE_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON4_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>4</span>, <span class='ident'>NCURSES_TRIPLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON4_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>       <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">4</span>, <span class="ident">NCURSES_BUTTON_RELEASED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON4_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">4</span>, <span class="ident">NCURSES_BUTTON_PRESSED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON4_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">4</span>, <span class="ident">NCURSES_BUTTON_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON4_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">4</span>, <span class="ident">NCURSES_DOUBLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON4_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">4</span>, <span class="ident">NCURSES_TRIPLE_CLICKED</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON5_RELEASED</span>: <span class='ident'>i32</span><span class='op'>=</span>       <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>5</span>, <span class='ident'>NCURSES_BUTTON_RELEASED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON5_PRESSED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>5</span>, <span class='ident'>NCURSES_BUTTON_PRESSED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON5_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span>        <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>5</span>, <span class='ident'>NCURSES_BUTTON_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON5_DOUBLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>5</span>, <span class='ident'>NCURSES_DOUBLE_CLICKED</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON5_TRIPLE_CLICKED</span>: <span class='ident'>i32</span><span class='op'>=</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>5</span>, <span class='ident'>NCURSES_TRIPLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON5_RELEASED</span>: <span class="ident">i32</span><span class="op">=</span>       <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">NCURSES_BUTTON_RELEASED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON5_PRESSED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">NCURSES_BUTTON_PRESSED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON5_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span>        <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">NCURSES_BUTTON_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON5_DOUBLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">NCURSES_DOUBLE_CLICKED</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON5_TRIPLE_CLICKED</span>: <span class="ident">i32</span><span class="op">=</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">NCURSES_TRIPLE_CLICKED</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON_CTRL</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>6</span>, <span class='number'>0x001</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON_SHIFT</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>6</span>, <span class='number'>0x002</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>BUTTON_ALT</span>: <span class='ident'>i32</span><span class='op'>=</span>		<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>6</span>, <span class='number'>0x004</span>);
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>REPORT_MOUSE_POSITION</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='number'>6</span>, <span class='number'>0x008</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON_CTRL</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">6</span>, <span class="number">0x001</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON_SHIFT</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">6</span>, <span class="number">0x002</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BUTTON_ALT</span>: <span class="ident">i32</span><span class="op">=</span>		<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">6</span>, <span class="number">0x004</span>);
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REPORT_MOUSE_POSITION</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="number">6</span>, <span class="number">0x008</span>);
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ALL_MOUSE_EVENTS</span>: <span class='ident'>i32</span><span class='op'>=</span>	<span class='ident'>REPORT_MOUSE_POSITION</span> <span class='op'>-</span> <span class='number'>1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALL_MOUSE_EVENTS</span>: <span class="ident">i32</span><span class="op">=</span>	<span class="ident">REPORT_MOUSE_POSITION</span> <span class="op">-</span> <span class="number">1</span>;
 
-<span class='comment'>/* macros to extract single event-bits from masks */</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_release</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x001</span>)); );
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_press</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x002</span>)); );
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_click</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x004</span>)); );
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_double_click</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x008</span>)); );
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_triple_click</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x010</span>)); );
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>button_reserved_event</span>( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (<span class='ident'>e</span> <span class='kw-2'>&amp;</span> <span class='macro'>ncurses_mouse_mask</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='number'>0x020</span>)); );
+<span class="comment">/* macros to extract single event-bits from masks */</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_release</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x001</span>)); );
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_press</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x002</span>)); );
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_click</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x004</span>)); );
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_double_click</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x008</span>)); );
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_triple_click</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x010</span>)); );
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">button_reserved_event</span>( (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (<span class="ident">e</span> <span class="op">&amp;</span> <span class="macro">ncurses_mouse_mask</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="number">0x020</span>)); );
 
-<span class='comment'>/* locales */</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_ALL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_COLLATE</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_CTYPE</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_MONETARY</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>3</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_NUMERIC</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_TIME</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>5</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LC_MESSAGES</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>6</span>;
+<span class="comment">/* locales */</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_ALL</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_COLLATE</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_CTYPE</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_MONETARY</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_NUMERIC</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_TIME</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LC_MESSAGES</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">6</span>;
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>i32</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>LcCategory</span> {
-    <span class='ident'>all</span> <span class='op'>=</span> <span class='ident'>LC_ALL</span>,
-    <span class='ident'>collate</span> <span class='op'>=</span> <span class='ident'>LC_COLLATE</span>,
-    <span class='ident'>ctype</span> <span class='op'>=</span> <span class='ident'>LC_CTYPE</span>,
-    <span class='ident'>monetary</span> <span class='op'>=</span> <span class='ident'>LC_MONETARY</span>,
-    <span class='ident'>numeric</span> <span class='op'>=</span> <span class='ident'>LC_NUMERIC</span>,
-    <span class='ident'>time</span> <span class='op'>=</span> <span class='ident'>LC_TIME</span>,
-    <span class='ident'>messages</span> <span class='op'>=</span> <span class='ident'>LC_MESSAGES</span>,
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LcCategory</span> {
+    <span class="ident">all</span> <span class="op">=</span> <span class="ident">LC_ALL</span>,
+    <span class="ident">collate</span> <span class="op">=</span> <span class="ident">LC_COLLATE</span>,
+    <span class="ident">ctype</span> <span class="op">=</span> <span class="ident">LC_CTYPE</span>,
+    <span class="ident">monetary</span> <span class="op">=</span> <span class="ident">LC_MONETARY</span>,
+    <span class="ident">numeric</span> <span class="op">=</span> <span class="ident">LC_NUMERIC</span>,
+    <span class="ident">time</span> <span class="op">=</span> <span class="ident">LC_TIME</span>,
+    <span class="ident">messages</span> <span class="op">=</span> <span class="ident">LC_MESSAGES</span>,
 }
 </pre>
 </section>
@@ -635,18 +647,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -679,7 +695,6 @@
         window.rootPath = "../../";
         window.currentCrate = "ncurses";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>
