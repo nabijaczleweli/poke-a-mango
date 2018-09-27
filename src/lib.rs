@@ -4,20 +4,20 @@
 //!
 //! Easily navigable menus!
 //!
-//! ![Start menu screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_start_menu.png)
+//! ![Start menu screenshot](https://rawcdn.githack.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_start_menu.png)
 //!
 //! Extensive leaderboard system!
 //!
-//! ![Leaderboard screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_leaderboard.png)
+//! ![Leaderboard screenshot](https://rawcdn.githack.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_leaderboard.png)
 //!
 //! A wide variety of difficulty modes!
 //!
 //! ![Difficulty selection
-//! screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)
+//! screenshot](https://rawcdn.githack.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_difficulty_selection.png)
 //!
 //! Exciting gameplay that will have you glued to the screen for hours on end!
 //!
-//! ![Gameplay screenshot](https://cdn.rawgit.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_gameplay.png)
+//! ![Gameplay screenshot](https://rawcdn.githack.com/nabijaczleweli/poke-a-mango/master/assets/screenshot_gameplay.png)
 //!
 //! # Library doc
 //!
